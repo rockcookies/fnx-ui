@@ -16,10 +16,7 @@
   },
   "scripts": {
     "clean": "rimraf ./lib",
-    "dev": "tsc --watch",
-    "build": "tsc --build",
-    "prepack": "yarn build",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc --build"
   },
   "keywords": [],
   "license": "MIT",
