@@ -2,12 +2,12 @@
 
 ## Basic Usage
 
-Bind the index value corresponding to the currently active tag through `activekey`. The first tag is enabled by default.
+Bind the index value corresponding to the currently active tag through `activeKey`. The first tag is enabled by default.
 
 ```tsx | pure
 ReactDOM.render(
   <>
-    <Tabs defaultValue="1">
+    <Tabs defaultActiveKey="1">
       <Tabs.Panel title="Life is like all kinds of chocolate">1</Tabs.Panel>
       <Tabs.Panel title="Title">2</Tabs.Panel>
       <Tabs.Panel title="Title">3</Tabs.Panel>

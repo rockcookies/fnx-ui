@@ -2,12 +2,12 @@
 
 ## 基础用法
 
-通过 `defaultValue` 绑定当前激活标签对应的索引值，默认情况下启用第一个标签。
+通过 `activeKey` 绑定当前激活标签对应的索引值，默认情况下启用第一个标签。
 
 ```tsx | pure
 ReactDOM.render(
   <>
-    <Tabs defaultValue="1">
+    <Tabs defaultActiveKey="1">
       <Tabs.Panel title="Life is like all kinds of chocolate">1</Tabs.Panel>
       <Tabs.Panel title="Title">2</Tabs.Panel>
       <Tabs.Panel title="Title">3</Tabs.Panel>
