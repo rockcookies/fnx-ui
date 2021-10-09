@@ -4,6 +4,7 @@ on:
   push:
     branches: [master]
     paths:
+      - '.github/**'
       - 'packages/fnx-ui/site/**'
       - 'packages/fnx-ui/src/**'
 
@@ -18,14 +19,14 @@ jobs:
         run: npm run bootstrap
 
       - name: Build Site
-        run: npm run build:site
+        run: |
+          git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+          npm run build:site -- -u "github-actions-bot <support+actions@github.com>"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@4.1.1
-        env:
-          # 在 Settings->Secrets 配置 GITEE_RSA_PRIVATE_KEY
-          SSH_PRIVATE_KEY: ${{ secrets.GITEE_RSA_PRIVATE_KEY }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: JamesIves/github-pages-deploy-action@4.1.5
         with:
           branch: gh-pages
           folder: packages/fnx-ui/dist-site
