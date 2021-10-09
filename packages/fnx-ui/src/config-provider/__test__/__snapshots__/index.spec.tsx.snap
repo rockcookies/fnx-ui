@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ConfigProvider /> test provider 1`] = `
+<div>
+  <pre>
+    {"locale":"zh-CN","safeAreaInsetBottom":false,"transitionDuration":600}
+  </pre>
+</div>
+`;
+
+exports[`<ConfigProvider /> test-inheritance 1`] = `
+<div>
+  <pre>
+    {"count":1,"locale":"zh-CN","safeAreaInsetBottom":true,"transitionDuration":500}
+  </pre>
+</div>
+`;
+
+exports[`<ConfigProvider /> test-inheritance 2`] = `
+<div>
+  <pre>
+    {"count":1,"locale":"zh-CN","safeAreaInsetBottom":true,"transitionDuration":500}
+  </pre>
+</div>
+`;

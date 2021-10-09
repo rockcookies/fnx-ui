@@ -1,0 +1,51 @@
+.fnx-icon {
+	display: inline-block;
+	font-style: normal;
+	line-height: 0;
+	text-align: center;
+	text-transform: none;
+	vertical-align: -0.125em; // for SVG icon, see https://blog.prototypr.io/align-svg-icons-to-text-and-say-goodbye-to-font-icons-d44b3d7b26b4
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+
+	> * {
+		line-height: 1;
+	}
+
+	svg {
+		display: inline-block;
+	}
+
+	&--spin {
+		animation: fnx-rotate 1s linear infinite;
+	}
+
+	&__spinner {
+		animation: fnx-rotate 2s linear infinite;
+
+		circle {
+			animation: fnx-icon-circular 1.5s ease-in-out infinite;
+			stroke: currentColor;
+			stroke-width: 3;
+			stroke-linecap: round;
+		}
+	}
+}
+
+@keyframes fnx-icon-circular {
+	0% {
+		stroke-dasharray: 1, 200;
+		stroke-dashoffset: 0;
+	}
+
+	50% {
+		stroke-dasharray: 90, 150;
+		stroke-dashoffset: -40;
+	}
+
+	100% {
+		stroke-dasharray: 90, 150;
+		stroke-dashoffset: -120;
+	}
+}

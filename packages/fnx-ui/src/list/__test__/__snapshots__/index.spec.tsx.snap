@@ -1,0 +1,96 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<List/> should render correctly when set direction 1`] = `
+<div>
+  <div
+    aria-busy="false"
+    class="fnx-list fnx-list--default"
+    role="feed"
+  >
+    <div
+      class="fnx-list__placeholder"
+    />
+  </div>
+</div>
+`;
+
+exports[`<List/> should render error slots correctly and do not trigger onLoad 1`] = `
+<div>
+  <div
+    aria-busy="false"
+    class="fnx-list fnx-list--error"
+    role="feed"
+  >
+    <div
+      class="fnx-list__indicator"
+    >
+      error
+    </div>
+    <div
+      class="fnx-list__placeholder"
+    />
+  </div>
+</div>
+`;
+
+exports[`<List/> should render finish tip correctly and do not trigger onLoad 1`] = `
+<div>
+  <div
+    aria-busy="false"
+    class="fnx-list fnx-list--finished"
+    role="feed"
+  >
+    <div
+      class="fnx-list__placeholder"
+    />
+  </div>
+</div>
+`;
+
+exports[`<List/> should render loading tip correctly and do not trigger onLoad 1`] = `
+<div>
+  <div
+    aria-busy="true"
+    class="fnx-list fnx-list--loading"
+    role="feed"
+  >
+    <div
+      class="fnx-list__indicator"
+    >
+      <span
+        class="fnx-loading"
+      >
+        <span
+          class="fnx-icon"
+          style="font-size: 16px;"
+        >
+          <svg
+            aria-hidden="true"
+            class="fnx-icon__spinner"
+            fill="currentColor"
+            focusable="false"
+            height="1em"
+            viewBox="25 25 50 50"
+            width="1em"
+          >
+            <circle
+              cx="50"
+              cy="50"
+              fill="none"
+              r="20"
+            />
+          </svg>
+        </span>
+        <span
+          class="fnx-loading__text"
+        >
+          Loading...
+        </span>
+      </span>
+    </div>
+    <div
+      class="fnx-list__placeholder"
+    />
+  </div>
+</div>
+`;

@@ -1,0 +1,199 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Pagination/> should render defaultCurrent and ref correctly  1`] = `
+<div>
+  <ul
+    class="fnx-pagination"
+  >
+    <li
+      class="fnx-pagination__item fnx-pagination__prev fnx-hairline"
+    >
+      Previous
+    </li>
+    <li
+      class="fnx-pagination__item fnx-pagination__page fnx-hairline"
+    >
+      4
+    </li>
+    <li
+      class="fnx-pagination__item fnx-pagination__page fnx-hairline"
+    >
+      5
+    </li>
+    <li
+      class="fnx-pagination__item fnx-pagination__page fnx-hairline"
+    >
+      6
+    </li>
+    <li
+      class="fnx-pagination__item fnx-pagination__page fnx-hairline"
+    >
+      7
+    </li>
+    <li
+      class="fnx-pagination__item fnx-pagination__item--active fnx-pagination__page fnx-hairline"
+    >
+      8
+    </li>
+    <li
+      class="fnx-pagination__item fnx-pagination__item--disabled fnx-pagination__next fnx-hairline"
+    >
+      Next
+    </li>
+  </ul>
+</div>
+`;
+
+exports[`<Pagination/> should render end forceEllipses correctly 1`] = `
+<div>
+  <ul
+    class="fnx-pagination"
+  >
+    <li
+      class="fnx-pagination__item fnx-pagination__prev fnx-hairline"
+    >
+      Previous
+    </li>
+    <li
+      class="fnx-pagination__item fnx-pagination__page fnx-hairline"
+    >
+      ...
+    </li>
+    <li
+      class="fnx-pagination__item fnx-pagination__page fnx-hairline"
+    >
+      3
+    </li>
+    <li
+      class="fnx-pagination__item fnx-pagination__page fnx-hairline"
+    >
+      4
+    </li>
+    <li
+      class="fnx-pagination__item fnx-pagination__item--active fnx-pagination__page fnx-hairline"
+    >
+      5
+    </li>
+    <li
+      class="fnx-pagination__item fnx-pagination__page fnx-hairline"
+    >
+      6
+    </li>
+    <li
+      class="fnx-pagination__item fnx-pagination__page fnx-hairline"
+    >
+      7
+    </li>
+    <li
+      class="fnx-pagination__item fnx-pagination__page fnx-hairline"
+    >
+      ...
+    </li>
+    <li
+      class="fnx-pagination__item fnx-pagination__next fnx-hairline"
+    >
+      Next
+    </li>
+  </ul>
+</div>
+`;
+
+exports[`<Pagination/> should render simple Mode correctly 1`] = `
+<div>
+  <ul
+    class="fnx-pagination fnx-pagination--simple"
+  >
+    <li
+      class="fnx-pagination__item fnx-pagination__item--disabled fnx-pagination__prev fnx-hairline"
+    >
+      Previous
+    </li>
+    <li
+      class="fnx-pagination__page-dec"
+    >
+      1
+      /
+      8
+    </li>
+    <li
+      class="fnx-pagination__item fnx-pagination__next fnx-hairline"
+    >
+      Next
+    </li>
+  </ul>
+</div>
+`;
+
+exports[`<Pagination/> should render slots correctly 1`] = `
+<div>
+  <ul
+    class="fnx-pagination"
+  >
+    <li
+      class="fnx-pagination__item fnx-pagination__item--disabled fnx-pagination__prev fnx-hairline"
+    >
+      <span
+        class="fnx-icon"
+      >
+        <svg
+          aria-hidden="true"
+          fill="currentColor"
+          focusable="false"
+          height="1em"
+          viewBox="0 0 1024 1024"
+          width="1em"
+        >
+          <path
+            d="M303.220736 520.22784c-3.29728-13.923328 0.484352-29.182976 11.344896-40.04352l341.925888-341.925888c16.661504-16.662528 43.676672-16.662528 60.3392 0s16.662528 43.677696 0 60.340224L404.996096 510.43328l311.883776 311.883776c16.662528 16.662528 16.662528 43.677696 0 60.340224s-43.677696 16.662528-60.340224 0L314.614784 540.731392a42.467328 42.467328 0 0 1-11.394048-20.503552z"
+          />
+        </svg>
+      </span>
+    </li>
+    <li
+      class="fnx-pagination__item fnx-pagination__item--active fnx-pagination__page fnx-hairline"
+    >
+      1
+    </li>
+    <li
+      class="fnx-pagination__item fnx-pagination__page fnx-hairline"
+    >
+      2
+    </li>
+    <li
+      class="fnx-pagination__item fnx-pagination__page fnx-hairline"
+    >
+      3
+    </li>
+    <li
+      class="fnx-pagination__item fnx-pagination__page fnx-hairline"
+    >
+      4
+    </li>
+    <li
+      class="fnx-pagination__item fnx-pagination__page fnx-hairline"
+    >
+      5
+    </li>
+    <li
+      class="fnx-pagination__item fnx-pagination__next fnx-hairline"
+    >
+      <span
+        class="fnx-icon"
+      >
+        <svg
+          aria-hidden="true"
+          fill="currentColor"
+          focusable="false"
+          height="1em"
+          viewBox="0 0 1024 1024"
+          width="1em"
+        >
+          <path
+            d="M728.223744 520.22784a42.467328 42.467328 0 0 1-11.393024 20.503552L374.90688 882.65728c-16.662528 16.662528-43.677696 16.662528-60.340224 0s-16.662528-43.677696 0-60.340224L626.449408 510.43328 314.614784 198.598656c-16.662528-16.662528-16.662528-43.677696 0-60.340224 16.661504-16.662528 43.676672-16.662528 60.3392 0L716.879872 480.18432c10.860544 10.860544 14.642176 26.120192 11.343872 40.04352z"
+          />
+        </svg>
+      </span>
+    </li>
+  </ul>
+</div>
+`;

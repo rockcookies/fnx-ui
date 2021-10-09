@@ -1,0 +1,71 @@
+:root {
+	--fnx-image-loading-text-color: var(--fnx-gray-700);
+	--fnx-image-loading-font-size: var(--fnx-font-size-md);
+	--fnx-image-loading-background-color: var(--fnx-gray-75);
+	--fnx-image-loading-icon-color: var(--fnx-gray-500);
+	--fnx-image-loading-icon-size: 32px;
+	--fnx-image-error-text-color: var(--fnx-gray-700);
+	--fnx-image-error-font-size: var(--fnx-font-size-md);
+	--fnx-image-error-background-color: var(--fnx-gray-75);
+	--fnx-image-error-icon-color: var(--fnx-gray-500);
+	--fnx-image-error-icon-size: 32px;
+}
+
+.fnx-image {
+	position: relative;
+	display: inline-block;
+
+	&--round {
+		overflow: hidden;
+		border-radius: var(--fnx-border-radius-max);
+
+		.fnx-image__img {
+			border-radius: inherit;
+		}
+	}
+
+	&__img,
+	&__error,
+	&__loading {
+		display: block;
+		width: 100%;
+		height: 100%;
+	}
+
+	&__error,
+	&__loading {
+		position: absolute;
+		top: 0;
+		left: 0;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+
+		.fnx-icon {
+			display: block;
+		}
+	}
+
+	&__loading {
+		color: var(--fnx-image-loading-text-color);
+		font-size: var(--fnx-image-loading-font-size);
+		background-color: var(--fnx-image-loading-background-color);
+
+		.fnx-icon {
+			color: var(--fnx-image-loading-icon-color);
+			font-size: var(--fnx-image-loading-icon-size);
+		}
+	}
+
+	&__error {
+		color: var(--fnx-image-error-text-color);
+		font-size: var(--fnx-image-error-font-size);
+		background-color: var(--fnx-image-error-background-color);
+
+		.fnx-icon {
+			color: var(--fnx-image-error-icon-color);
+			font-size: var(--fnx-image-error-icon-size);
+		}
+	}
+}

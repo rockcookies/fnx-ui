@@ -1,0 +1,353 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Circle/> Progress bar color, input object format can define gradient color 1`] = `
+<div>
+  <div
+    class="fnx-circle Circle"
+  >
+    <svg
+      viewBox="0 0 100 100"
+    >
+      <defs>
+        <lineargradient
+          id="fnx-circle-linearGradient-3"
+          x1="100%"
+          x2="0%"
+          y1="0%"
+          y2="0%"
+        >
+          <stop
+            offset="0%"
+            stop-color="#3fecff"
+            stop-opacity="1"
+          />
+          <stop
+            offset="100%"
+            stop-color="#6149f6"
+            stop-opacity="1"
+          />
+        </lineargradient>
+      </defs>
+      <path
+        class="fnx-circle__trail"
+        d="M 50,50 m 0,-47.5
+   a 47.5,47.5 0 1 ,0 0,95
+   a 47.5,47.5 0 1 ,0 0,-95"
+        fill-opacity="0"
+        stroke-linecap="round"
+        stroke-width="5"
+        style="stroke-dasharray: 298.45130209103036px 298.45130209103036px; stroke-dashoffset: -0px; transition: stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s, stroke-width .06s ease .3s, opacity .3s ease 0s;"
+      />
+      <path
+        class="fnx-circle__hover"
+        d="M 50,50 m 0,-47.5
+   a 47.5,47.5 0 1 ,1 0,95
+   a 47.5,47.5 0 1 ,1 0,-95"
+        fill-opacity="0"
+        opacity="1"
+        stroke="url(#fnx-circle-linearGradient-3)"
+        stroke-linecap="round"
+        stroke-width="5"
+        style="stroke-dasharray: 208.91591146372124px 298.45130209103036px; stroke-dashoffset: -0px; transition: stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s, stroke-width .06s ease .3s, opacity .3s ease 0s; transition-duration: 0.3s, 0.3s, 0.3s, 0.06s;"
+      />
+    </svg>
+    <div
+      class="fnx-circle__text"
+    />
+  </div>
+</div>
+`;
+
+exports[`<Circle/> change with animation 1`] = `
+<div>
+  <div
+    class="fnx-circle"
+  >
+    <svg
+      viewBox="0 0 100 100"
+    >
+      <path
+        class="fnx-circle__trail"
+        d="M 50,50 m 0,-47.5
+   a 47.5,47.5 0 1 ,0 0,95
+   a 47.5,47.5 0 1 ,0 0,-95"
+        fill-opacity="0"
+        stroke-linecap="round"
+        stroke-width="5"
+        style="stroke-dasharray: 298.45130209103036px 298.45130209103036px; stroke-dashoffset: -0px; transition: stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s, stroke-width .06s ease .3s, opacity .3s ease 0s;"
+      />
+      <path
+        class="fnx-circle__hover"
+        d="M 50,50 m 0,-47.5
+   a 47.5,47.5 0 1 ,1 0,95
+   a 47.5,47.5 0 1 ,1 0,-95"
+        fill-opacity="0"
+        opacity="1"
+        stroke="#1989fa"
+        stroke-linecap="round"
+        stroke-width="5"
+        style="stroke-dasharray: 208.91591146372124px 298.45130209103036px; stroke-dashoffset: -0px; transition: stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s, stroke-width .06s ease .3s, opacity .3s ease 0s; transition-duration: 0.3s, 0.3s, 0.3s, 0.06s;"
+      />
+    </svg>
+    <div
+      class="fnx-circle__text"
+    />
+  </div>
+</div>
+`;
+
+exports[`<Circle/> change with animation 2`] = `
+<div>
+  <div
+    class="fnx-circle"
+  >
+    <svg
+      viewBox="0 0 100 100"
+    >
+      <path
+        class="fnx-circle__trail"
+        d="M 50,50 m 0,-47.5
+   a 47.5,47.5 0 1 ,0 0,95
+   a 47.5,47.5 0 1 ,0 0,-95"
+        fill-opacity="0"
+        stroke-linecap="round"
+        stroke-width="5"
+        style="stroke-dasharray: 298.45130209103036px 298.45130209103036px; stroke-dashoffset: -0px; transition: stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s, stroke-width .06s ease .3s, opacity .3s ease 0s;"
+      />
+      <path
+        class="fnx-circle__hover"
+        d="M 50,50 m 0,-47.5
+   a 47.5,47.5 0 1 ,1 0,95
+   a 47.5,47.5 0 1 ,1 0,-95"
+        fill-opacity="0"
+        opacity="1"
+        stroke="#1989fa"
+        stroke-linecap="round"
+        stroke-width="5"
+        style="stroke-dasharray: 238.7610416728243px 298.45130209103036px; stroke-dashoffset: -0px; transition: stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s, stroke-width .06s ease .3s, opacity .3s ease 0s; transition-duration: 0s, 0s;"
+      />
+    </svg>
+    <div
+      class="fnx-circle__text"
+    />
+  </div>
+</div>
+`;
+
+exports[`<Circle/> should change circle size when using size prop 1`] = `
+<div>
+  <div
+    class="fnx-circle"
+    style="width: 300px; height: 300px;"
+  >
+    <svg
+      viewBox="0 0 100 100"
+    >
+      <path
+        class="fnx-circle__trail"
+        d="M 50,50 m 0,-47.5
+   a 47.5,47.5 0 1 ,0 0,95
+   a 47.5,47.5 0 1 ,0 0,-95"
+        fill-opacity="0"
+        stroke-linecap="round"
+        stroke-width="5"
+        style="stroke-dasharray: 298.45130209103036px 298.45130209103036px; stroke-dashoffset: -0px; transition: stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s, stroke-width .06s ease .3s, opacity .3s ease 0s;"
+      />
+      <path
+        class="fnx-circle__hover"
+        d="M 50,50 m 0,-47.5
+   a 47.5,47.5 0 1 ,1 0,95
+   a 47.5,47.5 0 1 ,1 0,-95"
+        fill-opacity="0"
+        opacity="1"
+        stroke="#1989fa"
+        stroke-linecap="round"
+        stroke-width="5"
+        style="stroke-dasharray: 208.91591146372124px 298.45130209103036px; stroke-dashoffset: -0px; transition: stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s, stroke-width .06s ease .3s, opacity .3s ease 0s; transition-duration: 0.3s, 0.3s, 0.3s, 0.06s;"
+      />
+    </svg>
+    <div
+      class="fnx-circle__text"
+    />
+  </div>
+</div>
+`;
+
+exports[`<Circle/> should change gap position when using gapPosition prop 1`] = `
+<div>
+  <div
+    class="fnx-circle"
+  >
+    <svg
+      viewBox="0 0 100 100"
+    >
+      <path
+        class="fnx-circle__trail"
+        d="M 50,50 m 0,-47.5
+   a 47.5,47.5 0 1 ,0 0,95
+   a 47.5,47.5 0 1 ,0 0,-95"
+        fill-opacity="0"
+        stroke-linecap="round"
+        stroke-width="5"
+        style="stroke-dasharray: 298.45130209103036px 298.45130209103036px; stroke-dashoffset: -0px; transition: stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s, stroke-width .06s ease .3s, opacity .3s ease 0s;"
+      />
+      <path
+        class="fnx-circle__hover"
+        d="M 50,50 m 0,-47.5
+   a 47.5,47.5 0 1 ,1 0,95
+   a 47.5,47.5 0 1 ,1 0,-95"
+        fill-opacity="0"
+        opacity="1"
+        stroke="#1989fa"
+        stroke-linecap="round"
+        stroke-width="5"
+        style="stroke-dasharray: 208.91591146372124px 298.45130209103036px; stroke-dashoffset: -0px; transition: stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s, stroke-width .06s ease .3s, opacity .3s ease 0s; transition-duration: 0.3s, 0.3s, 0.3s, 0.06s;"
+      />
+    </svg>
+    <div
+      class="fnx-circle__text"
+    />
+  </div>
+  ,
+  <div
+    class="fnx-circle"
+  >
+    <svg
+      viewBox="0 0 100 100"
+    >
+      <path
+        class="fnx-circle__trail"
+        d="M 50,50 m 0,47.5
+   a 47.5,47.5 0 1 ,0 0,-95
+   a 47.5,47.5 0 1 ,0 0,95"
+        fill-opacity="0"
+        stroke-linecap="round"
+        stroke-width="5"
+        style="stroke-dasharray: 298.45130209103036px 298.45130209103036px; stroke-dashoffset: -0px; transition: stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s, stroke-width .06s ease .3s, opacity .3s ease 0s;"
+      />
+      <path
+        class="fnx-circle__hover"
+        d="M 50,50 m 0,47.5
+   a 47.5,47.5 0 1 ,1 0,-95
+   a 47.5,47.5 0 1 ,1 0,95"
+        fill-opacity="0"
+        opacity="1"
+        stroke="#1989fa"
+        stroke-linecap="round"
+        stroke-width="5"
+        style="stroke-dasharray: 208.91591146372124px 298.45130209103036px; stroke-dashoffset: -0px; transition: stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s, stroke-width .06s ease .3s, opacity .3s ease 0s; transition-duration: 0.3s, 0.3s, 0.3s, 0.06s;"
+      />
+    </svg>
+    <div
+      class="fnx-circle__text"
+    />
+  </div>
+  ,
+  <div
+    class="fnx-circle"
+  >
+    <svg
+      viewBox="0 0 100 100"
+    >
+      <path
+        class="fnx-circle__trail"
+        d="M 50,50 m -47.5,0
+   a 47.5,47.5 0 1 ,0 95,0
+   a 47.5,47.5 0 1 ,0 -95,0"
+        fill-opacity="0"
+        stroke-linecap="round"
+        stroke-width="5"
+        style="stroke-dasharray: 298.45130209103036px 298.45130209103036px; stroke-dashoffset: -0px; transition: stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s, stroke-width .06s ease .3s, opacity .3s ease 0s;"
+      />
+      <path
+        class="fnx-circle__hover"
+        d="M 50,50 m -47.5,0
+   a 47.5,47.5 0 1 ,1 95,0
+   a 47.5,47.5 0 1 ,1 -95,0"
+        fill-opacity="0"
+        opacity="1"
+        stroke="#1989fa"
+        stroke-linecap="round"
+        stroke-width="5"
+        style="stroke-dasharray: 208.91591146372124px 298.45130209103036px; stroke-dashoffset: -0px; transition: stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s, stroke-width .06s ease .3s, opacity .3s ease 0s; transition-duration: 0.3s, 0.3s, 0.3s, 0.06s;"
+      />
+    </svg>
+    <div
+      class="fnx-circle__text"
+    />
+  </div>
+  ,
+  <div
+    class="fnx-circle"
+  >
+    <svg
+      viewBox="0 0 100 100"
+    >
+      <path
+        class="fnx-circle__trail"
+        d="M 50,50 m 47.5,0
+   a 47.5,47.5 0 1 ,0 -95,0
+   a 47.5,47.5 0 1 ,0 95,0"
+        fill-opacity="0"
+        stroke-linecap="round"
+        stroke-width="5"
+        style="stroke-dasharray: 298.45130209103036px 298.45130209103036px; stroke-dashoffset: -0px; transition: stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s, stroke-width .06s ease .3s, opacity .3s ease 0s;"
+      />
+      <path
+        class="fnx-circle__hover"
+        d="M 50,50 m 47.5,0
+   a 47.5,47.5 0 1 ,1 -95,0
+   a 47.5,47.5 0 1 ,1 95,0"
+        fill-opacity="0"
+        opacity="1"
+        stroke="#1989fa"
+        stroke-linecap="round"
+        stroke-width="5"
+        style="stroke-dasharray: 208.91591146372124px 298.45130209103036px; stroke-dashoffset: -0px; transition: stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s, stroke-width .06s ease .3s, opacity .3s ease 0s; transition-duration: 0.3s, 0.3s, 0.3s, 0.06s;"
+      />
+    </svg>
+    <div
+      class="fnx-circle__text"
+    />
+  </div>
+  ,
+</div>
+`;
+
+exports[`<Circle/> should change stroke linecap when using stroke-linecap prop 1`] = `
+<div>
+  <div
+    class="fnx-circle"
+  >
+    <svg
+      viewBox="0 0 100 100"
+    >
+      <path
+        class="fnx-circle__trail"
+        d="M 50,50 m 0,-47.5
+   a 47.5,47.5 0 1 ,0 0,95
+   a 47.5,47.5 0 1 ,0 0,-95"
+        fill-opacity="0"
+        stroke-linecap="square"
+        stroke-width="5"
+        style="stroke-dasharray: 298.45130209103036px 298.45130209103036px; stroke-dashoffset: -0px; transition: stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s, stroke-width .06s ease .3s, opacity .3s ease 0s;"
+      />
+      <path
+        class="fnx-circle__hover"
+        d="M 50,50 m 0,-47.5
+   a 47.5,47.5 0 1 ,1 0,95
+   a 47.5,47.5 0 1 ,1 0,-95"
+        fill-opacity="0"
+        opacity="1"
+        stroke="#1989fa"
+        stroke-linecap="square"
+        stroke-width="5"
+        style="stroke-dasharray: 208.91591146372124px 298.45130209103036px; stroke-dashoffset: -0px; transition: stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s, stroke-width .06s ease .3s, opacity .3s ease 0s; transition-duration: 0.3s, 0.3s, 0.3s, 0.06s;"
+      />
+    </svg>
+    <div
+      class="fnx-circle__text"
+    />
+  </div>
+</div>
+`;

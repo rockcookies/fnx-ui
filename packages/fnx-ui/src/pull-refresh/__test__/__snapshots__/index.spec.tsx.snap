@@ -1,0 +1,253 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<PullRefresh/> should render different head content in different pulling status 1`] = `
+<div>
+  <div
+    class="fnx-pull-refresh"
+  >
+    <div
+      class="fnx-pull-refresh__track"
+      style="transition-duration: 0ms; transform: translate3d(0, 20px, 0);"
+    >
+      <div
+        class="fnx-pull-refresh__indicator"
+      >
+        <div
+          class="fnx-pull-refresh__text"
+        >
+          Pull to refresh...
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`<PullRefresh/> should render different head content in different pulling status 2`] = `
+<div>
+  <div
+    class="fnx-pull-refresh"
+  >
+    <div
+      class="fnx-pull-refresh__track"
+      style="transition-duration: 0ms; transform: translate3d(0, 75px, 0);"
+    >
+      <div
+        class="fnx-pull-refresh__indicator"
+      >
+        <div
+          class="fnx-pull-refresh__text"
+        >
+          Loose to refresh...
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`<PullRefresh/> should render different head content in different pulling status 3`] = `
+<div>
+  <div
+    class="fnx-pull-refresh"
+  >
+    <div
+      class="fnx-pull-refresh__track"
+      style="transition-duration: 300ms; transform: translate3d(0, 50px, 0);"
+    >
+      <div
+        class="fnx-pull-refresh__indicator"
+      >
+        <span
+          class="fnx-loading"
+        >
+          <span
+            class="fnx-icon"
+            style="font-size: 16px;"
+          >
+            <svg
+              aria-hidden="true"
+              class="fnx-icon__spinner"
+              fill="currentColor"
+              focusable="false"
+              height="1em"
+              viewBox="25 25 50 50"
+              width="1em"
+            >
+              <circle
+                cx="50"
+                cy="50"
+                fill="none"
+                r="20"
+              />
+            </svg>
+          </span>
+          <span
+            class="fnx-loading__text"
+          >
+            Loading...
+          </span>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`<PullRefresh/> should render different head content in different pulling status 4`] = `
+<div>
+  <div
+    class="fnx-pull-refresh"
+  >
+    <div
+      class="fnx-pull-refresh__track"
+      style="transition-duration: 300ms; transform: translate3d(0, 50px, 0);"
+    >
+      <div
+        class="fnx-pull-refresh__indicator"
+      >
+        <span
+          class="fnx-loading"
+        >
+          <span
+            class="fnx-icon"
+            style="font-size: 16px;"
+          >
+            <svg
+              aria-hidden="true"
+              class="fnx-icon__spinner"
+              fill="currentColor"
+              focusable="false"
+              height="1em"
+              viewBox="25 25 50 50"
+              width="1em"
+            >
+              <circle
+                cx="50"
+                cy="50"
+                fill="none"
+                r="20"
+              />
+            </svg>
+          </span>
+          <span
+            class="fnx-loading__text"
+          >
+            Loading...
+          </span>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`<PullRefresh/> should render different head content in different pulling status 5`] = `
+<div>
+  <div
+    class="fnx-pull-refresh"
+  >
+    <div
+      class="fnx-pull-refresh__track"
+      style="transition-duration: 300ms;"
+    >
+      <div
+        class="fnx-pull-refresh__indicator"
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`<PullRefresh/> should render status slots correctly 1`] = `
+<div>
+  <div
+    class="fnx-pull-refresh"
+  >
+    <div
+      class="fnx-pull-refresh__track"
+      style="transition-duration: 0ms; transform: translate3d(0, 20px, 0);"
+    >
+      <div
+        class="fnx-pull-refresh__indicator"
+      >
+        pulling 20
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`<PullRefresh/> should render status slots correctly 2`] = `
+<div>
+  <div
+    class="fnx-pull-refresh"
+  >
+    <div
+      class="fnx-pull-refresh__track"
+      style="transition-duration: 0ms; transform: translate3d(0, 75px, 0);"
+    >
+      <div
+        class="fnx-pull-refresh__indicator"
+      >
+        loosing 75
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`<PullRefresh/> should render status slots correctly 3`] = `
+<div>
+  <div
+    class="fnx-pull-refresh"
+  >
+    <div
+      class="fnx-pull-refresh__track"
+      style="transition-duration: 300ms; transform: translate3d(0, 50px, 0);"
+    >
+      <div
+        class="fnx-pull-refresh__indicator"
+      >
+        loading 50
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`<PullRefresh/> should render success text correctly 1`] = `
+<div>
+  <div
+    class="fnx-pull-refresh"
+  >
+    <div
+      class="fnx-pull-refresh__track"
+      style="transition-duration: 300ms; transform: translate3d(0, 50px, 0);"
+    >
+      <div
+        class="fnx-pull-refresh__indicator"
+      >
+        success
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`<PullRefresh/> should render success text correctly 2`] = `
+<div>
+  <div
+    class="fnx-pull-refresh"
+  >
+    <div
+      class="fnx-pull-refresh__track"
+      style="transition-duration: 300ms;"
+    >
+      <div
+        class="fnx-pull-refresh__indicator"
+      />
+    </div>
+  </div>
+</div>
+`;

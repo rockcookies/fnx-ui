@@ -1,0 +1,107 @@
+:root {
+	--fnx-radio-horizontal-margin-right: var(--fnx-padding-sm);
+	--fnx-radio-icon-color: var(--fnx-natural-color);
+	--fnx-radio-size: 16px;
+	--fnx-radio-border-color: var(--fnx-gray-400);
+	--fnx-radio-transition-duration: var(--fnx-animation-duration-fast);
+	--fnx-radio-label-margin: var(--fnx-padding-xs);
+	--fnx-radio-label-color: var(--fnx-gray-800);
+	--fnx-radio-checked-icon-color: var(--fnx-primary-color);
+	--fnx-radio-disabled-icon-color: var(--fnx-gray-500);
+	--fnx-radio-disabled-label-color: var(--fnx-gray-500);
+	--fnx-radio-background-disabled-color: var(--fnx-gray-200);
+	--fnx-radio-disabled-border-color: var(--fnx-gray-300);
+}
+
+.fnx-radio {
+	display: flex;
+	align-items: center;
+	overflow: hidden;
+	cursor: pointer;
+	user-select: none;
+
+	&--disabled {
+		cursor: not-allowed;
+	}
+
+	&--label-disabled {
+		cursor: default;
+	}
+
+	&--horizontal {
+		margin-right: var(--fnx-radio-horizontal-margin-right);
+	}
+
+	&__icon {
+		flex: none;
+		font-size: var(--fnx-radio-size);
+		cursor: pointer;
+
+		&--square,
+		&--round {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			box-sizing: border-box;
+			width: 1.25em;
+			height: 1.25em;
+			border: 1px solid var(--fnx-radio-border-color);
+			transition-duration: var(--fnx-radio-transition-duration);
+			transition-property: border-color, background-color;
+
+			.fnx-icon {
+				color: transparent;
+				transition-duration: var(--fnx-radio-transition-duration);
+				transition-property: color;
+			}
+
+			&.fnx-radio__icon--checked {
+				background-color: var(--fnx-radio-checked-icon-color);
+				border-color: var(--fnx-radio-checked-icon-color);
+
+				.fnx-icon {
+					color: var(--fnx-radio-icon-color);
+				}
+			}
+
+			&.fnx-radio__icon--disabled {
+				background-color: var(--fnx-radio-background-disabled-color);
+				border-color: var(--fnx-radio-disabled-icon-color);
+				cursor: not-allowed;
+
+				&.fnx-radio__icon--checked .fnx-icon {
+					color: var(--fnx-radio-disabled-icon-color);
+				}
+			}
+		}
+
+		&--round {
+			border-radius: 100%;
+		}
+	}
+
+	&__icon + &__label,
+	&__label + &__icon {
+		margin-left: var(--fnx-radio-label-margin);
+	}
+
+	&__label {
+		color: var(--fnx-radio-label-color);
+		line-height: var(--fnx-radio-size);
+
+		&--left {
+			margin: 0 var(--fnx-radio-label-margin) 0 0;
+		}
+
+		&--disabled {
+			color: var(--fnx-radio-disabled-label-color);
+		}
+	}
+}
+
+.fnx-radio-group {
+	&--horizontal {
+		display: flex;
+		flex-wrap: wrap;
+	}
+}

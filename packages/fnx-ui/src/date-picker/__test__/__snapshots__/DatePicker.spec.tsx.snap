@@ -1,0 +1,211 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<DatePicker/> formatter、filter prop 1`] = `
+<div>
+  <div
+    class="fnx-picker"
+    data-testid="dateTimePicker"
+  >
+    <div
+      class="fnx-picker__toolbar"
+    >
+      <button
+        class="fnx-picker__cancel"
+        type="button"
+      >
+        Cancel
+      </button>
+      <button
+        class="fnx-picker__confirm"
+        type="button"
+      >
+        Confirm
+      </button>
+    </div>
+    <div
+      class="fnx-picker__columns"
+      style="height: 264px;"
+    >
+      <div
+        class="fnx-picker-column"
+      >
+        <ul
+          class="fnx-picker-column__wrapper"
+          style="transform: translate3d(0, 110px, 0);"
+        >
+          <li
+            class="fnx-picker-column__option fnx-picker-column__option--selected"
+            role="button"
+            style="height: 44px;"
+            tabindex="0"
+          >
+            <div
+              class="fnx-ellipsis"
+            >
+              05月
+            </div>
+          </li>
+          <li
+            class="fnx-picker-column__option"
+            role="button"
+            style="height: 44px;"
+            tabindex="0"
+          >
+            <div
+              class="fnx-ellipsis"
+            >
+              10月
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div
+        class="fnx-picker-column"
+      >
+        <ul
+          class="fnx-picker-column__wrapper"
+          style="transform: translate3d(0, 110px, 0);"
+        >
+          <li
+            class="fnx-picker-column__option fnx-picker-column__option--selected"
+            role="button"
+            style="height: 44px;"
+            tabindex="0"
+          >
+            <div
+              class="fnx-ellipsis"
+            >
+              05 day
+            </div>
+          </li>
+          <li
+            class="fnx-picker-column__option"
+            role="button"
+            style="height: 44px;"
+            tabindex="0"
+          >
+            <div
+              class="fnx-ellipsis"
+            >
+              10 day
+            </div>
+          </li>
+          <li
+            class="fnx-picker-column__option"
+            role="button"
+            style="height: 44px;"
+            tabindex="0"
+          >
+            <div
+              class="fnx-ellipsis"
+            >
+              15 day
+            </div>
+          </li>
+          <li
+            class="fnx-picker-column__option"
+            role="button"
+            style="height: 44px;"
+            tabindex="0"
+          >
+            <div
+              class="fnx-ellipsis"
+            >
+              20 day
+            </div>
+          </li>
+          <li
+            class="fnx-picker-column__option"
+            role="button"
+            style="height: 44px;"
+            tabindex="0"
+          >
+            <div
+              class="fnx-ellipsis"
+            >
+              25 day
+            </div>
+          </li>
+          <li
+            class="fnx-picker-column__option"
+            role="button"
+            style="height: 44px;"
+            tabindex="0"
+          >
+            <div
+              class="fnx-ellipsis"
+            >
+              30 day
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div
+        class="fnx-picker-column"
+      >
+        <ul
+          class="fnx-picker-column__wrapper"
+          style="transform: translate3d(0, 110px, 0);"
+        >
+          <li
+            class="fnx-picker-column__option fnx-picker-column__option--selected"
+            role="button"
+            style="height: 44px;"
+            tabindex="0"
+          >
+            <div
+              class="fnx-ellipsis"
+            >
+              2015 year
+            </div>
+          </li>
+          <li
+            class="fnx-picker-column__option"
+            role="button"
+            style="height: 44px;"
+            tabindex="0"
+          >
+            <div
+              class="fnx-ellipsis"
+            >
+              2020 year
+            </div>
+          </li>
+          <li
+            class="fnx-picker-column__option"
+            role="button"
+            style="height: 44px;"
+            tabindex="0"
+          >
+            <div
+              class="fnx-ellipsis"
+            >
+              2025 year
+            </div>
+          </li>
+          <li
+            class="fnx-picker-column__option"
+            role="button"
+            style="height: 44px;"
+            tabindex="0"
+          >
+            <div
+              class="fnx-ellipsis"
+            >
+              2030 year
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div
+        class="fnx-picker__mask"
+        style="background-size: 100% 110px;"
+      />
+      <div
+        class="fnx-picker__frame fnx-hairline-unset--top-bottom"
+        style="height: 44px;"
+      />
+    </div>
+  </div>
+</div>
+`;

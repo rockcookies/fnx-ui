@@ -1,0 +1,74 @@
+@import (reference) '../../styles/variables.less';
+
+.index {
+	background-image: url('../../assets/index-bg.svg');
+	background-repeat: repeat;
+	background-position: center center;
+
+	&__content {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		height: calc(100vh - @site-header-height - @site-footer-height);
+	}
+
+	&__logo {
+		margin: 0;
+		color: var(--fnx-gray-900);
+		font-size: 64px;
+	}
+
+	&__slogan {
+		margin: 16px 0 20px 0;
+		color: var(--fnx-gray-900);
+		font-size: 16px;
+	}
+
+	&__button-list {
+		text-align: center;
+	}
+
+	&__button {
+		position: relative;
+		display: inline-block;
+		padding: 0 18px;
+		overflow: hidden;
+		color: var(--fnx-primary-color);
+		line-height: 38px;
+		vertical-align: top;
+		background: var(--fnx-page-color);
+		border: 1px solid var(--fnx-primary-color);
+		border-radius: 4px;
+
+		span {
+			position: relative;
+		}
+
+		&::before {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: var(--fnx-black-color);
+			opacity: 0;
+			content: '';
+		}
+
+		&--primary {
+			color: var(--fnx-white-color);
+			background: var(--fnx-primary-color);
+		}
+
+		&:active {
+			&::before {
+				opacity: 0.1;
+			}
+		}
+	}
+
+	&__button + &__button {
+		margin-left: 12px;
+	}
+}

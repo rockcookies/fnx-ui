@@ -1,0 +1,185 @@
+@import '../../style/mixins.less';
+
+:root {
+	--fnx-uploader-size: 74px;
+	--fnx-uploader-icon-size: 24px;
+	--fnx-uploader-icon-color: var(--fnx-gray-600);
+	--fnx-uploader-text-color: var(--fnx-gray-800);
+	--fnx-uploader-text-font-size: var(--fnx-font-size-sm);
+	--fnx-uploader-upload-background-color: var(--fnx-gray-200);
+	--fnx-uploader-upload-active-color: var(--fnx-gray-300);
+	--fnx-uploader-delete-color: var(--fnx-white-color);
+	--fnx-uploader-delete-icon-size: 16px;
+	--fnx-uploader-delete-background-color: rgba(0, 0, 0, 0.7);
+	--fnx-uploader-file-background-color: var(--fnx-gray-100);
+	--fnx-uploader-file-icon-size: 24px;
+	--fnx-uploader-file-icon-color: var(--fnx-gray-600);
+	--fnx-uploader-file-name-padding: 0 var(--fnx-padding-base);
+	--fnx-uploader-file-name-margin-top: var(--fnx-padding-xs);
+	--fnx-uploader-file-name-font-size: var(--fnx-font-size-sm);
+	--fnx-uploader-file-name-text-color: var(--fnx-gray-800);
+	--fnx-uploader-mask-text-color: var(--fnx-white-color);
+	--fnx-uploader-mask-background-color: rgba(50, 50, 51, 0.88);
+	--fnx-uploader-mask-icon-size: 22px;
+	--fnx-uploader-mask-message-font-size: var(--fnx-font-size-sm);
+	--fnx-uploader-mask-message-line-height: var(--fnx-line-height-xs);
+	--fnx-uploader-loading-icon-size: 22px;
+	--fnx-uploader-loading-icon-color: var(--fnx-white);
+	--fnx-uploader-disabled-opacity: var(--fnx-disabled-opacity);
+}
+
+.fnx-uploader {
+	position: relative;
+	display: inline-block;
+
+	&--disabled {
+		.fnx-uploader__wrapper {
+			opacity: var(--fnx-uploader-disabled-opacity);
+		}
+	}
+
+	&__wrapper {
+		display: flex;
+		flex-wrap: wrap;
+	}
+
+	&__input {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		overflow: hidden; // to clip file-upload-button
+		cursor: pointer;
+		opacity: 0;
+
+		&-wrapper {
+			position: relative;
+		}
+
+		&:disabled {
+			cursor: not-allowed;
+		}
+	}
+
+	&__upload {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		box-sizing: border-box;
+		width: var(--fnx-uploader-size);
+		height: var(--fnx-uploader-size);
+		margin: 0 var(--fnx-padding-xs) var(--fnx-padding-xs) 0;
+		background-color: var(--fnx-uploader-upload-background-color);
+
+		&:active {
+			background-color: var(--fnx-uploader-upload-active-color);
+		}
+
+		&-icon {
+			color: var(--fnx-uploader-icon-color);
+			font-size: var(--fnx-uploader-icon-size);
+		}
+
+		&-text {
+			margin-top: var(--fnx-padding-xs);
+			color: var(--fnx-uploader-text-color);
+			font-size: var(--fnx-uploader-text-font-size);
+		}
+	}
+
+	&__preview {
+		position: relative;
+		margin: 0 var(--fnx-padding-xs) var(--fnx-padding-xs) 0;
+		cursor: pointer;
+
+		&-image {
+			display: block;
+			width: var(--fnx-uploader-size);
+			height: var(--fnx-uploader-size);
+			overflow: hidden;
+		}
+
+		&-remove {
+			position: absolute;
+			top: 0;
+			right: 0;
+			width: var(--fnx-uploader-delete-icon-size);
+			height: var(--fnx-uploader-delete-icon-size);
+			background-color: var(--fnx-uploader-delete-background-color);
+			border-radius: 0 0 0 var(--fnx-uploader-delete-icon-size);
+
+			&-icon {
+				position: absolute;
+				top: -2px;
+				right: -2px;
+				color: #fff;
+				color: var(--fnx-uploader-delete-color);
+				font-size: 16px;
+				transform: scale(0.5);
+			}
+		}
+
+		&-cover {
+			position: absolute;
+			top: 0;
+			right: 0;
+			bottom: 0;
+			left: 0;
+		}
+	}
+
+	&__mask {
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		color: var(--fnx-uploader-mask-text-color);
+		background-color: var(--fnx-uploader-mask-background-color);
+
+		&-icon,
+		&-icon-loading {
+			font-size: var(--fnx-uploader-mask-icon-size);
+		}
+
+		&-message {
+			margin-top: 6px;
+			padding: 0 var(--fnx-padding-base);
+			font-size: var(--fnx-uploader-mask-message-font-size);
+			line-height: var(--fnx-uploader-mask-message-line-height);
+		}
+	}
+
+	&__file {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		width: var(--fnx-uploader-size);
+		height: var(--fnx-uploader-size);
+		background-color: var(--fnx-uploader-file-background-color);
+
+		&-icon {
+			color: var(--fnx-uploader-file-icon-color);
+			font-size: var(--fnx-uploader-file-icon-size);
+		}
+
+		&-name {
+			box-sizing: border-box;
+			width: 100%;
+			margin-top: var(--fnx-uploader-file-name-margin-top);
+			padding: var(--fnx-uploader-file-name-padding);
+			color: var(--fnx-uploader-file-name-text-color);
+			font-size: var(--fnx-uploader-file-name-font-size);
+			text-align: center;
+			.ellipsis();
+		}
+	}
+}

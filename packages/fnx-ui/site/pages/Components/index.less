@@ -1,0 +1,34 @@
+@import '../../styles/variables.less';
+
+.components {
+	padding: @site-content-padding;
+
+	&__article {
+		padding-right: 320px + @site-content-padding;
+	}
+
+	&__device {
+		position: fixed;
+		top: @site-content-padding + @site-header-height;
+		right: @site-content-padding;
+		box-sizing: border-box;
+		width: 324px;
+		max-width: 100%;
+		padding: 26px 2px;
+		background: var(--fnx-gray-200);
+		border-radius: 20px;
+	}
+
+	&__simulator {
+		width: 100%;
+		height: 500px;
+		background: var(--fnx-page-color);
+
+		iframe {
+			display: block;
+			width: 100%;
+			height: 100%;
+			border: none;
+		}
+	}
+}

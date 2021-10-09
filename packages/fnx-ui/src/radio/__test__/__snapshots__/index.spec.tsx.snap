@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Radio/> icon & checkedIcon prop 1`] = `
+<div>
+  <div
+    aria-checked="false"
+    class="fnx-radio"
+    role="radio"
+    tabindex="0"
+  >
+    <span
+      class="fnx-radio__icon"
+    >
+      <span>
+        no-check
+      </span>
+    </span>
+    <span
+      class="fnx-radio__label"
+    >
+      box1
+    </span>
+  </div>
+</div>
+`;

@@ -1,0 +1,74 @@
+:root {
+	--fnx-swipe-indicator-size: 6px;
+	--fnx-swipe-indicator-margin: var(--fnx-padding-sm);
+	--fnx-swipe-indicator-active-opacity: 1;
+	--fnx-swipe-indicator-inactive-opacity: 0.3;
+	--fnx-swipe-indicator-active-background-color: var(--fnx-primary-color);
+	--fnx-swipe-indicator-inactive-background-color: var(--fnx-gray-200);
+}
+
+.fnx-swipe {
+	position: relative;
+	overflow: hidden;
+	cursor: grab;
+	user-select: none;
+
+	&__wrapper {
+		display: flex;
+		height: 100%;
+	}
+
+	&--vertical {
+		.fnx-swipe__wrapper {
+			flex-direction: column;
+		}
+
+		.fnx-swipe__indicators {
+			top: 50%;
+			bottom: auto;
+			left: var(--fnx-swipe-indicator-margin);
+			flex-direction: column;
+			transform: translateY(-50%);
+		}
+
+		.fnx-swipe__indicator:not(:last-child) {
+			margin-bottom: var(--fnx-swipe-indicator-size);
+		}
+	}
+
+	&__indicators {
+		position: absolute;
+		bottom: var(--fnx-swipe-indicator-margin);
+		left: 50%;
+		display: flex;
+		transform: translateX(-50%);
+	}
+
+	&__indicator {
+		width: var(--fnx-swipe-indicator-size);
+		height: var(--fnx-swipe-indicator-size);
+		background-color: var(--fnx-swipe-indicator-inactive-background-color);
+		border-radius: 100%;
+		opacity: var(--fnx-swipe-indicator-inactive-opacity);
+		transition: opacity var(--fnx-animation-duration-fast),
+			background-color var(--fnx-animation-duration-fast);
+
+		&:not(:last-child) {
+			margin-right: var(--fnx-swipe-indicator-size);
+		}
+
+		&--active {
+			background-color: var(
+				--fnx-swipe-indicator-active-background-color
+			);
+			opacity: var(--fnx-swipe-indicator-active-opacity);
+		}
+	}
+}
+
+.fnx-swipe-item {
+	position: relative;
+	flex-shrink: 0;
+	width: 100%;
+	height: 100%;
+}

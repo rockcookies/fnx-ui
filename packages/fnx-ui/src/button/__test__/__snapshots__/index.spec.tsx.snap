@@ -1,0 +1,53 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Button/> should render loadingIcon correctly 1`] = `
+<div>
+  <button
+    class="fnx-button fnx-button--default fnx-button--md"
+  >
+    <span
+      class="fnx-button__content"
+    >
+      <span
+        class="fnx-button__text"
+      >
+        Children
+      </span>
+    </span>
+  </button>
+</div>
+`;
+
+exports[`<Button/> should render loadingIcon correctly 2`] = `
+<div>
+  <button
+    class="fnx-button fnx-button--default fnx-button--md fnx-button--loading"
+  >
+    <span
+      class="fnx-button__content"
+    >
+      <span
+        class="fnx-icon"
+      >
+        <svg
+          aria-hidden="true"
+          fill="currentColor"
+          focusable="false"
+          height="1em"
+          viewBox="0 0 1024 1024"
+          width="1em"
+        >
+          <path
+            d="M550.4 550.4v332.8c0 21.20704-17.19296 38.4-38.4 38.4s-38.4-17.19296-38.4-38.4v-332.8h-332.8c-21.20704 0-38.4-17.19296-38.4-38.4s17.19296-38.4 38.4-38.4h332.8v-332.8c0-21.20704 17.19296-38.4 38.4-38.4s38.4 17.19296 38.4 38.4v332.8h332.8c21.20704 0 38.4 17.19296 38.4 38.4s-17.19296 38.4-38.4 38.4h-332.8z"
+          />
+        </svg>
+      </span>
+      <span
+        class="fnx-button__text"
+      >
+        loadingChildren
+      </span>
+    </span>
+  </button>
+</div>
+`;

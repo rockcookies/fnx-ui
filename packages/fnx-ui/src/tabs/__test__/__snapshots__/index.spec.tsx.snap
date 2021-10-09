@@ -1,0 +1,64 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Tabs/> slots 1`] = `
+<div>
+  <div
+    class="fnx-tabs"
+  >
+    <div
+      class="fnx-tabs__header"
+    >
+      <div
+        class="fnx-tabs__nav"
+      >
+        <div
+          class="fnx-tabs__nav-left"
+        >
+          <div>
+            left
+          </div>
+        </div>
+        <div
+          class="fnx-tabs__tab-list"
+          role="tablist"
+        >
+          <div
+            aria-selected="true"
+            class="fnx-tabs__tab fnx-tabs__tab--active"
+            role="tab"
+          >
+            <div
+              class="fnx-tabs__tab-title fnx-tabs__tab-title--ellipsis"
+            >
+              1
+            </div>
+          </div>
+          <div
+            class="fnx-tabs__track"
+            style="left: 0px; transition-duration: 300ms;"
+          />
+        </div>
+        <div
+          class="fnx-tabs__nav-right"
+        >
+          <div>
+            right
+          </div>
+        </div>
+      </div>
+      bottom
+    </div>
+    <div
+      class="fnx-tabs__content"
+    >
+      <div
+        class="fnx-tabs__panel"
+        data-fnx-tab-panel-key="0"
+        role="tabpanel"
+      >
+        content1
+      </div>
+    </div>
+  </div>
+</div>
+`;

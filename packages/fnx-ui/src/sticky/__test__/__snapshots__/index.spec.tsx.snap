@@ -1,0 +1,165 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Sticky/> should add offset top when using offset-top prop 1`] = `
+<div>
+  <div
+    class="fnx-sticky fnx-sticky--fixed"
+    data-testid="sticky"
+    style="height: 10px; width: 0px;"
+  >
+    <div
+      class="fnx-sticky__container"
+      style="width: 0px; height: 0px; transform: translate3d(0, 0px, 0); z-index: 0; top: 10px;"
+    >
+      Content
+    </div>
+  </div>
+</div>
+`;
+
+exports[`<Sticky/> should allow to using offset-top prop with rem unit 1`] = `
+<div>
+  <div
+    class="fnx-sticky fnx-sticky--fixed"
+    data-testid="sticky"
+    style="height: 10px; width: 0px;"
+  >
+    <div
+      class="fnx-sticky__container"
+      style="width: 0px; height: 0px; transform: translate3d(0, 0px, 0); z-index: 99; top: 32px;"
+    >
+      Content
+    </div>
+  </div>
+</div>
+`;
+
+exports[`<Sticky/> should allow to using offset-top prop with vw unit 1`] = `
+<div>
+  <div
+    class="fnx-sticky fnx-sticky--fixed"
+    data-testid="sticky"
+    style="height: 10px; width: 0px;"
+  >
+    <div
+      class="fnx-sticky__container"
+      style="width: 0px; height: 0px; transform: translate3d(0, 0px, 0); z-index: 99; top: 30px;"
+    >
+      Content
+    </div>
+  </div>
+</div>
+`;
+
+exports[`<Sticky/> should not trigger scroll event when hidden 1`] = `
+<div>
+  <div
+    class="fnx-sticky"
+    data-testid="sticky"
+    style="height: 10px; display: none;"
+  >
+    <div
+      class="fnx-sticky__container"
+    >
+      Content
+    </div>
+  </div>
+</div>
+`;
+
+exports[`<Sticky/> should sticky inside container bottom when using containerRef prop 1`] = `
+<div
+  data-testid="container"
+  style="margin-top: 640px;"
+>
+  <div
+    style="height: 150px;"
+  />
+  <div
+    class="fnx-sticky fnx-sticky--fixed"
+    data-testid="sticky"
+    style="height: 44px; width: 88px;"
+  >
+    <div
+      class="fnx-sticky__container"
+      style="width: 88px; height: 44px; transform: translate3d(0, 0px, 0); z-index: 99; bottom: 0px;"
+    >
+      Content
+    </div>
+  </div>
+</div>
+`;
+
+exports[`<Sticky/> should sticky inside container bottom when using containerRef prop 2`] = `
+<div
+  data-testid="container"
+  style="margin-top: 640px;"
+>
+  <div
+    style="height: 150px;"
+  />
+  <div
+    class="fnx-sticky fnx-sticky--fixed"
+    data-testid="sticky"
+    style="height: 44px; width: 88px;"
+  >
+    <div
+      class="fnx-sticky__container"
+      style="width: 88px; height: 44px; transform: translate3d(0, 24px, 0); z-index: 99; bottom: 0px;"
+    >
+      Content
+    </div>
+  </div>
+</div>
+`;
+
+exports[`<Sticky/> should sticky to bottom after scrolling 1`] = `
+<div>
+  <div
+    class="fnx-sticky fnx-sticky--fixed"
+    data-testid="sticky"
+    style="height: 10px; width: 0px;"
+  >
+    <div
+      class="fnx-sticky__container"
+      style="width: 0px; height: 0px; transform: translate3d(0, 0px, 0); z-index: 99; bottom: 10px;"
+    >
+      Content
+    </div>
+  </div>
+</div>
+`;
+
+exports[`<Sticky/> should sticky to top after scrolling 1`] = `
+<div>
+  <div
+    class="fnx-sticky fnx-sticky--fixed"
+    data-testid="sticky"
+    style="height: 10px; width: 0px;"
+  >
+    <div
+      class="fnx-sticky__container"
+      style="width: 0px; height: 0px; transform: translate3d(0, 0px, 0); z-index: 99; top: 0px;"
+    >
+      Content
+    </div>
+  </div>
+</div>
+`;
+
+exports[`<Sticky/> should update z-index when using z-index prop 1`] = `
+<div>
+  <div
+    class="fnx-sticky fnx-sticky--fixed"
+    data-testid="sticky"
+    style="height: 10px; width: 0px;"
+  >
+    <div
+      class="fnx-sticky__container"
+      style="width: 0px; height: 0px; transform: translate3d(0, 0px, 0); z-index: 0; top: 0px;"
+    >
+      Content
+    </div>
+  </div>
+</div>
+`;

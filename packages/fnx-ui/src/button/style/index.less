@@ -1,0 +1,233 @@
+:root {
+	--fnx-button-default-height: 44px;
+	--fnx-button-default-line-height: 1.2;
+	--fnx-button-default-font-size: var(--fnx-font-size-lg);
+	--fnx-button-lg-height: 50px;
+	--fnx-button-lg-padding: 18px;
+	--fnx-button-lg-font-size: 18px;
+	--fnx-button-md-height: 44px;
+	--fnx-button-md-padding: var(--fnx-padding-md);
+	--fnx-button-md-font-size: var(--fnx-font-size-md);
+	--fnx-button-sm-height: 32px;
+	--fnx-button-sm-padding: var(--fnx-padding-sm);
+	--fnx-button-sm-font-size: var(--fnx-font-size-sm);
+	--fnx-button-xs-height: 24px;
+	--fnx-button-xs-padding: var(--fnx-padding-xs);
+	--fnx-button-xs-font-size: var(--fnx-font-size-xs);
+	--fnx-button-default-color: var(--fnx-gray-800);
+	--fnx-button-default-background: var(--fnx-gray-100);
+	--fnx-button-default-border-color: var(--fnx-gray-400);
+	--fnx-button-primary-color: var(--fnx-white-color);
+	--fnx-button-primary-background: var(--fnx-primary-color);
+	--fnx-button-primary-border-color: var(--fnx-primary-color);
+	--fnx-button-success-color: var(--fnx-white-color);
+	--fnx-button-success-background: var(--fnx-success-color);
+	--fnx-button-success-border-color: var(--fnx-success-color);
+	--fnx-button-danger-color: var(--fnx-white-color);
+	--fnx-button-danger-background: var(--fnx-danger-color);
+	--fnx-button-danger-border-color: var(--fnx-danger-color);
+	--fnx-button-warning-color: var(--fnx-white-color);
+	--fnx-button-warning-background: var(--fnx-warning-color);
+	--fnx-button-warning-border-color: var(--fnx-warning-color);
+	--fnx-button-custom-color: var(--fnx-white-color);
+	--fnx-button-disabled-opacity: var(--fnx-disabled-opacity);
+	--fnx-button-border-width: var(--fnx-border-width-base);
+	--fnx-button-border-radius: var(--fnx-border-radius-sm);
+	--fnx-button-round-border-radius: var(--fnx-border-radius-max);
+	--fnx-button-plain-background-color: rgba(0, 0, 0, 0);
+}
+
+.fnx-button {
+	position: relative;
+	display: inline-block;
+	box-sizing: border-box;
+	height: var(--fnx-button-default-height);
+	margin: 0;
+	padding: 0;
+	font-size: var(--fnx-button-default-font-size);
+	line-height: var(--fnx-button-default-line-height);
+	text-align: center;
+	border-radius: var(--fnx-button-border-radius);
+	cursor: pointer;
+	transition: opacity var(--fnx-animation-duration-fast);
+	-webkit-appearance: none;
+
+	&::before {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		width: 100%;
+		height: 100%;
+		background-color: var(--fnx-black-color);
+		border: inherit;
+		border-color: var(--fnx-black-color);
+		border-radius: inherit; /* inherit parent's border radius */
+		transform: translate(-50%, -50%);
+		opacity: 0;
+		content: ' ';
+	}
+
+	&:active::before {
+		opacity: 0.1;
+	}
+
+	&--loading,
+	&--disabled {
+		&::before {
+			display: none;
+		}
+	}
+
+	&--round {
+		border-radius: var(--fnx-button-round-border-radius);
+	}
+
+	&--rect {
+		border-radius: 0;
+	}
+
+	&--lg {
+		height: var(--fnx-button-lg-height);
+		padding: 0 var(--fnx-button-lg-padding);
+		font-size: var(--fnx-button-lg-font-size);
+	}
+
+	&--md {
+		height: var(--fnx-button-md-height);
+		padding: 0 var(--fnx-button-md-padding);
+		font-size: var(--fnx-button-md-font-size);
+	}
+
+	&--sm {
+		height: var(--fnx-button-sm-height);
+		padding: 0 var(--fnx-button-sm-padding);
+		font-size: var(--fnx-button-sm-font-size);
+	}
+
+	&--xs {
+		height: var(--fnx-button-xs-height);
+		padding: 0 var(--fnx-button-xs-padding);
+		font-size: var(--fnx-button-xs-font-size);
+	}
+
+	&--default {
+		color: var(--fnx-button-default-color);
+		background: var(--fnx-button-default-background);
+		border: var(--fnx-button-border-width) solid
+			var(--fnx-button-default-border-color);
+	}
+
+	&--primary {
+		color: var(--fnx-button-primary-color);
+		background: var(--fnx-button-primary-background);
+		border: var(--fnx-button-border-width) solid
+			var(--fnx-button-primary-border-color);
+	}
+
+	&--success {
+		color: var(--fnx-button-success-color);
+		background: var(--fnx-button-success-background);
+		border: var(--fnx-button-border-width) solid
+			var(--fnx-button-success-border-color);
+	}
+
+	&--danger {
+		color: var(--fnx-button-danger-color);
+		background: var(--fnx-button-danger-background);
+		border: var(--fnx-button-border-width) solid
+			var(--fnx-button-danger-border-color);
+	}
+
+	&--warning {
+		color: var(--fnx-button-warning-color);
+		background-color: var(--fnx-button-warning-background);
+		border: var(--fnx-button-border-width) solid
+			var(--fnx-button-warning-border-color);
+	}
+
+	&--plain {
+		background-color: var(--fnx-button-plain-background-color);
+
+		&.fnx-button--primary {
+			color: var(--fnx-button-primary-background-color);
+		}
+
+		&.fnx-button--success {
+			color: var(--fnx-button-success-background-color);
+		}
+
+		&.fnx-button--danger {
+			color: var(--fnx-button-danger-background-color);
+		}
+
+		&.fnx-button--warning {
+			color: var(--fnx-button-warning-background-color);
+		}
+	}
+
+	&__content {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		&::before {
+			content: ' ';
+		}
+	}
+
+	.fnx-icon {
+		font-size: 1.2em;
+	}
+
+	&--block {
+		display: block;
+		width: 100%;
+	}
+
+	&--disabled {
+		cursor: not-allowed;
+		opacity: var(--fnx-button-disabled-opacity);
+
+		&::before {
+			display: none;
+		}
+	}
+
+	&--loading {
+		cursor: default;
+
+		&::before {
+			display: none;
+		}
+
+		.fnx-icon {
+			font-size: 1.4em;
+		}
+	}
+
+	.fnx-icon + &__text,
+	&__text + .fnx-icon {
+		margin-left: var(--fnx-padding-base);
+	}
+
+	&--custom-color {
+		color: var(--fnx-button-custom-color);
+	}
+
+	&--hairline {
+		border-width: 0;
+
+		&::after {
+			border-color: inherit;
+			border-radius: calc(var(--fnx-button-border-radius) * 2);
+		}
+
+		&.fnx-button--round::after {
+			border-radius: var(--fnx-button-round-border-radius);
+		}
+
+		&.fnx-button--rect::after {
+			border-radius: 0;
+		}
+	}
+}

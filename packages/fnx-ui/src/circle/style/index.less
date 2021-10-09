@@ -1,0 +1,49 @@
+:root {
+	--fnx-circle-size: 100px;
+	--fnx-circle-color: var(--fnx-primary-color);
+	--fnx-circle-trail-color: var(--fnx-gray-100);
+	--fnx-circle-text-color: var(--fnx-gray-800);
+	--fnx-circle-text-font-weight: var(--fnx-font-weight-bold);
+	--fnx-circle-text-font-size: var(--fnx-font-size-md);
+	--fnx-circle-text-line-height: var(--fnx-line-height-md);
+}
+
+.fnx-circle {
+	position: relative;
+	display: inline-block;
+	width: var(--fnx-circle-size);
+	height: var(--fnx-circle-size);
+	text-align: center;
+
+	svg {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+	}
+
+	&__trail {
+		stroke: var(--fnx-circle-trail-color);
+	}
+
+	&__path {
+		fill: none;
+		stroke: var(--fnx-circle-color);
+		stroke-linecap: round;
+	}
+
+	&__text {
+		position: absolute;
+		top: 50%;
+		left: 0;
+		box-sizing: border-box;
+		width: 100%;
+		padding: 0 var(--fnx-padding-base);
+		color: var(--fnx-circle-text-color);
+		font-weight: var(--fnx-circle-text-font-weight);
+		font-size: var(--fnx-circle-text-font-size);
+		line-height: var(--fnx-circle-text-line-height);
+		transform: translateY(-50%);
+	}
+}

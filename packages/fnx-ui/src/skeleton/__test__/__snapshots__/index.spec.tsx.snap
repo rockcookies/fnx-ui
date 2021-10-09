@@ -1,0 +1,83 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Skeleton/> should allow to disable animation 1`] = `
+<div>
+  <div
+    class="fnx-skeleton fnx-skeleton--animate"
+  >
+    <div
+      class="fnx-skeleton__content"
+    >
+      <h3
+        class="fnx-skeleton__title"
+      />
+      <div
+        class="fnx-skeleton__row"
+        style="width: 100%;"
+      />
+      <div
+        class="fnx-skeleton__row"
+        style="width: 100%;"
+      />
+      <div
+        class="fnx-skeleton__row"
+        style="width: 60%;"
+      />
+    </div>
+  </div>
+  ,
+  <div
+    class="fnx-skeleton"
+  >
+    <div
+      class="fnx-skeleton__content"
+    >
+      <h3
+        class="fnx-skeleton__title"
+      />
+      <div
+        class="fnx-skeleton__row"
+        style="width: 100%;"
+      />
+      <div
+        class="fnx-skeleton__row"
+        style="width: 100%;"
+      />
+      <div
+        class="fnx-skeleton__row"
+        style="width: 60%;"
+      />
+    </div>
+  </div>
+  ,
+</div>
+`;
+
+exports[`<Skeleton/> should change avatar shape when using avatar-shape prop 1`] = `
+<div
+  class="fnx-skeleton fnx-skeleton--animate"
+  data-testid="skeleton"
+>
+  <div
+    class="fnx-skeleton__avatar fnx-skeleton__avatar--square"
+  />
+  <div
+    class="fnx-skeleton__content"
+  >
+    <div
+      class="fnx-skeleton__row"
+      style="width: 100%;"
+    />
+    <div
+      class="fnx-skeleton__row"
+      style="width: 100%;"
+    />
+    <div
+      class="fnx-skeleton__row"
+      style="width: 60%;"
+    />
+  </div>
+</div>
+`;
+
+exports[`<Skeleton/> should change avatar size when using avatar-size prop: 200px 1`] = `"200px"`;

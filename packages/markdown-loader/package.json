@@ -1,0 +1,30 @@
+{
+  "name": "@fnx-ui/markdown-loader",
+  "version": "0.0.1",
+  "description": "Simple and fast React markdown loader",
+  "main": "src/index.js",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "license": "MIT",
+  "peerDependencies": {
+    "react": ">=16.3.1"
+  },
+  "dependencies": {
+    "front-matter": "^4.0.2",
+    "loader-utils": "^2.0.0",
+    "markdown-it": "^12.2.0",
+    "markdown-it-anchor": "^8.3.1",
+    "markdown-it-prism": "^2.2.1",
+    "prismjs": "^1.25.0",
+    "transliteration": "^2.2.0"
+  },
+  "devDependencies": {
+    "@types/prismjs": "^1.16.6"
+  }
+}

@@ -1,0 +1,130 @@
+:root {
+	--fnx-stepper-button-color: var(--fnx-gray-800);
+	--fnx-stepper-button-background-color: var(--fnx-gray-200);
+	--fnx-stepper-button-disabled-color: var(--fnx-gray-500);
+	--fnx-stepper-button-background-disabled-color: var(--fnx-gray-100);
+	--fnx-stepper-button-active-color: var(--fnx-gray-900);
+	--fnx-stepper-button-background-active-color: var(--fnx-gray-300);
+	--fnx-stepper-input-width: 32px;
+	--fnx-stepper-input-height: 28px;
+	--fnx-stepper-input-font-size: var(--fnx-font-size-md);
+	--fnx-stepper-input-line-height: normal;
+	--fnx-stepper-input-text-color: var(--fnx-gray-800);
+	--fnx-stepper-input-text-disabled-color: var(--fnx-gray-500);
+	--fnx-stepper-input-background-color: var(--fnx-gray-200);
+	--fnx-stepper-input-background-disabled-color: var(--fnx-gray-100);
+	--fnx-stepper-border-radius: var(--fnx-border-radius-md);
+}
+
+.fnx-stepper {
+	display: inline-block;
+	user-select: none;
+
+	&__minus,
+	&__plus {
+		position: relative;
+		box-sizing: border-box;
+		width: var(--fnx-stepper-input-height);
+		height: var(--fnx-stepper-input-height);
+		margin: 0;
+		padding: 0;
+		color: var(--fnx-stepper-button-color);
+		vertical-align: middle;
+		background-color: var(--fnx-stepper-button-background-color);
+		border: 0;
+		cursor: pointer;
+
+		&::before {
+			width: 50%;
+			height: 1px;
+		}
+
+		&::after {
+			width: 1px;
+			height: 50%;
+		}
+
+		&::before,
+		&::after {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			background-color: currentColor;
+			transform: translate(-50%, -50%);
+			content: '';
+		}
+
+		&:active {
+			color: var(--fnx-stepper-button-active-color);
+			background-color: var(--fnx-stepper-button-background-active-color);
+		}
+
+		&--hidden {
+			display: none;
+		}
+
+		&--disabled {
+			color: var(--fnx-stepper-button-disabled-color);
+			background-color: var(
+				--fnx-stepper-button-background-disabled-color
+			);
+			cursor: not-allowed;
+
+			&:active {
+				color: var(--fnx-stepper-button-disabled-color);
+				background-color: var(
+					--fnx-stepper-button-background-disabled-color
+				);
+			}
+		}
+	}
+
+	&__minus {
+		border-radius: var(--fnx-stepper-border-radius) 0 0
+			var(--fnx-stepper-border-radius);
+
+		&::after {
+			display: none;
+		}
+	}
+
+	&__plus {
+		border-radius: 0 var(--fnx-stepper-border-radius)
+			var(--fnx-stepper-border-radius) 0;
+	}
+
+	&__input {
+		box-sizing: border-box;
+		width: var(--fnx-stepper-input-width);
+		height: var(--fnx-stepper-input-height);
+		margin: 0 2px;
+		padding: 0;
+		color: var(--fnx-stepper-input-text-color);
+		font-size: var(--fnx-stepper-input-font-size);
+		line-height: var(--fnx-stepper-input-line-height);
+		text-align: center;
+		vertical-align: middle;
+		background-color: var(--fnx-stepper-input-background-color);
+		border: 0;
+		border-width: 1px 0;
+		border-radius: 0;
+		-webkit-appearance: none;
+
+		&:disabled {
+			color: var(--fnx-stepper-input-text-disabled-color);
+			background-color: var(
+				--fnx-stepper-input-background-disabled-color
+			);
+			-webkit-text-fill-color: currentColor; // fix disabled color in iOS
+			opacity: 1;
+		}
+
+		&:read-only {
+			cursor: default;
+		}
+
+		&--hidden {
+			display: none;
+		}
+	}
+}

@@ -1,0 +1,121 @@
+:root {
+	--fnx-dialog-width: 320px;
+	--fnx-dialog-small-screen-width: 90%;
+	--fnx-dialog-font-size: var(--fnx-font-size-lg);
+	--fnx-dialog-border-radius: 16px;
+	--fnx-dialog-background-color: var(--fnx-gray-100);
+	--fnx-dialog-header-font-weight: var(--fnx-font-weight-bold);
+	--fnx-dialog-header-color: var(--fnx-gray-900);
+	--fnx-dialog-header-line-height: 24px;
+	--fnx-dialog-header-padding-top: 26px;
+	--fnx-dialog-header-isolated-padding: var(--fnx-padding-lg) 0;
+	--fnx-dialog-message-padding: var(--fnx-padding-lg);
+	--fnx-dialog-message-font-size: var(--fnx-font-size-md);
+	--fnx-dialog-message-line-height: var(--fnx-line-height-md);
+	--fnx-dialog-message-max-height: 60vh;
+	--fnx-dialog-has-title-message-text-color: var(--fnx-gray-800);
+	--fnx-dialog-has-title-message-padding-top: var(--fnx-padding-xs);
+	--fnx-dialog-button-height: 48px;
+	--fnx-dialog-button-text-color: var(--fnx-gray-700);
+	--fnx-dialog-confirm-button-text-color: var(--fnx-primary-color);
+}
+
+.fnx-dialog {
+	top: 45%;
+	left: 50%;
+	width: var(--fnx-dialog-width);
+	overflow: hidden;
+	font-size: var(--fnx-dialog-font-size);
+	background-color: var(--fnx-dialog-background-color);
+	border-radius: var(--fnx-dialog-border-radius);
+	backface-visibility: hidden; // avoid blurry text after scale animation
+
+	@media (max-width: 321px) {
+		width: var(--fnx-dialog-small-screen-width);
+	}
+
+	&__header {
+		padding-top: var(--fnx-dialog-header-padding-top);
+		color: var(--fnx-dialog-header-color);
+		font-weight: var(--fnx-dialog-header-font-weight);
+		line-height: var(--fnx-dialog-header-line-height);
+		text-align: center;
+
+		&--isolated {
+			padding: var(--fnx-dialog-header-isolated-padding);
+		}
+	}
+
+	&__message {
+		flex: 1;
+		max-height: var(--fnx-dialog-message-max-height);
+		padding: 26px var(--fnx-dialog-message-padding);
+		overflow-y: auto;
+		font-size: var(--fnx-dialog-message-font-size);
+		line-height: var(--fnx-dialog-message-line-height);
+
+		// allow newline character
+		white-space: pre-wrap;
+		text-align: center;
+		word-wrap: break-word;
+		-webkit-overflow-scrolling: touch;
+
+		&--has-header {
+			padding-top: var(--fnx-dialog-has-title-message-padding-top);
+			color: var(--fnx-dialog-has-title-message-text-color);
+		}
+
+		&--left {
+			text-align: left;
+		}
+
+		&--right {
+			text-align: right;
+		}
+	}
+
+	&__footer {
+		display: flex;
+		overflow: hidden;
+		user-select: none;
+	}
+
+	&__confirm,
+	&__cancel {
+		flex: 1;
+		height: var(--fnx-dialog-button-height);
+		margin: 0;
+		color: var(--fnx-dialog-button-text-color);
+		border: 0;
+	}
+
+	&__confirm {
+		&,
+		&:active {
+			color: var(--fnx-dialog-confirm-button-text-color);
+		}
+	}
+
+	&-bounce-enter-active,
+	&-bounce-exit-active {
+		transition: var(--fnx-animation-duration-base)
+			var(--fnx-animation-timing-function-enter);
+		transition-property: transform, opacity;
+	}
+
+	&-bounce-enter {
+		transform: translate3d(-50%, -50%, 0) scale(0.1);
+		opacity: 0;
+	}
+
+	&-bounce-enter-active,
+	&-bounce-exit {
+		transform: translate3d(-50%, -50%, 0) scale(1);
+		opacity: 1;
+	}
+
+	&-bounce-exit-active {
+		transform: translate3d(-50%, -50%, 0) scale(0.9);
+		opacity: 0;
+	}
+}

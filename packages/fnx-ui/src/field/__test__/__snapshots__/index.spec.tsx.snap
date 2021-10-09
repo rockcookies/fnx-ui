@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Form.Item/> label、labelAlign、labelWidth props 1`] = `
+<div>
+  <div
+    class="fnx-cell fnx-cell--align-top fnx-field"
+  >
+    <div
+      class="fnx-cell__title fnx-field__label fnx-field__label--text-right"
+      style="width: 44px;"
+    >
+      field
+    </div>
+    <div
+      class="fnx-cell__content fnx-field__control"
+    >
+      <div
+        class="fnx-field__control-body"
+      >
+        <div
+          class="fnx-field__control-item"
+        >
+          <span
+            class="fnx-field-input"
+          >
+            <input
+              class="fnx-field-input__control"
+              type="text"
+              value=""
+            />
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

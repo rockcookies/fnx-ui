@@ -1,0 +1,12 @@
+:root {
+	--fnx-sticky-z-index: 99;
+}
+
+.fnx-sticky {
+	&--fixed {
+		.fnx-sticky__container {
+			position: fixed;
+			z-index: var(--fnx-sticky-z-index);
+		}
+	}
+}

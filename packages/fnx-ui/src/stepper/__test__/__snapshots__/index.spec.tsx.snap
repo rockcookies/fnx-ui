@@ -1,0 +1,106 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Stepper/> button-size prop 1`] = `
+<div>
+  <span
+    class="fnx-stepper"
+  >
+    <button
+      class="fnx-stepper__minus"
+      style="width: 15px; height: 15px;"
+      type="button"
+    />
+    <input
+      aria-valuenow="0"
+      class="fnx-stepper__input"
+      inputmode="decimal"
+      role="spinbutton"
+      style="height: 15px;"
+      type="text"
+      value="0"
+    />
+    <button
+      class="fnx-stepper__plus"
+      style="width: 15px; height: 15px;"
+      type="button"
+    />
+  </span>
+</div>
+`;
+
+exports[`<Stepper/> input-width prop 1`] = `
+<div>
+  <span
+    class="fnx-stepper"
+  >
+    <button
+      class="fnx-stepper__minus"
+      type="button"
+    />
+    <input
+      aria-valuenow="0"
+      class="fnx-stepper__input"
+      inputmode="decimal"
+      role="spinbutton"
+      style="width: 80px;"
+      type="text"
+      value="0"
+    />
+    <button
+      class="fnx-stepper__plus"
+      type="button"
+    />
+  </span>
+</div>
+`;
+
+exports[`<Stepper/> should disable buttons and input when using disabled prop 1`] = `
+<div>
+  <span
+    class="fnx-stepper"
+  >
+    <button
+      class="fnx-stepper__minus fnx-stepper__minus--disabled"
+      type="button"
+    />
+    <input
+      aria-valuenow="0"
+      class="fnx-stepper__input"
+      disabled=""
+      inputmode="decimal"
+      role="spinbutton"
+      type="text"
+      value="0"
+    />
+    <button
+      class="fnx-stepper__plus fnx-stepper__plus--disabled"
+      type="button"
+    />
+  </span>
+</div>
+`;
+
+exports[`<Stepper/> show-plus & show-minus props 1`] = `
+<div>
+  <span
+    class="fnx-stepper"
+  >
+    <button
+      class="fnx-stepper__minus fnx-stepper__minus--hidden"
+      type="button"
+    />
+    <input
+      aria-valuenow="0"
+      class="fnx-stepper__input"
+      inputmode="decimal"
+      role="spinbutton"
+      type="text"
+      value="0"
+    />
+    <button
+      class="fnx-stepper__plus fnx-stepper__plus--hidden"
+      type="button"
+    />
+  </span>
+</div>
+`;

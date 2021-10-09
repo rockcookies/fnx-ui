@@ -1,0 +1,108 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Badge/> should change count position when using offset prop 1`] = `
+<div>
+  <div
+    class="fnx-badge__wrapper"
+  >
+    children
+    <span
+      class="fnx-badge fnx-badge--fixed"
+      style="top: 20px; right: -10px;"
+    >
+      8
+    </span>
+  </div>
+</div>
+`;
+
+exports[`<Badge/> should change count position when using offset prop 2`] = `
+<div>
+  <div
+    class="fnx-badge__wrapper"
+  >
+    children
+    <span
+      class="fnx-badge fnx-badge--fixed"
+      style="top: -20px; right: 10px;"
+    >
+      8
+    </span>
+  </div>
+</div>
+`;
+
+exports[`<Badge/> should change dot position when using offset prop with custom unit 1`] = `
+<div>
+  <div
+    class="fnx-badge__wrapper"
+  >
+    children
+    <span
+      class="fnx-badge fnx-badge--dot fnx-badge--fixed"
+    />
+  </div>
+</div>
+`;
+
+exports[`<Badge/> should change dot position when using offset prop without children 1`] = `
+<div>
+  <span
+    class="fnx-badge fnx-badge--dot"
+    style="margin-top: 20px; margin-left: 10px;"
+  />
+</div>
+`;
+
+exports[`<Badge/> should not render zero when show-zero is false 1`] = `
+<div>
+  <div
+    class="fnx-badge__wrapper"
+  >
+    children
+    <span
+      class="fnx-badge fnx-badge--fixed"
+    />
+  </div>
+</div>
+`;
+
+exports[`<Badge/> should render children correctly 1`] = `
+<div>
+  <div
+    class="fnx-badge__wrapper"
+  >
+    children
+    <span
+      class="fnx-badge fnx-badge--fixed"
+    >
+      8
+    </span>
+  </div>
+</div>
+`;
+
+exports[`<Badge/> should render default count when children is not exist 1`] = `
+<div>
+  <span
+    class="fnx-badge"
+  >
+    8
+  </span>
+</div>
+`;
+
+exports[`<Badge/> should render nothing when count is zero 1`] = `
+<div>
+  <div
+    class="fnx-badge__wrapper"
+  >
+    children
+    <span
+      class="fnx-badge fnx-badge--fixed"
+    >
+      0
+    </span>
+  </div>
+</div>
+`;

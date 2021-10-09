@@ -1,0 +1,68 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Switch/> should apply active color to loading icon 1`] = `
+<div>
+  <div
+    aria-checked="true"
+    class="fnx-switch fnx-switch--on fnx-switch--loading"
+    data-testid="switch"
+    role="switch"
+    style="background-color: red;"
+  >
+    <span
+      class="fnx-switch__handle"
+    >
+      <span
+        class="fnx-icon fnx-switch__loading"
+        style="color: red;"
+      >
+        <svg
+          aria-hidden="true"
+          class="fnx-icon__spinner"
+          fill="currentColor"
+          focusable="false"
+          height="1em"
+          viewBox="25 25 50 50"
+          width="1em"
+        >
+          <circle
+            cx="50"
+            cy="50"
+            fill="none"
+            r="20"
+          />
+        </svg>
+      </span>
+    </span>
+    <span
+      class="fnx-switch__inner"
+    >
+      <span
+        class="fnx-switch__children"
+      />
+    </span>
+  </div>
+</div>
+`;
+
+exports[`<Switch/> should apply inactive color to loading icon 1`] = `
+<div>
+  <div
+    aria-checked="false"
+    class="fnx-switch"
+    data-testid="switch"
+    role="switch"
+  >
+    <span
+      class="fnx-switch__handle"
+    />
+    <span
+      class="fnx-switch__inner"
+    >
+      <span
+        class="fnx-switch__children"
+      />
+    </span>
+  </div>
+</div>
+`;

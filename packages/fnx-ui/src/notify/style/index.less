@@ -1,0 +1,42 @@
+:root {
+	--fnx-notify-text-color: var(--fnx-white-color);
+	--fnx-notify-padding: var(--fnx-padding-xs) var(--fnx-padding-md);
+	--fnx-notify-font-size: var(--fnx-font-size-md);
+	--fnx-notify-line-height: var(--fnx-line-height-md);
+	--fnx-notify-primary-background-color: var(--fnx-primary-color);
+	--fnx-notify-success-background-color: var(--fnx-success-color);
+	--fnx-notify-danger-background-color: var(--fnx-danger-color);
+	--fnx-notify-warning-background-color: var(--fnx-warning-color);
+}
+
+.fnx-notify {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	box-sizing: border-box;
+	padding: var(--fnx-notify-padding);
+	color: var(--fnx-notify-text-color);
+	font-size: var(--fnx-notify-font-size);
+	line-height: var(--fnx-notify-line-height);
+
+	// allow newline character
+	white-space: pre-wrap;
+	text-align: center;
+	word-wrap: break-word;
+
+	&--primary {
+		background-color: var(--fnx-notify-primary-background-color);
+	}
+
+	&--success {
+		background-color: var(--fnx-notify-success-background-color);
+	}
+
+	&--danger {
+		background-color: var(--fnx-notify-danger-background-color);
+	}
+
+	&--warning {
+		background-color: var(--fnx-notify-warning-background-color);
+	}
+}

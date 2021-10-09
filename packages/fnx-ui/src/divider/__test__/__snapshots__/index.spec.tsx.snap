@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Divider> contentposition defines the position of the text 1`] = `
+<div>
+  <div
+    class="fnx-divider fnx-divider--hairline fnx-divider--content-right"
+  >
+    right
+  </div>
+</div>
+`;
+
+exports[`<Divider> hairline 1`] = `
+<div>
+  <div
+    class="fnx-divider fnx-divider--hairline"
+  />
+</div>
+`;
+
+exports[`<Divider> should render Divider have Children correctly 1`] = `
+<div>
+  <div
+    class="fnx-divider fnx-divider--hairline fnx-divider--content-right"
+  >
+    right
+  </div>
+</div>
+`;
+
+exports[`<Divider> using dash props, divide the line into dashed lines 1`] = `
+<div>
+  <div
+    class="fnx-divider fnx-divider--dashed fnx-divider--hairline"
+  />
+</div>
+`;

@@ -1,0 +1,100 @@
+:root {
+	--fnx-pagination-height: 40px;
+	--fnx-pagination-font-size: var(--fnx-font-size-md);
+	--fnx-pagination-item-width: 36px;
+	--fnx-pagination-item-color: var(--fnx-primary-color);
+	--fnx-pagination-item-background-color: var(--fnx-gray-75);
+	--fnx-pagination-item-active-color: var(--fnx-natural-color);
+	--fnx-pagination-item-background-active-color: var(--fnx-primary-color);
+	--fnx-pagination-item-disabled-color: var(--fnx-gray-600);
+	--fnx-pagination-item-background-disabled-color: var(--fnx-gray-100);
+	--fnx-pagination-background-color: var(--fnx-gray-100);
+	--fnx-pagination-desc-color: var(--fnx-gray-700);
+	--fnx-pagination-disabled-opacity: var(--fnx-disabled-opacity);
+}
+
+.fnx-pagination {
+	display: flex;
+	font-size: var(--fnx-pagination-font-size);
+
+	&__item,
+	&__page-dec {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	&__item {
+		flex: 1;
+		box-sizing: border-box;
+		min-width: var(--fnx-pagination-item-width);
+		height: var(--fnx-pagination-height);
+		color: var(--fnx-pagination-item-color);
+		background-color: var(--fnx-pagination-item-background-color);
+		cursor: pointer;
+		user-select: none;
+
+		&:active {
+			color: var(--fnx-pagination-item-active-color);
+			background-color: var(
+				--fnx-pagination-item-background-active-color
+			);
+		}
+
+		&::after {
+			border-width: var(--fnx-border-width-base) 0
+				var(--fnx-border-width-base) var(--fnx-border-width-base);
+		}
+
+		&:last-child::after {
+			border-right-width: var(--fnx-border-width-base);
+		}
+
+		&--active {
+			color: var(--fnx-pagination-item-active-color);
+			background-color: var(
+				--fnx-pagination-item-background-active-color
+			);
+		}
+	}
+
+	&__prev,
+	&__next {
+		padding: 0 var(--fnx-padding-base);
+		cursor: pointer;
+	}
+
+	&__item--disabled {
+		&,
+		&:active {
+			color: var(--fnx-pagination-item-disabled-color);
+			background-color: var(
+				--fnx-pagination-item-background-disabled-color
+			);
+			cursor: not-allowed;
+			opacity: var(--fnx-pagination-disabled-opacity);
+		}
+	}
+
+	&__page {
+		flex-grow: 0;
+	}
+
+	&__page-dec {
+		flex: 1;
+		height: var(--fnx-pagination-height);
+		color: var(--fnx-pagination-desc-color);
+	}
+
+	&--hidden {
+		display: none;
+	}
+
+	&--simple {
+		.fnx-pagination__prev {
+			&::after {
+				border-right-width: var(--fnx-border-width-base);
+			}
+		}
+	}
+}

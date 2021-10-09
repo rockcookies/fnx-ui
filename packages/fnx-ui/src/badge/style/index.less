@@ -1,0 +1,50 @@
+:root {
+	--fnx-badge-size: 16px;
+	--fnx-badge-color: var(--fnx-white-color);
+	--fnx-badge-padding: 0 3px;
+	--fnx-badge-font-size: var(--fnx-font-size-sm);
+	--fnx-badge-font-weight: var(--fnx-font-weight-bold);
+	--fnx-badge-border-width: var(--fnx-border-width-base);
+	--fnx-badge-background-color: var(--fnx-danger-color);
+	--fnx-badge-dot-color: var(--fnx-danger-color);
+	--fnx-badge-dot-size: 8px;
+	--fnx-badge-font-family: -apple-system-font, helvetica neue, arial,
+		sans-serif;
+}
+
+.fnx-badge {
+	display: inline-block;
+	box-sizing: border-box;
+	min-width: var(--fnx-badge-size);
+	padding: var(--fnx-badge-padding);
+	color: var(--fnx-badge-color);
+	font-weight: var(--fnx-badge-font-weight);
+	font-size: var(--fnx-badge-font-size);
+	font-family: var(--fnx-badge-font-family);
+	line-height: 1.2;
+	text-align: center;
+	background-color: var(--fnx-badge-background-color);
+	border-radius: var(--fnx-border-radius-max);
+
+	&--fixed {
+		position: absolute;
+		top: 0;
+		right: 0;
+		transform: translate(50%, -50%);
+		transform-origin: 100%;
+	}
+
+	&--dot {
+		width: var(--fnx-badge-dot-size);
+		min-width: 0;
+		height: var(--fnx-badge-dot-size);
+		background-color: var(--fnx-badge-dot-color);
+		border-radius: 100%;
+	}
+
+	&__wrapper {
+		position: relative;
+		display: inline-block;
+		margin: 10px;
+	}
+}

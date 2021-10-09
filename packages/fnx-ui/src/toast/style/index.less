@@ -1,0 +1,80 @@
+:root {
+	--fnx-toast-max-width: 70%;
+	--fnx-toast-font-size: var(--fnx-font-size-md);
+	--fnx-toast-text-color: var(--fnx-white-color);
+	--fnx-toast-line-height: var(--fnx-line-height-md);
+	--fnx-toast-border-radius: var(--fnx-border-radius-lg);
+	--fnx-toast-background-color: rgba(0, 0, 0, 0.7);
+	--fnx-toast-icon-size: 36px;
+	--fnx-toast-text-min-width: 96px;
+	--fnx-toast-text-padding: var(--fnx-padding-xs) var(--fnx-padding-sm);
+	--fnx-toast-default-padding: var(--fnx-padding-md);
+	--fnx-toast-default-width: 88px;
+	--fnx-toast-default-min-height: 88px;
+	--fnx-toast-position-top-distance: 20%;
+	--fnx-toast-position-bottom-distance: 20%;
+}
+
+.fnx-toast {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	box-sizing: content-box;
+
+	// hack for avoid max-width when use left & fixed
+	width: var(--fnx-toast-default-width);
+	max-width: var(--fnx-toast-max-width);
+	min-height: var(--fnx-toast-default-min-height);
+	padding: var(--fnx-toast-default-padding);
+	color: var(--fnx-toast-text-color);
+	font-size: var(--fnx-toast-font-size);
+	line-height: var(--fnx-toast-line-height);
+
+	// allow newline charactor
+	white-space: pre-wrap;
+	text-align: center;
+	word-wrap: break-word;
+	background-color: var(--fnx-toast-background-color);
+	border-radius: var(--fnx-toast-border-radius);
+
+	&--unclickable {
+		// lock scroll
+		overflow: hidden;
+		cursor: not-allowed;
+
+		// should not add pointer-events: none directly to body tag
+		// that will cause unexpected tap-highlight-color in mobile safari
+		* {
+			pointer-events: none;
+		}
+	}
+
+	&--top {
+		top: var(--fnx-toast-position-top-distance);
+	}
+
+	&--bottom {
+		top: auto;
+		bottom: var(--fnx-toast-position-bottom-distance);
+	}
+
+	&--text {
+		width: fit-content;
+		min-width: var(--fnx-toast-text-min-width);
+		min-height: 0;
+		padding: var(--fnx-toast-text-padding);
+
+		.fnx-toast__message {
+			margin-top: 0;
+		}
+	}
+
+	&__icon {
+		font-size: var(--fnx-toast-icon-size);
+	}
+
+	&__message {
+		margin-top: var(--fnx-padding-xs);
+	}
+}

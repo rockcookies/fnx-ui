@@ -1,5 +1,5 @@
 import { readFileSync } from 'fs-extra';
-import { consola } from '../common/logger';
+import { signal } from '../core/logger';
 
 const commitRE =
 	/^(revert: )?(fix|feat|docs|perf|test|types|style|build|chore|refactor|breaking change)(\(.+\))?: .{1,50}/;
@@ -10,7 +10,7 @@ export function commitLint() {
 	const commitMsg = readFileSync(gitParams, 'utf-8').trim();
 
 	if (!commitRE.test(commitMsg) && !mergeRE.test(commitMsg)) {
-		consola.error(`invalid commit message: "${commitMsg}".
+		signal.error(`invalid commit message: "${commitMsg}".
 
 Proper commit message format is required for automated changelog generation.
 

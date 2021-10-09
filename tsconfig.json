@@ -8,10 +8,7 @@
     "sourceMap": true,
     "strict": true,
     "allowJs": false,
-    "baseUrl": ".",
-    "paths": {
-      "@fnx-ui/*": ["packages/*/src"]
-    }
+    "baseUrl": "."
   },
   "exclude": ["node_modules", "dist"]
 }

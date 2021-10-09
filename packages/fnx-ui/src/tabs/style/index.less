@@ -1,0 +1,113 @@
+:root {
+	--fnx-tabs-tab-list-height: 44px;
+	--fnx-tabs-header-background-color: var(--fnx-gray-75);
+	--fnx-tabs-tab-text-color: var(--fnx-gray-700);
+	--fnx-tabs-tab-line-height: var(--fnx-line-height-md);
+	--fnx-tabs-tab-font-size: var(--fnx-font-size-md);
+	--fnx-tabs-tab-active-text-color: var(--fnx-gray-900);
+	--fnx-tabs-tab-text-disabled-color: var(--fnx-gray-500);
+	--fnx-tabs-track-width: 40px;
+	--fnx-tabs-track-height: 3px;
+	--fnx-tabs-track-color: var(--fnx-primary-color);
+}
+
+.fnx-tabs {
+	&__header {
+		overflow: hidden;
+		background: var(--fnx-tabs-header-background-color);
+	}
+
+	&__nav {
+		position: relative;
+		display: flex;
+	}
+
+	&__nav-left,
+	&__nav-right {
+		flex: none;
+	}
+
+	&__tab {
+		position: relative;
+		display: flex;
+		flex: 1;
+		align-items: center;
+		justify-content: center;
+		box-sizing: border-box;
+		padding: 0 var(--fnx-padding-base);
+		color: var(--fnx-tabs-tab-text-color);
+		font-size: var(--fnx-tabs-tab-font-size);
+		line-height: var(--fnx-tabs-tab-line-height);
+		cursor: pointer;
+
+		&--active {
+			color: var(--fnx-tabs-tab-active-text-color);
+			font-weight: var(--fnx-font-weight-bold);
+		}
+
+		&--disabled {
+			color: var(--fnx-tabs-tab-text-disabled-color);
+			cursor: not-allowed;
+		}
+	}
+
+	&__tab-title {
+		&--ellipsis {
+			display: -webkit-box;
+			overflow: hidden;
+			-webkit-line-clamp: 1;
+			-webkit-box-orient: vertical;
+		}
+	}
+
+	&__tab-list {
+		position: relative;
+		display: flex;
+		flex: auto;
+		box-sizing: content-box;
+		height: var(--fnx-tabs-tab-list-height);
+		padding-bottom: 15px; /* 15px padding to hide scrollbar in mobile safari */
+		user-select: none;
+
+		&--scrollable {
+			padding-right: var(--fnx-padding-xs);
+			padding-left: var(--fnx-padding-xs);
+			overflow-x: auto;
+			overflow-y: hidden;
+			-webkit-overflow-scrolling: touch;
+
+			&::-webkit-scrollbar {
+				display: none;
+			}
+
+			.fnx-tabs__tab {
+				flex: 1 0 auto;
+				padding: 0 var(--fnx-padding-sm);
+			}
+		}
+	}
+
+	&__track {
+		position: absolute;
+		bottom: 15px;
+		left: 0;
+		z-index: 1;
+		width: var(--fnx-tabs-track-width);
+		height: var(--fnx-tabs-track-height);
+		background-color: var(--fnx-tabs-track-color);
+		border-radius: var(--fnx-tabs-track-height);
+		transform: translateX(-50%);
+		will-change: left;
+	}
+
+	&__content {
+		&--animated {
+			overflow: hidden;
+		}
+	}
+
+	&__panel {
+		box-sizing: border-box;
+		width: 100%;
+	}
+}

@@ -1,0 +1,37 @@
+:root {
+	--fnx-loading-text-color: var(--fnx-gray-600);
+	--fnx-loading-text-font-size: var(--fnx-font-size-md);
+	--fnx-loading-spinner-color: var(--fnx-gray-500);
+	--fnx-loading-spinner-size: 24px;
+}
+
+.fnx-loading {
+	display: inline-block;
+	color: var(--fnx-loading-spinner-color);
+	text-align: center;
+	vertical-align: middle;
+
+	.fnx-icon {
+		display: inline-block;
+		font-size: var(--fnx-loading-spinner-size);
+		vertical-align: middle;
+	}
+
+	&__text {
+		display: inline-block;
+		margin-left: var(--fnx-padding-xs);
+		color: var(--fnx-loading-text-color);
+		font-size: var(--fnx-loading-text-font-size);
+		vertical-align: middle;
+	}
+
+	&--vertical {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+
+		.fnx-loading__text {
+			margin: var(--fnx-padding-xs) 0 0;
+		}
+	}
+}

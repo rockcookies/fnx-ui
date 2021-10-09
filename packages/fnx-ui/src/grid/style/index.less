@@ -1,0 +1,54 @@
+:root {
+	--fnx-grid-item-content-background-color: var(--fnx-gray-75);
+	--fnx-grid-item-content-active-color: var(--fnx-gray-200);
+}
+
+.fnx-grid {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.fnx-grid-item {
+	position: relative;
+	box-sizing: border-box;
+
+	&--square {
+		&::before {
+			display: block;
+			padding-top: 100%;
+			content: '';
+		}
+	}
+
+	&__content {
+		box-sizing: border-box;
+		background-color: var(--fnx-grid-item-content-background-color);
+
+		&::after {
+			z-index: 1;
+			border-width: 0 var(--fnx-border-width-base)
+				var(--fnx-border-width-base) 0;
+		}
+
+		&--square {
+			position: absolute;
+			top: 0;
+			left: 0;
+			height: 100%;
+		}
+
+		&--surround {
+			&::after {
+				border-width: var(--fnx-border-width-base);
+			}
+		}
+
+		&--clickable {
+			cursor: pointer;
+
+			&:active {
+				background-color: var(--fnx-grid-item-content-active-color);
+			}
+		}
+	}
+}

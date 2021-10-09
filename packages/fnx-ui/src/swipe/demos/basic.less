@@ -1,0 +1,40 @@
+.demo-swipe {
+	.fnx-swipe-item {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		height: 150px;
+		color: #fff;
+		font-size: 20px;
+		line-height: 150px;
+		background-color: var(--fnx-success-color);
+	}
+
+	&__vertical-swipe {
+		height: 150px;
+	}
+
+	.custom-indicator {
+		position: absolute;
+		right: 5px;
+		bottom: 5px;
+		padding: 2px 5px;
+		color: #fff;
+		font-size: 12px;
+		background: rgba(0, 0, 0, 0.1);
+	}
+
+	&__define-swipe {
+		.fnx-swipe-item:nth-child(2) {
+			background-color: var(--fnx-warning-color);
+		}
+		.fnx-swipe-item:nth-child(3) {
+			background-color: var(--fnx-danger-color);
+		}
+	}
+
+	&__buttons {
+		margin-top: 8px;
+		text-align: center;
+	}
+}

@@ -1,0 +1,101 @@
+:root {
+	--fnx-rate-icon-size: 20px;
+	--fnx-rate-icon-gutter: var(--fnx-padding-base);
+	--fnx-rate-icon-void-color: var(--fnx-gray-400);
+	--fnx-rate-icon-full-color: var(--fnx-warning-color);
+	--fnx-rate-icon-disabled-color: var(--fnx-gray-400);
+	--fnx-rate-icon-void-disabled-color: var(--fnx-gray-200);
+}
+
+.fnx-rate {
+	display: inline-flex;
+	flex-wrap: wrap;
+	cursor: pointer;
+	user-select: none;
+
+	&__item {
+		position: relative;
+		list-style: none;
+
+		&:not(:last-child) {
+			padding-right: var(--fnx-rate-icon-gutter);
+		}
+
+		&--full {
+			color: var(--fnx-rate-icon-full-color);
+
+			.fnx-rate__character {
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				overflow: hidden;
+				font-size: inherit;
+			}
+			.fnx-rate__void-character {
+				display: block;
+				width: 100%;
+				color: var(--fnx-rate-icon-void-color);
+				font-size: inherit;
+				opacity: 0;
+			}
+		}
+
+		&--half {
+			color: var(--fnx-rate-icon-full-color);
+
+			.fnx-rate__character {
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 50%;
+				overflow: hidden;
+				font-size: inherit;
+			}
+		}
+
+		&--zero {
+			color: var(--fnx-rate-icon-void-color);
+
+			.fnx-rate__character {
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 50%;
+				overflow: hidden;
+				font-size: inherit;
+				opacity: 0;
+			}
+		}
+	}
+
+	&__void-character {
+		display: block;
+		width: 100%;
+		color: var(--fnx-rate-icon-void-color);
+		font-size: inherit;
+
+		&--full {
+			color: var(--fnx-rate-icon-full-color);
+		}
+
+		&--disabled {
+			color: var(--fnx-rate-icon-disabled-color);
+		}
+	}
+
+	&--disabled {
+		cursor: not-allowed;
+
+		.fnx-rate__character {
+			color: var(--fnx-rate-icon-disabled-color);
+		}
+		.fnx-rate__void-character {
+			color: var(--fnx-rate-icon-void-disabled-color);
+		}
+	}
+
+	&--readonly {
+		cursor: default;
+	}
+}

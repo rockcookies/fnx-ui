@@ -1,0 +1,142 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Loading/> should set color correctly 1`] = `
+<div>
+  <span
+    class="fnx-loading"
+    style="color: rgb(25, 137, 250);"
+  >
+    <span
+      class="fnx-icon"
+    >
+      <svg
+        aria-hidden="true"
+        class="fnx-icon__spinner"
+        fill="currentColor"
+        focusable="false"
+        height="1em"
+        viewBox="25 25 50 50"
+        width="1em"
+      >
+        <circle
+          cx="50"
+          cy="50"
+          fill="none"
+          r="20"
+        />
+      </svg>
+    </span>
+    <span
+      class="fnx-loading__text"
+      style="color: rgb(25, 137, 250);"
+    >
+      Loading...
+    </span>
+  </span>
+</div>
+`;
+
+exports[`<Loading/> should set size correctly 1`] = `
+<div>
+  <span
+    class="fnx-loading"
+  >
+    <span
+      class="fnx-icon"
+      style="font-size: 20px;"
+    >
+      <svg
+        aria-hidden="true"
+        class="fnx-icon__spinner"
+        fill="currentColor"
+        focusable="false"
+        height="1em"
+        viewBox="25 25 50 50"
+        width="1em"
+      >
+        <circle
+          cx="50"
+          cy="50"
+          fill="none"
+          r="20"
+        />
+      </svg>
+    </span>
+    <span
+      class="fnx-loading__text"
+    >
+      Loading...
+    </span>
+  </span>
+</div>
+`;
+
+exports[`<Loading/> should set textColor correctly 1`] = `
+<div>
+  <span
+    class="fnx-loading"
+  >
+    <span
+      class="fnx-icon"
+    >
+      <svg
+        aria-hidden="true"
+        class="fnx-icon__spinner"
+        fill="currentColor"
+        focusable="false"
+        height="1em"
+        viewBox="25 25 50 50"
+        width="1em"
+      >
+        <circle
+          cx="50"
+          cy="50"
+          fill="none"
+          r="20"
+        />
+      </svg>
+    </span>
+    <span
+      class="fnx-loading__text"
+      style="color: rgb(25, 137, 250);"
+    >
+      Loading...
+    </span>
+  </span>
+</div>
+`;
+
+exports[`<Loading/> should set textSize correctly 1`] = `
+<div>
+  <span
+    class="fnx-loading"
+  >
+    <span
+      class="fnx-icon"
+    >
+      <svg
+        aria-hidden="true"
+        class="fnx-icon__spinner"
+        fill="currentColor"
+        focusable="false"
+        height="1em"
+        viewBox="25 25 50 50"
+        width="1em"
+      >
+        <circle
+          cx="50"
+          cy="50"
+          fill="none"
+          r="20"
+        />
+      </svg>
+    </span>
+    <span
+      class="fnx-loading__text"
+      style="font-size: 20px;"
+    >
+      Loading...
+    </span>
+  </span>
+</div>
+`;

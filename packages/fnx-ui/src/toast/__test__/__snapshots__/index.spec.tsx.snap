@@ -1,0 +1,191 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Toast /> create a forbidClick toast 1`] = `
+<div
+  class="fnx-popup fnx-popup--center fnx-toast fnx-popup--fade-enter fnx-popup--fade-enter-active"
+  id="toast"
+  style="z-index: 2003;"
+>
+  <div
+    class="fnx-toast__icon"
+  >
+    <span
+      class="fnx-icon"
+    >
+      <svg
+        aria-hidden="true"
+        fill="currentColor"
+        focusable="false"
+        height="1em"
+        viewBox="0 0 1024 1024"
+        width="1em"
+      >
+        <path
+          d="M122.28096 536.623104c-9.940992-9.925632-11.548672-25.360384-2.78528-36.407296l20.487168-25.828352c8.397824-10.58816 24.108032-13.246464 35.211264-5.835776l177.3312 118.35904c9.353216 6.243328 25.452544 5.430272 34.185216-1.654784l468.5824-380.16c10.532864-8.54528 27.030528-7.817216 36.261888 1.400832l11.542528 11.52512c10.04544 10.03008 9.314304 25.951232-1.215488 36.465664l-502.92736 502.183936c-15.64672 15.624192-41.337856 14.94016-57.445376-1.142784l-219.22816-218.9056z"
+        />
+      </svg>
+    </span>
+  </div>
+</div>
+`;
+
+exports[`<Toast /> create a forbidClick toast 2`] = `null`;
+
+exports[`<Toast /> show toast 1`] = `
+<div
+  class="fnx-popup--center fnx-toast fnx-toast--text fnx-popup fnx-popup--fade-enter-done"
+  id="show-toast"
+  style="z-index: 2004;"
+>
+  <div
+    class="fnx-toast__message"
+  >
+    show
+  </div>
+</div>
+`;
+
+exports[`<Toast /> show toast 2`] = `
+<div
+  class="fnx-popup--center fnx-toast fnx-popup fnx-popup--fade-enter-done"
+  id="success-toast"
+  style="z-index: 2005;"
+>
+  <div
+    class="fnx-toast__icon"
+  >
+    <span
+      class="fnx-icon"
+    >
+      <svg
+        aria-hidden="true"
+        fill="currentColor"
+        focusable="false"
+        height="1em"
+        viewBox="0 0 1024 1024"
+        width="1em"
+      >
+        <path
+          d="M122.28096 536.623104c-9.940992-9.925632-11.548672-25.360384-2.78528-36.407296l20.487168-25.828352c8.397824-10.58816 24.108032-13.246464 35.211264-5.835776l177.3312 118.35904c9.353216 6.243328 25.452544 5.430272 34.185216-1.654784l468.5824-380.16c10.532864-8.54528 27.030528-7.817216 36.261888 1.400832l11.542528 11.52512c10.04544 10.03008 9.314304 25.951232-1.215488 36.465664l-502.92736 502.183936c-15.64672 15.624192-41.337856 14.94016-57.445376-1.142784l-219.22816-218.9056z"
+        />
+      </svg>
+    </span>
+  </div>
+  <div
+    class="fnx-toast__message"
+  >
+    success
+  </div>
+</div>
+`;
+
+exports[`<Toast /> show toast 3`] = `
+<div
+  class="fnx-popup--center fnx-toast fnx-popup fnx-popup--fade-enter-done"
+  id="fail-toast"
+  style="z-index: 2006;"
+>
+  <div
+    class="fnx-toast__icon"
+  >
+    <span
+      class="fnx-icon"
+    >
+      <svg
+        aria-hidden="true"
+        fill="currentColor"
+        focusable="false"
+        height="1em"
+        viewBox="0 0 1024 1024"
+        width="1em"
+      >
+        <path
+          d="M455.12192 128.99328c-0.187392-8.402944 5.812224-15.215616 14.620672-15.215616h84.514816c8.262656 0 14.81728 6.38976 14.620672 15.21664l-12.035072 538.456064c-0.187392 8.403968-7.324672 15.21664-15.03744 15.21664h-59.611136c-8.117248 0-14.839808-6.38976-15.03744-15.21664L455.12192 128.99328zM512 853.334016c-31.418368 0-56.889344-25.469952-56.889344-56.88832 0-31.419392 25.470976-56.889344 56.889344-56.889344s56.889344 25.469952 56.889344 56.889344c0 31.418368-25.470976 56.88832-56.889344 56.88832z"
+        />
+      </svg>
+    </span>
+  </div>
+  <div
+    class="fnx-toast__message"
+  >
+    fail
+  </div>
+</div>
+`;
+
+exports[`<Toast /> show toast 4`] = `
+<div
+  class="fnx-popup--center fnx-toast fnx-popup fnx-popup--fade-enter-done"
+  id="loading-toast"
+  style="z-index: 2007;"
+>
+  <div
+    class="fnx-toast__icon"
+  >
+    <span
+      class="fnx-icon"
+    >
+      <svg
+        aria-hidden="true"
+        class="fnx-icon__spinner"
+        fill="currentColor"
+        focusable="false"
+        height="1em"
+        viewBox="25 25 50 50"
+        width="1em"
+      >
+        <circle
+          cx="50"
+          cy="50"
+          fill="none"
+          r="20"
+        />
+      </svg>
+    </span>
+  </div>
+  <div
+    class="fnx-toast__message"
+  >
+    loading
+  </div>
+</div>
+`;
+
+exports[`<Toast /> toast disappeared after duration 1`] = `<div />`;
+
+exports[`<Toast /> useToast 1`] = `
+<div>
+  <div>
+    <div
+      class="fnx-popup fnx-popup--center fnx-toast fnx-popup--fade-enter fnx-popup--fade-enter-active"
+      style="z-index: 2010;"
+    >
+      <div
+        class="fnx-toast__icon"
+      >
+        <span
+          class="fnx-icon"
+        >
+          <svg
+            aria-hidden="true"
+            fill="currentColor"
+            focusable="false"
+            height="1em"
+            viewBox="0 0 1024 1024"
+            width="1em"
+          >
+            <path
+              d="M122.28096 536.623104c-9.940992-9.925632-11.548672-25.360384-2.78528-36.407296l20.487168-25.828352c8.397824-10.58816 24.108032-13.246464 35.211264-5.835776l177.3312 118.35904c9.353216 6.243328 25.452544 5.430272 34.185216-1.654784l468.5824-380.16c10.532864-8.54528 27.030528-7.817216 36.261888 1.400832l11.542528 11.52512c10.04544 10.03008 9.314304 25.951232-1.215488 36.465664l-502.92736 502.183936c-15.64672 15.624192-41.337856 14.94016-57.445376-1.142784l-219.22816-218.9056z"
+            />
+          </svg>
+        </span>
+      </div>
+      <div
+        class="fnx-toast__message"
+      >
+        success
+      </div>
+    </div>
+  </div>
+</div>
+`;

@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Notify /> color props 1`] = `
+<div
+  class="fnx-popup fnx-popup--top fnx-notify fnx-notify--danger fnx-popup--slide-top-enter fnx-popup--slide-top-enter-active"
+  data-testid="notify"
+  style="color: rgb(173, 0, 0); z-index: 2003;"
+/>
+`;
+
+exports[`<Notify /> color props 2`] = `<div />`;
+
+exports[`<Notify /> different display styles for different type 1`] = `<div />`;
+
+exports[`<Notify /> onBeforeHide event is triggered correctly 1`] = `
+<div
+  class="fnx-popup fnx-popup--top fnx-notify fnx-notify--danger fnx-popup--slide-top-enter fnx-popup--slide-top-enter-active"
+  data-testid="notify"
+  style="z-index: 2004;"
+>
+  Content
+</div>
+`;
+
+exports[`<Notify /> should render Notify correctly 1`] = `
+<div
+  class="fnx-popup fnx-popup--top fnx-notify fnx-notify--danger fnx-popup--slide-top-enter fnx-popup--slide-top-enter-active"
+  data-testid="notify"
+  style="z-index: 2001;"
+/>
+`;
+
+exports[`<Notify /> should render Notify correctly 2`] = `<div />`;
+
+exports[`<Notify /> useToast 1`] = `
+<div>
+  <div>
+    <div
+      class="fnx-popup fnx-popup--top fnx-notify fnx-notify--danger fnx-popup--slide-top-enter fnx-popup--slide-top-enter-active"
+      style="z-index: 2006;"
+    >
+      success
+    </div>
+  </div>
+</div>
+`;

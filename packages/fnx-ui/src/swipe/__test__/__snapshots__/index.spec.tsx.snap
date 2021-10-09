@@ -1,0 +1,139 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Swipe/> should not allow to drag swipe when touchable is false 1`] = `
+<div>
+  <div
+    class="fnx-swipe"
+    data-testid="swipe"
+  >
+    <div
+      class="fnx-swipe__wrapper"
+      style="transform: translateX(0px); width: 300px;"
+    >
+      <div
+        class="fnx-swipe-item"
+        style="width: 100px;"
+      >
+        1
+      </div>
+      <div
+        class="fnx-swipe-item"
+        style="width: 100px;"
+      >
+        2
+      </div>
+      <div
+        class="fnx-swipe-item"
+        style="width: 100px;"
+      >
+        3
+      </div>
+    </div>
+    <div
+      class="fnx-swipe__indicators"
+    >
+      <i
+        class="fnx-swipe__indicator fnx-swipe__indicator--active"
+      />
+      <i
+        class="fnx-swipe__indicator"
+      />
+      <i
+        class="fnx-swipe__indicator"
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`<Swipe/> should render initial swipe correctly 1`] = `
+<div>
+  <div
+    class="fnx-swipe"
+    data-testid="swipe"
+  >
+    <div
+      class="fnx-swipe__wrapper"
+      style="transform: translateX(0px); width: 300px;"
+    >
+      <div
+        class="fnx-swipe-item"
+        style="width: 100px;"
+      >
+        1
+      </div>
+      <div
+        class="fnx-swipe-item"
+        style="width: 100px;"
+      >
+        2
+      </div>
+      <div
+        class="fnx-swipe-item"
+        style="width: 100px;"
+      >
+        3
+      </div>
+    </div>
+    <div
+      class="fnx-swipe__indicators"
+    >
+      <i
+        class="fnx-swipe__indicator fnx-swipe__indicator--active"
+      />
+      <i
+        class="fnx-swipe__indicator"
+      />
+      <i
+        class="fnx-swipe__indicator"
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`<Swipe/> should render initial swipe correctly 2`] = `
+<div>
+  <div
+    class="fnx-swipe"
+    data-testid="swipe"
+  >
+    <div
+      class="fnx-swipe__wrapper"
+      style="transform: translateX(-200px); width: 300px;"
+    >
+      <div
+        class="fnx-swipe-item"
+        style="width: 100px;"
+      >
+        1
+      </div>
+      <div
+        class="fnx-swipe-item"
+        style="width: 100px;"
+      >
+        2
+      </div>
+      <div
+        class="fnx-swipe-item"
+        style="width: 100px;"
+      >
+        3
+      </div>
+    </div>
+    <div
+      class="fnx-swipe__indicators"
+    >
+      <i
+        class="fnx-swipe__indicator"
+      />
+      <i
+        class="fnx-swipe__indicator"
+      />
+      <i
+        class="fnx-swipe__indicator fnx-swipe__indicator--active"
+      />
+    </div>
+  </div>
+</div>
+`;

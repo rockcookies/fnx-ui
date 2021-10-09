@@ -1,0 +1,147 @@
+@import './mixins.less';
+
+// -------------------------
+// normalize
+// -------------------------
+
+html {
+	-webkit-tap-highlight-color: transparent;
+}
+
+body {
+	margin: 0;
+	font-family: var(--fnx-base-font-family);
+}
+
+a {
+	text-decoration: none;
+}
+
+input,
+button,
+textarea {
+	color: inherit;
+	font: inherit;
+}
+
+a,
+input,
+button,
+textarea,
+[class*='fnx-'] {
+	&:focus {
+		outline: none;
+	}
+}
+
+ol,
+ul {
+	margin: 0;
+	padding: 0;
+}
+
+// -------------------------
+// animation
+// -------------------------
+
+@keyframes fnx-rotate {
+	from {
+		transform: rotate(0deg);
+	}
+
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+.fnx-fade {
+	&-enter {
+		opacity: 0;
+	}
+
+	&-enter-active {
+		opacity: 1;
+		transition: opacity var(--fnx-animation-duration-base)
+			var(--fnx-animation-timing-function-enter);
+	}
+
+	&-exit {
+		opacity: 1;
+	}
+
+	&-exit-active {
+		opacity: 0;
+		transition: opacity var(--fnx-animation-duration-base)
+			var(--fnx-animation-timing-function-exit);
+	}
+}
+
+// -------------------------
+// misc
+// -------------------------
+
+.fnx-clearfix {
+	.clearfix();
+}
+
+.fnx-ellipsis {
+	.ellipsis();
+}
+
+.fnx-multi-ellipsis--l2 {
+	.multi-ellipsis(2);
+}
+
+.fnx-multi-ellipsis--l3 {
+	.multi-ellipsis(3);
+}
+
+.fnx-safe-area-bottom {
+	padding-bottom: constant(safe-area-inset-bottom);
+	padding-bottom: env(safe-area-inset-bottom);
+}
+
+[class*='fnx-hairline'] {
+	&::after {
+		.hairline();
+	}
+}
+
+.fnx-hairline {
+	&,
+	&--top,
+	&--left,
+	&--right,
+	&--bottom,
+	&--surround,
+	&--top-bottom {
+		position: relative;
+	}
+
+	&--top::after {
+		border-top-width: var(--fnx-border-width-base);
+	}
+
+	&--left::after {
+		border-left-width: var(--fnx-border-width-base);
+	}
+
+	&--right::after {
+		border-right-width: var(--fnx-border-width-base);
+	}
+
+	&--bottom::after {
+		border-bottom-width: var(--fnx-border-width-base);
+	}
+
+	&,
+	&-unset {
+		&--top-bottom::after {
+			border-width: var(--fnx-border-width-base) 0;
+		}
+	}
+
+	&--surround::after {
+		border-width: var(--fnx-border-width-base);
+	}
+}

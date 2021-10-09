@@ -1,0 +1,74 @@
+@import '../styles/variables.less';
+@import '../../src/style/mixins.less';
+
+.site-menu-tree {
+	@dark-color: rgb(38, 128, 235);
+	@active-color: rgb(75, 156, 245);
+
+	&::after {
+		display: block;
+		height: 6px;
+		content: '';
+	}
+
+	&__menu-group-title {
+		margin: 6px 0 0 0;
+		padding-left: 32px;
+		color: var(--fnx-gray-600);
+		font-size: 13px;
+		line-height: 36px;
+		.ellipsis();
+	}
+
+	&__menu-item {
+		margin-top: 6px;
+		padding: 0 8px;
+	}
+
+	&__menu-item-title {
+		position: relative;
+
+		a {
+			position: relative;
+			display: block;
+			padding: 0 10px 0 30px;
+			color: var(--fnx-gray-800);
+			line-height: 42px;
+			.ellipsis();
+		}
+
+		span {
+			margin-left: 4px;
+			color: var(--fnx-gray-600);
+			font-size: 12px;
+		}
+
+		&::before {
+			position: absolute;
+			top: 0;
+			right: 0;
+			bottom: 0;
+			left: 0;
+			background: @dark-color;
+			opacity: 0;
+			content: '';
+		}
+
+		&--active,
+		&:hover {
+			a {
+				color: @active-color;
+			}
+
+			span {
+				color: @active-color;
+			}
+		}
+
+		&--active {
+			&::before {
+				opacity: 0.2;
+			}
+		}
+	}
+}

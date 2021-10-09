@@ -1,0 +1,281 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Grid/> should change grid border when using border prop 1`] = `
+<div>
+  <div
+    class="fnx-grid"
+    style="padding-left: 0px;"
+  >
+    <div
+      class="fnx-grid-item"
+      style="flex-basis: 25%; padding-right: 0px;"
+    >
+      <div
+        class="fnx-grid-item__content"
+        data-fnx-grid-item-index="0"
+        style="right: 0px;"
+      >
+        children
+      </div>
+    </div>
+    <div
+      class="fnx-grid-item"
+      style="flex-basis: 25%; padding-right: 0px;"
+    >
+      <div
+        class="fnx-grid-item__content"
+        data-fnx-grid-item-index="1"
+        style="right: 0px;"
+      >
+        children
+      </div>
+    </div>
+    <div
+      class="fnx-grid-item"
+      style="flex-basis: 25%; padding-right: 0px;"
+    >
+      <div
+        class="fnx-grid-item__content"
+        data-fnx-grid-item-index="2"
+        style="right: 0px;"
+      >
+        children
+      </div>
+    </div>
+    <div
+      class="fnx-grid-item"
+      style="flex-basis: 25%; padding-right: 0px;"
+    >
+      <div
+        class="fnx-grid-item__content"
+        data-fnx-grid-item-index="3"
+        style="right: 0px;"
+      >
+        children
+      </div>
+    </div>
+    <div
+      class="fnx-grid-item"
+      style="flex-basis: 25%; padding-right: 0px; margin-top: 0px;"
+    >
+      <div
+        class="fnx-grid-item__content"
+        data-fnx-grid-item-index="4"
+        style="right: 0px;"
+      >
+        children
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`<Grid/> should change grid gutter when using gutter prop 1`] = `
+<div>
+  <div
+    class="fnx-grid"
+    style="padding-left: 10px;"
+  >
+    <div
+      class="fnx-grid-item"
+      style="flex-basis: 25%; padding-right: 10px;"
+    >
+      <div
+        class="fnx-grid-item__content fnx-grid-item__content--surround fnx-hairline"
+        data-fnx-grid-item-index="0"
+        style="right: 0px;"
+      >
+        children
+      </div>
+    </div>
+    <div
+      class="fnx-grid-item"
+      style="flex-basis: 25%; padding-right: 10px;"
+    >
+      <div
+        class="fnx-grid-item__content fnx-grid-item__content--surround fnx-hairline"
+        data-fnx-grid-item-index="1"
+        style="right: 0px;"
+      >
+        children
+      </div>
+    </div>
+    <div
+      class="fnx-grid-item"
+      style="flex-basis: 25%; padding-right: 10px;"
+    >
+      <div
+        class="fnx-grid-item__content fnx-grid-item__content--surround fnx-hairline"
+        data-fnx-grid-item-index="2"
+        style="right: 0px;"
+      >
+        children
+      </div>
+    </div>
+    <div
+      class="fnx-grid-item"
+      style="flex-basis: 25%; padding-right: 10px;"
+    >
+      <div
+        class="fnx-grid-item__content fnx-grid-item__content--surround fnx-hairline"
+        data-fnx-grid-item-index="3"
+        style="right: 0px;"
+      >
+        children
+      </div>
+    </div>
+    <div
+      class="fnx-grid-item"
+      style="flex-basis: 25%; padding-right: 10px; margin-top: 10px;"
+    >
+      <div
+        class="fnx-grid-item__content fnx-grid-item__content--surround fnx-hairline"
+        data-fnx-grid-item-index="4"
+        style="right: 0px;"
+      >
+        children
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`<Grid/> should change grid square when using square prop 1`] = `
+<div>
+  <div
+    class="fnx-grid fnx-hairline--top"
+    style="padding-left: 0px;"
+  >
+    <div
+      class="fnx-grid-item"
+      style="flex-basis: 25%; padding-right: 0px;"
+    >
+      <div
+        class="fnx-grid-item__content fnx-hairline"
+        data-fnx-grid-item-index="0"
+        style="right: 0px;"
+      >
+        children
+      </div>
+    </div>
+    <div
+      class="fnx-grid-item"
+      style="flex-basis: 25%; padding-right: 0px;"
+    >
+      <div
+        class="fnx-grid-item__content fnx-hairline"
+        data-fnx-grid-item-index="1"
+        style="right: 0px;"
+      >
+        children
+      </div>
+    </div>
+    <div
+      class="fnx-grid-item"
+      style="flex-basis: 25%; padding-right: 0px;"
+    >
+      <div
+        class="fnx-grid-item__content fnx-hairline"
+        data-fnx-grid-item-index="2"
+        style="right: 0px;"
+      >
+        children
+      </div>
+    </div>
+    <div
+      class="fnx-grid-item"
+      style="flex-basis: 25%; padding-right: 0px;"
+    >
+      <div
+        class="fnx-grid-item__content fnx-hairline"
+        data-fnx-grid-item-index="3"
+        style="right: 0px;"
+      >
+        children
+      </div>
+    </div>
+    <div
+      class="fnx-grid-item"
+      style="flex-basis: 25%; padding-right: 0px; margin-top: 0px;"
+    >
+      <div
+        class="fnx-grid-item__content fnx-hairline"
+        data-fnx-grid-item-index="4"
+        style="right: 0px;"
+      >
+        children
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`<Grid/> should render children correctly 1`] = `
+<div>
+  <div
+    class="fnx-grid fnx-hairline--top"
+    style="padding-left: 0px;"
+  >
+    <div
+      class="fnx-grid-item"
+      style="flex-basis: 25%; padding-right: 0px;"
+    >
+      <div
+        class="fnx-grid-item__content fnx-hairline"
+        data-fnx-grid-item-index="0"
+        style="right: 0px;"
+      >
+        children
+      </div>
+    </div>
+    <div
+      class="fnx-grid-item"
+      style="flex-basis: 25%; padding-right: 0px;"
+    >
+      <div
+        class="fnx-grid-item__content fnx-hairline"
+        data-fnx-grid-item-index="1"
+        style="right: 0px;"
+      >
+        children
+      </div>
+    </div>
+    <div
+      class="fnx-grid-item"
+      style="flex-basis: 25%; padding-right: 0px;"
+    >
+      <div
+        class="fnx-grid-item__content fnx-hairline"
+        data-fnx-grid-item-index="2"
+        style="right: 0px;"
+      >
+        children
+      </div>
+    </div>
+    <div
+      class="fnx-grid-item"
+      style="flex-basis: 25%; padding-right: 0px;"
+    >
+      <div
+        class="fnx-grid-item__content fnx-hairline"
+        data-fnx-grid-item-index="3"
+        style="right: 0px;"
+      >
+        children
+      </div>
+    </div>
+    <div
+      class="fnx-grid-item"
+      style="flex-basis: 25%; padding-right: 0px; margin-top: 0px;"
+    >
+      <div
+        class="fnx-grid-item__content fnx-hairline"
+        data-fnx-grid-item-index="4"
+        style="right: 0px;"
+      >
+        children
+      </div>
+    </div>
+  </div>
+</div>
+`;

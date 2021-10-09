@@ -1,0 +1,58 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<NoticeBar/> clear noticeBar element when close icon is clicked 1`] = `<div />`;
+
+exports[`<NoticeBar/> should not start scrolling when marquee false 1`] = `
+<div>
+  <div
+    class="fnx-notice-bar"
+  >
+    <div
+      class="fnx-notice-bar__content-wrapper"
+    >
+      <div
+        class="fnx-notice-bar__content fnx-notice-bar__content--wrap-text"
+      >
+        Content
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`<NoticeBar/> should render children correct 1`] = `
+<div>
+  <div
+    class="fnx-notice-bar fnx-notice-bar--marquee"
+  >
+    <div
+      class="fnx-notice-bar__marquee-wrapper"
+    >
+      <div
+        class="fnx-notice-bar__marquee"
+      >
+        Content
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`<NoticeBar/> should start scrolling when marquee auto and marquee width > marquee-wrapper width 1`] = `
+<div>
+  <div
+    class="fnx-notice-bar fnx-notice-bar--marquee"
+  >
+    <div
+      class="fnx-notice-bar__marquee-wrapper"
+    >
+      <div
+        class="fnx-notice-bar__marquee"
+        style="transform: translateX(-100px); transition-duration: 2500ms;"
+      >
+        Content
+      </div>
+    </div>
+  </div>
+</div>
+`;

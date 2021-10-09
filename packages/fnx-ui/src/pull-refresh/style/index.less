@@ -1,0 +1,29 @@
+:root {
+	--fnx-pull-refresh-head-height: 50px;
+	--fnx-pull-refresh-head-font-size: var(--fnx-font-size-md);
+	--fnx-pull-refresh-head-text-color: var(--fnx-gray-700);
+}
+
+.fnx-pull-refresh {
+	overflow: hidden;
+	user-select: none;
+
+	&__track {
+		position: relative;
+		height: 100%;
+		transition-property: transform;
+	}
+
+	&__indicator {
+		position: absolute;
+		left: 0;
+		width: 100%;
+		height: var(--fnx-pull-refresh-head-height);
+		overflow: hidden;
+		color: var(--fnx-pull-refresh-head-text-color);
+		font-size: var(--fnx-pull-refresh-head-font-size);
+		line-height: var(--fnx-pull-refresh-head-height);
+		text-align: center;
+		transform: translateY(-100%);
+	}
+}

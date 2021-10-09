@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Cell.Group /> should render correctly 1`] = `
+<div>
+  <div
+    class="fnx-cell-group"
+  >
+    <div
+      class="fnx-cell-group__title"
+    >
+      title
+    </div>
+    <div
+      class="fnx-cell-group__body fnx-hairline--top-bottom"
+    >
+      content
+    </div>
+  </div>
+</div>
+`;

@@ -1,0 +1,32 @@
+.demo-block {
+	&__title {
+		margin: 0;
+		padding: 32px 16px 16px;
+		color: var(--fnx-gray-800);
+		font-weight: normal;
+		font-size: 14px;
+		line-height: 16px;
+	}
+
+	&--card-mode {
+		.demo-block__content {
+			margin: 12px 12px 0;
+		}
+
+		.demo-block__title + .demo-block__content {
+			margin-top: 0;
+		}
+	}
+
+	&:first-of-type {
+		.demo-block__title {
+			padding-top: 20px;
+		}
+	}
+
+	&:last-of-type {
+		.demo-block__content {
+			padding-bottom: 20px;
+		}
+	}
+}

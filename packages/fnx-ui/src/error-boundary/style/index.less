@@ -1,0 +1,28 @@
+:root {
+	--fnx-error-boundary-background-color: var(--fnx-danger-color);
+	--fnx-error-boundary-padding: var(--fnx-padding-sm);
+	--fnx-error-boundary-title-font-size: var(--fnx-font-size-lg);
+	--fnx-error-boundary-title-color: var(--fnx-white-color);
+	--fnx-error-boundary-description-color: var(--fnx-white-color);
+}
+
+.fnx-error-boundary {
+	padding: var(--fnx-error-boundary-padding);
+	background-color: var(--fnx-error-boundary-background-color);
+
+	&__title {
+		color: var(--fnx-error-boundary-title-color);
+		font-size: var(--fnx-error-boundary-title-font-size);
+	}
+
+	&__description {
+		color: var(--fnx-error-boundary-description-color);
+		word-wrap: break-word;
+
+		> pre {
+			width: auto;
+			margin: 0;
+			overflow: auto;
+		}
+	}
+}

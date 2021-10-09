@@ -6,9 +6,17 @@
   "scripts": {
     "prepare": "yarn build:cli",
     "bootstrap": "lerna bootstrap",
-    "build:clean": "lerna run clean",
+    "dev": "lerna exec --scope fnx-ui yarn dev",
+    "clean": "lerna exec --scope fnx-ui yarn clean",
+    "build": "lerna exec --scope fnx-ui yarn build",
+    "build:site": "lerna exec --scope fnx-ui yarn build:site",
     "build:cli": "lerna exec --scope @fnx-ui/cli yarn build",
-    "clean": "lerna clean -y",
+    "test": "lerna exec --scope fnx-ui yarn test",
+    "test:cov": "lerna exec --scope fnx-ui yarn test:cov",
+    "test:update": "lerna exec --scope fnx-ui yarn test:update",
+    "lint": "lerna exec --scope fnx-ui yarn lint",
+    "changelog": "lerna-changelog",
+    "lerna:clean": "lerna clean -y",
     "publish": "lerna publish"
   },
   "repository": {
@@ -19,15 +27,20 @@
     "eslint": "^7.32.0",
     "lerna": "^4.0.0",
     "lerna-changelog": "^2.1.0",
-    "lint-staged": "^11.1.2",
+    "lint-staged": "^11.2.0",
     "prettier": "^2.4.1",
     "yorkie": "^2.0.0"
   },
   "gitHooks": {
-    "pre-commit": "lint-staged"
+    "pre-commit": "lint-staged",
+    "commit-msg": "fnx-ui-cli commit-lint"
   },
   "lint-staged": {
     "*.{ts,tsx,js,less}": "prettier --write",
-    "*.{ts,tsx}": "eslint --fix"
+    "*.{ts,tsx}": "eslint --fix",
+    "*.{css,less}": "stylelint --fix"
+  },
+  "dependencies": {
+    "@fnx-ui/cli": "^0.0.4"
   }
 }
