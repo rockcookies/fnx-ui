@@ -1,0 +1,1 @@
+.demo-grid__item{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:var(--fnx-padding-md) var(--fnx-padding-xs)}.demo-grid__image{width:100%;height:100%;vertical-align:top}.demo-grid__text{margin:var(--fnx-padding-xs) 0 0 0}.demo-grid__icon{color:var(--fnx-gray-800);font-size:28px}
