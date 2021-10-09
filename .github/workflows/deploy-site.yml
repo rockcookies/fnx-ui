@@ -4,6 +4,7 @@ on:
   push:
     branches: [master]
     paths:
+      - 'packages/fnx-ui/public/**'
       - 'packages/fnx-ui/site/**'
       - 'packages/fnx-ui/src/**'
 
