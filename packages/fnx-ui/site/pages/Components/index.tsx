@@ -16,7 +16,7 @@ const Components: FC = () => {
 			return;
 		}
 
-		return appendQuery('/demo', {
+		return appendQuery(`${window.location.pathname}#/demo`, {
 			component: menu.key,
 			locale,
 			theme,

@@ -1,6 +1,12 @@
 import { defineConfig } from 'umi';
 
+const NODE_ENV = process.env.NODE_ENV;
+const IS_DEV = NODE_ENV === 'development';
+
+const PUBLIC_PATH = IS_DEV ? '/' : './';
+
 export default defineConfig({
+	publicPath: PUBLIC_PATH,
 	nodeModulesTransform: {
 		type: 'none',
 	},
@@ -9,7 +15,7 @@ export default defineConfig({
 	hash: true,
 	// webpack5: {},
 	dynamicImport: {},
-	history: { type: 'browser' },
+	history: { type: 'hash' },
 	fastRefresh: {},
 	routes: [
 		{
