@@ -10,7 +10,7 @@ export default defineConfig({
 	nodeModulesTransform: {
 		type: 'none',
 	},
-	favicon: '/favicon.ico',
+	favicon: './favicon.ico',
 	outputPath: 'dist-site',
 	hash: true,
 	// webpack5: {},
