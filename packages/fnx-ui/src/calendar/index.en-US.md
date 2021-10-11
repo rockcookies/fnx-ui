@@ -17,7 +17,7 @@ ReactDOM.render(
 
 ## Single Date
 
-The following demonstrates the use of the pop-up layer to use the calendar component, the Date selection is complete, and the `onconfirm` event will be triggered.
+The following demonstrates the use of the pop-up layer to use the calendar component, the Date selection is complete, and the `onConfirm` event will be triggered.
 
 ```tsx
 import { Popup,Calendar } from 'fnx-ui';
