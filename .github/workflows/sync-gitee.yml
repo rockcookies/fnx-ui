@@ -1,0 +1,28 @@
+name: Sync to Gitee
+
+on:
+  schedule:
+    # 每天北京时间9点跑
+    - cron:  '0 1 * * *'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Sync to Gitee
+        uses: wearerequired/git-mirror-action@master
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.GITEE_PRIVATE_KEY }}
+        with:
+          source-repo: https://github.com/Rockcookies/fnx-ui.git
+          destination-repo: git@gitee.com:rockcookies/fnx-ui.git
+
+      - name: Reload Gitee Pages
+        uses: mizuka-wu/gitee-pages-action@v1.0.0
+        with:
+          repository: rockcookies/fnx-ui
+          cookie: ${{ secrets.GITEE_COOKIE }}
+          branch: master
+          directory: src
+          https: true

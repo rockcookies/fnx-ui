@@ -15,7 +15,7 @@ jobs:
       - name: Checkout 🛎️
         uses: actions/checkout@v2
 
-      - name: Git Identity
+      - name: Git Identity 🔑
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
@@ -23,10 +23,11 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Install dependencies
+      - name: Install dependencies ‍🌈
         run: npm run bootstrap
 
-      - name: Build Site
+      - name: Build Site ‍🔨
+        run: npm run bootstrap
         run: npm run build:site
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -36,3 +37,5 @@ jobs:
         with:
           branch: gh-pages
           folder: packages/fnx-ui/dist-site
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
