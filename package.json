@@ -17,7 +17,7 @@
     "lint": "lerna exec --scope fnx-ui yarn lint",
     "changelog": "lerna-changelog",
     "lerna:clean": "lerna clean -y",
-    "publish": "lerna publish"
+    "publish": "yarn run build && lerna publish"
   },
   "repository": {
     "type": "git",
