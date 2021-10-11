@@ -1,13 +1,13 @@
 name: Deploy Site
 
 on:
-  workflow_dispatch:
   push:
     branches: [master]
     paths:
       - 'packages/fnx-ui/public/**'
       - 'packages/fnx-ui/site/**'
       - 'packages/fnx-ui/src/**'
+  workflow_dispatch:
 
 jobs:
   build-and-deploy:
