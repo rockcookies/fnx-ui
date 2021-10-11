@@ -50,7 +50,7 @@ const Demo: FC = () => {
 					)}
 				>
 					{Demo != null && (
-						<Suspense fallback={<div>Loading...</div>}>
+						<Suspense fallback={<></>}>
 							<Demo />
 						</Suspense>
 					)}

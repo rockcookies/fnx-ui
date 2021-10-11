@@ -5,6 +5,7 @@ import { compileWebpack } from '../compile/compile-webpack';
 import { DIRS } from '../core/constants';
 import { signal } from '../core/logger';
 import { clean } from './clean';
+import execa from 'execa';
 
 async function buildComponentScriptEntry() {
 	await fb({
@@ -19,6 +20,14 @@ async function buildComponentScriptEntry() {
 			},
 		},
 	});
+}
+
+async function buildTypeDeclarations() {
+	for (const dir of ['es', 'lib']) {
+		await execa(
+			`tsc --declaration --emitDeclarationOnly --rootDir src --declarationDir ${dir}`,
+		);
+	}
 }
 
 const tasks = Array.from<{
@@ -36,6 +45,10 @@ const tasks = Array.from<{
 	{
 		text: 'Build Package Style Outputs',
 		task: compileCss,
+	},
+	{
+		text: 'Build Type Declarations',
+		task: buildTypeDeclarations,
 	},
 	{
 		text: 'Build CommonJS Outputs',

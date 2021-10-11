@@ -7,7 +7,7 @@ import './SiteMenuTree.less';
 
 const bem = createBEM('site-menu-tree');
 
-type CProps = HTMLAttributes<HTMLElement>;
+type CProps = HTMLAttributes<HTMLDivElement>;
 
 const SideMenuTree: FC<CProps> = (props: CProps) => {
 	const { locale, category, menu } = useContext(SiteContext);

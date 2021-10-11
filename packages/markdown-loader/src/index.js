@@ -17,6 +17,8 @@ function getNormalizedMarkdownCompiler(options) {
 		return { render: options.markdown };
 	}
 
+	const className = options.className;
+
 	const parser = new MarkdownIt({ html: true })
 		.use(markdownItAnchor, {
 			level: 2,
@@ -33,7 +35,7 @@ function getNormalizedMarkdownCompiler(options) {
 		self,
 	) {
 		return (
-			`<div class='table-wrapper'>` +
+			`<div class='${className ? className + '__' : ''}table-wrapper'>` +
 			self.renderToken(tokens, idx, options)
 		);
 	};

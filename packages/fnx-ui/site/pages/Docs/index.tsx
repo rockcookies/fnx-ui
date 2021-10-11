@@ -2,6 +2,7 @@ import React, { FC, useContext, useEffect, useState } from 'react';
 import { Redirect } from 'umi';
 import { setScrollTop } from '../../../src/utils/dom/scroll';
 import { createBEM } from '../../../src/utils/namespace';
+import Markdown from '../../components/Markdown';
 import { SiteContext } from '../../layout/context';
 import './index.less';
 
@@ -19,6 +20,8 @@ const Components: FC = () => {
 
 		let canceled = false;
 		const md = locale === 'zh-CN' ? menu.markdownCN() : menu.markdown();
+
+		setContent(undefined);
 
 		md.then((resp) => {
 			if (canceled) {
@@ -41,12 +44,7 @@ const Components: FC = () => {
 
 	return (
 		<div className={bem()}>
-			<div
-				className="markdown"
-				dangerouslySetInnerHTML={{
-					__html: content,
-				}}
-			></div>
+			<Markdown html={content} />
 		</div>
 	);
 };

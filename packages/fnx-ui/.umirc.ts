@@ -14,7 +14,9 @@ export default defineConfig({
 	outputPath: 'dist-site',
 	hash: true,
 	// webpack5: {},
-	dynamicImport: {},
+	dynamicImport: {
+		loading: '@/../site/components/PageLoading/index.tsx',
+	},
 	history: { type: 'hash' },
 	fastRefresh: {},
 	routes: [
@@ -40,7 +42,9 @@ export default defineConfig({
 			.loader(require.resolve('@fnx-ui/markdown-loader'))
 			.tap(() => {
 				// loader options
-				return {};
+				return {
+					className: 'markdown',
+				};
 			});
 
 		config.module

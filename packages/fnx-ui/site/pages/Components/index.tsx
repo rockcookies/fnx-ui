@@ -2,6 +2,7 @@ import React, { FC, useContext, useEffect, useMemo, useState } from 'react';
 import { Redirect } from 'umi';
 import { setScrollTop } from '../../../src/utils/dom/scroll';
 import { createBEM } from '../../../src/utils/namespace';
+import Markdown from '../../components/Markdown';
 import { SiteContext } from '../../layout/context';
 import { appendQuery } from '../../utils/history-utils';
 import './index.less';
@@ -55,12 +56,7 @@ const Components: FC = () => {
 	return (
 		<div className={bem()}>
 			<div className={bem('article')}>
-				<div
-					className="markdown"
-					dangerouslySetInnerHTML={{
-						__html: content,
-					}}
-				></div>
+				<Markdown html={content} />
 			</div>
 			{demoUrl && (
 				<div className={bem('device')}>

@@ -69,7 +69,7 @@ const Layout: FC = () => {
 	// 菜单
 	const menu = useMemo<SiteMenu | undefined>(() => {
 		if (params.menu != null) {
-			for (const { children } of category.children || []) {
+			for (const { children } of category?.children || []) {
 				for (const menu of children || []) {
 					if (menu.key === params.menu) {
 						return menu;
@@ -103,7 +103,7 @@ const Layout: FC = () => {
 		<SiteContext.Provider
 			value={{
 				locale,
-				responsive,
+				responsive: responsive || {},
 				theme,
 				setTheme,
 				category,
@@ -112,7 +112,7 @@ const Layout: FC = () => {
 		>
 			<section
 				className={bem({
-					mobile: !responsive.md,
+					mobile: !responsive?.md,
 					'layout-mode': category == null,
 				})}
 			>
