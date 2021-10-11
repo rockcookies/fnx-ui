@@ -1,5 +1,5 @@
-const cli = require('@fnx-ui/cli');
+const stylelint = require('./packages/cli/lib/stylelint.js');
 
 module.exports = {
-	...cli.stylelint,
+	...stylelint,
 };

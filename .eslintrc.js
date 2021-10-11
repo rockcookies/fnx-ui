@@ -1,3 +1,3 @@
 module.exports = {
-	extends: [require.resolve('@fnx-ui/cli/lib/eslint')],
+	extends: [require.resolve('./packages/cli/lib/eslint.js')],
 };

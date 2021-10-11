@@ -39,8 +39,5 @@
     "*.{ts,tsx,js,less}": "prettier --write",
     "*.{ts,tsx}": "eslint --fix",
     "*.{css,less}": "stylelint --fix"
-  },
-  "dependencies": {
-    "@fnx-ui/cli": "^0.0.4"
   }
 }
