@@ -1,15 +1,13 @@
-import React, { FC, HTMLAttributes } from 'react';
-import { classnames, createBEM } from '../../../src/utils/namespace';
+import React, { FC } from 'react';
+import { createBEM } from '../../../src/utils/namespace';
 import logo from '../../assets/logo.svg';
 import './index.less';
 
 const bem = createBEM('page-loading');
 
-const PageLoading: FC<HTMLAttributes<HTMLDivElement>> = (_props) => {
-	const { className, ...props } = _props;
-
+const PageLoading: FC = () => {
 	return (
-		<div className={classnames(bem(), className)} {...props}>
+		<div className={bem()}>
 			<img src={logo} />
 		</div>
 	);
