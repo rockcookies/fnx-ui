@@ -1,4 +1,4 @@
-import React, { FC, useContext, useState } from 'react';
+import React, { FC, useContext, useState, useEffect } from 'react';
 import { Link } from 'umi';
 import pkg from '../../package.json';
 import { createBEM } from '../../src/utils/namespace';
@@ -83,6 +83,18 @@ const SiteHeader: FC = () => {
 		);
 	};
 
+	useEffect(() => {
+		if (asideExpanded && responsive.md) {
+			const body = document.body;
+
+			body.style.overflow = 'hidden';
+
+			return () => {
+				body.style.removeProperty('overflow');
+			};
+		}
+	}, [asideExpanded, responsive.md]);
+
 	const renderNav = () => {
 		return (
 			<>
@@ -161,8 +173,10 @@ const SiteHeader: FC = () => {
 						})}
 					></div>
 					<div className={bem('aside', { expanded: asideExpanded })}>
-						<ul className={bem('aside-nav')}>{renderNav()}</ul>
-						<SideMenuTree />
+						<div className={bem('aside-container')}>
+							<ul className={bem('aside-nav')}>{renderNav()}</ul>
+							<SideMenuTree />
+						</div>
 					</div>
 				</div>
 			)}

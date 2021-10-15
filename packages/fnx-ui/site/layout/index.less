@@ -37,10 +37,12 @@ a {
 		z-index: @site-z-index;
 		width: @site-aside-width;
 		height: calc(100vh - @site-header-height);
-		overflow: auto;
+		overflow-x: hidden;
+		overflow-y: scroll;
 		background: var(--fnx-page-color);
 		border-right: 1px solid var(--fnx-gray-200);
 		transition: transform 0.3s;
+		-webkit-overflow-scrolling: touch;
 
 		&::-webkit-scrollbar {
 			width: 6px;
@@ -81,7 +83,7 @@ a {
 
 	&--mobile {
 		.site__aside {
-			transform: translateX(-100%);
+			display: none;
 		}
 
 		.site__main {
