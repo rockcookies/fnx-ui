@@ -9,11 +9,11 @@ import React, {
 	useState,
 } from 'react';
 import ConfigProvider from '../config-provider';
-import useProps from '../hooks/use-props';
 import useDefaultsRef from '../hooks/use-defaults-ref';
+import useProps from '../hooks/use-props';
 import Loading from '../loading';
 import { useLocale } from '../locale';
-import { preventDefault, SUPPORTS_PASSIVE } from '../utils/dom/event';
+import { bindEvent, preventDefault } from '../utils/dom/event';
 import { getScrollParent, getScrollTop } from '../utils/dom/scroll';
 import TouchHelper from '../utils/dom/touch-helper';
 import { noop } from '../utils/misc';
@@ -164,11 +164,7 @@ const PullRefresh = forwardRef<HTMLDivElement, PullRefreshProps>(
 			};
 
 			node.addEventListener('touchstart', onTouchStart, false);
-			node.addEventListener(
-				'touchmove',
-				onTouchMove,
-				SUPPORTS_PASSIVE ? { passive: false } : false,
-			);
+			bindEvent(node, 'touchmove', onTouchMove, { passive: false });
 			node.addEventListener('touchend', onTouchEnd, false);
 			node.addEventListener('touchcancel', onTouchEnd, false);
 
@@ -302,10 +298,10 @@ const PullRefresh = forwardRef<HTMLDivElement, PullRefreshProps>(
 PullRefresh.displayName = 'PullRefresh';
 
 export type {
-	PullRefreshSlots as PullRefreshIndicator,
-	PullRefreshIndicatorNode,
 	PullRefreshComponentProps,
+	PullRefreshIndicatorNode,
 	PullRefreshProps,
+	PullRefreshSlots as PullRefreshIndicator,
 } from './interface';
 
 export default PullRefresh;

@@ -11,7 +11,7 @@ import { CSSTransition } from 'react-transition-group';
 import ConfigProvider from '../config-provider';
 import useDefaults from '../hooks/use-defaults';
 import useProps from '../hooks/use-props';
-import { preventDefault, SUPPORTS_PASSIVE } from '../utils/dom/event';
+import { bindEvent, preventDefault } from '../utils/dom/event';
 import { classnames, createBEM } from '../utils/namespace';
 import { OverlayProps } from './interface';
 
@@ -69,11 +69,7 @@ const Overlay = forwardRef<HTMLDivElement, OverlayProps>((_props, ref) => {
 				preventDefault(e, true);
 			};
 
-			overlay.addEventListener(
-				'touchmove',
-				touchmove,
-				SUPPORTS_PASSIVE ? { passive: false } : false,
-			);
+			bindEvent(overlay, 'touchmove', touchmove, { passive: false });
 
 			return () => {
 				overlay.removeEventListener('touchmove', touchmove);
@@ -133,5 +129,5 @@ const Overlay = forwardRef<HTMLDivElement, OverlayProps>((_props, ref) => {
 
 Overlay.displayName = 'Overlay';
 
-export type { OverlayProps, OverlayComponentProps } from './interface';
+export type { OverlayComponentProps, OverlayProps } from './interface';
 export default Overlay;

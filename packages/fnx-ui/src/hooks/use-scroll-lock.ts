@@ -1,6 +1,6 @@
 import { RefObject, useEffect } from 'react';
 import { canUseDom } from '../utils/detect';
-import { preventDefault, SUPPORTS_PASSIVE } from '../utils/dom/event';
+import { bindEvent, preventDefault } from '../utils/dom/event';
 import { getScrollParent } from '../utils/dom/scroll';
 import TouchHelper from '../utils/dom/touch-helper';
 
@@ -49,11 +49,7 @@ export default function useScrollLock(
 		};
 
 		document.addEventListener('touchstart', touch.start);
-		document.addEventListener(
-			'touchmove',
-			onTouchMove,
-			SUPPORTS_PASSIVE ? { passive: false } : false,
-		);
+		bindEvent(document, 'touchmove', onTouchMove, { passive: false });
 
 		if (!totalLockCount) {
 			document.body.classList.add(BODY_LOCK_CLASS);

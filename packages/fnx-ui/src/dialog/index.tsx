@@ -114,7 +114,7 @@ Dialog.useDialog = () => {
 	}, [contextRef]);
 };
 
-export {
+export type {
 	DialogComponentProps,
 	DialogContext,
 	DialogInstance,

@@ -7,17 +7,17 @@ import React, {
 	useMemo,
 	useRef,
 } from 'react';
+import useControlledState from '../hooks/use-controlled-state';
+import useDefaultsRef from '../hooks/use-defaults-ref';
 import useProps from '../hooks/use-props';
 import Icon from '../icon/Icon';
-import useDefaultsRef from '../hooks/use-defaults-ref';
-import { preventDefault, SUPPORTS_PASSIVE } from '../utils/dom/event';
+import { bindEvent, preventDefault } from '../utils/dom/event';
 import TouchHelper from '../utils/dom/touch-helper';
 import { addUnit } from '../utils/format';
 import { Dictionary } from '../utils/interface';
 import { noop } from '../utils/misc';
 import { classnames, createBEM } from '../utils/namespace';
 import { RateProps } from './interface';
-import useControlledState from '../hooks/use-controlled-state';
 
 const NS = 'fnx-rate';
 const bem = createBEM(NS);
@@ -189,11 +189,7 @@ const Rate = forwardRef<HTMLUListElement, RateProps>((_props, ref) => {
 		};
 
 		node.addEventListener('touchstart', onTouchStart, false);
-		node.addEventListener(
-			'touchmove',
-			onTouchMove,
-			SUPPORTS_PASSIVE ? { passive: false } : false,
-		);
+		bindEvent(node, 'touchmove', onTouchMove, { passive: false });
 
 		return () => {
 			node.removeEventListener('touchstart', onTouchStart);

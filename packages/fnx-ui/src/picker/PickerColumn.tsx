@@ -12,7 +12,7 @@ import useCreation from '../hooks/use-creation';
 import useDefaultsRef from '../hooks/use-defaults-ref';
 import useSafeState from '../hooks/use-safe-state';
 import useUpdateEffect from '../hooks/use-update-effect';
-import { preventDefault, SUPPORTS_PASSIVE } from '../utils/dom/event';
+import { bindEvent, preventDefault } from '../utils/dom/event';
 import TouchHelper from '../utils/dom/touch-helper';
 import { clamp } from '../utils/format';
 import { isEqualArrays } from '../utils/misc';
@@ -360,11 +360,7 @@ const PickerColumn = forwardRef<PickerColumnRef, CProps>((props, ref) => {
 		};
 
 		node.addEventListener('touchstart', onTouchStart, false);
-		node.addEventListener(
-			'touchmove',
-			onTouchMove,
-			SUPPORTS_PASSIVE ? { passive: false } : false,
-		);
+		bindEvent(node, 'touchmove', onTouchMove, { passive: false });
 		node.addEventListener('touchend', onTouchEnd, false);
 		node.addEventListener('touchcancel', onTouchEnd, false);
 

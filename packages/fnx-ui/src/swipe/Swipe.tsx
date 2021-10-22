@@ -10,12 +10,13 @@ import React, {
 	useRef,
 } from 'react';
 import ResizeObserver from 'resize-observer-polyfill';
-import useProps from '../hooks/use-props';
 import useDefaultsRef from '../hooks/use-defaults-ref';
+import usePopupReopen from '../hooks/use-popup-reopen';
+import useProps from '../hooks/use-props';
 import {
+	bindEvent,
 	listenDocumentVisibilityChange,
 	preventDefault,
-	SUPPORTS_PASSIVE,
 } from '../utils/dom/event';
 import TouchHelper from '../utils/dom/touch-helper';
 import { noop } from '../utils/misc';
@@ -23,7 +24,6 @@ import { classnames, createBEM } from '../utils/namespace';
 import { toElementArray } from '../utils/react';
 import useSwipe from './hooks/use-swipe';
 import { SwipeComponentRequiredProps, SwipeProps, SwipeRef } from './interface';
-import usePopupReopen from '../hooks/use-popup-reopen';
 
 const NS = 'fnx-swipe';
 const bem = createBEM(NS);
@@ -341,11 +341,7 @@ const Swipe = forwardRef<SwipeRef, SwipeProps>((_props, ref) => {
 		};
 
 		node.addEventListener('touchstart', onTouchStart, false);
-		node.addEventListener(
-			'touchmove',
-			onTouchMove,
-			SUPPORTS_PASSIVE ? { passive: false } : false,
-		);
+		bindEvent(node, 'touchmove', onTouchMove, { passive: false });
 		node.addEventListener('touchend', onTouchEnd, false);
 		node.addEventListener('touchcancel', onTouchEnd, false);
 

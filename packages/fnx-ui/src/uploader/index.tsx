@@ -5,7 +5,7 @@ import UploaderPreviewItem from './UploaderPreviewItem';
 const Uploader: UploaderComponent & UploaderExportExtra = _Uploader as any;
 Uploader.PreviewItem = UploaderPreviewItem;
 
-export {
+export type {
 	UploaderFileStatus,
 	UploaderFile,
 	UploaderMarkedFile,

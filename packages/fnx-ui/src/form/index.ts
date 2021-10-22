@@ -9,7 +9,7 @@ Form.Item = FormItem;
 Form.List = FormList;
 Form.useForm = useForm;
 
-export {
+export type {
 	NamePath,
 	FormMeta,
 	FormLabelAlign,
