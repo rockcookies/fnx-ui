@@ -1,0 +1,1 @@
+System.register([],(function(t){"use strict";return{execute:function(){t("attributes",{}),t("html",'<h1>支持的平台</h1>\n<h2 id="liu-lan-qi" tabindex="-1">浏览器</h2>\n<p>支持现代浏览器以及 Chrome &gt;= 51、Android &gt;= 5.0、iOS &gt;= 10.0。</p>\n<h2 id="react" tabindex="-1">React</h2>\n<p>需要版本 &gt; 16.3.1。</p>\n<h2 id="typescript" tabindex="-1">TypeScript</h2>\n<p>需要版本 &gt; 4.0。</p>\n')}}}));
