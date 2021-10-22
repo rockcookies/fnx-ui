@@ -1,5 +1,5 @@
 import React, { FC, useContext, useEffect, useState } from 'react';
-import { Redirect } from 'umi';
+import { Redirect } from 'react-router-dom';
 import { setScrollTop } from '../../../src/utils/dom/scroll';
 import { createBEM } from '../../../src/utils/namespace';
 import Markdown from '../../components/Markdown';
@@ -8,7 +8,7 @@ import './index.less';
 
 const bem = createBEM('docs');
 
-const Components: FC = () => {
+const Docs: FC = () => {
 	const { locale, menu } = useContext(SiteContext);
 
 	const [content, setContent] = useState<string>();
@@ -49,6 +49,6 @@ const Components: FC = () => {
 	);
 };
 
-Components.displayName = 'Components';
+Docs.displayName = 'Docs';
 
-export default Components;
+export default Docs;

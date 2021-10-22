@@ -1,13 +1,16 @@
 import fs from 'fs-extra';
-import debug from 'gulp-debug';
 import less from 'gulp-less';
 import plumber from 'gulp-plumber';
 import path from 'path';
 import through from 'through2';
 import vfs from 'vinyl-fs';
 import { DIRS } from '../core/constants';
-import { pipeline } from '../core/utils';
+import { signal } from '../core/logger';
+import { onRelative, pipeline } from '../core/utils';
 import { getPostcss } from './compile-less';
+import chalk from 'chalk';
+
+const relative = onRelative(DIRS.cwd);
 
 const buildCss = async (options: { minify: boolean }): Promise<void> => {
 	await pipeline(
@@ -25,11 +28,12 @@ const buildCss = async (options: { minify: boolean }): Promise<void> => {
 						file.path = file.path.replace(/\.css/, '.min.css');
 					}
 
+					signal.info(`Build CSS ${chalk.blue(relative(file.path))}`);
+
 					this.push(file);
 					cb();
 				}),
 			)
-			.pipe(debug({ title: 'build css' }))
 			.pipe(plumber.stop())
 			.pipe(vfs.dest(DIRS.dist)),
 	);
@@ -43,12 +47,13 @@ export async function compileCss() {
 		"@import '../es/index.less';\n",
 	);
 
-	// eslint-disable-next-line @typescript-eslint/no-var-requires
-	const createTheme = require(path.join(DIRS.src, 'style/theme.js'));
+	const dark = await fs.readJSON(path.join(DIRS.src, 'style/dark.json'));
+	const light = await fs.readJSON(path.join(DIRS.src, 'style/light.json'));
 
-	for (const theme of ['light', 'dark']) {
-		const variables = createTheme(theme);
-
+	for (const [theme, variables] of Array.from<[string, any]>([
+		['dark', dark],
+		['light', light],
+	])) {
 		let css = ':root {\n';
 
 		for (const key in variables) {
@@ -57,10 +62,11 @@ export async function compileCss() {
 
 		css += `}\n`;
 
-		await fs.writeFile(
-			path.join(DIRS.dist, `fnx-theme-${theme}.less`),
-			css,
-		);
+		const dest = path.join(DIRS.dist, `fnx-theme-${theme}.less`);
+
+		signal.info(`Build Theme ${chalk.blue(relative(dest))}`);
+
+		await fs.writeFile(dest, css);
 	}
 
 	await buildCss({ minify: false });

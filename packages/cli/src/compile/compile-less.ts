@@ -1,18 +1,21 @@
 import autoprefixer from 'autoprefixer';
+import chalk from 'chalk';
 import cssnano from 'cssnano';
-import debug from 'gulp-debug';
 import less from 'gulp-less';
 import plumber from 'gulp-plumber';
 import postcss from 'gulp-postcss';
 import { join } from 'path';
 import through from 'through2';
 import vfs from 'vinyl-fs';
-import { DIRS } from '../core/constants';
-import { pipeline } from '../core/utils';
+import { COMPILE_TARGETS, DIRS } from '../core/constants';
+import { signal } from '../core/logger';
+import { onRelative, pipeline } from '../core/utils';
 
 export const getPostcss = ({ minify }) => {
 	return postcss([
-		autoprefixer(),
+		autoprefixer({
+			overrideBrowserslist: COMPILE_TARGETS,
+		}),
 		...(minify
 			? [
 					cssnano({
@@ -24,6 +27,8 @@ export const getPostcss = ({ minify }) => {
 			: []),
 	]);
 };
+
+const relative = onRelative(DIRS.cwd);
 
 const cssInjection = (content: string) => {
 	return content
@@ -47,7 +52,16 @@ async function compileLessEntry(cwd: string): Promise<void> {
 				},
 			)
 			.pipe(plumber())
-			.pipe(debug({ title: 'transform to css' }))
+			.pipe(
+				through.obj(function transform(file: any, encoding, cb: any) {
+					signal.info(
+						`Transform to css for ${chalk.blue(
+							relative(file.path),
+						)}`,
+					);
+					cb();
+				}),
+			)
 			.pipe(less({ javascriptEnabled: true }))
 			.pipe(getPostcss({ minify: false }))
 			.pipe(plumber.stop())
@@ -62,12 +76,18 @@ async function compileCssEntry(cwd: string): Promise<void> {
 				base: cwd,
 			})
 			.pipe(plumber())
-			.pipe(debug({ title: 'transform css.js' }))
 			.pipe(
 				through.obj(function transform(file: any, encoding, cb: any) {
 					this.push(file.clone());
 					const content = file.contents.toString(encoding);
 					file.contents = Buffer.from(cssInjection(content));
+
+					signal.info(
+						`Transform to css.js for ${chalk.blue(
+							relative(file.path),
+						)}`,
+					);
+
 					file.path = file.path.replace(/index\.js/, 'css.js');
 					this.push(file);
 					cb();

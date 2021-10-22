@@ -1,5 +1,6 @@
 import React, { FC, Suspense, useCallback, useMemo, useState } from 'react';
-import { useRouteMatch } from 'umi';
+import { useRouteMatch } from 'react-router-dom';
+import Helmet from 'react-helmet';
 import pkg from '../../package.json';
 import { Dictionary } from '../../src/utils/interface';
 import { createBEM } from '../../src/utils/namespace';
@@ -12,6 +13,7 @@ import { SiteContext } from './context';
 import './index.less';
 import SiteHeader from './SiteHeader';
 import SideMenuTree from './SiteMenuTree';
+import PageLoading from '../components/PageLoading';
 
 const bem = createBEM('site');
 
@@ -23,6 +25,15 @@ const useResponsive = configResponsive({
 	xl: 1200,
 	xxl: 1600,
 });
+
+const I18N: Dictionary<Dictionary<string>> = {
+	'zh-CN': {
+		slogan: '轻量、可靠的移动端 React 组件库',
+	},
+	'en-US': {
+		slogan: 'Lightweight Mobile UI Components built in React',
+	},
+};
 
 const Layout: FC = () => {
 	const [responsive] = useResponsive();
@@ -38,6 +49,8 @@ const Layout: FC = () => {
 		() => (params.locale === 'zh-CN' ? 'zh-CN' : 'en-US'),
 		[params.locale],
 	);
+
+	const i18n = I18N[locale];
 
 	// 主题
 	const [theme, _setTheme] = useState<'dark' | 'light'>(() => {
@@ -116,16 +129,27 @@ const Layout: FC = () => {
 					'layout-mode': category == null,
 				})}
 			>
+				<Helmet>
+					<title>
+						{menu
+							? `${
+									locale === 'zh-CN'
+										? menu.titleCN
+										: menu.title
+							  } - FNX-UI`
+							: `FNX-UI - ${i18n.slogan}`}
+					</title>
+				</Helmet>
 				<SiteHeader />
 				<SideMenuTree className={bem('aside')} />
 				<div className={bem('main')}>
 					<div className={bem('content')}>
 						{category ? (
-							<Suspense fallback={<></>}>
+							<Suspense fallback={<PageLoading />}>
 								<category.component />
 							</Suspense>
 						) : (
-							<Index />
+							<Index slogan={i18n.slogan} />
 						)}
 					</div>
 					{renderFooter()}

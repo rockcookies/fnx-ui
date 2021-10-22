@@ -16,7 +16,7 @@ function runCommand(
 	signal.info(messages.start);
 
 	return new Promise((resolve) => {
-		execa(cmd, options)
+		execa(cmd, options, {})
 			.then(() => {
 				signal.success(messages.succeed);
 				resolve(true);

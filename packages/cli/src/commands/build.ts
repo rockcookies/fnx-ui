@@ -1,26 +1,10 @@
-import fb from 'father-build';
+import execa from 'execa';
 import { compileCss } from '../compile/compile-css';
+import { compileJs } from '../compile/compile-js';
 import { compileLess } from '../compile/compile-less';
 import { compileWebpack } from '../compile/compile-webpack';
-import { DIRS } from '../core/constants';
 import { signal } from '../core/logger';
 import { clean } from './clean';
-import execa from 'execa';
-
-async function buildComponentScriptEntry() {
-	await fb({
-		cwd: DIRS.cwd,
-		rootConfig: {
-			cjs: {
-				type: 'babel',
-				lazy: true,
-			},
-			esm: {
-				type: 'babel',
-			},
-		},
-	});
-}
 
 async function buildTypeDeclarations() {
 	for (const dir of ['es', 'lib']) {
@@ -36,7 +20,7 @@ const tasks = Array.from<{
 }>([
 	{
 		text: 'Build Component Script Entry',
-		task: buildComponentScriptEntry,
+		task: compileJs,
 	},
 	{
 		text: 'Build Component Style Entry',

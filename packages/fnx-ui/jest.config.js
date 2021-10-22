@@ -1,8 +1,8 @@
 module.exports = {
 	roots: ['<rootDir>/src'],
-	// preset: 'ts-jest',
-	// testRegex: '^.+\\.spec\\.(ts|tsx)$',
-	moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
-	// setupFilesAfterEnv: ['<rootDir>/setup-jest.js'],
-	coveragePathIgnorePatterns: ['demos', 'style', '.umi'],
+	coveragePathIgnorePatterns: ['demos', 'style'],
+	testMatch: [
+		'<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}',
+		'<rootDir>/src/**/*.{spec,test}.{js,jsx,ts,tsx}',
+	],
 };

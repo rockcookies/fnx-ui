@@ -9,8 +9,15 @@
     "esModuleInterop": true,
     "sourceMap": true,
     "strict": true,
-    "allowJs": false
+    "allowJs": false,
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "useDefineForClassFields": true,
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true
   },
+  "include": ["src"],
   "exclude": [
     "node_modules",
     "lib",

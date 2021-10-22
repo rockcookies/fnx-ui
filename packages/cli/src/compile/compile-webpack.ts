@@ -3,6 +3,7 @@ import webpack from 'webpack';
 import TerserPlugin from 'terser-webpack-plugin';
 import ProgressBarPlugin from 'progress-bar-webpack-plugin';
 import { DIRS } from '../core/constants';
+import { getBabelOptions } from './get-babel-options';
 
 export async function compileWebpack() {
 	const compile = webpack({
@@ -34,22 +35,11 @@ export async function compileWebpack() {
 		module: {
 			rules: [
 				{
-					test: /\.jsx?$/,
-					use: {
-						loader: 'babel-loader',
-						options: {
-							presets: ['@umijs/babel-preset-umi/app'],
-						},
-					},
-				},
-				{
 					test: /\.tsx?$/,
 					exclude: /(node_modules|bower_components)/,
 					use: {
 						loader: 'babel-loader',
-						options: {
-							presets: ['@umijs/babel-preset-umi/app'],
-						},
+						options: getBabelOptions('umd'),
 					},
 				},
 			],

@@ -1,5 +1,5 @@
 import React, { FC, LazyExoticComponent, Suspense, useMemo } from 'react';
-import { useLocation } from 'umi';
+import { useLocation } from 'react-router-dom';
 import { ConfigProvider } from '../../../src';
 import '../../../src/index.less';
 import enUS from '../../../src/locale/en-US';
@@ -18,7 +18,7 @@ const Demo: FC = () => {
 	const { search } = useLocation();
 
 	const {
-		demo: Demo,
+		demo: Cmp,
 		locale,
 		key,
 		theme,
@@ -49,9 +49,9 @@ const Demo: FC = () => {
 						`demo-${key}`,
 					)}
 				>
-					{Demo != null && (
+					{Cmp != null && (
 						<Suspense fallback={<></>}>
-							<Demo />
+							<Cmp />
 						</Suspense>
 					)}
 				</section>

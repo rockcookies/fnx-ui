@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { useLocation } from 'umi';
+import { useLocation } from 'react-router-dom';
 
 const NotFound: FC = () => {
 	const { pathname } = useLocation();

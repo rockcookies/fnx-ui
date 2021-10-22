@@ -4,13 +4,14 @@
     "packages/*"
   ],
   "scripts": {
-    "prepare": "yarn build:cli",
+    "prepare": "yarn build:cli && yarn build:vite-plugin-markdown",
     "bootstrap": "lerna bootstrap",
     "dev": "lerna exec --scope fnx-ui yarn dev",
     "clean": "lerna exec --scope fnx-ui yarn clean",
     "build": "lerna exec --scope fnx-ui yarn build",
     "build:site": "lerna exec --scope fnx-ui yarn build:site",
     "build:cli": "lerna exec --scope @fnx-ui/cli yarn build",
+    "build:vite-plugin-markdown": "lerna exec --scope @fnx-ui/vite-plugin-markdown yarn build",
     "test": "lerna exec --scope fnx-ui yarn test",
     "test:cov": "lerna exec --scope fnx-ui yarn test:cov",
     "test:update": "lerna exec --scope fnx-ui yarn test:update",
@@ -26,7 +27,7 @@
   "devDependencies": {
     "eslint": "^7.32.0",
     "lerna": "^4.0.0",
-    "lerna-changelog": "^2.1.0",
+    "lerna-changelog": "^2.2.0",
     "lint-staged": "^11.2.0",
     "prettier": "^2.4.1",
     "yorkie": "^2.0.0"

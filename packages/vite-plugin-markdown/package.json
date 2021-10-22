@@ -1,23 +1,27 @@
 {
-  "name": "@fnx-ui/markdown-loader",
-  "version": "0.0.2",
-  "description": "Simple and fast React markdown loader",
-  "main": "src/index.js",
+  "name": "@fnx-ui/vite-plugin-markdown",
+  "version": "0.0.1",
+  "description": "",
+  "main": "lib/index.js",
+  "typings": "lib/index.d.ts",
+  "files": [
+    "lib"
+  ],
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "clean": "rimraf ./lib",
+    "build": "tsc --build"
   },
   "keywords": [],
   "license": "MIT",
   "peerDependencies": {
-    "react": ">=16.3.1"
+    "vite": "^2.0.0"
   },
   "dependencies": {
     "front-matter": "^4.0.2",
-    "loader-utils": "^3.0.0",
     "markdown-it": "^12.2.0",
     "markdown-it-anchor": "^8.4.1",
     "markdown-it-prism": "^2.2.1",
@@ -25,6 +29,9 @@
     "transliteration": "^2.2.0"
   },
   "devDependencies": {
-    "@types/prismjs": "^1.16.6"
+    "@types/markdown-it": "^12.2.3",
+    "@types/node": "^16.11.2",
+    "@types/prismjs": "^1.16.6",
+    "vite": "^2.6.10"
   }
 }

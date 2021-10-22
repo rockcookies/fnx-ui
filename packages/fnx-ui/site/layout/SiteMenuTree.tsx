@@ -1,5 +1,5 @@
 import React, { FC, HTMLAttributes, ReactNode, useContext } from 'react';
-import { Link } from 'umi';
+import { Link } from 'react-router-dom';
 import { classnames, createBEM } from '../../src/utils/namespace';
 import { SiteMenu } from '../site-protocol';
 import { SiteContext } from './context';

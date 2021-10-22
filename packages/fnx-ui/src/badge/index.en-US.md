@@ -1,6 +1,6 @@
 # Badge
 
-Logo numbers or small red dots in the upper right corner.
+Small numerical value or status descriptor for UI elements.
 
 ## Basic Usage
 

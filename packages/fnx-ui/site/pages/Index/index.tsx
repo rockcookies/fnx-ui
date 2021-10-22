@@ -1,5 +1,5 @@
 import React, { FC, useContext } from 'react';
-import { Link } from 'umi';
+import { Link } from 'react-router-dom';
 import { Dictionary } from '../../../src/utils/interface';
 import { createBEM } from '../../../src/utils/namespace';
 import { SiteContext } from '../../layout/context';
@@ -20,7 +20,11 @@ const I18N: Dictionary<Dictionary<string>> = {
 	},
 };
 
-const SiteIndex: FC = () => {
+interface CProps {
+	slogan?: string;
+}
+
+const SiteIndex: FC<CProps> = (props) => {
 	const { locale, setTheme, theme } = useContext(SiteContext);
 
 	const i18n = I18N[locale];
@@ -29,7 +33,7 @@ const SiteIndex: FC = () => {
 		<div className={bem()}>
 			<div className={bem('content')}>
 				<h1 className={bem('logo')}>FNX UI</h1>
-				<div className={bem('slogan')}>{i18n.slogan}</div>
+				<div className={bem('slogan')}>{props.slogan}</div>
 				<div className={bem('button-list')}>
 					<a
 						className={bem('button')}

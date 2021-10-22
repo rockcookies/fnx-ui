@@ -1,5 +1,5 @@
 import React, { FC, useContext, useState, useEffect } from 'react';
-import { Link } from 'umi';
+import { Link } from 'react-router-dom';
 import pkg from '../../package.json';
 import { createBEM } from '../../src/utils/namespace';
 import logo from '../assets/logo.svg';
@@ -76,7 +76,12 @@ const SiteHeader: FC = () => {
 
 	const renderLogo = () => {
 		return (
-			<Link className={bem('logo')} to={`/${locale}`} replace={false}>
+			<Link
+				className={bem('logo')}
+				to={`/${locale}`}
+				replace={false}
+				onClick={() => setAsideExpanded(false)}
+			>
 				<img src={logo} />
 				<span>FNX UI</span>
 			</Link>
@@ -84,7 +89,7 @@ const SiteHeader: FC = () => {
 	};
 
 	useEffect(() => {
-		if (asideExpanded && responsive.md) {
+		if (asideExpanded) {
 			const body = document.body;
 
 			body.style.overflow = 'hidden';
@@ -93,7 +98,7 @@ const SiteHeader: FC = () => {
 				body.style.removeProperty('overflow');
 			};
 		}
-	}, [asideExpanded, responsive.md]);
+	}, [asideExpanded]);
 
 	const renderNav = () => {
 		return (
@@ -166,19 +171,23 @@ const SiteHeader: FC = () => {
 			})}
 		>
 			{!responsive.md && (
-				<div onClick={() => setAsideExpanded(false)}>
-					<div
+				<>
+					<i
 						className={bem('aside-mask', {
 							expanded: asideExpanded,
 						})}
-					></div>
-					<div className={bem('aside', { expanded: asideExpanded })}>
+						onClick={() => setAsideExpanded(false)}
+					/>
+					<div
+						className={bem('aside', { expanded: asideExpanded })}
+						onClick={() => setAsideExpanded(false)}
+					>
 						<div className={bem('aside-container')}>
 							<ul className={bem('aside-nav')}>{renderNav()}</ul>
 							<SideMenuTree />
 						</div>
 					</div>
-				</div>
+				</>
 			)}
 			<div className={bem('container')}>
 				{!responsive.md && (
