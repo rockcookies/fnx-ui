@@ -70,7 +70,6 @@
   },
   "devDependencies": {
     "@fnx-ui/cli": "^0.0.6",
-    "@fnx-ui/vite-plugin-markdown": "^0.0.2",
     "@testing-library/react": "^12.1.2",
     "@testing-library/react-hooks": "^7.0.2",
     "@types/jest": "^27.0.2",
