@@ -4,7 +4,7 @@
     "packages/*"
   ],
   "scripts": {
-    "prepare": "yarn build:cli && yarn build:vite-plugin-markdown",
+    "prepare": "yarn build:vite-plugin-markdown && yarn build:cli",
     "bootstrap": "lerna bootstrap",
     "dev": "lerna exec --scope fnx-ui yarn dev",
     "clean": "lerna exec --scope fnx-ui yarn clean",
