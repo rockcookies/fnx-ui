@@ -33,14 +33,19 @@ export function getBabelOptions(type: 'cjs' | 'esm' | 'umd'): TransformOptions {
 						],
 				  ]
 				: []),
-			[
-				require.resolve('@babel/plugin-transform-runtime'),
-				{
-					useESModules: type === 'esm',
-					// eslint-disable-next-line @typescript-eslint/no-var-requires
-					version: require('@babel/runtime/package.json').version,
-				},
-			],
+			...(type === 'umd'
+				? [
+						[
+							require.resolve('@babel/plugin-transform-runtime'),
+							{
+								useESModules: false,
+								// eslint-disable-next-line @typescript-eslint/no-var-requires
+								version: require('@babel/runtime/package.json')
+									.version,
+							},
+						],
+				  ]
+				: []),
 		],
 		// 不读取外部的babel.config.js配置文件，全采用babelOpts中的babel配置来构建
 		configFile: false,

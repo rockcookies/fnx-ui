@@ -1,0 +1,20 @@
+.error-fallback {
+	padding: var(--fnx-padding-sm);
+	background-color: var(--fnx-danger-color);
+
+	&__title {
+		color: var(--fnx-white-color);
+		font-size: var(--fnx-font-size-lg);
+	}
+
+	&__description {
+		color: var(--fnx-white-color);
+		word-wrap: break-word;
+
+		> pre {
+			width: auto;
+			margin: 0;
+			overflow: auto;
+		}
+	}
+}

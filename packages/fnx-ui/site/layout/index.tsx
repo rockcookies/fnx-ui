@@ -14,6 +14,7 @@ import './index.less';
 import SiteHeader from './SiteHeader';
 import SideMenuTree from './SiteMenuTree';
 import PageLoading from '../components/PageLoading';
+import ErrorFallback from '../components/ErrorFallback';
 
 const bem = createBEM('site');
 
@@ -144,13 +145,15 @@ const Layout: FC = () => {
 				<SideMenuTree className={bem('aside')} />
 				<div className={bem('main')}>
 					<div className={bem('content')}>
-						{category ? (
-							<Suspense fallback={<PageLoading />}>
-								<category.component />
-							</Suspense>
-						) : (
-							<Index slogan={i18n.slogan} />
-						)}
+						<ErrorFallback className={bem('error-fallback')}>
+							{category ? (
+								<Suspense fallback={<PageLoading />}>
+									<category.component />
+								</Suspense>
+							) : (
+								<Index slogan={i18n.slogan} />
+							)}
+						</ErrorFallback>
 					</div>
 					{renderFooter()}
 				</div>
