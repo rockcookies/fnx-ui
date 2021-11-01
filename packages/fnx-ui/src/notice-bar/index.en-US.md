@@ -6,7 +6,7 @@ For loop playback display a set of messages, the default is not looped.
 
 Set the content of the notification bar through the child element, set the icon on the left side of the notification bar via the `leftIcons` property.
 
-```tsx | pure
+```tsx
 import { NoticeBar } from 'fnx-ui';
 
 ReactDOM.render(
@@ -24,7 +24,7 @@ ReactDOM.render(
 
 `marquee` is the scrolling playback when the content length overflow for `'auto'` notification bar is overflow.
 
-```tsx | pure
+```tsx
 import { NoticeBar } from 'fnx-ui';
 ReactDOM.render(
   <>
@@ -45,7 +45,7 @@ ReactDOM.render(
 
 The default is multi-line show, when the text is longer, you can display it by setting the `ellipsis` property.
 
-```tsx | pure
+```tsx
 import { NoticeBar } from 'fnx-ui';
 
 ReactDOM.render(
@@ -63,7 +63,7 @@ ReactDOM.render(
 
 Set text color through `color` attribute, set background colors via `background` attribute.
 
-```tsx | pure
+```tsx
 import { NoticeBar } from 'fnx-ui';
 
 ReactDOM.render(
@@ -81,7 +81,7 @@ ReactDOM.render(
 
 Match `NoticeBar` and `Swipe` components can achieve vertical scrolling effects.
 
-```tsx | pure
+```tsx
 import { NoticeBar } from 'fnx-ui';
 
 ReactDOM.render(

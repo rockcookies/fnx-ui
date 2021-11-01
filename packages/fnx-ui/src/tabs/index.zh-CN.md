@@ -4,7 +4,7 @@
 
 通过 `activeKey` 绑定当前激活标签对应的索引值，默认情况下启用第一个标签。
 
-```tsx | pure
+```tsx
 ReactDOM.render(
   <>
     <Tabs defaultActiveKey="1">
@@ -21,7 +21,7 @@ ReactDOM.render(
 
 在标签指定 `name` 属性的情况下，`activeKey` 的值为当前标签的 `name`（此时无法通过索引值来匹配标签）。
 
-```tsx | pure
+```tsx
 const [activeKey, setActiveKey] = useState('key2');
 const onActiveKeyChange = (key) => {
   setActiveKey(key);
@@ -49,7 +49,7 @@ ReactDOM.render(
 
 默认标签数量超过 4 个时，标签栏可以在水平方向上滚动，切换时会自动将当前标签居中。
 
-```tsx | pure
+```tsx
 ReactDOM.render(
   <>
     <Tabs>
@@ -68,7 +68,7 @@ ReactDOM.render(
 
 设置 `disabled` 属性即可禁用标签。
 
-```tsx | pure
+```tsx
 ReactDOM.render(
   <>
     <Tabs>
@@ -87,7 +87,7 @@ ReactDOM.render(
 
 可以在 `<Tabs></Tabs>` 上绑定 `onTabClick` 事件。
 
-```tsx | pure
+```tsx
 const onTabClick = (index) => {
   console.log(index);
 };

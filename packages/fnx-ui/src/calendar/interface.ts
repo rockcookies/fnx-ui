@@ -47,8 +47,8 @@ export interface CalendarBaseProps {
 	closeIcon?: ReactNode;
 	firstDayOfWeek?: number;
 	slots?: CalendarSlots;
-	confirmText?: string;
-	confirmDisabledText?: string;
+	confirmText?: ReactNode;
+	confirmDisabledText?: ReactNode;
 }
 
 export type CalendarElementProps = Omit<

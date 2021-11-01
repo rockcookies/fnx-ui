@@ -1,32 +1,54 @@
 # Popup
 
-The pop-up layer container is used to show the population, information prompt, and the like, support multiple pop-ups overlay display.
+Used to display popup windows, information prompts, etc., and supports multiple popup layers to display.
 
 ## Basic Usage
 
-Control the pop-up layer is displayed via `visible`
+Use `visible` property to control the popup layer is displayed.
 
 ```tsx
-import { Popup } from 'fnx-ui';
+import React, { useState } from 'react';
+import { Popup, Cell } from 'fnx-ui';
 
-ReactDOM.render(
-  <>
-    <Popup visible />
-  </>,
-  mountNode,
-);
+const App = () => {
+  const [isPopupVisible, setIsPopupVisible] = useState(false);
+
+  const showPopup = () => {
+    setIsPopupVisible(true);
+  };
+
+  const handleClose = () => {
+    setIsPopupVisible(false);
+  };
+
+  return (
+    <>
+      <Cell
+        title="Open Popup"
+        rightIcon={<Icon name="arrow-right" />}
+        onClick={showPopup}
+        clickable
+      />
+      <Popup visible={isPopupVisible} onClose={handleClose}>
+        Content
+      </Popup>
+    </>
+  );
+};
+
+ReactDOM.render(<App />, mountNode);
 ```
 
 ## Position
 
-The pop-up position is set by `position` property, the default is popped, which can be set to `top、bottom、left、right、center`.
+Use `position` property to set popup position, which can be set to `top`, `bottom`,`left`,`right` or `center`.
 
 ```tsx
 import { Popup } from 'fnx-ui';
 
 ReactDOM.render(
   <>
-    <Popup position="center" />
+    <Popup visible position="top" style={{ height: '30%' }}></Popup>
   </>,
   mountNode,
 );
@@ -34,14 +56,16 @@ ReactDOM.render(
 
 ## Round
 
-After setting the `round` property, the pop-up will add different rounded patterns based on the pop-up position.
+Use `round` property to set popup rounded style, The popup will add different rounded patterns based on the popup position.
 
 ```tsx
 import { Popup } from 'fnx-ui';
 
 ReactDOM.render(
   <>
-    <Popup round />
+    <Popup visible round position="top">
+      Content
+    </Popup>
   </>,
   mountNode,
 );
@@ -49,51 +73,47 @@ ReactDOM.render(
 
 ## MountTo
 
-The pop-up layer is mounted to the location where the component is mounted, and the mount position can be specified by `mounttTo` property.
+Use `mountTo` property to specified mount dom node.
 
 ```tsx
 import { Popup } from 'fnx-ui';
 
 ReactDOM.render(
   <>
-    <Popup mountTo={() => document.body}>Content</Popup>
+    <Popup visible mountTo={() => document.body}></Popup>
+    <Popup visible mountTo={() => document.getElementById('app')}></Popup>
   </>,
   mountNode,
 );
 ```
 
-## `<Popup.Select>` Use
+## Use with Popup.Select
 
 ```tsx
-import { Popup } from 'fnx-ui';
+import { Popup, Cell, Icon, Picker } from 'fnx-ui';
 
-const renderCell = (title, content) => {
-  return (
-    <Cell
-      title={title}
-      content={content}
-      clickable
-      rightIcon={<Icon name="arrow-right" />}
-    />
-  );
-};
-
-const formatDate = (date) => {
-  if (date) {
-    return `${date.getMonth() + 1}/${date.getDate()}`;
-  }
-};
-
-const formatFullDate = (date) => {
-  if (date) {
-    return `${date.getFullYear()}/${formatDate(date)}`;
-  }
-};
+const options = [
+  'Monday',
+  'Tuesday',
+  'Wednesday',
+  'Thursday',
+  'Friday',
+  'Saturday',
+  'Sunday',
+];
 
 ReactDOM.render(
   <>
-    <Popup.Select select={<Calendar />}>
-      {(value) => renderCell('Title', formatFullDate(value))}
+    <Popup.Select<string>
+      select={<Picker data={options} title="Select date" />}
+    >
+      {(value) => (
+        <Cell
+          clickable
+          title={value || 'Select date'}
+          rightIcon={<Icon name="arrow-right" />}
+        />
+      )}
     </Popup.Select>
   </>,
   mountNode,
@@ -102,53 +122,62 @@ ReactDOM.render(
 
 ## API
 
-| Parameter           | Description                                  | Type                                                | Default value |
-| ------------------- | -------------------------------------------- | --------------------------------------------------- | ------------- |
-| visible             | Show pop-up layer                            | `boolean`                                           | `false`       |
-| round               | Show fillet                                  | `boolean`                                           | `false`       |
-| position            | Mask layer location                          | `'top' \| 'bottom' \| 'left' \| 'right' \|'center'` | `center`      |
-| overlay             | Show mask layer                              | `boolean`                                           | `fill`        |
-| overlayClassName    | Mask layer class name                        | `string`                                            | -             |
-| overlayStyle        | Mask layer style                             | `string`                                            | -             |
-| overlayCloseable    | Click mask layer to close                    | `boolean`                                           | `true`        |
-| renderOnShow        | Render load                                  | `boolean`                                           | `true`        |
-| destroyOnHide       | Close destroy                                | `boolean`                                           | `false`       |
-| mountTo             | Specify the node to mount                    | `boolean \| element \| ()=>element `                | -             |
-| transitionDuration  | Transition animation                         | `number`                                            | -             |
-| transitionName      | Transition animation class name              | `string`                                            | -             |
-| lockScroll          | Disable scrolling                            | `boolean`                                           | `true`        |
-| safeAreaInsetBottom | Is the bottom safety zone adaptation enabled | `boolean`                                           | `false`       |
+### Popup Props
 
-## PopupSelect API
+| Name                | Description                                            | Type                                                | Default               |
+| ------------------- | ------------------------------------------------------ | --------------------------------------------------- | --------------------- |
+| visible             | Whether to show popup                                  | `boolean`                                           | `false`               |
+| renderOnShow        | Whether to render util appeared                        | `boolean`                                           | `true`                |
+| destroyOnHide       | Whether to unmount child components on hide            | `boolean`                                           | `false`               |
+| mountTo             | Specifies a target element where Popup will be mounted | `HTMLElement \| () => HTMLElement \| false`         | `() => document.body` |
+| transitionDuration  | Transition duration, unit millisecond                  | `number`                                            | `300`                 |
+| transitionName      | Transition class name                                  | `string`                                            | -                     |
+| lockScroll          | Whether to lock background scroll                      | `boolean`                                           | `true`                |
+| position            | Popup position                                         | `'top' \| 'bottom' \| 'left' \| 'right' \|'center'` | `'center'`            |
+| round               | Whether to show round corner                           | `boolean`                                           | `false`               |
+| safeAreaInsetBottom | Whether to enable bottom safe area adaptation          | `boolean`                                           | `false`               |
+| overlay             | Whether to show overlay                                | `boolean`                                           | `true`                |
+| overlayClassName    | Custom overlay class                                   | `string`                                            | -                     |
+| overlayStyle        | Custom overlay style                                   | `CSSProperties`                                     | -                     |
+| overlayCloseable    | Whether to close when overlay is clicked               | `boolean`                                           | `true`                |
 
-| Parameter                  | Description                    | Type                                       | Default value |
-| -------------------------- | ------------------------------ | ------------------------------------------ | ------------- |
-| disabled                   | Is it disabled?                | `boolean`                                  | `false`       |
-| value                      | Option value                   | `T`                                        | -             |
-| defaultValue               | Default option value           | `T`                                        | -             |
-| select                     | Pop-up layer content           | `ReactNode`                                | -             |
-| selectDefaultValuePropName | `name` of default `props`      | `string`                                   | -             |
-| selectConfirmTrigger       | Confirm button name properties | `string`                                   | -             |
-| selectCancelTrigger        | Cancel button name properties  | `string`                                   | -             |
-| trigger                    | Child element properties       | `string`                                   | -             |
-| children                   | Custom attribute sub-elements  | ` ReactNode \| ((value?: T) => ReactNode)` | -             |
+#### Note
+
+- The state of Popup will be preserved at it's component lifecycle by default, if you wish to open it with a brand new state everytime, set `destroyOnClose` on it.
 
 ## Events
 
-| Event name     | Description                                                         | Callback Arguments |
-| -------------- | ------------------------------------------------------------------- | ------------------ |
-| onShow         | Triggered when the pop-up layer is turned on                        | -                  |
-| onOverlayClick | Click the mask layer to trigger                                     | -                  |
-| onClose        | When the mask layer can be clicked, click the mask layer to trigger | -                  |
-| onBeforeHide   | Execute trigger before exit animation                               | -                  |
-| onHide         | Execute trigger in exit animation                                   | -                  |
-| onAfterHide    | Execute trigger after exit animation                                | -                  |
-| onBeforeShow   | Execute trigger before entering animation                           | -                  |
-| onShow         | Execute trigger in approach animation                               | -                  |
-| onAfterShow    | Execute trigger after approach animation                            | -                  |
+| Event name     | Description                            | Callback Arguments |
+| -------------- | -------------------------------------- | ------------------ |
+| onOverlayClick | Emitted when overlay is clicked        | -                  |
+| onClose        | Emitted when Popup is closing          | -                  |
+| onBeforeHide   | Emitted when before the hide animation | -                  |
+| onHide         | Emitted when popup hiding              | -                  |
+| onAfterHide    | Emitted when after the hide animation  | -                  |
+| onBeforeShow   | Emitted when before the show animation | -                  |
+| onShow         | Execute when popup showing             | -                  |
+| onAfterShow    | Emitted when after the show animation  | -                  |
+
+## Popup.Select Props
+
+Popup.Select extends Popup props and add the following props:
+
+| Name                       | Description          | Type                                      | Default value  |
+| -------------------------- | -------------------- | ----------------------------------------- | -------------- |
+| disabled                   | Is it disabled?      | `boolean`                                 | `false`        |
+| value                      | Option value         | `any`                                     | -              |
+| defaultValue               | Default option value | `any`                                     | -              |
+| select                     | popup layer content  | `ReactNode`                               | -              |
+| selectDefaultValuePropName | Default name         | `string`                                  | `defaultValue` |
+| selectConfirmTrigger       | Confirm button name  | `string`                                  | `onConfirm`    |
+| selectCancelTrigger        | Cancel button name   | `string`                                  | `onCancel`     |
+| trigger                    | Trigger behavior     | `string`                                  | `onClick`      |
+| children                   | Child element        | `ReactNode \| (value?: any) => ReactNode` | -              |
 
 ## PopupSelect Events
 
-| Event Name | Description                              | Callback Arguments |
-| ---------- | ---------------------------------------- | ------------------ |
-| onChange   | Triggers when the value changes changing | `(v: T=any)`       |
+Popup.Select extends Popup events and add the following events:
+
+| Event Name | Description            | Callback Arguments     |
+| ---------- | ---------------------- | ---------------------- |
+| onChange   | `value` 发生改变时触发 | `(value: any) => void` |

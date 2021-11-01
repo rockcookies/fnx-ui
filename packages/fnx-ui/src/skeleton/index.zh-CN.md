@@ -6,7 +6,7 @@
 
 通过 `title` 属性显示标题占位图，通过 `rows` 属性配置占位段落行数。
 
-```tsx | pure
+```tsx
 import { Skeleton } from 'fnx-ui';
 
 ReactDOM.render(
@@ -23,7 +23,7 @@ ReactDOM.render(
 
 通过 `avatar` 属性显示头像占位图。
 
-```tsx | pure
+```tsx
 import { Skeleton } from 'fnx-ui';
 
 ReactDOM.render(
@@ -40,7 +40,7 @@ ReactDOM.render(
 
 将 `loading` 属性设置成 `false` 表示内容加载完成，此时会隐藏占位图，并显示 `Skeleton` 的子组件。
 
-```tsx | pure
+```tsx
 import { Skeleton } from 'fnx-ui';
 
 ReactDOM.render(

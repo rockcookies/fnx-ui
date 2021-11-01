@@ -6,7 +6,7 @@ Used to display a set of placebound graphics during the content loading process.
 
 Show title placement via `title` attribute, configure the number of banks through `rows` attribute.
 
-```tsx | pure
+```tsx
 import { Skeleton } from 'fnx-ui';
 
 ReactDOM.render(
@@ -23,7 +23,7 @@ ReactDOM.render(
 
 Show avatar occupying graphs via `avatar` attribute.
 
-```tsx | pure
+```tsx
 import { Skeleton } from 'fnx-ui';
 
 ReactDOM.render(
@@ -40,7 +40,7 @@ ReactDOM.render(
 
 Set the `loading` property to `false` indicates that the content loading is complete, and the placeholder map is hidden and the subcomponents of the `Skeleton`
 
-```tsx | pure
+```tsx
 import { Skeleton } from 'fnx-ui';
 
 ReactDOM.render(

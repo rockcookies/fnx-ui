@@ -1,7 +1,7 @@
 :root {
 	--fnx-popup-round-border-radius: 16px;
 	--fnx-popup-text-color: var(--fnx-gray-800);
-	--fnx-popup-background-color: var(--fnx-page-color);
+	--fnx-popup-background: var(--fnx-page-color);
 }
 
 .fnx-popup {
@@ -9,7 +9,7 @@
 	max-height: 100%;
 	overflow-y: auto;
 	color: var(--fnx-popup-text-color);
-	background-color: var(--fnx-popup-background-color);
+	background: var(--fnx-popup-background);
 	-webkit-overflow-scrolling: touch;
 
 	&--center {
@@ -80,24 +80,6 @@
 	&--slide-bottom-exit-active {
 		transition: transform var(--fnx-animation-duration-base)
 			var(--fnx-animation-timing-function-exit);
-	}
-
-	&--fade-enter-active {
-		opacity: 1;
-		transition: opacity var(--fnx-animation-duration-base)
-			var(--fnx-animation-timing-function-enter);
-	}
-
-	&--fade-exit-active {
-		transition: opacity var(--fnx-animation-duration-base)
-			var(--fnx-animation-timing-function-exit);
-	}
-
-	&--fade {
-		&-enter,
-		&-exit-active {
-			opacity: 0;
-		}
 	}
 
 	&--slide-top {

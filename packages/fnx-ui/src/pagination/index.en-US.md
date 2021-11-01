@@ -2,7 +2,7 @@
 
 ## Basic Usage
 
-```tsx | pure
+```tsx
 import { Pagination } from 'fnx-ui';
 
 ReactDOM.render(
@@ -17,7 +17,7 @@ ReactDOM.render(
 
 Set the `mode` Set to `simple` to switch to simple mode, at which point the paging device does not show the specific page number button.
 
-```tsx | pure
+```tsx
 import { Pagination } from 'fnx-ui';
 
 ReactDOM.render(
@@ -32,7 +32,7 @@ ReactDOM.render(
 
 Set up `forcellipses`, you will show the omitted button, click to quickly jump.
 
-```tsx | pure
+```tsx
 import { Pagination } from 'fnx-ui';
 
 ReactDOM.render(
@@ -52,7 +52,7 @@ ReactDOM.render(
 
 Content from the paging button via `prev`,` next`, etc..
 
-```tsx | pure
+```tsx
 import { Pagination } from 'fnx-ui';
 
 ReactDOM.render(

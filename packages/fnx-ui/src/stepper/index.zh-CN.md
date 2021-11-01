@@ -4,7 +4,7 @@
 
 ## 基础用法
 
-```tsx | pure
+```tsx
 import { Stepper } from 'fnx-ui';
 
 ReactDOM.render(
@@ -19,7 +19,7 @@ ReactDOM.render(
 
 可以通过 `onChange` 事件监听到输入值的变化。
 
-```tsx | pure
+```tsx
 import { Stepper } from 'fnx-ui';
 
 const [value, setValue] = useState(5);
@@ -39,7 +39,7 @@ ReactDOM.render(
 
 通过 `step` 属性设置每次点击增加或减少按钮时变化的值，默认为 `1`。
 
-```tsx | pure
+```tsx
 import { Stepper } from 'fnx-ui';
 
 ReactDOM.render(
@@ -54,7 +54,7 @@ ReactDOM.render(
 
 通过 `min` 和 `max` 属性限制输入值的范围。
 
-```tsx | pure
+```tsx
 import { Stepper } from 'fnx-ui';
 
 ReactDOM.render(
@@ -69,7 +69,7 @@ ReactDOM.render(
 
 设置 `integer` 属性后，输入框将限制只能输入整数。
 
-```tsx | pure
+```tsx
 import { Stepper } from 'fnx-ui';
 
 ReactDOM.render(
@@ -84,7 +84,7 @@ ReactDOM.render(
 
 通过设置 `disabled` 属性来禁用步进器，禁用状态下无法点击按钮或修改输入框。
 
-```tsx | pure
+```tsx
 import { Stepper } from 'fnx-ui';
 
 ReactDOM.render(
@@ -99,7 +99,7 @@ ReactDOM.render(
 
 通过设置 `disableInput` 属性来禁用输入框，此时按钮仍然可以点击。
 
-```tsx | pure
+```tsx
 import { Stepper } from 'fnx-ui';
 
 ReactDOM.render(
@@ -114,7 +114,7 @@ ReactDOM.render(
 
 通过设置 `precision` 属性可以保留固定的小数位数。
 
-```tsx | pure
+```tsx
 import { Stepper } from 'fnx-ui';
 
 ReactDOM.render(
@@ -129,7 +129,7 @@ ReactDOM.render(
 
 通过 `inputWidth` 属性设置输入框宽度，通过 `buttonSize` 属性设置按钮大小和输入框高度。
 
-```tsx | pure
+```tsx
 import { Stepper } from 'fnx-ui';
 
 ReactDOM.render(
@@ -144,7 +144,7 @@ ReactDOM.render(
 
 将 `theme` 设置为 `round` 来展示圆角风格的步进器。
 
-```tsx | pure
+```tsx
 import { Stepper } from 'fnx-ui';
 
 ReactDOM.render(

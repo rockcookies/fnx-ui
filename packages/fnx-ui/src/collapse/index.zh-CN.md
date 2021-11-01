@@ -6,7 +6,7 @@
 
 通过 `defaultActiveKey` 表示默认控制展开的面板列表。
 
-```tsx | pure
+```tsx
 import { Collapse } from 'fnx-ui';
 
 ReactDOM.render(
@@ -24,7 +24,7 @@ ReactDOM.render(
 
 通过 `accordion` 可以设置为手风琴模式，最多展开一个面板。
 
-```tsx | pure
+```tsx
 import { Collapse } from 'fnx-ui';
 
 ReactDOM.render(
@@ -42,7 +42,7 @@ ReactDOM.render(
 
 通过控制属性 `ghost` 实现是否显示内边框。
 
-```tsx | pure
+```tsx
 import { Collapse } from 'fnx-ui';
 
 ReactDOM.render(
@@ -60,7 +60,7 @@ ReactDOM.render(
 
 通过 `disabled` 属性来禁用单个面板。
 
-```tsx | pure
+```tsx
 import { Collapse } from 'fnx-ui';
 
 ReactDOM.render(
@@ -78,7 +78,7 @@ ReactDOM.render(
 
 `title` 是 `ReactNode` 类型，`headerProps` 属性里面的 `leftIcon` 和 `content` 也是 `ReactNode` 类型，`leftIcon` 表示是左侧图标，`content` 是默认右侧的内容。
 
-```tsx | pure
+```tsx
 import { Collapse, Icon } from 'fnx-ui';
 
 ReactDOM.render(

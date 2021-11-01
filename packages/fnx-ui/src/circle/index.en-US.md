@@ -6,7 +6,7 @@ Ring shaped progress bar component, support progress gradient animation
 
 The rate attribute represents the target progress of the progress bar, and the currentrate represents the real-time progress in the animation process. When the rate changes, the attribute represents the target progress of the progress bar, and the current rate will change at the speed of speed until it reaches the value set by the rate.
 
-```tsx | pure
+```tsx
 import { Circle } from 'fnx-ui';
 
 ReactDOM.render(
@@ -21,7 +21,7 @@ ReactDOM.render(
 
 The width of progress bar is controlled by strokeWidth attribute.
 
-```tsx | pure
+```tsx
 import { Circle } from 'fnx-ui';
 
 ReactDOM.render(
@@ -40,7 +40,7 @@ ReactDOM.render(
 
 The color attribute is used to control the color of the progress bar, and the layercolor attribute is used to control the color of the track.
 
-```tsx | pure
+```tsx
 import { Sticky, Button } from 'fnx-ui';
 
 ReactDOM.render(
@@ -59,7 +59,7 @@ ReactDOM.render(
 
 The color property supports incoming object formats to define gradients.
 
-```tsx | pure
+```tsx
 import { Circle } from 'fnx-ui';
 
 ReactDOM.render(
@@ -78,7 +78,7 @@ ReactDOM.render(
 
 If clockwise is set to false, the progress will start counterclockwise.
 
-```tsx | pure
+```tsx
 import { Circle } from 'fnx-ui';
 
 ReactDOM.render(
@@ -97,7 +97,7 @@ ReactDOM.render(
 
 Set the circle diameter through the size property.
 
-```tsx | pure
+```tsx
 import { Circle } from 'fnx-ui';
 
 ReactDOM.render(

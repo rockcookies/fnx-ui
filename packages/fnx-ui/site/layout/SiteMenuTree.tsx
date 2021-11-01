@@ -50,7 +50,6 @@ const SideMenuTree: FC<CProps> = (props: CProps) => {
 								>
 									<Link
 										to={`/${locale}/${category.key}/${m.key}`}
-										replace={true}
 									>
 										{renderMenuItemTitle(m)}
 									</Link>

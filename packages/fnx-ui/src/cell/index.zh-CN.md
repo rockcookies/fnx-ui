@@ -4,35 +4,37 @@
 
 ## 基础用法
 
-`Cell` 可以单独使用，也可以与 `CellGroup` 搭配使用，`CellGroup` 可以为 `Cell` 提供上下外边框。
+`Cell` 可以单独使用，也可以与 `Cell.Group` 搭配使用，`Cell.Group` 可以为 `Cell` 提供上下外边框。
 
-```tsx | pure
+```tsx
 import { Cell } from 'fnx-ui';
 
 ReactDOM.render(
   <>
-    <Cell.Group>
-      <Cell border={false} title="Basic Usage">
+    <Cell.Group border>
+      <Cell title="Title">Content</Cell>
+      <Cell title="Title" description="Description">
         Content
       </Cell>
-      <Cell title="Basic Usage">Content</Cell>
     </Cell.Group>
   </>,
   mountNode,
 );
 ```
 
-## 自定义标题内容
+## 卡片风格
 
-`title` 是 `ReactNode` 类型，通过设置 `title` 可以自定义标题内容。
+通过 `Cell.Group` 的 `inset` 属性，可以将单元格转换为圆角卡片风格。
 
-```tsx | pure
+```tsx
 import { Cell } from 'fnx-ui';
 
 ReactDOM.render(
   <>
-    <Cell title="Custom Title Content">content</Cell>
-    <Cell title="Custom Title Content">content</Cell>
+    <Cell.Group inset>
+      <Cell title="Title">Content</Cell>
+      <Cell title="Title">Content</Cell>
+    </Cell.Group>
   </>,
   mountNode,
 );
@@ -40,20 +42,35 @@ ReactDOM.render(
 
 ## 自定义图标
 
-`leftIcon` 和 `rightIcon` 是 `ReactNode` 类型可以自定义左侧和右侧图标。
+通过 `leftIcon` 和 `rightIcon` 属性可以自定义左侧和右侧图标。
 
-```tsx | pure
-import { Cell,Icon } from 'fnx-ui';
+```tsx
+import { Cell, Icon } from 'fnx-ui';
 
 ReactDOM.render(
   <>
-    <Cell title="Custom Icon" leftIcon={<Icon name="arrow-down" />}>
+    <Cell title="Title" leftIcon={<Icon name="success" />}>
       Content
     </Cell>
-    <Cell title="Custom Icon" rightIcon={<Icon name="arrow-down" />}>
+    <Cell title="Title" rightIcon={<Icon name="arrow-right" />}>
       Content
     </Cell>
   </>
+  mountNode,
+);
+```
+
+## 极简模式
+
+只设置 `children` 时，内容会靠左对齐。
+
+```tsx
+import { Cell } from 'fnx-ui';
+
+ReactDOM.render(
+  <>
+    <Cell>Content</Cell>
+  </>,
   mountNode,
 );
 ```
@@ -62,12 +79,12 @@ ReactDOM.render(
 
 通过 `clickable` 属性可以使 `Cell` 组件有点击效果。
 
-```tsx | pure
-import { Cell } from 'fnx-ui';
+```tsx
+import { Cell, Icon } from 'fnx-ui';
 
 ReactDOM.render(
   <>
-    <Cell title="Clickable" clickable>
+    <Cell title="Title" clickable rightIcon={<Icon name="arrow-right" />}>
       Content
     </Cell>
   </>,
@@ -75,37 +92,21 @@ ReactDOM.render(
 );
 ```
 
-## 只设置 children
+## 分组标题
 
-只设置 `children` 时，内容会靠左对齐。
+通过 `Cell.Group` 的 `title` 属性可以指定分组标题。
 
-```tsx | pure
+```tsx
 import { Cell } from 'fnx-ui';
 
 ReactDOM.render(
   <>
-    <Cell>Only Children</Cell>
-    <Cell>Only Children</Cell>
-  </>,
-  mountNode,
-);
-```
-
-## 描述信息
-
-`description` 属性是 `ReactNode` ，表示自定义描述信息。
-
-```tsx | pure
-import { Cell } from 'fnx-ui';
-
-ReactDOM.render(
-  <>
-    <Cell itemsAlign="bottom" description="Description">
-      Content
-    </Cell>
-    <Cell itemsAlign="bottom" description={<div>Description</div>}>
-      Content
-    </Cell>
+    <Cell.Group title="Group 1">
+      <Cell title="Title">Content</Cell>
+    </Cell.Group>
+    <Cell.Group title="Group 2">
+      <Cell title="Title">Content</Cell>
+    </Cell.Group>
   </>,
   mountNode,
 );
@@ -113,17 +114,20 @@ ReactDOM.render(
 
 ## 对齐
 
-通过 `itemsAlign` 属性可以设置 `'top' | 'middle' | 'bottom'` 分别表示上、中、下对齐。
+通过 `itemsAlign` 属性可以设置 `top` 、`middle` 或 `bottom` 分别表示垂直方向上、中、下对齐。
 
-```tsx | pure
+```tsx
 import { Cell } from 'fnx-ui';
 
 ReactDOM.render(
   <>
-    <Cell itemsAlign="top" description="Description">
+    <Cell itemsAlign="top" title="Title" description="Description">
       Content
     </Cell>
-    <Cell itemsAlign="middle" description="Description">
+    <Cell itemsAlign="middle" title="Title" description="Description">
+      Content
+    </Cell>
+    <Cell itemsAlign="bottom" title="Title" description="Description">
       Content
     </Cell>
   </>,
@@ -133,10 +137,12 @@ ReactDOM.render(
 
 ## API
 
-| 参数             | 说明                   | 类型                              | 默认值  |
+### Cell Props
+
+| 名称             | 说明                   | 类型                              | 默认值  |
 | ---------------- | ---------------------- | --------------------------------- | ------- |
-| title            | 标题                   | `ReactNode`                       | -       |
-| titleProps       | 标题属性               | `ReactNode`                       | -       |
+| title            | 左侧标题               | `ReactNode`                       | -       |
+| titleProps       | 左侧标题属性           | `HTMLAttributes<HTMLDivElement>`  | -       |
 | content          | 右侧内容               | `ReactNode`                       | -       |
 | contentProps     | 右侧内容属性           | `HTMLAttributes<HTMLDivElement>`  | -       |
 | description      | 标题下方的描述信息     | `ReactNode`                       | -       |
@@ -145,15 +151,16 @@ ReactDOM.render(
 | leftIconProps    | 左侧自定义图标属性     | `HTMLAttributes<HTMLSpanElement>` | -       |
 | rightIcon        | 右侧自定义图标         | `ReactNode`                       | -       |
 | rightIconProps   | 右侧自定义图标属性     | `HTMLAttributes<HTMLSpanElement>` | -       |
-| border           | `cell` 边框            | `boolean`                         | `true`  |
-| itemsAlign       | 对齐方式               | `'top' \| 'middle' \| 'bottom'`   | -       |
+| border           | 是否显示内边框         | `boolean`                         | `true`  |
+| itemsAlign       | 对齐方式               | `'top' \| 'middle' \| 'bottom'`   | `'top'` |
 | clickable        | 是否可点击             | `boolean`                         | `false` |
 
-## CellGroup API
+### Cell.Group Props
 
-| 参数       | 说明           | 类型                             | 默认值 |
-| ---------- | -------------- | -------------------------------- | ------ |
-| title      | 分组标题       | `ReactNode`                      | -      |
-| titleProps | 分组标题       | `HTMLAttributes<HTMLDivElement>` | -      |
-| border     | 是否显示外边框 | `boolean`                        | `true` |
-| bodyProps  | 外边框属性     | `HTMLAttributes<HTMLDivElement>` | -      |
+| 名称       | 说明                   | 类型                             | 默认值 |
+| ---------- | ---------------------- | -------------------------------- | ------ |
+| title      | 分组标题               | `ReactNode`                      | -      |
+| titleProps | 分组标题属性           | `HTMLAttributes<HTMLDivElement>` | -      |
+| border     | 是否显示外边框         | `boolean`                        | `true` |
+| inset      | 是否展示为圆角卡片风格 | `boolean`                        | -      |
+| bodyProps  | 内容属性               | `HTMLAttributes<HTMLDivElement>` | -      |

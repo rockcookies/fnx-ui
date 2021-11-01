@@ -1,18 +1,13 @@
-import React, { useState } from 'react';
-import PullRefresh from '../../pull-refresh';
+import React from 'react';
 import useDemoTranslate from '../../../site/hooks/use-demo-translate';
-import Button from '../../button';
 import Cell from '../../cell';
+import useSafeState from '../../hooks/use-safe-state';
+import PullRefresh from '../../pull-refresh';
+import Tabs from '../../tabs';
 import { Dictionary } from '../../utils/interface';
 import { sleep } from '../../utils/misc';
-import { createBEM } from '../../utils/namespace';
 import List from '../index';
 import { ListStatus } from '../interface';
-import './basic.less';
-import useSafeState from '../../hooks/use-safe-state';
-import { useCallback } from 'react';
-
-const bem = createBEM('demo-list');
 
 const I18N: Dictionary<Dictionary<string>> = {
 	'zh-CN': {
@@ -36,160 +31,121 @@ const getRows = (count: number): string[] => {
 	});
 };
 
-type Tab = 'basicUsage' | 'errorTip' | 'pullRefresh';
-
-const TAB_LIST: Tab[] = ['basicUsage', 'errorTip', 'pullRefresh'];
-
 export default function Basic(): ReturnType<React.FC> {
 	const [i18n] = useDemoTranslate(I18N, 'en-US');
-
-	const [tab, setTab] = useState<Tab>('basicUsage');
 
 	const [basicStatus, setBasicStatus] = useSafeState<ListStatus>('default');
 	const [basicData, setBasicData] = useSafeState<string[]>();
 
-	const handleBasicDataLoad = useCallback(
-		async (data: string[]) => {
-			await sleep(1000);
-			data = getRows(data.length + 10);
+	const handleBasicDataLoad = async (data: string[] = []) => {
+		setBasicStatus('loading');
 
-			setBasicData(data);
-			setBasicStatus(data.length > 30 ? 'finished' : 'default');
-		},
-		[setBasicData, setBasicStatus],
-	);
+		await sleep(1000);
+		data = getRows(data.length + 8);
+
+		setBasicData(data);
+		setBasicStatus(data.length >= 24 ? 'finished' : 'default');
+	};
 
 	const [errorStatus, setErrorStatus] = useSafeState<ListStatus>('default');
 	const [errorData, setErrorData] = useSafeState<string[]>();
 
-	const handleErrorDataLoad = useCallback(
-		async (data: string[]) => {
-			await sleep(1000);
-			data = getRows(data.length + 10);
+	const handleErrorDataLoad = async (data: string[] = []) => {
+		setErrorStatus('loading');
 
-			setErrorData(data);
-			if (data.length <= 10) {
-				setErrorStatus('error');
-			} else {
-				setErrorStatus(data.length > 30 ? 'finished' : 'default');
-			}
-		},
-		[setErrorData, setErrorStatus],
-	);
+		await sleep(1000);
+		data = getRows(data.length + 8);
 
-	const [pullStatus, setPullStatus] = useSafeState<ListStatus>('default');
-	const [pullData, setPullData] = useSafeState<string[]>();
-
-	const handlePullDataLoad = useCallback(
-		async (data: string[]) => {
-			await sleep(1000);
-			data = getRows(data.length + 10);
-
-			setPullData(data);
-			setPullStatus(data.length > 30 ? 'finished' : 'default');
-		},
-		[setPullData, setPullStatus],
-	);
-
-	const handleListLoad = (tab: Tab, data: string[]) => {
-		if (tab === 'basicUsage') {
-			setBasicStatus('loading');
-			handleBasicDataLoad(data);
-		} else if (tab === 'errorTip') {
-			setErrorStatus('loading');
-			handleErrorDataLoad(data);
-		} else if (tab === 'pullRefresh') {
-			setPullStatus('loading');
-			handlePullDataLoad(data);
+		setErrorData(data);
+		if (data.length <= 8) {
+			setErrorStatus('error');
+		} else {
+			setErrorStatus(data.length >= 24 ? 'finished' : 'default');
 		}
 	};
 
-	const handleTabChange = (active: Tab) => {
-		if (tab === active) {
-			return;
+	const [pullStatus, setPullStatus] = useSafeState<ListStatus>('default');
+	const [pullRefreshing, setPullRefreshing] = useSafeState(false);
+	const [pullData, setPullData] = useSafeState<string[]>();
+
+	const handlePullDataLoad = async (
+		data: string[] = [],
+		refreshing: boolean,
+	) => {
+		if (refreshing) {
+			setPullRefreshing(true);
+
+			// refresh 时正在 loading，则跳过
+			if (pullStatus === 'loading') {
+				return;
+			}
 		}
 
-		setTab(active);
-		handleListLoad(active, []);
+		setPullStatus('loading');
+
+		data = getRows(refreshing ? 8 : data.length + 8);
+
+		await sleep(1000);
+
+		setPullData(data);
+		setPullRefreshing(false);
+		setPullStatus(data.length >= 24 ? 'finished' : 'default');
 	};
 
 	return (
 		<>
-			<div className={bem('tab')}>
-				{TAB_LIST.map((item) => (
-					<Button
-						size="sm"
-						key={item}
-						type={tab === item ? 'primary' : 'default'}
-						onClick={() => handleTabChange(item)}
-					>
-						{i18n[item]}
-					</Button>
-				))}
-			</div>
-
-			<div
-				className={bem('list-container', {
-					active: tab === 'basicUsage',
-				})}
-			>
-				<List
-					status={basicStatus}
-					onLoad={() => handleListLoad('basicUsage', basicData || [])}
-				>
-					{(basicData || []).map((item) => (
-						<Cell title={item} key={item} />
-					))}
-				</List>
-			</div>
-
-			<div
-				className={bem('list-container', {
-					active: tab === 'errorTip',
-				})}
-			>
-				<List
-					status={errorStatus}
-					onLoad={() => handleListLoad('errorTip', errorData || [])}
-					slots={{
-						error: (
-							<span
-								onClick={() =>
-									handleListLoad('errorTip', errorData || [])
-								}
-							>
-								{i18n.errorText}
-							</span>
-						),
-					}}
-				>
-					{(errorData || []).map((item) => (
-						<Cell title={item} key={item} />
-					))}
-				</List>
-			</div>
-
-			<div
-				className={bem('list-container', {
-					active: tab === 'pullRefresh',
-				})}
-			>
-				<PullRefresh
-					refreshing={pullStatus === 'loading'}
-					onRefresh={() => handleListLoad('pullRefresh', [])}
-				>
+			<Tabs>
+				<Tabs.Panel key="basicUsage" title={i18n['basicUsage']}>
 					<List
-						status={pullStatus}
-						onLoad={() =>
-							handleListLoad('pullRefresh', pullData || [])
-						}
+						status={basicStatus}
+						onLoad={() => {
+							handleBasicDataLoad(basicData);
+						}}
 					>
-						{(pullData || []).map((item) => (
+						{(basicData || []).map((item) => (
 							<Cell title={item} key={item} />
 						))}
 					</List>
-				</PullRefresh>
-			</div>
+				</Tabs.Panel>
+				<Tabs.Panel key="errorTip" title={i18n['errorTip']}>
+					<List
+						status={errorStatus}
+						slots={{
+							error: (
+								<span
+									onClick={() => {
+										handleErrorDataLoad(errorData);
+									}}
+								>
+									{i18n.errorText}
+								</span>
+							),
+						}}
+						onLoad={() => {
+							handleErrorDataLoad(errorData);
+						}}
+					>
+						{(errorData || []).map((item) => (
+							<Cell title={item} key={item} />
+						))}
+					</List>
+				</Tabs.Panel>
+				<Tabs.Panel key="pullRefresh" title={i18n['pullRefresh']}>
+					<PullRefresh
+						refreshing={pullRefreshing}
+						onRefresh={() => handlePullDataLoad(pullData, true)}
+					>
+						<List
+							status={pullStatus}
+							onLoad={() => handlePullDataLoad(pullData, false)}
+						>
+							{(pullData || []).map((item) => (
+								<Cell title={item} key={item} />
+							))}
+						</List>
+					</PullRefresh>
+				</Tabs.Panel>
+			</Tabs>
 		</>
 	);
 }

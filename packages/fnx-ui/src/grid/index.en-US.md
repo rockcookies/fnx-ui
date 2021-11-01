@@ -6,7 +6,7 @@ The patrigger can separate the page into the equal width block in the horizontal
 
 Set the palace content by `grid.Item` child element
 
-```tsx | pure
+```tsx
 import { Grid, Image } from 'fnx-ui';
 
 ReactDOM.render(
@@ -31,7 +31,7 @@ ReactDOM.render(
 
 The default line shows four plaids, which can be custom columns through `columnsize`
 
-```tsx | pure
+```tsx
 import { Grid, Image } from 'fnx-ui';
 
 ReactDOM.render(
@@ -59,7 +59,7 @@ ReactDOM.render(
 
 After setting the `Square` property, the height of the lattice will be consistent with the width.
 
-```tsx | pure
+```tsx
 import { Grid, Image } from 'fnx-ui';
 
 ReactDOM.render(
@@ -78,7 +78,7 @@ ReactDOM.render(
 
 Set the distance between the plaids via the `gutter` property.
 
-```tsx | pure
+```tsx
 import { Grid, Image } from 'fnx-ui';
 
 ReactDOM.render(

@@ -6,7 +6,7 @@ Used to switch between selected and non-selected states.
 
 Check status through `checkd` bind check box, `defaultChecked` is a checkbox default check status.
 
-```tsx | pure
+```tsx
 import { Checkbox } from 'fnx-ui';
 
 ReactDOM.render(
@@ -21,7 +21,7 @@ ReactDOM.render(
 
 You can disable the checkbox by setting the `disabled` property.
 
-```tsx | pure
+```tsx
 import { Checkbox } from 'fnx-ui';
 
 ReactDOM.render(
@@ -38,7 +38,7 @@ ReactDOM.render(
 
 Set the `iconshape` property to `Square` , the shape of the check box will become square.
 
-```tsx | pure
+```tsx
 import { Checkbox } from 'fnx-ui';
 
 ReactDOM.render(
@@ -53,7 +53,7 @@ ReactDOM.render(
 
 Set the icon color selected by the `iconCheckedColor` property setting.
 
-```tsx | pure
+```tsx
 import { Checkbox } from 'fnx-ui';
 
 ReactDOM.render(
@@ -68,7 +68,7 @@ ReactDOM.render(
 
 Customize the size of the icon via the `iconsize` property.
 
-```tsx | pure
+```tsx
 import { Checkbox } from 'fnx-ui';
 
 ReactDOM.render(
@@ -83,7 +83,7 @@ ReactDOM.render(
 
 Customized Icon, `checkedIcon` custom selection icon.
 
-```tsx | pure
+```tsx
 import { Toast } from 'fnx-ui';
 
 ReactDOM.render(
@@ -104,7 +104,7 @@ ReactDOM.render(
 
 After setting the `labeldisabled` property, click on the content other than the icon without trigger the check box to switch.
 
-```tsx | pure
+```tsx
 import { Checkbox } from 'fnx-ui';
 
 ReactDOM.render(

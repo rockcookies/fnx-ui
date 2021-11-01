@@ -6,7 +6,7 @@ The user can enter or edit text in the text box.
 
 You can bind the value of the input box through `value` and set the placeholder prompt text through `placeholder`.
 
-```tsx | pure
+```tsx
 import { Field } from 'fnx-ui';
 
 ReactDOM.render(
@@ -23,7 +23,7 @@ ReactDOM.render(
 
 Define different types of input boxes according to the `type` attribute. The default value is text.
 
-```tsx | pure
+```tsx
 import { Field } from 'fnx-ui';
 
 ReactDOM.render(
@@ -42,7 +42,7 @@ ReactDOM.render(
 
 Set the input box to read-only status through `readOnly`, and set the input box to disabled status through `disabled`.
 
-```tsx | pure
+```tsx
 import { Field } from 'fnx-ui';
 
 ReactDOM.render(
@@ -61,7 +61,7 @@ ReactDOM.render(
 
 Configure the icons on both sides of the `Cell` cell through `leftIcon` and `rightIcon`, and display the clear icon during input by setting `clearable`.
 
-```tsx | pure
+```tsx
 import { Field } from 'fnx-ui';
 
 ReactDOM.render(
@@ -87,7 +87,7 @@ ReactDOM.render(
 
 Setting the `required` attribute indicates that this is a required item, and the corresponding error prompt can be displayed in combination with the `help` attribute.
 
-```tsx | pure
+```tsx
 import { Field } from 'fnx-ui';
 
 ReactDOM.render(
@@ -104,7 +104,7 @@ ReactDOM.render(
 
 Use `controlSuffix` to insert buttons at the end of the input box and `controlPrefix` to insert buttons at the head of the input box.
 
-```tsx | pure
+```tsx
 import { Field } from 'fnx-ui';
 
 ReactDOM.render(
@@ -133,7 +133,7 @@ ReactDOM.render(
 
 For `< Field. TextArea / >`, you can set a high degree of adaptation through the `autosize` attribute.
 
-```tsx | pure
+```tsx
 import { Field } from 'fnx-ui';
 
 ReactDOM.render(
@@ -150,7 +150,7 @@ ReactDOM.render(
 
 After setting the `maxlength` and `showCount` properties, word count will be displayed at the bottom.
 
-```tsx | pure
+```tsx
 import { Field } from 'fnx-ui';
 
 ReactDOM.render(
@@ -171,7 +171,7 @@ ReactDOM.render(
 
 You can set the alignment of the contents of the input box through the `inputAlign` attribute. The optional values are left, center and right.
 
-```tsx | pure
+```tsx
 import { Field } from 'fnx-ui';
 
 ReactDOM.render(

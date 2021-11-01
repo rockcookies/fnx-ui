@@ -32,35 +32,35 @@ export default function Basic(): ReturnType<React.FC> {
 	return (
 		<>
 			<DemoBlock title={i18n.basicUsage}>
-				<Badge count={5}>
+				<Badge count={10}>
 					<p className={bem('children')}></p>
 				</Badge>
-				<Badge count={10}>
+				<Badge count={0} showZero>
 					<p className={bem('children')}></p>
 				</Badge>
 				<Badge count="hot">
 					<p className={bem('children')}></p>
 				</Badge>
-				<Badge dot color="red">
+				<Badge dot>
 					<p className={bem('children')}></p>
 				</Badge>
 			</DemoBlock>
 			<DemoBlock title={i18n.max}>
-				<Badge max={9} count={10}>
+				<Badge count={20} max={9}>
 					<p className={bem('children')}></p>
 				</Badge>
-				<Badge max={20} count={99}>
+				<Badge count={50} max={20}>
 					<p className={bem('children')}></p>
 				</Badge>
-				<Badge max={99} showZero={false} count={100}>
+				<Badge count={200} max={99}>
 					<p className={bem('children')}></p>
 				</Badge>
 			</DemoBlock>
 			<DemoBlock title={i18n.customColor}>
-				<Badge count="5" color="var(--fnx-primary-color)">
+				<Badge count={5} color="var(--fnx-primary-color)">
 					<p className={bem('children')}></p>
 				</Badge>
-				<Badge count="10" color="var(--fnx-warning-color)">
+				<Badge count={10} color="var(--fnx-warning-color)">
 					<p className={bem('children')}></p>
 				</Badge>
 				<Badge dot color="var(--fnx-success-color)">
@@ -69,14 +69,10 @@ export default function Basic(): ReturnType<React.FC> {
 			</DemoBlock>
 
 			<DemoBlock title={i18n.customContent}>
-				<Badge
-					count={<Icon className={bem('icon')} name="arrow-down" />}
-				>
+				<Badge count={<Icon className={bem('icon')} name="success" />}>
 					<p className={bem('children')}></p>
 				</Badge>
-				<Badge
-					count={<Icon className={bem('icon')} name="arrow-left" />}
-				>
+				<Badge count="hot">
 					<p className={bem('children')}></p>
 				</Badge>
 				<Badge
@@ -88,7 +84,7 @@ export default function Basic(): ReturnType<React.FC> {
 
 			<DemoBlock title={i18n.standalone}>
 				<Badge count={20} style={{ marginLeft: '16px' }} />
-				<Badge max="99" count={100} style={{ marginLeft: '16px' }} />
+				<Badge max={99} count={100} style={{ marginLeft: '16px' }} />
 			</DemoBlock>
 		</>
 	);

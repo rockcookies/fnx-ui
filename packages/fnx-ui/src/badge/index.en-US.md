@@ -1,49 +1,97 @@
 # Badge
 
-Small numerical value or status descriptor for UI elements.
+Small numerical value or status descriptor for UI element, Badge normally appears in proximity to notifications or user avatars with eye-catching appeal, typically displaying unread messages count.
 
 ## Basic Usage
 
-After setting the `count` attribute,`Badge` to display the corresponding logo in the upper right corner of the child, or via `dot` to display small red dots.
+Set `count` prop to display the corresponding content in the upper right corner of the child element, or set `dot` to display small red dots.
 
-```tsx | pure
+```tsx
 import { Badge } from 'fnx-ui';
 
 ReactDOM.render(
   <>
-    <Badge count="hot">Content</Badge>
-  </>,
-  mountNode,
-);
-```
-
-## Max
-
-After setting the `max` attribute, when` count` The value is more than the maximum value and `count` type is` number`, it will be automatically displayed as `{Max} +`.
-
-```tsx | pure
-import { Badge } from 'fnx-ui';
-
-ReactDOM.render(
-  <>
-    <Badge count="100" max={99}>
-      Content
+    <Badge count={10}>
+      <div>content</div>
+    </Badge>
+    <Badge count={0} showZero>
+      <div>content</div>
+    </Badge>
+    <Badge count="hot">
+      <div>content</div>
+    </Badge>
+    <Badge dot>
+      <div>content</div>
     </Badge>
   </>,
   mountNode,
 );
 ```
 
-## color
+## Overflow
 
-Set the color of the logo through the `Color` property.
+Set `max` prop to handle overflow situation.
 
-```tsx | pure
+```tsx
 import { Badge } from 'fnx-ui';
 
 ReactDOM.render(
   <>
-    <Badge count="hot">Content</Badge>
+    <Badge count={20} max={9}>
+      <div>content</div>
+    </Badge>
+    <Badge count={50} max={20}>
+      <div>content</div>
+    </Badge>
+    <Badge count={200} max={99}>
+      <div>content</div>
+    </Badge>
+  </>,
+  mountNode,
+);
+```
+
+## Custom Color
+
+You can also set it to a hex color string for custom color through `color` property.
+
+```tsx
+import { Badge } from 'fnx-ui';
+
+ReactDOM.render(
+  <>
+    <Badge count={5} color="var(--fnx-primary-color)">
+      <div>content</div>
+    </Badge>
+    <Badge count={10} color="var(--fnx-warning-color)">
+      <div>content</div>
+    </Badge>
+    <Badge dot color="var(--fnx-success-color)">
+      <div>content</div>
+    </Badge>
+  </>,
+  mountNode,
+);
+```
+
+## 自定义徽标内容
+
+`count` prop support custom element.
+
+```tsx
+import { Badge, Icon } from 'fnx-ui';
+
+ReactDOM.render(
+  <>
+    <Badge count={<Icon name="success" />}>
+      <div>content</div>
+    </Badge>
+    <Badge count="hot">
+      <div>content</div>
+    </Badge>
+    <Badge count={<Icon name="arrow-right" />}>
+      <div>content</div>
+    </Badge>
   </>,
   mountNode,
 );
@@ -51,14 +99,22 @@ ReactDOM.render(
 
 ## Independent Display
 
-When the `Badge` does not have a child element, it will be displayed as an independent element.
+Used in standalone when children is empty.
 
-```tsx | pure
-import { Badge } from 'fnx-ui';
+```tsx
+import { Badge, Icon } from 'fnx-ui';
 
 ReactDOM.render(
   <>
-    <Badge count="100">Content</Badge>
+    <Badge count={<Icon name="success" />}>
+      <div>content</div>
+    </Badge>
+    <Badge count="hot">
+      <div>content</div>
+    </Badge>
+    <Badge count={<Icon name="arrow-right" />}>
+      <div>content</div>
+    </Badge>
   </>,
   mountNode,
 );
@@ -66,11 +122,13 @@ ReactDOM.render(
 
 ## API
 
-| Parameter | Description                                                                                                                                            | Type                   | Default value |
-| --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------- | ------------- |
-| count     | Logo content                                                                                                                                           | `ReactNode`            | `8`           |
-| showZero  | When `count` is numeric 0, is it show a logo?                                                                                                          | `boolean`              | `true`        |
-| dot       | Whether to show a small red point                                                                                                                      | `boolean`              | `false`       |
-| max       | Maximum value, more than the maximum is displayed `{max} +`, only when count is digital                                                                | `number \| string`     | -             |
-| color     | Logo background color                                                                                                                                  | `string`               | `#ee0a24`     |
-| offset    | Set the offset of the logo, two of the arrays respectively correspond to the offset of the horizontal and vertical direction, the default unit is `px` | `number[] \| string[]` | -             |
+### Props
+
+| Name     | Description                                                                                                           | Type                   | Default   |
+| -------- | --------------------------------------------------------------------------------------------------------------------- | ---------------------- | --------- |
+| count    | Badge content                                                                                                         | `ReactNode`            | -         |
+| showZero | Whether to display the badge, even if provided value equals 0.                                                        | `boolean`              | `true`    |
+| dot      | Whether to show a small red point                                                                                     | `boolean`              | `false`   |
+| max      | Maximum value, more than the maximum is displayed `{max} +`, only when count is number                                | `number \| string`     | -         |
+| color    | Badge color                                                                                                           | `string`               | `#ee0a24` |
+| offset   | Offset of badge dot, two of the arrays respectively correspond to the offset of the horizontal and vertical direction | `number[] \| string[]` | -         |

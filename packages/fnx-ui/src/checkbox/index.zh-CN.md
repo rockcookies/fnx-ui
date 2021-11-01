@@ -6,7 +6,7 @@
 
 通过 `checked` 绑定复选框的勾选状态，`defaultChecked` 是复选框默认的勾选状态。
 
-```tsx | pure
+```tsx
 import { Checkbox } from 'fnx-ui';
 
 ReactDOM.render(
@@ -21,7 +21,7 @@ ReactDOM.render(
 
 通过设置 `disabled` 属性可以禁用复选框。
 
-```tsx | pure
+```tsx
 import { Checkbox } from 'fnx-ui';
 
 ReactDOM.render(
@@ -38,7 +38,7 @@ ReactDOM.render(
 
 将 `iconShape` 属性设置为 `square` ，复选框的形状会变成方形。
 
-```tsx | pure
+```tsx
 import { Checkbox } from 'fnx-ui';
 
 ReactDOM.render(
@@ -53,7 +53,7 @@ ReactDOM.render(
 
 通过 `iconCheckedColor` 属性设置选中状态的图标颜色。
 
-```tsx | pure
+```tsx
 import { Checkbox } from 'fnx-ui';
 
 ReactDOM.render(
@@ -68,7 +68,7 @@ ReactDOM.render(
 
 通过 `iconSize` 属性可以自定义图标的大小。
 
-```tsx | pure
+```tsx
 import { Checkbox } from 'fnx-ui';
 
 ReactDOM.render(
@@ -83,7 +83,7 @@ ReactDOM.render(
 
 通过 `icon` 自定义未选中图标，`checkedIcon` 自定义选中图标。
 
-```tsx | pure
+```tsx
 import { Toast } from 'fnx-ui';
 
 ReactDOM.render(
@@ -104,7 +104,7 @@ ReactDOM.render(
 
 设置 `labelDisabled` 属性后，点击图标以外的内容不会触发复选框切换。
 
-```tsx | pure
+```tsx
 import { Checkbox } from 'fnx-ui';
 
 ReactDOM.render(

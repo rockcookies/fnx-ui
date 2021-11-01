@@ -6,7 +6,7 @@ Place a set of contents in a plurality of fold panels, click on the title of the
 
 By `defaultactivekey`, the default control expands the panel list.
 
-```tsx | pure
+```tsx
 import { Collapse } from 'fnx-ui';
 
 ReactDOM.render(
@@ -24,7 +24,7 @@ ReactDOM.render(
 
 Expanded a panel with your accordion mode through `Accordion`
 
-```tsx | pure
+```tsx
 import { Collapse } from 'fnx-ui';
 
 ReactDOM.render(
@@ -42,7 +42,7 @@ ReactDOM.render(
 
 The inner border is displayed by controlling the property `ghost`.
 
-```tsx | pure
+```tsx
 import { Collapse } from 'fnx-ui';
 
 ReactDOM.render(
@@ -60,7 +60,7 @@ ReactDOM.render(
 
 Disable a single panel via the `disabled` property.
 
-```tsx | pure
+```tsx
 import { Collapse } from 'fnx-ui';
 
 ReactDOM.render(
@@ -78,7 +78,7 @@ ReactDOM.render(
 
 `title` is`Reactnode` type,`lefticon` and `content` in the `headerprops` attribute are also `Reactnode` types,`leftIcon` indicates that the left icon，`content` is the content of the default side。
 
-```tsx | pure
+```tsx
 import { Collapse, Icon } from 'fnx-ui';
 
 ReactDOM.render(

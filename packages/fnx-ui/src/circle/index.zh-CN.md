@@ -6,7 +6,7 @@
 
 `progress` 属性表示动画过程中的实时进度。当 `progress` 发生变化时会以 `speed` 的速度变化到新的值。
 
-```tsx | pure
+```tsx
 import { Circle } from 'fnx-ui';
 
 ReactDOM.render(
@@ -21,7 +21,7 @@ ReactDOM.render(
 
 通过 `strokeWidth` 属性来控制进度条宽度。
 
-```tsx | pure
+```tsx
 import { Circle } from 'fnx-ui';
 
 ReactDOM.render(
@@ -38,7 +38,7 @@ ReactDOM.render(
 
 通过 `strokeColor` 属性来控制进度条颜色， `trailColor` 属性来控制轨道颜色。
 
-```tsx | pure
+```tsx
 import { Circle } from 'fnx-ui';
 
 ReactDOM.render(
@@ -55,7 +55,7 @@ ReactDOM.render(
 
 `strokeColor` 属性支持传入对象格式来定义渐变色。
 
-```tsx | pure
+```tsx
 import { Circle } from 'fnx-ui';
 
 ReactDOM.render(
@@ -76,7 +76,7 @@ ReactDOM.render(
 
 将 `clockwise` 设置为 `false`，进度会从逆时针方向开始。
 
-```tsx | pure
+```tsx
 import { Circle } from 'fnx-ui';
 
 ReactDOM.render(
@@ -91,7 +91,7 @@ ReactDOM.render(
 
 通过 `size` 属性设置圆环直径。
 
-```tsx | pure
+```tsx
 import { Circle } from 'fnx-ui';
 
 ReactDOM.render(

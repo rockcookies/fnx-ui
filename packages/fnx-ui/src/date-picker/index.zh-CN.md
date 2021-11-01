@@ -6,7 +6,7 @@
 
 `DatePicker` 通过 `columnsLayout` 属性来定义需要选择的时间类型， `columnsLayout` 为 `year,month,day` 表示选择年月日。通过 `maxDate` 和 `minDate` 属性可以确定可选的时间范围。
 
-```tsx | pure
+```tsx
 import { DatePicker } from 'fnx-ui';
 
 ReactDOM.render(
@@ -26,7 +26,7 @@ ReactDOM.render(
 
 将 `columnsLayout` 设置为 `year,month` 即可选择年份和月份。通过传入 `formatter` 函数，可以对选项文字进行格式化处理。
 
-```tsx | pure
+```tsx
 import { DatePicker } from 'fnx-ui';
 
 const formatter = (type, value) => {
@@ -61,7 +61,7 @@ ReactDOM.render(
 
 将 `columnsLayout` 设置为 `hour,minute` 即可选择时间（小时和分钟）。
 
-```tsx | pure
+```tsx
 import { DatePicker } from 'fnx-ui';
 
 ReactDOM.render(
@@ -76,7 +76,7 @@ ReactDOM.render(
 
 将 `columnsLayout` 设置为 `year,month,day,hour,minute` 即可选择完整时间，包括年、月、日和小时、分钟。
 
-```tsx | pure
+```tsx
 import { DatePicker } from 'fnx-ui';
 
 ReactDOM.render(
@@ -95,7 +95,7 @@ ReactDOM.render(
 
 通过传入 `filter` 函数，可以对选项数组进行过滤，实现自定义时间间隔。
 
-```tsx | pure
+```tsx
 import { DatePicker } from 'fnx-ui';
 
 const filter = (type, values) => {
@@ -116,7 +116,7 @@ ReactDOM.render(
 
 ## 自定义列排序
 
-```tsx | pure
+```tsx
 import { DatePicker } from 'fnx-ui';
 
 const formatter = (type, value) => {

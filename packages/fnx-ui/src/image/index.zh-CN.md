@@ -14,7 +14,7 @@ ReactDOM.render(
     <Image
       width="100"
       height="100"
-      src="https://img17.fn-mart.com/pic/2a021346939822ebb66f/B26n221z_2fdhMZdKz/7imyeafa3yKGj9/CsmRtmA3RAuAVmgsAAKtgt1PF3s715.jpg"
+      src="https://dummyimage.com/100x100/000/fff.jpg"
     />
   </>,
   mountNode,

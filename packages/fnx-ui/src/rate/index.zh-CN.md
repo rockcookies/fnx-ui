@@ -6,7 +6,7 @@
 
 通过 `value` 属性设置显示当前分值， `defaultValue` 属性设置默认分值。
 
-```tsx | pure
+```tsx
 import { Rate } from 'fnx-ui';
 
 ReactDOM.render(
@@ -21,7 +21,7 @@ ReactDOM.render(
 
 通过 `character` 属性自定义图标样式。
 
-```tsx | pure
+```tsx
 import { Rate } from 'fnx-ui';
 
 ReactDOM.render(
@@ -36,7 +36,7 @@ ReactDOM.render(
 
 通过 `voidCharacter` 属性自定义图标样式。
 
-```tsx | pure
+```tsx
 import { Rate } from 'fnx-ui';
 
 ReactDOM.render(
@@ -51,7 +51,7 @@ ReactDOM.render(
 
 通过 `color` ，`voidColor` 属性自定义图标样式。
 
-```tsx | pure
+```tsx
 import { Rate } from 'fnx-ui';
 
 ReactDOM.render(
@@ -66,7 +66,7 @@ ReactDOM.render(
 
 通过 `size` 属性自定义图标大小。
 
-```tsx | pure
+```tsx
 import { Rate } from 'fnx-ui';
 
 ReactDOM.render(
@@ -81,7 +81,7 @@ ReactDOM.render(
 
 通过 `count` 属性自定义数量。
 
-```tsx | pure
+```tsx
 import { Rate } from 'fnx-ui';
 ReactDOM.render(
   <>
@@ -95,7 +95,7 @@ ReactDOM.render(
 
 通过 `disabled` 属性禁用 `Rate`。
 
-```tsx | pure
+```tsx
 import { Rate } from 'fnx-ui';
 ReactDOM.render(
   <>
@@ -109,7 +109,7 @@ ReactDOM.render(
 
 通过 `allowHalf` 属性实现选择半星。
 
-```tsx | pure
+```tsx
 import { Rate } from 'fnx-ui';
 ReactDOM.render(
   <>
@@ -123,7 +123,7 @@ ReactDOM.render(
 
 通过 `readonly` 属性实现只读功能。
 
-```tsx | pure
+```tsx
 import { Rate } from 'fnx-ui';
 ReactDOM.render(
   <>
@@ -137,7 +137,7 @@ ReactDOM.render(
 
 `onChange` 方法返回当前的 `value`。
 
-```tsx | pure
+```tsx
 import { Rate,Toast } from 'fnx-ui';
 
 const onChange=(value)=>{ Toast.show(value)} }

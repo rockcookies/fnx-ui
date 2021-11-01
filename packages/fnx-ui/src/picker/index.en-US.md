@@ -12,7 +12,7 @@ Set the `toolbar` property, will display the top operation bar, confirm the butt
 
 ## Basic Usage
 
-```tsx | pure
+```tsx
 import { Picker } from 'fnx-ui';
 
 const pickerData = [
@@ -38,7 +38,7 @@ ReactDOM.render(
 
 Single column selection，You can set the index of the initial selection from the `defaultvalue` property setting。
 
-```tsx | pure
+```tsx
 import { Picker } from 'fnx-ui';
 
 const data = [
@@ -64,7 +64,7 @@ ReactDOM.render(
 
 `Picker.multi` You can configure multiple columns,
 
-```tsx | pure
+```tsx
 import { Picker } from 'fnx-ui';
 
 const data = [
@@ -92,7 +92,7 @@ ReactDOM.render(
 
 `Picker.Multi` You can configure multiple columns options，
 
-```tsx | pure
+```tsx
 import { Picker } from 'fnx-ui';
 
 const data = [
@@ -140,7 +140,7 @@ ReactDOM.render(
 
 The option can be an object structure and disable this option by setting the `disabled`
 
-```tsx | pure
+```tsx
 import { Picker } from 'fnx-ui';
 
 const data = [
@@ -169,7 +169,7 @@ ReactDOM.render(
 
 The option can be an object structure and disable this option by setting the `disabled`
 
-```tsx | pure
+```tsx
 import { Picker } from 'fnx-ui';
 
 const data = [
@@ -222,7 +222,7 @@ ReactDOM.render(
 
 If the selector data is available asynchronously, the load prompt can be displayed via the `loading` property.
 
-```tsx | pure
+```tsx
 import { Picker } from 'fnx-ui';
 
 const pickerData = [
@@ -255,7 +255,7 @@ ReactDOM.render(
 
 In actual scenes, `picker` usually acts as an auxiliary form, you can match the `popup` and `field` to achieve this effect.
 
-```tsx | pure
+```tsx
 import { Picker, Popup, Field } from 'fnx-ui';
 
 const pickerData = [

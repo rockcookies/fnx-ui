@@ -133,9 +133,7 @@ const List = forwardRef<ListRef, ListProps>((_props, ref) => {
 	}, [check, propsRef]);
 
 	useUpdateEffect(() => {
-		if (status === 'default' && tabPanelActive !== false) {
-			check();
-		}
+		check();
 	}, [check, tabPanelActive, status]);
 
 	const renderSlots = () => {

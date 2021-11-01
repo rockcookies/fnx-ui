@@ -4,53 +4,55 @@ The cell is a single display item in the list.
 
 ## Basic Usage
 
-`Cell` can be used alone or in combination with `Cellgroup`. `Cellgroup` can provide upper and lower outer borders for `Cell`.
+`Cell` can be used alone or in combination with `Cell.group`.
 
-```tsx | pure
+```tsx
 import { Cell } from 'fnx-ui';
 
 ReactDOM.render(
   <>
-    <Cell.Group>
-      <Cell border={false} title="Basic Usage">
+    <Cell.Group border>
+      <Cell title="Title">Content</Cell>
+      <Cell title="Title" description="Description">
         Content
       </Cell>
-      <Cell title="Basic Usage">Content</Cell>
     </Cell.Group>
   </>,
   mountNode,
 );
 ```
 
-## Custom Title
+## Inset Grouped
 
-`title` is a `Reactnode` type. You can customize the title content by setting `title`.
+Use `inset` property of `Cell.Group`, You can convert cells into rounded card styles.
 
-```tsx | pure
+```tsx
 import { Cell } from 'fnx-ui';
 
 ReactDOM.render(
   <>
-    <Cell title="Custom Title Content">content</Cell>
-    <Cell title="Custom Title Content">content</Cell>
+    <Cell.Group inset>
+      <Cell title="Title">Content</Cell>
+      <Cell title="Title">Content</Cell>
+    </Cell.Group>
   </>,
   mountNode,
 );
 ```
 
-## Custom Icon
+## Add Icon
 
-`leftIcon` and `rightIcon` are types of `ReactNode`. You can customize the left and right icons.
+Use `leftIcon` and `rightIcon` to customize the left and right icons.
 
-```tsx | pure
-import { Cell,Icon } from 'fnx-ui';
+```tsx
+import { Cell, Icon } from 'fnx-ui';
 
 ReactDOM.render(
   <>
-    <Cell title="Custom Icon" leftIcon={<Icon name="arrow-down" />}>
+    <Cell title="Title" leftIcon={<Icon name="success" />}>
       Content
     </Cell>
-    <Cell title="Custom Icon" rightIcon={<Icon name="arrow-down" />}>
+    <Cell title="Title" rightIcon={<Icon name="arrow-right" />}>
       Content
     </Cell>
   </>
@@ -58,16 +60,31 @@ ReactDOM.render(
 );
 ```
 
+## Simple mode
+
+When only `children` property is set, the content will be aligned to the left.
+
+```tsx
+import { Cell } from 'fnx-ui';
+
+ReactDOM.render(
+  <>
+    <Cell>Content</Cell>
+  </>,
+  mountNode,
+);
+```
+
 ## Clickable
 
-The `clickable` attribute enables the `Cell` component to have a click effect.
+The `clickable` property enables the `Cell` to have a click effect.
 
-```tsx | pure
-import { Cell } from 'fnx-ui';
+```tsx
+import { Cell, Icon } from 'fnx-ui';
 
 ReactDOM.render(
   <>
-    <Cell title="Clickable" clickable>
+    <Cell title="Title" clickable rightIcon={<Icon name="arrow-right" />}>
       Content
     </Cell>
   </>,
@@ -75,37 +92,21 @@ ReactDOM.render(
 );
 ```
 
-## Children Only
+## Group Title
 
-When only `children` are set, the content will be aligned to the left.
+Use `title` property of `Cell.Group` to set group title.
 
-```tsx | pure
+```tsx
 import { Cell } from 'fnx-ui';
 
 ReactDOM.render(
   <>
-    <Cell>Only Children</Cell>
-    <Cell>Only Children</Cell>
-  </>,
-  mountNode,
-);
-```
-
-## Description Information
-
-The `description` attribute is `Reactnode`, which represents user-defined description information.
-
-```tsx | pure
-import { Cell } from 'fnx-ui';
-
-ReactDOM.render(
-  <>
-    <Cell itemsAlign="bottom" description="Description">
-      Content
-    </Cell>
-    <Cell itemsAlign="bottom" description={<div>Description</div>}>
-      Content
-    </Cell>
+    <Cell.Group title="Group 1">
+      <Cell title="Title">Content</Cell>
+    </Cell.Group>
+    <Cell.Group title="Group 2">
+      <Cell title="Title">Content</Cell>
+    </Cell.Group>
   </>,
   mountNode,
 );
@@ -113,17 +114,20 @@ ReactDOM.render(
 
 ## Alignment
 
-You can set 'top' | 'middle' | 'bottom' through the `itemalign` attribute to indicate the top、middle and bottom alignment respectively.
+Use `top` , `middle` and `bottom` option through the `itemAlign` property to set the top、middle and bottom alignment respectively.
 
-```tsx | pure
+```tsx
 import { Cell } from 'fnx-ui';
 
 ReactDOM.render(
   <>
-    <Cell itemsAlign="top" description="Description">
+    <Cell itemsAlign="top" title="Title" description="Description">
       Content
     </Cell>
-    <Cell itemsAlign="middle" description="Description">
+    <Cell itemsAlign="middle" title="Title" description="Description">
+      Content
+    </Cell>
+    <Cell itemsAlign="bottom" title="Title" description="Description">
       Content
     </Cell>
   </>,
@@ -133,27 +137,30 @@ ReactDOM.render(
 
 ## API
 
-| Parameter        | Description                            | Type                              | Default value |
-| ---------------- | -------------------------------------- | --------------------------------- | ------------- |
-| title            | Title                                  | `ReactNode`                       | -             |
-| titleProps       | Title Properties                       | `ReactNode`                       | -             |
-| content          | Right content                          | `ReactNode`                       | -             |
-| contentProps     | Right content properties               | `HTMLAttributes<HTMLDivElement>`  | -             |
-| description      | Description below the title            | `ReactNode`                       | -             |
-| descriptionProps | Description properties below the title | `HTMLAttributes<HTMLDivElement`   | -             |
-| leftIcon         | Left custom icon                       | `ReactNode`                       | -             |
-| leftIconProps    | Left custom icon properties            | `HTMLAttributes<HTMLSpanElement>` | -             |
-| rightIcon        | Custom icon on the right               | `ReactNode`                       | -             |
-| rightIconProps   | Right custom icon properties           | `HTMLAttributes<HTMLSpanElement>` | -             |
-| border           | `Cell` border                          | `boolean`                         | `true`        |
-| itemsAlign       | Alignment                              | `'top' \| 'middle' \| 'bottom'`   | -             |
-| clickable        | Can I click                            | `boolean`                         | `false`       |
+### Cell Props
 
-## CellGroup API
+| Name             | Description                                 | Type                              | Default |
+| ---------------- | ------------------------------------------- | --------------------------------- | ------- |
+| title            | Left title                                  | `ReactNode`                       | -       |
+| titleProps       | Left title properties                       | `HTMLAttributes<HTMLDivElement>`  | -       |
+| content          | Right content                               | `ReactNode`                       | -       |
+| contentProps     | Right content properties                    | `HTMLAttributes<HTMLDivElement>`  | -       |
+| description      | Description below the title                 | `ReactNode`                       | -       |
+| descriptionProps | Description properties below the title      | `HTMLAttributes<HTMLDivElement`   | -       |
+| leftIcon         | Left custom icon                            | `ReactNode`                       | -       |
+| leftIconProps    | Left custom icon properties                 | `HTMLAttributes<HTMLSpanElement>` | -       |
+| rightIcon        | Custom icon on the right                    | `ReactNode`                       | -       |
+| rightIconProps   | Right custom icon properties                | `HTMLAttributes<HTMLSpanElement>` | -       |
+| border           | Whether to show inner border                | `boolean`                         | `true`  |
+| itemsAlign       | Alignment                                   | `'top' \| 'middle' \| 'bottom'`   | `'top'` |
+| clickable        | Whether to show click feedback when clicked | `boolean`                         | `false` |
 
-| Parameter  | Description             | Type                             | Default value |
-| ---------- | ----------------------- | -------------------------------- | ------------- |
-| title      | Group title             | `ReactNode`                      | -             |
-| titleProps | Group title             | `HTMLAttributes<HTMLDivElement>` | -             |
-| border     | Show outer border       | `boolean`                        | `true`        |
-| bodyProps  | Outer border properties | `HTMLAttributes<HTMLDivElement>` | -             |
+### Cell.Group Props
+
+| Name       | Description                  | Type                             | Default |
+| ---------- | ---------------------------- | -------------------------------- | ------- |
+| title      | Group Title                  | `ReactNode`                      | -       |
+| titleProps | Group title properties       | `HTMLAttributes<HTMLDivElement>` | -       |
+| border     | Whether to show outer border | `boolean`                        | `true`  |
+| bodyProps  | Body properties              | `HTMLAttributes<HTMLDivElement>` | -       |
+| inset      | Whether to be inset grouped  | `boolean`                        | -       |

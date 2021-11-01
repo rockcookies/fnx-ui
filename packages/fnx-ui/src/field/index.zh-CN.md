@@ -6,7 +6,7 @@
 
 可以通过 `value` 绑定输入框的值，通过 `placeholder` 设置占位提示文字。
 
-```tsx | pure
+```tsx
 import { Field } from 'fnx-ui';
 
 ReactDOM.render(
@@ -23,7 +23,7 @@ ReactDOM.render(
 
 根据 `type` 属性定义不同类型的输入框，默认值为 text 。
 
-```tsx | pure
+```tsx
 import { Field } from 'fnx-ui';
 
 ReactDOM.render(
@@ -42,7 +42,7 @@ ReactDOM.render(
 
 通过 `readOnly` 将输入框设置为只读状态，通过 `disabled` 将输入框设置为禁用状态。
 
-```tsx | pure
+```tsx
 import { Field } from 'fnx-ui';
 
 ReactDOM.render(
@@ -61,7 +61,7 @@ ReactDOM.render(
 
 通过 `leftIcon` 和 `rightIcon` 配置 `Cell` 单元格内两侧的图标，通过设置 `clearable` 在输入过程中展示清除图标。
 
-```tsx | pure
+```tsx
 import { Field } from 'fnx-ui';
 
 ReactDOM.render(
@@ -87,7 +87,7 @@ ReactDOM.render(
 
 设置 `required` 属性表示这是一个必填项，可以配合 `help` 属性显示对应的错误提示。
 
-```tsx | pure
+```tsx
 import { Field } from 'fnx-ui';
 
 ReactDOM.render(
@@ -104,7 +104,7 @@ ReactDOM.render(
 
 通过 `controlSuffix` 可以在输入框尾部插入按钮 ,`controlPrefix` 可以在输入框头部插入按钮。
 
-```tsx | pure
+```tsx
 import { Field } from 'fnx-ui';
 
 ReactDOM.render(
@@ -133,7 +133,7 @@ ReactDOM.render(
 
 对于 `<Field.TextArea />`，可以通过 `autosize` 属性设置高度自适应。
 
-```tsx | pure
+```tsx
 import { Field } from 'fnx-ui';
 
 ReactDOM.render(
@@ -150,7 +150,7 @@ ReactDOM.render(
 
 设置 `maxlength` 和 `showCount` 属性后会在底部显示字数统计。
 
-```tsx | pure
+```tsx
 import { Field } from 'fnx-ui';
 
 ReactDOM.render(
@@ -171,7 +171,7 @@ ReactDOM.render(
 
 通过 `inputAlign` 属性可以设置输入框内容的对齐方式，可选值为 `left、center、right`。
 
-```tsx | pure
+```tsx
 import { Field } from 'fnx-ui';
 
 ReactDOM.render(

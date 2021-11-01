@@ -3,8 +3,8 @@
 	--fnx-swipe-indicator-margin: var(--fnx-padding-sm);
 	--fnx-swipe-indicator-active-opacity: 1;
 	--fnx-swipe-indicator-inactive-opacity: 0.3;
-	--fnx-swipe-indicator-active-background-color: var(--fnx-primary-color);
-	--fnx-swipe-indicator-inactive-background-color: var(--fnx-gray-200);
+	--fnx-swipe-indicator-active-background: var(--fnx-primary-color);
+	--fnx-swipe-indicator-inactive-background: var(--fnx-gray-200);
 }
 
 .fnx-swipe {
@@ -47,7 +47,7 @@
 	&__indicator {
 		width: var(--fnx-swipe-indicator-size);
 		height: var(--fnx-swipe-indicator-size);
-		background-color: var(--fnx-swipe-indicator-inactive-background-color);
+		background: var(--fnx-swipe-indicator-inactive-background);
 		border-radius: 100%;
 		opacity: var(--fnx-swipe-indicator-inactive-opacity);
 		transition: opacity var(--fnx-animation-duration-fast),
@@ -58,9 +58,7 @@
 		}
 
 		&--active {
-			background-color: var(
-				--fnx-swipe-indicator-active-background-color
-			);
+			background: var(--fnx-swipe-indicator-active-background);
 			opacity: var(--fnx-swipe-indicator-active-opacity);
 		}
 	}

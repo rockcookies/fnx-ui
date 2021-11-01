@@ -4,7 +4,7 @@
 
 ## 基础用法
 
-```tsx | pure
+```tsx
 import { Overlay } from 'fnx-ui';
 
 ReactDOM.render(
@@ -19,7 +19,7 @@ ReactDOM.render(
 
 可以在遮罩层上嵌入任意内容。
 
-```tsx | pure
+```tsx
 import { Overlay } from 'fnx-ui';
 
 ReactDOM.render(

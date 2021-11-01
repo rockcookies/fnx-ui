@@ -6,7 +6,7 @@
 
 通过子元素设置通知栏的内容，通过 `leftIcon` 属性设置通知栏左侧的图标。
 
-```tsx | pure
+```tsx
 import { NoticeBar } from 'fnx-ui';
 
 ReactDOM.render(
@@ -24,7 +24,7 @@ ReactDOM.render(
 
 `marquee` 为 `'auto'` 通知栏的内容长度溢出时会自动开启滚动播放。
 
-```tsx | pure
+```tsx
 import { NoticeBar } from 'fnx-ui';
 ReactDOM.render(
   <>
@@ -45,7 +45,7 @@ ReactDOM.render(
 
 默认多行展示，文字较长时，可以通过设置 `ellipsis` 属性在一行显示。
 
-```tsx | pure
+```tsx
 import { NoticeBar } from 'fnx-ui';
 
 ReactDOM.render(
@@ -63,7 +63,7 @@ ReactDOM.render(
 
 通过 `color` 属性设置文本颜色，通过 `background` 属性设置背景色。
 
-```tsx | pure
+```tsx
 import { NoticeBar } from 'fnx-ui';
 
 ReactDOM.render(
@@ -81,7 +81,7 @@ ReactDOM.render(
 
 搭配 `NoticeBar` 和 `Swipe` 组件可以实现垂直滚动的效果。
 
-```tsx | pure
+```tsx
 import { NoticeBar } from 'fnx-ui';
 
 ReactDOM.render(

@@ -6,7 +6,7 @@
 
 通过 `Grid.Item`子元素设置宫格内容
 
-```tsx | pure
+```tsx
 import { Grid, Image } from 'fnx-ui';
 
 ReactDOM.render(
@@ -31,7 +31,7 @@ ReactDOM.render(
 
 默认一行展示四个格子，可以通过 `columnSize` 自定义列数。
 
-```tsx | pure
+```tsx
 import { Grid, Image } from 'fnx-ui';
 
 ReactDOM.render(
@@ -59,7 +59,7 @@ ReactDOM.render(
 
 设置 `square` 属性后，格子的高度会和宽度保持一致。
 
-```tsx | pure
+```tsx
 import { Grid, Image } from 'fnx-ui';
 
 ReactDOM.render(
@@ -78,7 +78,7 @@ ReactDOM.render(
 
 通过 `gutter` 属性设置格子之间的距离。
 
-```tsx | pure
+```tsx
 import { Grid, Image } from 'fnx-ui';
 
 ReactDOM.render(

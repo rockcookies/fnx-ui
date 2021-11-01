@@ -2,7 +2,7 @@
 
 ## 基础用法
 
-```tsx | pure
+```tsx
 import { Pagination } from 'fnx-ui';
 
 ReactDOM.render(
@@ -17,7 +17,7 @@ ReactDOM.render(
 
 将 `mode` 设置为 `simple` 来切换到简单模式，此时分页器不会展示具体的页码按钮。
 
-```tsx | pure
+```tsx
 import { Pagination } from 'fnx-ui';
 
 ReactDOM.render(
@@ -32,7 +32,7 @@ ReactDOM.render(
 
 设置 `forceEllipses` 后会展示省略号按钮，点击后可以快速跳转。
 
-```tsx | pure
+```tsx
 import { Pagination } from 'fnx-ui';
 
 ReactDOM.render(
@@ -52,7 +52,7 @@ ReactDOM.render(
 
 通过 `prev`、`next` 等来自定义分页按钮的内容。
 
-```tsx | pure
+```tsx
 import { Pagination } from 'fnx-ui';
 
 ReactDOM.render(

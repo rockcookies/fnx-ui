@@ -6,12 +6,12 @@
 	--fnx-uploader-icon-color: var(--fnx-gray-600);
 	--fnx-uploader-text-color: var(--fnx-gray-800);
 	--fnx-uploader-text-font-size: var(--fnx-font-size-sm);
-	--fnx-uploader-upload-background-color: var(--fnx-gray-200);
-	--fnx-uploader-upload-active-color: var(--fnx-gray-300);
+	--fnx-uploader-upload-background: var(--fnx-gray-200);
+	--fnx-uploader-upload-active-background: var(--fnx-gray-300);
 	--fnx-uploader-delete-color: var(--fnx-white-color);
 	--fnx-uploader-delete-icon-size: 16px;
-	--fnx-uploader-delete-background-color: rgba(0, 0, 0, 0.7);
-	--fnx-uploader-file-background-color: var(--fnx-gray-100);
+	--fnx-uploader-delete-background: rgba(0, 0, 0, 0.7);
+	--fnx-uploader-file-background: var(--fnx-gray-100);
 	--fnx-uploader-file-icon-size: 24px;
 	--fnx-uploader-file-icon-color: var(--fnx-gray-600);
 	--fnx-uploader-file-name-padding: 0 var(--fnx-padding-base);
@@ -19,7 +19,7 @@
 	--fnx-uploader-file-name-font-size: var(--fnx-font-size-sm);
 	--fnx-uploader-file-name-text-color: var(--fnx-gray-800);
 	--fnx-uploader-mask-text-color: var(--fnx-white-color);
-	--fnx-uploader-mask-background-color: rgba(50, 50, 51, 0.88);
+	--fnx-uploader-mask-background: rgba(50, 50, 51, 0.88);
 	--fnx-uploader-mask-icon-size: 22px;
 	--fnx-uploader-mask-message-font-size: var(--fnx-font-size-sm);
 	--fnx-uploader-mask-message-line-height: var(--fnx-line-height-xs);
@@ -72,10 +72,10 @@
 		width: var(--fnx-uploader-size);
 		height: var(--fnx-uploader-size);
 		margin: 0 var(--fnx-padding-xs) var(--fnx-padding-xs) 0;
-		background-color: var(--fnx-uploader-upload-background-color);
+		background: var(--fnx-uploader-upload-background);
 
 		&:active {
-			background-color: var(--fnx-uploader-upload-active-color);
+			background: var(--fnx-uploader-upload-active-background);
 		}
 
 		&-icon {
@@ -108,7 +108,7 @@
 			right: 0;
 			width: var(--fnx-uploader-delete-icon-size);
 			height: var(--fnx-uploader-delete-icon-size);
-			background-color: var(--fnx-uploader-delete-background-color);
+			background: var(--fnx-uploader-delete-background);
 			border-radius: 0 0 0 var(--fnx-uploader-delete-icon-size);
 
 			&-icon {
@@ -142,7 +142,7 @@
 		align-items: center;
 		justify-content: center;
 		color: var(--fnx-uploader-mask-text-color);
-		background-color: var(--fnx-uploader-mask-background-color);
+		background: var(--fnx-uploader-mask-background);
 
 		&-icon,
 		&-icon-loading {
@@ -164,7 +164,7 @@
 		justify-content: center;
 		width: var(--fnx-uploader-size);
 		height: var(--fnx-uploader-size);
-		background-color: var(--fnx-uploader-file-background-color);
+		background: var(--fnx-uploader-file-background);
 
 		&-icon {
 			color: var(--fnx-uploader-file-icon-color);

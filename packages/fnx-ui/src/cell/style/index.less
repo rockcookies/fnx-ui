@@ -6,9 +6,9 @@
 	--fnx-cell-vertical-padding: 10px;
 	--fnx-cell-horizontal-padding: var(--fnx-padding-md);
 	--fnx-cell-text-color: var(--fnx-gray-800);
-	--fnx-cell-background-color: var(--fnx-gray-75);
+	--fnx-cell-background: var(--fnx-gray-75);
 	--fnx-cell-border-color: var(--fnx-gray-200);
-	--fnx-cell-active-color: var(--fnx-gray-300);
+	--fnx-cell-active-background: var(--fnx-gray-300);
 	--fnx-cell-description-color: var(--fnx-gray-600);
 	--fnx-cell-description-font-size: var(--fnx-font-size-sm);
 	--fnx-cell-description-line-height: var(--fnx-line-height-sm);
@@ -39,7 +39,7 @@
 	color: var(--fnx-cell-text-color);
 	font-size: var(--fnx-cell-font-size);
 	line-height: var(--fnx-cell-line-height);
-	background-color: var(--fnx-cell-background-color);
+	background: var(--fnx-cell-background);
 
 	&::after {
 		.hairline-bottom(var(--fnx-cell-border-color), var(--fnx-padding-md), var(--fnx-padding-md));
@@ -98,7 +98,7 @@
 		cursor: pointer;
 
 		&:active {
-			background-color: var(--fnx-cell-active-color);
+			background: var(--fnx-cell-active-background);
 		}
 	}
 
@@ -112,10 +112,12 @@
 }
 
 .fnx-cell-group {
-	&--inset {
-		margin: var(--fnx-cell-group-inset-padding);
-		overflow: hidden;
-		border-radius: var(--fnx-cell-group-inset-border-radius);
+	&__body {
+		&--inset {
+			margin: var(--fnx-cell-group-inset-padding);
+			overflow: hidden;
+			border-radius: var(--fnx-cell-group-inset-border-radius);
+		}
 	}
 
 	&__title {

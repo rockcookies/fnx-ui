@@ -6,7 +6,7 @@ Time selector, support date, month, time division, etc., usually used in conjunc
 
 `Datepicker` Attribute to define the time type that needs to be selected, `columnsLayout` is the day and month of the day, the `color, month, day`. The optional time range can be determined by `maxdate` and `minDate` properties.
 
-```tsx | pure
+```tsx
 import { DatePicker } from 'fnx-ui';
 
 ReactDOM.render(
@@ -26,7 +26,7 @@ ReactDOM.render(
 
 Set the `columnslayout` set to `Year, Month` to choose the year and month. By incurring the `formatter` function, you can format the option text.
 
-```tsx | pure
+```tsx
 import { DatePicker } from 'fnx-ui';
 
 const formatter = (type, value) => {
@@ -61,7 +61,7 @@ ReactDOM.render(
 
 Set the `columnslayout` Set to` Hour, Minute` to select time (hours and minutes).
 
-```tsx | pure
+```tsx
 import { DatePicker } from 'fnx-ui';
 
 ReactDOM.render(
@@ -76,7 +76,7 @@ ReactDOM.render(
 
 Set the `columnslayout` , `Year, Month, Day, Hour, Minute` to choose the full time, including year, month, day and hours, minutes.
 
-```tsx | pure
+```tsx
 import { DatePicker } from 'fnx-ui';
 
 ReactDOM.render(
@@ -95,7 +95,7 @@ ReactDOM.render(
 
 By incurring the `Filter` function, you can filter the option array and achieve custom interval.
 
-```tsx | pure
+```tsx
 import { DatePicker } from 'fnx-ui';
 
 const filter = (type, values) => {
@@ -116,7 +116,7 @@ ReactDOM.render(
 
 ## Custom Sort
 
-```tsx | pure
+```tsx
 import { DatePicker } from 'fnx-ui';
 
 const formatter = (type, value) => {

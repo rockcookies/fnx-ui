@@ -4,7 +4,7 @@
 
 ## 基础用法
 
-```tsx | pure
+```tsx
 import { Swipe } from 'fnx-ui';
 
 ReactDOM.render(

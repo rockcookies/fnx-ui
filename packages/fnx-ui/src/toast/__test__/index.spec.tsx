@@ -76,7 +76,7 @@ describe('<Toast />', () => {
 
 		await waitFor(() => toast.update({ forbidClick: false }));
 
-		expect(ddc().contains('van-toast--unclickable')).not.toBeTruthy();
+		expect(ddc().contains('fnx-toast--unclickable')).not.toBeTruthy();
 
 		await waitFor(() => Toast.clearAll());
 		jest.runAllTimers();

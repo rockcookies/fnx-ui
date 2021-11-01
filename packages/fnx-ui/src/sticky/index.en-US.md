@@ -6,7 +6,7 @@
 
 Wrap the content in the `sticky` component.
 
-```tsx | pure
+```tsx
 import { Sticky, Button } from 'fnx-ui';
 
 ReactDOM.render(
@@ -23,7 +23,7 @@ ReactDOM.render(
 
 Through the `offsettop` property, you can set the distance between the components and the top when the top of the ceiling is set.
 
-```tsx | pure
+```tsx
 import { Sticky, Button } from 'fnx-ui';
 
 ReactDOM.render(
@@ -40,7 +40,7 @@ ReactDOM.render(
 
 The component can be specified by the `containerref` property to specify the container of the component, and the component will always remain in the range of the container. When the component is more than the bottom of the container, it is fixed at the bottom of the container.
 
-```tsx | pure
+```tsx
 import { Sticky, Button } from 'fnx-ui';
 
 const Demo: React.FC = () => {
@@ -62,7 +62,7 @@ ReactDOM.render(<Demo />, mountNode);
 
 Set the bottom offset through the `offsetbottom` property.
 
-```tsx | pure
+```tsx
 import { Sticky, Button } from 'fnx-ui';
 
 ReactDOM.render(

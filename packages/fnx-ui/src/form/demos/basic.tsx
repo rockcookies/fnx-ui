@@ -206,27 +206,46 @@ export default function Basic(): ReturnType<React.FC> {
 	return (
 		<>
 			<DemoBlock title={i18n.basicUsage} cardMode>
-				<Form>
-					<Form.List name="form">
-						{(fields, { add, remove }) => (
-							<>
-								<Form.Item label="Password">
-									<Field.Input placeholder="Placeholder" />
-								</Form.Item>
-								{fields.map((field, index) => {
-									return (
-										<Form.Item key={index} label="Password">
-											<Field.Input placeholder="Placeholder" />
-										</Form.Item>
-									);
-								})}
-								<button onClick={() => add()}>Add Field</button>
-								<button onClick={() => remove(1)}>
-									Remove Field
-								</button>
-							</>
-						)}
-					</Form.List>
+				<Form
+					onFinish={(values) => console.log(values)}
+					onFinishFailed={(values) => console.log(values)}
+				>
+					<Form.Item
+						label={i18n.username}
+						name="username"
+						rules={[
+							{
+								required: true,
+								message: i18n.requireUsername,
+							},
+						]}
+					>
+						<Field.Input placeholder={i18n.username} />
+					</Form.Item>
+					<Form.Item
+						label={i18n.password}
+						name="password"
+						rules={[
+							{
+								required: true,
+								message: i18n.requirePassword,
+							},
+						]}
+					>
+						<Field.Input
+							type="password"
+							placeholder={i18n.password}
+						/>
+					</Form.Item>
+					<Button
+						type="primary"
+						htmlType="submit"
+						shape="round"
+						block
+						className={bem('submit')}
+					>
+						{i18n.submit}
+					</Button>
 				</Form>
 			</DemoBlock>
 
@@ -240,6 +259,7 @@ export default function Basic(): ReturnType<React.FC> {
 						name="pattern"
 						rules={[
 							{
+								required: true,
 								pattern: /\d{6}/,
 								message: i18n.message,
 							},
@@ -252,6 +272,7 @@ export default function Basic(): ReturnType<React.FC> {
 						name="validator"
 						rules={[
 							{
+								required: true,
 								validator: (_, val) => {
 									if (/\d{6}/.test(val)) {
 										return Promise.resolve();
@@ -270,6 +291,7 @@ export default function Basic(): ReturnType<React.FC> {
 						validateTrigger="onBlur"
 						rules={[
 							{
+								required: true,
 								validator: (_, val) => {
 									return new Promise((resolve, reject) => {
 										setValidating(true);

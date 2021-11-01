@@ -4,7 +4,7 @@ Create a mask layer to emphasize a specific page element and prevent the user fr
 
 ## Basic usagec Usage
 
-```tsx | pure
+```tsx
 import { Overlay } from 'fnx-ui';
 
 ReactDOM.render(
@@ -19,7 +19,7 @@ ReactDOM.render(
 
 An arbitrary content can be embedded on the mask layer.
 
-```tsx | pure
+```tsx
 import { Overlay } from 'fnx-ui';
 
 ReactDOM.render(

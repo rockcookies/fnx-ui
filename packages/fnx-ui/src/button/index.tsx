@@ -96,7 +96,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>((_props, ref) => {
 	const renderChildren = () => {
 		let node: ReactNode;
 
-		if (loading && loadingChildren) {
+		if (loading && loadingChildren !== undefined) {
 			node = loadingChildren;
 		} else {
 			node = children;

@@ -1,219 +1,128 @@
 # Toast
 
-Black translucent prompts are pop-up in the middle of the page for message notifications, load prompts, and operation results prompts.
+Black semi-transparent pop-up hint in the middle of the page, used for message notification, loading hint, operation result hint and other scenarios.
 
-## Text Prompt
+## Basic Usage
 
-```tsx | pure
-import { Cell, Toast } from 'fnx-ui';
+```tsx
+import { Toast } from 'fnx-ui';
 
-ReactDOM.render(
-  <>
-    <Cell onClick={() => Toast.show('Message')}>Content</Cell>
-    <Toast visible message="Message" />
-  </>,
-  mountNode,
-);
+Toast.show('Message');
 ```
 
-## Loading Prompt
+## Loading
 
-Use the `Toast.loading` method to display the load prompt, you can disable the background click via `forbidClick` property.
+Use the `Toast.loading` method to display the loading toast, you can disable the background click via `forbidClick` property.
 
-```tsx | pure
-import { Cell, Toast } from 'fnx-ui';
+```tsx
+import { Toast } from 'fnx-ui';
 
-ReactDOM.render(
-  <>
-    <Cell onClick={() => Toast.loading('Message')}>Content</Cell>
-    <Cell
-      onClick={() =>
-        Toast.loading({
-          message: 'Message',
-          forbidClick: true,
-        })
-      }
-    >
-      Content
-    </Cell>
-  </>,
-  mountNode,
-);
+Toast.loading({
+  message: 'Message',
+  forbidClick: true,
+});
 ```
 
-## Success / Fail Prompt
+## Success / Fail
 
-Use the `Toast.success` method to show the success reminder, use the `Toast.fail` method to show failed prompts.
+Use the `Toast.success` method to show success toast or the `Toast.fail` method to show failed toast.
 
-```tsx | pure
-import { Cell, Toast } from 'fnx-ui';
+```tsx
+import { Toast } from 'fnx-ui';
 
-ReactDOM.render(
-  <>
-    <Cell onClick={() => Toast.success('Message')}>Content</Cell>
-    <Cell onClick={() => Toast.fail('Message')}>Content</Cell>
-  </>,
-  mountNode,
-);
+Toast.success('Success');
+Toast.fail('Failed');
 ```
 
 ## Custom Icon
 
-```tsx | pure
-import { Cell, Toast, Icon } from 'fnx-ui';
-
-ReactDOM.render(
-  <>
-    <Cell
-      onClick={() =>
-        Toast.loading({
-          message: 'Message',
-          forbidClick: true,
-          icon: <Icon name="star-full" spin />,
-        })
-      }
-    >
-      Content
-    </Cell>
-    <Toast
-      visible={true}
-      icon={<Icon name="star-full" spin />}
-      message="Message"
-    />
-  </>,
-  mountNode,
-);
-```
-
-## Custom Location
-
-`Toast` default rendering on the screen, pass the `position` property can control the position of the `toast` display.
-
-```tsx | pure
-import { Cell, Toast, Icon } from 'fnx-ui';
-
-ReactDOM.render(
-  <>
-    <Cell
-      onClick={() =>
-        Toast.show({
-          message: 'Message',
-          forbidClick: true,
-          position: 'top',
-          icon: <Icon name="star-full" spin />,
-        })
-      }
-    >
-      Content
-    </Cell>
-  </>,
-  mountNode,
-);
-```
-
-## Dynamic Tips
-
-When the `toast` method is executed, the corresponding` toast` instance is returned, and the effect of dynamic update prompt can be realized by modifying the `update` property instance.
+Use `icon` property to custom icon style.
 
 ```tsx
-import { Cell, Toast, Icon } from 'fnx-ui';
+import { Toast, Icon } from 'fnx-ui';
 
-const toast = Toast.useToast();
+Toast.show({
+  message: 'Custom Icon',
+  icon: <Icon name="star-full" spin />,
+});
 
-const clearCountdown = useCallback(() => {
-  if (timerRef.current != null) {
-    clearInterval(timerRef.current);
-    timerRef.current = undefined;
-  }
-}, []);
-
-const handleCountdown = () => {
-  let second = 3;
-
-  const loading = toast.loading({
-    duration: 0,
-    forbidClick: true,
-    message: `${second}s`,
-  });
-
-  timerRef.current = setInterval(() => {
-    second--;
-
-    if (second) {
-      loading.update({
-        message: `${second}s`,
-      });
-    } else {
-      clearCountdown();
-      loading.clear();
-    }
-  }, 1000);
-};
-
-ReactDOM.render(
-  <>
-    <Cell onClick={() => handleCountdown}>Content</Cell>
-  </>,
-  mountNode,
-);
+Toast.show({
+  message: 'Custom Icon.Spinner',
+  icon: <Icon.Spinner />,
+});
 ```
 
-## ToastProps API
+## Custom Position
 
-| Parameter           | Description                                                                        | Type                                 | Default value |
-| ------------------- | ---------------------------------------------------------------------------------- | ------------------------------------ | ------------- |
-| message             | Text content, support passing `\ n`                                                | `string`                             | -             |
-| icon                | Custom icon                                                                        | `ReactNode`                          | -             |
-| duration            | Animation                                                                          | `number`                             | `2000`        |
-| forbidClick         | Whether to ban the background, click (when the `loading` is the default is` true`) | `boolean`                            | `false`       |
-| clickCloseable      | Is it close after clicking                                                         | `boolean_`                           | `false`       |
-| duration            | During the display, the value is 0, `toast` does not disappear                     | `number`                             | `2000`        |
-| className           | Custom class name                                                                  | `string`                             | -             |
-| visible             | Whether it is displayed                                                            | `boolean`                            | `false`       |
-| round               | Whether to show the fillet                                                         | `boolean`                            | `false`       |
-| position            | Location                                                                           | `` top` \| `bottom` \| `middle ``    | `middle`      |
-| overlay             | Whether to display a mask layer                                                    | `boolean`                            | `fill`        |
-| overlayClassName    | Mask layer class name                                                              | `string`                             | -             |
-| overlayStyle        | Mask layer style                                                                   | `string`                             | -             |
-| overlayCloseable    | Whether to click the mask layer close                                              | `boolean`                            | `true`        |
-| renderOnShow        | Whether to render load                                                             | `boolean`                            | `true`        |
-| destroyOnHide       | Whether to close the destruction                                                   | `boolean`                            | `false`       |
-| mountTo             | Specify a mounted node                                                             | `boolean \| element \| ()=>element ` | -             |
-| transitionDuration  | Transition animation                                                               | `number`                             | -             |
-| transitionName      | Transition animation name                                                          | `string`                             | -             |
-| lockScroll          | Whether it is forbidden to scroll                                                  | `boolean`                            | `true`        |
-| safeAreaInsetBottom | Do you open the bottom security area adaptation                                    | `boolean`                            | `false`       |
+Use the `position` property to set the position of the toast display.
 
-## <Toast /> Events
+```tsx
+import { Toast, Icon } from 'fnx-ui';
 
-| Event name     | Description                                              | Callback Arguments |
-| -------------- | -------------------------------------------------------- | ------------------ |
-| onShow         | Trigger when opening the pop-up layer                    | -                  |
-| onOverlayClick | Click on the mask layer trigger                          | -                  |
-| onClose        | (Mask layer can be clicked) Click the mask layer trigger | -                  |
-| onBeforeHide   | Executive trigger before the animation                   | -                  |
-| onHide         | Executive trigger in the animation                       | -                  |
-| onAfterHide    | Executive trigger after the animation                    | -                  |
-| onBeforeShow   | Execute trigger before entering the field                | -                  |
-| onShow         | Implementing triggers in the input animation             | -                  |
-| onAfterShow    | Imported animation                                       | -                  |
+Toast.show({
+  message: 'Display on top',
+  position: 'top',
+});
+
+Toast.show({
+  message: 'Display on bottom',
+  position: 'bottom',
+});
+```
+
+## Update Message
+
+Call the Toast function will return a Toast Instance, You can call the `update` of the Toast Instance to update toast.
+
+```tsx
+import { Toast } from 'fnx-ui';
+
+const toast = Toast.loading({
+  duration: 0,
+  message: '3 seconds',
+});
+
+let second = 3;
+const timer = setInterval(() => {
+  second--;
+  if (second) {
+    toast.update({ message: `${second} seconds` });
+  } else {
+    clearInterval(timer);
+    toast.clear();
+  }
+}, 1000);
+```
+
+## API
+
+### Toast Props
+
+Toast extends [Popup](#/en-US/components/popup) props and add the following props:
+
+| Name           | Description                                       | Type                            | Default value |
+| -------------- | ------------------------------------------------- | ------------------------------- | ------------- |
+| position       | Toast location                                    | `'top' \| 'bottom' \| 'middle'` | `'middle'`    |
+| message        | Text content, support passing `\n`                | `string`                        | -             |
+| icon           | Custom icon                                       | `ReactNode`                     | -             |
+| duration       | Toast duration(ms), won't disappear if value is 0 | `number`                        | `2000`        |
+| forbidClick    | Whether to forbid click background                | `boolean`                       | `false`       |
+| clickCloseable | Whether to close when click                       | `boolean`                       | -             |
 
 ### Toast Method
 
-| Event name          | Description             | Callback Arguments              | Return Value |
-| ------------------- | ----------------------- | ------------------------------- | ------------ |
-| Toast.show          | Display loading prompt  | `(props: string \| ToastProps)` | `toast`      |
-| Toast.loading       | Display loading prompt  | `(props: string \| ToastProps)` | `toast`      |
-| Toast.success       | Show success reminder   | `(props: string \| ToastProps)` | `toast`      |
-| Toast.fail          | Show failed prompt      | `(props: string \| ToastProps)` | `toast`      |
-| Toast.clearAll      | Close prompt            | -                               | `void`       |
-| Toast.allowMultiple | Allows multiple `toast` | `(allow: boolean)`              | `void`       |
+| Event name          | Description                           | Callback Arguments                               | Return Value   |
+| ------------------- | ------------------------------------- | ------------------------------------------------ | -------------- |
+| Toast.show          | Display toast                         | `(props: string \| ToastProps) => ToastInstance` | Toast instance |
+| Toast.loading       | Display loading toast                 | `(props: string \| ToastProps) => ToastInstance` | Toast instance |
+| Toast.success       | Display success toast                 | `(props: string \| ToastProps) => ToastInstance` | Toast instance |
+| Toast.fail          | Display failed toast                  | `(props: string \| ToastProps) => ToastInstance` | Toast instance |
+| Toast.clearAll      | Close toast                           | -                                                | -              |
+| Toast.allowMultiple | Allow multiple toast at the same time | `(allow: boolean)`                               | -              |
 
-### Toast Instance Method
+### Toast Instance Methods
 
-Create an instance: const toast = Toast.show({message:'Message'});
-
-| Method Name    | Description           | Parameter    | Return Value   |
-| -------------- | --------------------- | ------------ | -------------- |
-| Toast.update() | Update display prompt | `ToastProps` | toast instance |
-| Toast.clear()  | Destroy `toast`       | -            | toast instance |
+| Method Name | Description            | Parameter             | Return Value |
+| ----------- | ---------------------- | --------------------- | ------------ |
+| update      | Update toast instance  | `(props: ToastProps)` | -            |
+| clear       | Destroy toast instance | -                     | -            |

@@ -5,6 +5,9 @@ import { performance } from 'perf_hooks';
 import react from '@vitejs/plugin-react';
 import legacy from '@vitejs/plugin-legacy';
 import markdown from '@fnx-ui/vite-plugin-markdown';
+import markdownItAnchor from 'markdown-it-anchor';
+import markdownItPrism from 'markdown-it-prism';
+import { slugify } from 'transliteration';
 
 const DEFAULT_BASE = './';
 const DEFAULT_PORT = 8000;
@@ -17,7 +20,10 @@ const getViteOptions = (): Partial<UserConfig> => {
 		plugins: [
 			react(),
 			markdown({
-				className: 'markdown',
+				markdownItUses: [
+					[markdownItAnchor, { slugify }],
+					markdownItPrism,
+				],
 			}),
 			legacy({
 				targets: COMPILE_TARGETS,

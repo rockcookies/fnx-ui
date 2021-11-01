@@ -1,19 +1,19 @@
 # Button
 
-The button is used to start an instant operation.
+Button is used to trigger some actions.
 
 ## Theme
 
-The button supports five themes: `default` 、`primary` 、`success` 、`warning` and `danger`. The default is `default`.
+There are `default`, `primary`, `success`, `warning` and `danger` button types.
 
 ```tsx
 import { Button } from 'fnx-ui';
 
 ReactDOM.render(
   <>
+    <Button type="default">Default</Button>
     <Button type="primary">Primary</Button>
     <Button type="success">Success</Button>
-    <Button type="default">Default</Button>
     <Button type="warning">Warning</Button>
     <Button type="danger">Danger</Button>
   </>,
@@ -23,7 +23,7 @@ ReactDOM.render(
 
 ## Plain
 
-Set the button as a simple button through the `plain` attribute. The text of the simple button is the button color and the background is white.
+Use `plain` to show a plain button.
 
 ```tsx
 import { Button } from 'fnx-ui';
@@ -41,9 +41,29 @@ ReactDOM.render(
 );
 ```
 
+## Hairline
+
+Use `hairline` to set border to hairline thickness.
+
+```tsx
+import { Button } from 'fnx-ui';
+
+ReactDOM.render(
+  <>
+    <Button type="primary" plain hairline>
+      {i18n.hairline}
+    </Button>
+    <Button type="success" plain hairline>
+      {i18n.hairline}
+    </Button>
+  </>,
+  mountNode,
+);
+```
+
 ## Disabled
 
-Disable the button through the `disabled` attribute. In the disabled state, the button cannot be clicked.
+Buttons can be disabled.
 
 ```tsx
 import { Button } from 'fnx-ui';
@@ -63,7 +83,7 @@ ReactDOM.render(
 
 ## Loading
 
-Set the button to the loading status through the `loading` attribute. The button text will be hidden by default in the loading status. You can set the text in the loading status through the `loadingtext`.
+A loading indicator can be added to a button by setting the `loading` property on the Button, You can also set the text in the loading status through the `loadingChildren` prop.
 
 ```tsx
 import { Button } from 'fnx-ui';
@@ -84,7 +104,7 @@ ReactDOM.render(
 
 ## Shape
 
-The button shape supports four types of `rect`、`radius`、`round`, and the default is `radius`.
+There are `rect`, `radius`, `round` button shapes, and the default shape is `radius`.
 
 ```tsx
 import { Button } from 'fnx-ui';
@@ -92,13 +112,13 @@ import { Button } from 'fnx-ui';
 ReactDOM.render(
   <>
     <Button type="primary" shape="rect">
-      Content
+      rect
     </Button>
     <Button type="success" shape="radius">
-      Content
+      radius
     </Button>
     <Button type="warning" shape="round">
-      Content
+      round
     </Button>
   </>,
   mountNode,
@@ -107,7 +127,7 @@ ReactDOM.render(
 
 ## Icon
 
-Set the button icon through the `icon` attribute.
+Icons can be used in buttons.
 
 ```tsx
 import { Button, Icon } from 'fnx-ui';
@@ -116,7 +136,7 @@ ReactDOM.render(
   <>
     <Button type="primary" icon={<Icon name="plus" />} />
     <Button type="primary" icon={<Icon name="plus" />}>
-      Content
+      Button
     </Button>
   </>,
   mountNode,
@@ -125,7 +145,7 @@ ReactDOM.render(
 
 ## Size
 
-The button size is `size`. Four sizes of `lg`、`md`、`sm`、`xs` are supported. The default is `md`.
+Buttons can be `lg`, `md`, `sm` and `xs` in size.
 
 ```tsx
 import { Button } from 'fnx-ui';
@@ -151,7 +171,7 @@ ReactDOM.render(
 
 ## Block
 
-By default, buttons are in line block level elements. You can set the element type of buttons to block level elements through the `block` attribute.
+`block` property will make the button fit to its parent width.
 
 ```tsx
 import { Button } from 'fnx-ui';
@@ -167,6 +187,8 @@ ReactDOM.render(
 ```
 
 ## Custom color
+
+You can also set it to a color string for custom color through `color` property.
 
 ```tsx
 import { Button } from 'fnx-ui';
@@ -185,23 +207,25 @@ ReactDOM.render(
 
 ## API
 
-| parameter       | explain                                                         | type                                                           | Default value |
-| --------------- | --------------------------------------------------------------- | -------------------------------------------------------------- | ------------- |
-| type            | Button type                                                     | `'primary' \| 'success' \| 'warning' \| 'danger' \| 'default'` | `default`     |
-| size            | Size, optional values are large small mini                      | `'lg' \|'md' \|'sm' 'xs'`                                      | `md`          |
-| iconPosition    | Icon display position                                           | `'left' \| 'right'`                                            | `left`        |
-| loading         | Is it displayed as loaded                                       | `boolean`                                                      | `false`       |
-| disabled        | Disable button                                                  | `boolean`                                                      | `false`       |
-| hairline        | Use 0.5px border                                                | `boolean`                                                      | `false`       |
-| plain           | Is it a simple button                                           | `boolean`                                                      | `false`       |
-| shape           | Button shape                                                    | `'rect' \| 'radius' \| 'round'`                                | `radius`      |
-| block           | Is it a block level element                                     | `boolean`                                                      | `false`       |
-| loadingIcon     | Load status icon                                                | `ReactNode`                                                    | -             |
-| loadingChildren | Display content in loading status                               | `ReactNode`                                                    | -             |
-| color           | Button color, which supports the incoming linear-gradient color | `string`                                                       | -             |
-| htmlType        | Button type                                                     | `ButtonHTMLAttributes<HTMLButtonElement>['type']`              | -             |
+### Props
 
-## Events
+| Name            | Description                                                                         | Type                                                           | Default            |
+| --------------- | ----------------------------------------------------------------------------------- | -------------------------------------------------------------- | ------------------ |
+| type            | Button type                                                                         | `'primary' \| 'success' \| 'warning' \| 'danger' \| 'default'` | `default`          |
+| size            | Button size                                                                         | `'lg' \|'md' \|'sm' 'xs'`                                      | `md`               |
+| iconPosition    | The position of the icon in the button                                              | `'left' \| 'right'`                                            | `left`             |
+| loading         | Whether the button shows the loading status                                         | `boolean`                                                      | `false`            |
+| loadingIcon     | Load status icon                                                                    | `ReactNode`                                                    | `<Icon.Spinner />` |
+| disabled        | Whether the button is disabled                                                      | `ReactNode`                                                    | -                  |
+| loadingChildren | Display content in loading status                                                   | `boolean`                                                      | `false`            |
+| hairline        | Use 0.5px border                                                                    | `boolean`                                                      | `false`            |
+| plain           | Whether the button is plain                                                         | `boolean`                                                      | `false`            |
+| shape           | Button shape                                                                        | `'rect' \| 'radius' \| 'round'`                                | `radius`           |
+| block           | Whether the button is displayed as block                                            | `boolean`                                                      | `false`            |
+| color           | Button color (support `#FFF`, `#FFFFFF`, `yellow`, `rgb(0, 0, 0)` formatted colors) | string`                                                        | -                  |
+| htmlType        | The `type` attribute of the button's DOM.                                           | `ButtonHTMLAttributes<HTMLButtonElement>['type']`              | -                  |
+
+### Events
 
 | Event Name | Description                                                                          | Callback Arguments  |
 | ---------- | ------------------------------------------------------------------------------------ | ------------------- |

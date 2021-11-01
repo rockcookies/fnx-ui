@@ -1,19 +1,19 @@
 # Button 按钮
 
-按钮用于开始一个即时操作。
+按钮用来触发一些操作。
 
 ## 按钮主题
 
-按钮支持 `default`、`primary`、`success`、`warning`、`danger` 五种主题，默认为 `default`。
+按钮的 `type` 分别为 `default`、`primary`、`success`、`warning` 和 `danger` 。
 
 ```tsx
 import { Button } from 'fnx-ui';
 
 ReactDOM.render(
   <>
+    <Button type="default">Default</Button>
     <Button type="primary">Primary</Button>
     <Button type="success">Success</Button>
-    <Button type="default">Default</Button>
     <Button type="warning">Warning</Button>
     <Button type="danger">Danger</Button>
   </>,
@@ -23,7 +23,7 @@ ReactDOM.render(
 
 ## 朴素按钮
 
-通过 `plain` 属性将按钮设置为朴素按钮，朴素按钮的文字为按钮颜色，背景为白色。
+使用 `plain` 来使用朴素按钮。
 
 ```tsx
 import { Button } from 'fnx-ui';
@@ -35,6 +35,26 @@ ReactDOM.render(
     </Button>
     <Button type="success" plain>
       Success
+    </Button>
+  </>,
+  mountNode,
+);
+```
+
+## 细边框
+
+设置 `hairline` 属性可以展示 0.5px 的细边框。
+
+```tsx
+import { Button } from 'fnx-ui';
+
+ReactDOM.render(
+  <>
+    <Button type="primary" plain hairline>
+      {i18n.hairline}
+    </Button>
+    <Button type="success" plain hairline>
+      {i18n.hairline}
     </Button>
   </>,
   mountNode,
@@ -63,7 +83,7 @@ ReactDOM.render(
 
 ## 加载状态
 
-通过 `loading` 属性设置按钮为加载状态，加载状态下默认会隐藏按钮文字，可以通过 `loadingText` 设置加载状态下的文字。
+通过 `loading` 属性设置按钮为加载状态，加载状态下默认会隐藏按钮文字，可以通过 `loadingChildren` 设置加载状态下的文字。
 
 ```tsx
 import { Button } from 'fnx-ui';
@@ -72,10 +92,10 @@ ReactDOM.render(
   <>
     <Button type="primary" loading />
     <Button type="primary" loading>
-      Content
+      Primary
     </Button>
-    <Button type="success" loading loadingText="Loading...">
-      Content
+    <Button type="success" loading loadingChildren="Loading...">
+      Success
     </Button>
   </>,
   mountNode,
@@ -92,13 +112,13 @@ import { Button } from 'fnx-ui';
 ReactDOM.render(
   <>
     <Button type="primary" shape="rect">
-      Content
+      rect
     </Button>
     <Button type="success" shape="radius">
-      Content
+      radius
     </Button>
     <Button type="warning" shape="round">
-      Content
+      round
     </Button>
   </>,
   mountNode,
@@ -116,7 +136,7 @@ ReactDOM.render(
   <>
     <Button type="primary" icon={<Icon name="plus" />} />
     <Button type="primary" icon={<Icon name="plus" />}>
-      Content
+      Button
     </Button>
   </>,
   mountNode,
@@ -125,7 +145,7 @@ ReactDOM.render(
 
 ## 按钮尺寸
 
-按钮尺寸 `size`，支持 `lg`、`md`、`sm`、`xs` 四种尺寸，默认为 `md`。
+有 `lg`、`md`、`sm` 和 `xs` 尺寸。
 
 ```tsx
 import { Button } from 'fnx-ui';
@@ -133,16 +153,16 @@ import { Button } from 'fnx-ui';
 ReactDOM.render(
   <>
     <Button type="primary" size="lg">
-      LG
+      lg
     </Button>
     <Button type="primary" size="md">
-      MD
+      md
     </Button>
     <Button type="primary" size="sm">
-      SM
+      sm
     </Button>
     <Button type="primary" size="xs">
-      XS
+      xs
     </Button>
   </>,
   mountNode,
@@ -151,7 +171,7 @@ ReactDOM.render(
 
 ## 块级按钮
 
-按钮在默认情况下为行内块级元素，通过 `block` 属性可以将按钮的元素类型设置为块级元素。
+`block` 属性将使按钮适合其父宽度。
 
 ```tsx
 import { Button } from 'fnx-ui';
@@ -168,16 +188,20 @@ ReactDOM.render(
 
 ## 自定义颜色
 
+通过 `color` 属性可以自定义按钮的颜色。
+
 ```tsx
 import { Button } from 'fnx-ui';
 
 ReactDOM.render(
   <>
-    <Button color="#7232dd">Button</Button>
-    <Button color="#7232dd" plain>
-      Button
+    <Button color="#8a2be2">#8a2be2</Button>
+    <Button color="#ff69b4" plain>
+      #ff69b4
     </Button>
-    <Button color="linear-gradient(to right, #ff6034, #ee0a24)">Button</Button>
+    <Button color="linear-gradient(to right, #ff6034, #ee0a24)">
+      LinearGradient
+    </Button>
   </>,
   mountNode,
 );
@@ -185,23 +209,25 @@ ReactDOM.render(
 
 ## API
 
-| 参数            | 说明                                      | 类型                                                           | 默认值    |
-| --------------- | ----------------------------------------- | -------------------------------------------------------------- | --------- |
-| type            | 按钮类型                                  | `'primary' \| 'success' \| 'warning' \| 'danger' \| 'default'` | `default` |
-| size            | 尺寸，可选值为 large small mini           | `'lg' \|'md' \|'sm' 'xs'`                                      | `md`      |
-| iconPosition    | 图标展示位置                              | `'left' \| 'right'`                                            | `left`    |
-| loading         | 是否显示为加载状态                        | `boolean`                                                      | `false`   |
-| disabled        | 是否禁用按钮                              | `boolean`                                                      | `false`   |
-| hairline        | 是否使用 0.5px 边框                       | `boolean`                                                      | `false`   |
-| plain           | 是否为朴素按钮                            | `boolean`                                                      | `false`   |
-| shape           | 按钮形状                                  | `'rect' \| 'radius' \| 'round'`                                | `radius`  |
-| block           | 是否为块级元素                            | `boolean`                                                      | `false`   |
-| loadingIcon     | 加载状态图标                              | `ReactNode`                                                    | -         |
-| loadingChildren | 加载状态中显示内容                        | `ReactNode`                                                    | -         |
-| color           | 按钮颜色，支持传入 linear-gradient 渐变色 | `string`                                                       | -         |
-| htmlType        | 按钮 type                                 | `ButtonHTMLAttributes<HTMLButtonElement>['type']`              | -         |
+### Props
 
-## 事件
+| 名称            | 说明                                      | 类型                                                           | 默认值             |
+| --------------- | ----------------------------------------- | -------------------------------------------------------------- | ------------------ |
+| type            | 按钮类型                                  | `'primary' \| 'success' \| 'warning' \| 'danger' \| 'default'` | `default`          |
+| size            | 按钮尺寸                                  | `'lg' \|'md' \|'sm' 'xs'`                                      | `md`               |
+| iconPosition    | 按钮中图标的位置                          | `'left' \| 'right'`                                            | `left`             |
+| loading         | 按钮是否显示加载状态                      | `boolean`                                                      | `false`            |
+| loadingIcon     | 按钮加载状态图标                          | `ReactNode`                                                    | `<Icon.Spinner />` |
+| loadingChildren | 加载状态中显示内容                        | `ReactNode`                                                    | -                  |
+| disabled        | 按钮是否禁用                              | `boolean`                                                      | `false`            |
+| hairline        | 按钮是否使用 0.5px 边框                   | `boolean`                                                      | `false`            |
+| plain           | 按钮是否为朴素按钮                        | `boolean`                                                      | `false`            |
+| shape           | 按钮形状                                  | `'rect' \| 'radius' \| 'round'`                                | `radius`           |
+| block           | 按钮是否显示为块级                        | `boolean`                                                      | `false`            |
+| color           | 按钮颜色，支持传入 linear-gradient 渐变色 | `string`                                                       | -                  |
+| htmlType        | 原生 button 标签的 `type` 属性            | `ButtonHTMLAttributes<HTMLButtonElement>['type']`              | -                  |
+
+### Events
 
 | 事件名  | 说明                                     | 回调参数            |
 | ------- | ---------------------------------------- | ------------------- |

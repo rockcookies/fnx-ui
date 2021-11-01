@@ -12,7 +12,7 @@
 
 ## 基础用法
 
-```tsx | pure
+```tsx
 import { Picker } from 'fnx-ui';
 
 const pickerData = [
@@ -38,7 +38,7 @@ ReactDOM.render(
 
 单列选择时，可以通过 `defaultValue` 属性设置初始选中项的索引。
 
-```tsx | pure
+```tsx
 import { Picker } from 'fnx-ui';
 
 const data = [
@@ -64,7 +64,7 @@ ReactDOM.render(
 
 `Picker.Multi` 可以配置多列选择，
 
-```tsx | pure
+```tsx
 import { Picker } from 'fnx-ui';
 
 const data = [
@@ -92,7 +92,7 @@ ReactDOM.render(
 
 `Picker.Multi` 可以配置多列选择，
 
-```tsx | pure
+```tsx
 import { Picker } from 'fnx-ui';
 
 const data = [
@@ -140,7 +140,7 @@ ReactDOM.render(
 
 选项可以为对象结构，通过设置 `disabled` 来禁用该选项。
 
-```tsx | pure
+```tsx
 import { Picker } from 'fnx-ui';
 
 const data = [
@@ -169,7 +169,7 @@ ReactDOM.render(
 
 选项可以为对象结构，通过设置 `disabled` 来禁用该选项。
 
-```tsx | pure
+```tsx
 import { Picker } from 'fnx-ui';
 
 const data = [
@@ -222,7 +222,7 @@ ReactDOM.render(
 
 若选择器数据是异步获取的，可以通过 `loading` 属性显示加载提示。
 
-```tsx | pure
+```tsx
 import { Picker } from 'fnx-ui';
 
 const pickerData = [
@@ -255,7 +255,7 @@ ReactDOM.render(
 
 在实际场景中，`Picker` 通常作为用于辅助表单填写，可以搭配 `Popup` 和 `Field` 实现该效果。
 
-```tsx | pure
+```tsx
 import { Picker, Popup, Field } from 'fnx-ui';
 
 const pickerData = [

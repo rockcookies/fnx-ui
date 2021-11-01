@@ -7,26 +7,48 @@
 通过 `visible` 控制弹出层是否显示。
 
 ```tsx
-import { Popup } from 'fnx-ui';
+import React, { useState } from 'react';
+import { Popup, Cell } from 'fnx-ui';
 
-ReactDOM.render(
-  <>
-    <Popup visible />
-  </>,
-  mountNode,
-);
+const App = () => {
+  const [isPopupVisible, setIsPopupVisible] = useState(false);
+
+  const showPopup = () => {
+    setIsPopupVisible(true);
+  };
+
+  const handleClose = () => {
+    setIsPopupVisible(false);
+  };
+
+  return (
+    <>
+      <Cell
+        title="Open Popup"
+        rightIcon={<Icon name="arrow-right" />}
+        onClick={showPopup}
+        clickable
+      />
+      <Popup visible={isPopupVisible} onClose={handleClose}>
+        Content
+      </Popup>
+    </>
+  );
+};
+
+ReactDOM.render(<App />, mountNode);
 ```
 
 ## 弹出位置
 
-通过 `position` 属性设置弹出位置，默认居中弹出，可以设置为 `top、bottom、left、right、center`。
+通过 `position` 属性设置弹出位置，默认居中弹出，可以设置为 `top`、`bottom`、`left`、`right` 或 `center`。
 
 ```tsx
 import { Popup } from 'fnx-ui';
 
 ReactDOM.render(
   <>
-    <Popup position="center" />
+    <Popup visible position="top" style={{ height: '30%' }}></Popup>
   </>,
   mountNode,
 );
@@ -41,7 +63,7 @@ import { Popup } from 'fnx-ui';
 
 ReactDOM.render(
   <>
-    <Popup round />
+    <Popup visible round position="bottom" style={{ height: '30%' }}></Popup>
   </>,
   mountNode,
 );
@@ -49,51 +71,47 @@ ReactDOM.render(
 
 ## 指定挂载位置
 
-弹出层默认挂载到组件所在位置，可以通过 `mountTo` 属性指定挂载位置。
+弹出层可以通过 `mountTo` 属性指定挂载位置。
 
 ```tsx
 import { Popup } from 'fnx-ui';
 
 ReactDOM.render(
   <>
-    <Popup mountTo={() => document.body}>Content</Popup>
+    <Popup visible mountTo={() => document.body}></Popup>
+    <Popup visible mountTo={() => document.getElementById('app')}></Popup>
   </>,
   mountNode,
 );
 ```
 
-## `<Popup.Select>` 使用
+## 使用 Popup.Select
 
 ```tsx
-import { Popup } from 'fnx-ui';
+import { Popup, Cell, Icon, Picker } from 'fnx-ui';
 
-const renderCell = (title, content) => {
-  return (
-    <Cell
-      title={title}
-      content={content}
-      clickable
-      rightIcon={<Icon name="arrow-right" />}
-    />
-  );
-};
-
-const formatDate = (date) => {
-  if (date) {
-    return `${date.getMonth() + 1}/${date.getDate()}`;
-  }
-};
-
-const formatFullDate = (date) => {
-  if (date) {
-    return `${date.getFullYear()}/${formatDate(date)}`;
-  }
-};
+const options = [
+  'Monday',
+  'Tuesday',
+  'Wednesday',
+  'Thursday',
+  'Friday',
+  'Saturday',
+  'Sunday',
+];
 
 ReactDOM.render(
   <>
-    <Popup.Select select={<Calendar />}>
-      {(value) => renderCell('Title', formatFullDate(value))}
+    <Popup.Select<string>
+      select={<Picker data={options} title="Select date" />}
+    >
+      {(value) => (
+        <Cell
+          clickable
+          title={value || 'Select date'}
+          rightIcon={<Icon name="arrow-right" />}
+        />
+      )}
     </Popup.Select>
   </>,
   mountNode,
@@ -102,53 +120,62 @@ ReactDOM.render(
 
 ## API
 
-| 参数                | 说明                   | 类型                                                | 默认值   |
-| ------------------- | ---------------------- | --------------------------------------------------- | -------- |
-| visible             | 是否显示弹出层         | `boolean`                                           | `false`  |
-| round               | 是否展示圆角           | `boolean`                                           | `false`  |
-| position            | 遮罩层位置             | `'top' \| 'bottom' \| 'left' \| 'right' \|'center'` | `center` |
-| overlay             | 是否显示遮罩层         | `boolean`                                           | `fill`   |
-| overlayClassName    | 遮罩层类名             | `string`                                            | -        |
-| overlayStyle        | 遮罩层样式             | `string`                                            | -        |
-| overlayCloseable    | 是否点击遮罩层关闭     | `boolean`                                           | `true`   |
-| renderOnShow        | 是否渲染加载           | `boolean`                                           | `true`   |
-| destroyOnHide       | 是否关闭销毁           | `boolean`                                           | `false`  |
-| mountTo             | 指定挂载的节点         | `boolean \| element \| ()=>element `                | -        |
-| transitionDuration  | 过渡动画               | `number`                                            | -        |
-| transitionName      | 过渡动画类名           | `string`                                            | -        |
-| lockScroll          | 是否禁止滚动           | `boolean`                                           | `true`   |
-| safeAreaInsetBottom | 是否开启底部安全区适配 | `boolean`                                           | `false`  |
+### Popup Props
 
-## PopupSelect API
+| 名称                | 说明                       | 类型                                                | 默认值                |
+| ------------------- | -------------------------- | --------------------------------------------------- | --------------------- |
+| visible             | 是否显示弹出层             | `boolean`                                           | `false`               |
+| renderOnShow        | 是否在显示弹层时才渲染节点 | `boolean`                                           | `true`                |
+| destroyOnHide       | 是否在关闭弹层时销毁节点   | `boolean`                                           | `false`               |
+| mountTo             | 指定挂载的节点             | `HTMLElement \| () => HTMLElement \| false`         | `() => document.body` |
+| transitionDuration  | 过渡动画时常，单位毫秒     | `number`                                            | `300`                 |
+| transitionName      | 过渡动画类名               | `string`                                            | -                     |
+| lockScroll          | 是否锁定背景滚动           | `boolean`                                           | `true`                |
+| position            | 遮罩层位置                 | `'top' \| 'bottom' \| 'left' \| 'right' \|'center'` | `'center'`            |
+| round               | 是否展示圆角               | `boolean`                                           | `false`               |
+| safeAreaInsetBottom | 是否开启底部安全区适配     | `boolean`                                           | `false`               |
+| overlay             | 是否显示遮罩层             | `boolean`                                           | `true`                |
+| overlayClassName    | 遮罩层 Class 类名          | `string`                                            | -                     |
+| overlayStyle        | 遮罩层样式                 | `CSSProperties`                                     | -                     |
+| overlayCloseable    | 是否点击遮罩层关闭         | `boolean`                                           | `true`                |
 
-| 参数                       | 说明                   | 类型                                       | 默认值  |
-| -------------------------- | ---------------------- | ------------------------------------------ | ------- |
-| disabled                   | 是否禁用               | `boolean`                                  | `false` |
-| value                      | 选项值                 | `T`                                        | -       |
-| defaultValue               | 默认选项值             | `T`                                        | -       |
-| select                     | 弹出层内容             | `ReactNode`                                | -       |
-| selectDefaultValuePropName | 默认 `props` 的 `name` | `string`                                   | -       |
-| selectConfirmTrigger       | 确认按钮名字属性       | `string`                                   | -       |
-| selectCancelTrigger        | 取消按钮名字属性       | `string`                                   | -       |
-| trigger                    | 子元素属性             | `string`                                   | -       |
-| children                   | 自定义的属性子元素     | ` ReactNode \| ((value?: T) => ReactNode)` | -       |
+#### 注意
 
-## 事件
+- `<Popup />` 默认关闭后状态不会自动清空, 如果希望每次打开都是新内容，请设置 `destroyOnHide`。
 
-| 事件名         | 说明                         | 回调参数 |
-| -------------- | ---------------------------- | -------- |
-| onShow         | 打开弹出层时触发             | -        |
-| onOverlayClick | 点击遮罩层触发               | -        |
-| onClose        | 遮罩层可点击时点击遮罩层触发 | -        |
-| onBeforeHide   | 出场动画前执行触发           | -        |
-| onHide         | 出场动画中执行触发           | -        |
-| onAfterHide    | 出场动画后执行触发           | -        |
-| onBeforeShow   | 进场动画前执行触发           | -        |
-| onShow         | 进场动画中执行触发           | -        |
-| onAfterShow    | 进场动画后执行触发           | -        |
+### Popup Events
 
-## PopupSelect 事件
+| 事件名         | 说明             | 回调参数 |
+| -------------- | ---------------- | -------- |
+| onOverlayClick | 点击遮罩层触发   | -        |
+| onClose        | 关闭事件触发     | -        |
+| onBeforeHide   | 关闭动画之前触发 | -        |
+| onHide         | 关闭动画时触发   | -        |
+| onAfterHide    | 关闭动画后触发   | -        |
+| onBeforeShow   | 显示动画前触发   | -        |
+| onShow         | 显示动画中触发   | -        |
+| onAfterShow    | 显示动画后触发   | -        |
 
-| 事件名   | 说明                 | 回调参数 |
-| -------- | -------------------- | -------- |
-| onChange | 选项值发生改变时触发 | `(v: T=any)` |
+## Popup.Select Props
+
+Popup.Select 继承了 Popup 的属性并新增了如下属性：
+
+| 名称                       | 说明               | 类型                                      | 默认值         |
+| -------------------------- | ------------------ | ----------------------------------------- | -------------- |
+| disabled                   | 是否禁用           | `boolean`                                 | `false`        |
+| value                      | 选项值             | `any`                                     | -              |
+| defaultValue               | 默认选项值         | `any`                                     | -              |
+| select                     | 弹出层内容         | `ReactNode`                               | -              |
+| selectDefaultValuePropName | 默认值名字         | `string`                                  | `defaultValue` |
+| selectConfirmTrigger       | 确认事件回调名称   | `string`                                  | `onConfirm`    |
+| selectCancelTrigger        | 取消事件回调名称   | `string`                                  | `onCancel`     |
+| trigger                    | 子元素触发事件名称 | `string`                                  | `onClick`      |
+| children                   | 子元素             | `ReactNode \| (value?: any) => ReactNode` | -              |
+
+## Popup.Select Events
+
+Popup.Select 继承了 Popup 的事件并新增了如下事件：
+
+| 事件名   | 说明                   | 回调参数               |
+| -------- | ---------------------- | ---------------------- |
+| onChange | `value` 发生改变时触发 | `(value: any) => void` |

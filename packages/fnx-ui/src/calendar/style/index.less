@@ -1,5 +1,5 @@
 :root {
-	--fnx-calendar-background-color: var(--fnx-page-color);
+	--fnx-calendar-background: var(--fnx-page-color);
 	--fnx-calendar-color: var(--fnx-gray-700);
 	--fnx-calendar-height: 500px;
 	--fnx-calendar-header-box-shadow: 0 2px 10px var(--fnx-box-shadow);
@@ -22,14 +22,14 @@
 	--fnx-calendar-day-height: 64px;
 	--fnx-calendar-day-font-size: var(--fnx-font-size-lg);
 	--fnx-calendar-range-edge-color: var(--fnx-white-color);
-	--fnx-calendar-range-edge-background-color: var(--fnx-primary-color);
+	--fnx-calendar-range-edge-background: var(--fnx-primary-color);
 	--fnx-calendar-range-middle-color: var(--fnx-primary-color);
 	--fnx-calendar-range-middle-background-opacity: 0.1;
 	--fnx-calendar-selected-day-size: 54px;
 	--fnx-calendar-selected-day-color: var(--fnx-white-color);
 	--fnx-calendar-info-font-size: var(--fnx-font-size-xs);
 	--fnx-calendar-info-line-height: var(--fnx-line-height-xs);
-	--fnx-calendar-selected-day-background-color: var(--fnx-primary-color);
+	--fnx-calendar-selected-day-background: var(--fnx-primary-color);
 	--fnx-calendar-day-disabled-color: var(--fnx-gray-500);
 	--fnx-calendar-footer-box-shadow: 0 -2px 10px var(--fnx-box-shadow);
 	--fnx-calendar-confirm-button-height: 36px;
@@ -42,7 +42,7 @@
 	height: 500px;
 	overflow: hidden;
 	color: var(--fnx-calendar-color);
-	background-color: var(--fnx-calendar-background-color);
+	background: var(--fnx-calendar-background);
 
 	&__header {
 		position: relative;
@@ -141,12 +141,12 @@
 		&--multiple-middle,
 		&--multiple-selected {
 			color: var(--fnx-calendar-range-edge-color);
-			background-color: var(--fnx-calendar-range-edge-background-color);
+			background: var(--fnx-calendar-range-edge-background);
 		}
 
 		&--selected {
 			color: var(--fnx-calendar-selected-day-color);
-			background-color: var(--fnx-calendar-selected-day-background-color);
+			background: var(--fnx-calendar-selected-day-background);
 			border-radius: var(--fnx-border-radius-md);
 		}
 

@@ -3,12 +3,11 @@
 	--fnx-pagination-font-size: var(--fnx-font-size-md);
 	--fnx-pagination-item-width: 36px;
 	--fnx-pagination-item-color: var(--fnx-primary-color);
-	--fnx-pagination-item-background-color: var(--fnx-gray-75);
+	--fnx-pagination-item-background: var(--fnx-gray-75);
 	--fnx-pagination-item-active-color: var(--fnx-natural-color);
-	--fnx-pagination-item-background-active-color: var(--fnx-primary-color);
+	--fnx-pagination-item-active-background: var(--fnx-primary-color);
 	--fnx-pagination-item-disabled-color: var(--fnx-gray-600);
-	--fnx-pagination-item-background-disabled-color: var(--fnx-gray-100);
-	--fnx-pagination-background-color: var(--fnx-gray-100);
+	--fnx-pagination-item-disabled-background: var(--fnx-gray-100);
 	--fnx-pagination-desc-color: var(--fnx-gray-700);
 	--fnx-pagination-disabled-opacity: var(--fnx-disabled-opacity);
 }
@@ -30,15 +29,13 @@
 		min-width: var(--fnx-pagination-item-width);
 		height: var(--fnx-pagination-height);
 		color: var(--fnx-pagination-item-color);
-		background-color: var(--fnx-pagination-item-background-color);
+		background: var(--fnx-pagination-item-background);
 		cursor: pointer;
 		user-select: none;
 
 		&:active {
 			color: var(--fnx-pagination-item-active-color);
-			background-color: var(
-				--fnx-pagination-item-background-active-color
-			);
+			background: var(--fnx-pagination-item-active-background);
 		}
 
 		&::after {
@@ -52,9 +49,7 @@
 
 		&--active {
 			color: var(--fnx-pagination-item-active-color);
-			background-color: var(
-				--fnx-pagination-item-background-active-color
-			);
+			background: var(--fnx-pagination-item-active-background);
 		}
 	}
 
@@ -68,9 +63,7 @@
 		&,
 		&:active {
 			color: var(--fnx-pagination-item-disabled-color);
-			background-color: var(
-				--fnx-pagination-item-background-disabled-color
-			);
+			background: var(--fnx-pagination-item-disabled-background);
 			cursor: not-allowed;
 			opacity: var(--fnx-pagination-disabled-opacity);
 		}

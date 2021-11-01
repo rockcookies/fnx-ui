@@ -4,7 +4,7 @@ The stepper consists of an increase button, reducing buttons, and input boxes fo
 
 ## Basic Usage
 
-```tsx | pure
+```tsx
 import { Stepper } from 'fnx-ui';
 
 ReactDOM.render(
@@ -19,7 +19,7 @@ ReactDOM.render(
 
 You can listen to changes in the input value via the `onchange` event.
 
-```tsx | pure
+```tsx
 import { Stepper } from 'fnx-ui';
 
 const [value, setValue] = useState(5);
@@ -39,7 +39,7 @@ ReactDOM.render(
 
 The value of the changed or reduced button through the `Step` property setting, the default is` 1`
 
-```tsx | pure
+```tsx
 import { Stepper } from 'fnx-ui';
 
 ReactDOM.render(
@@ -54,7 +54,7 @@ ReactDOM.render(
 
 Through `min` and` max` attribute limit the range of input values.
 
-```tsx | pure
+```tsx
 import { Stepper } from 'fnx-ui';
 
 ReactDOM.render(
@@ -69,7 +69,7 @@ ReactDOM.render(
 
 After setting the `integer` property, the input box will limit only an integer.
 
-```tsx | pure
+```tsx
 import { Stepper } from 'fnx-ui';
 
 ReactDOM.render(
@@ -84,7 +84,7 @@ ReactDOM.render(
 
 By setting the `disabled` property to disable the stepper, you cannot click the button or modify the input box if you disable state.
 
-```tsx | pure
+```tsx
 import { Stepper } from 'fnx-ui';
 
 ReactDOM.render(
@@ -99,7 +99,7 @@ ReactDOM.render(
 
 By setting the `disableinput` property to disable the input box, the button can still click.
 
-```tsx | pure
+```tsx
 import { Stepper } from 'fnx-ui';
 
 ReactDOM.render(
@@ -114,7 +114,7 @@ ReactDOM.render(
 
 The fixed number of decimal numbers can be retained by setting the `precision` attribute.
 
-```tsx | pure
+```tsx
 import { Stepper } from 'fnx-ui';
 
 ReactDOM.render(
@@ -129,7 +129,7 @@ ReactDOM.render(
 
 Set the input box width through `InputWidth` property, set the button size and the input box height via` Buttonsize` property.
 
-```tsx | pure
+```tsx
 import { Stepper } from 'fnx-ui';
 
 ReactDOM.render(
@@ -144,7 +144,7 @@ ReactDOM.render(
 
 Set the `Theme` to `Round` to show the rounded style stepper.
 
-```tsx | pure
+```tsx
 import { Stepper } from 'fnx-ui';
 
 ReactDOM.render(

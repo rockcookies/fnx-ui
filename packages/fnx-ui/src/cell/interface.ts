@@ -17,7 +17,6 @@ export interface CellComponentProps {
 	border?: boolean;
 	itemsAlign?: CellItemsAlign;
 	clickable?: boolean;
-	size?: 'md' | 'lg';
 }
 
 export type CellProps = CellComponentProps &
@@ -27,7 +26,7 @@ export interface CellGroupComponentProps {
 	title?: ReactNode;
 	titleProps?: HTMLAttributes<HTMLDivElement>;
 	border?: boolean;
-	insert?: boolean;
+	inset?: boolean;
 	bodyProps?: HTMLAttributes<HTMLDivElement>;
 }
 

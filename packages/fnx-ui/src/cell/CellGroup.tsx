@@ -12,12 +12,12 @@ const NS = 'fnx-cell-group';
 const bem = createBEM(NS);
 
 type RequiredCellProps = Required<
-	Pick<CellGroupProps, 'title' | 'insert' | 'border' | 'bodyProps'>
+	Pick<CellGroupProps, 'title' | 'inset' | 'border' | 'bodyProps'>
 >;
 
 const DEFAULT_PROPS: RequiredCellProps = {
 	border: true,
-	insert: false,
+	inset: false,
 	title: null,
 	bodyProps: {},
 };
@@ -26,18 +26,18 @@ const CellGroup: ForwardRefExoticComponent<
 	CellGroupProps & RefAttributes<HTMLDivElement>
 > = forwardRef<HTMLDivElement, CellGroupProps>((props, ref) => {
 	const [
-		{ title, border, insert, bodyProps },
+		{ title, border, inset, bodyProps },
 		{ className, children, ...restProps },
 	] = useProps<RequiredCellProps, CellGroupProps>(DEFAULT_PROPS, props);
 
 	return (
 		<div {...restProps} className={classnames(bem(), className)} ref={ref}>
-			{title && <div className={bem('title', { insert })}>{title}</div>}
+			{title && <div className={bem('title', { inset })}>{title}</div>}
 			<div
 				{...bodyProps}
 				className={classnames(
-					bem('body'),
-					border && !insert && BORDER_TOP_BOTTOM,
+					bem('body', { inset }),
+					border && !inset && BORDER_TOP_BOTTOM,
 					bodyProps.className,
 				)}
 			>

@@ -89,9 +89,6 @@ describe('<Calendar/>', () => {
 
 		expect(selectedDay.innerHTML).toEqual(`${today}`);
 
-		fireEvent.click(days[today - 2]);
-		expect(onChange).not.toHaveBeenCalled();
-
 		fireEvent.click(days[today + 2]);
 		expect(onChange).toHaveBeenCalled();
 	});

@@ -4,7 +4,7 @@
 
 Bind the index value corresponding to the currently active tag through `activeKey`. The first tag is enabled by default.
 
-```tsx | pure
+```tsx
 ReactDOM.render(
   <>
     <Tabs defaultActiveKey="1">
@@ -21,7 +21,7 @@ ReactDOM.render(
 
 When the label specifies the `name` attribute, the value of the `activeKey` is the `name` of the current label (the label cannot be matched by the index value at this time).
 
-```tsx | pure
+```tsx
 const [activeKey, setActiveKey] = useState('key2');
 const onActiveKeyChange = (key) => {
   setActiveKey(key);
@@ -49,7 +49,7 @@ ReactDOM.render(
 
 When the default number of labels exceeds 4, the label bar can scroll horizontally, and the current label will be automatically centered during switching.
 
-```tsx | pure
+```tsx
 ReactDOM.render(
   <>
     <Tabs>
@@ -68,7 +68,7 @@ ReactDOM.render(
 
 Set the `disabled` attribute to disable the label.
 
-```tsx | pure
+```tsx
 ReactDOM.render(
   <>
     <Tabs>
@@ -87,7 +87,7 @@ ReactDOM.render(
 
 You can bind the `onTabClick` event on `< Tabs > < / Tabs >`.
 
-```tsx | pure
+```tsx
 const onTabClick = (index) => {
   console.log(index);
 };

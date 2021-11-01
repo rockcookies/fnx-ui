@@ -128,7 +128,7 @@ const Popup: PopupComponent = forwardRef<HTMLDivElement, PopupProps>(
 			}
 
 			return position === 'center'
-				? bem(['fade'])
+				? 'fnx-fade'
 				: bem([`slide-${position}`]);
 		}, [transitionName, position]);
 

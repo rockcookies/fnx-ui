@@ -1,6 +1,6 @@
 :root {
 	--fnx-tabs-tab-list-height: 44px;
-	--fnx-tabs-header-background-color: var(--fnx-gray-75);
+	--fnx-tabs-header-background: var(--fnx-gray-75);
 	--fnx-tabs-tab-text-color: var(--fnx-gray-700);
 	--fnx-tabs-tab-line-height: var(--fnx-line-height-md);
 	--fnx-tabs-tab-font-size: var(--fnx-font-size-md);
@@ -8,13 +8,13 @@
 	--fnx-tabs-tab-text-disabled-color: var(--fnx-gray-500);
 	--fnx-tabs-track-width: 40px;
 	--fnx-tabs-track-height: 3px;
-	--fnx-tabs-track-color: var(--fnx-primary-color);
+	--fnx-tabs-track-background: var(--fnx-primary-color);
 }
 
 .fnx-tabs {
 	&__header {
 		overflow: hidden;
-		background: var(--fnx-tabs-header-background-color);
+		background: var(--fnx-tabs-header-background);
 	}
 
 	&__nav {
@@ -94,7 +94,7 @@
 		z-index: 1;
 		width: var(--fnx-tabs-track-width);
 		height: var(--fnx-tabs-track-height);
-		background-color: var(--fnx-tabs-track-color);
+		background: var(--fnx-tabs-track-background);
 		border-radius: var(--fnx-tabs-track-height);
 		transform: translateX(-50%);
 		will-change: left;

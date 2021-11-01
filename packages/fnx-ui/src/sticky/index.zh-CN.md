@@ -6,7 +6,7 @@
 
 将内容包裹在 `Sticky` 组件内即可。
 
-```tsx | pure
+```tsx
 import { Sticky, Button } from 'fnx-ui';
 
 ReactDOM.render(
@@ -23,7 +23,7 @@ ReactDOM.render(
 
 通过 `offsetTop` 属性可以设置组件在吸顶时与顶部的距离。
 
-```tsx | pure
+```tsx
 import { Sticky, Button } from 'fnx-ui';
 
 ReactDOM.render(
@@ -40,7 +40,7 @@ ReactDOM.render(
 
 通过 `containerRef` 属性可以指定组件的容器，页面滚动时，组件会始终保持在容器范围内，当组件即将超出容器底部时，会固定在容器的底部。
 
-```tsx | pure
+```tsx
 import { Sticky, Button } from 'fnx-ui';
 
 const Demo: React.FC = () => {
@@ -62,7 +62,7 @@ ReactDOM.render(<Demo />, mountNode);
 
 通过 `offsetBottom` 属性设置底端偏移。
 
-```tsx | pure
+```tsx
 import { Sticky, Button } from 'fnx-ui';
 
 ReactDOM.render(

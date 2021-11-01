@@ -17,7 +17,7 @@ const I18N = {
 		popupRight: '右侧弹出',
 		teleport: '指定挂载节点',
 		roundCorner: '圆角弹窗',
-		content: '内容',
+		content: '为了联盟',
 	},
 	'en-US': {
 		basicUsage: 'Basic Usage',
@@ -29,7 +29,7 @@ const I18N = {
 		popupRight: 'From Right',
 		teleport: 'Get Container',
 		roundCorner: 'Round Corner',
-		content: 'Content',
+		content: 'For the alliance',
 	},
 };
 

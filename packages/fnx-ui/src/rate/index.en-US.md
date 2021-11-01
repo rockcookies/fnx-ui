@@ -6,7 +6,7 @@ Used to rating operations on things.
 
 Display the current `DefaultValue` Property Set the default score. setting，`DefaultValue` Property Set the default score.
 
-```tsx | pure
+```tsx
 import { Rate } from 'fnx-ui';
 
 ReactDOM.render(
@@ -21,7 +21,7 @@ ReactDOM.render(
 
 Custom icon style via `Character` property.
 
-```tsx | pure
+```tsx
 import { Rate } from 'fnx-ui';
 
 ReactDOM.render(
@@ -36,7 +36,7 @@ ReactDOM.render(
 
 Custom Icon style via the `voidcharacter` property.
 
-```tsx | pure
+```tsx
 import { Rate } from 'fnx-ui';
 
 ReactDOM.render(
@@ -51,7 +51,7 @@ ReactDOM.render(
 
 Custom Icon style via `Color`,` voidcolor` attribute custom icon style.
 
-```tsx | pure
+```tsx
 import { Rate } from 'fnx-ui';
 
 ReactDOM.render(
@@ -66,7 +66,7 @@ ReactDOM.render(
 
 Customize the icon size via the `size` property.
 
-```tsx | pure
+```tsx
 import { Rate } from 'fnx-ui';
 
 ReactDOM.render(
@@ -81,7 +81,7 @@ ReactDOM.render(
 
 Custom quantity by `count` attribute。
 
-```tsx | pure
+```tsx
 import { Rate } from 'fnx-ui';
 ReactDOM.render(
   <>
@@ -95,7 +95,7 @@ ReactDOM.render(
 
 Disabled` rate` attribute via `disabled`.
 
-```tsx | pure
+```tsx
 import { Rate } from 'fnx-ui';
 ReactDOM.render(
   <>
@@ -109,7 +109,7 @@ ReactDOM.render(
 
 Select half-star through `Allowhalf` attribute.
 
-```tsx | pure
+```tsx
 import { Rate } from 'fnx-ui';
 ReactDOM.render(
   <>
@@ -123,7 +123,7 @@ ReactDOM.render(
 
 Realize read-only features through `Readonly` properties.
 
-```tsx | pure
+```tsx
 import { Rate } from 'fnx-ui';
 ReactDOM.render(
   <>
@@ -137,7 +137,7 @@ ReactDOM.render(
 
 `onchange` method returns the current` value`.
 
-```tsx | pure
+```tsx
 import { Rate,Toast } from 'fnx-ui';
 
 const onChange=(value)=>{ Toast.show(value)} }

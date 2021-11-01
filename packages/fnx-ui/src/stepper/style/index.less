@@ -1,18 +1,18 @@
 :root {
 	--fnx-stepper-button-color: var(--fnx-gray-800);
-	--fnx-stepper-button-background-color: var(--fnx-gray-200);
+	--fnx-stepper-button-background: var(--fnx-gray-200);
 	--fnx-stepper-button-disabled-color: var(--fnx-gray-500);
-	--fnx-stepper-button-background-disabled-color: var(--fnx-gray-100);
+	--fnx-stepper-button-background-disabled: var(--fnx-gray-100);
 	--fnx-stepper-button-active-color: var(--fnx-gray-900);
-	--fnx-stepper-button-background-active-color: var(--fnx-gray-300);
+	--fnx-stepper-button-background-active: var(--fnx-gray-300);
 	--fnx-stepper-input-width: 32px;
 	--fnx-stepper-input-height: 28px;
 	--fnx-stepper-input-font-size: var(--fnx-font-size-md);
 	--fnx-stepper-input-line-height: normal;
 	--fnx-stepper-input-text-color: var(--fnx-gray-800);
 	--fnx-stepper-input-text-disabled-color: var(--fnx-gray-500);
-	--fnx-stepper-input-background-color: var(--fnx-gray-200);
-	--fnx-stepper-input-background-disabled-color: var(--fnx-gray-100);
+	--fnx-stepper-input-background: var(--fnx-gray-200);
+	--fnx-stepper-input-background-disabled: var(--fnx-gray-100);
 	--fnx-stepper-border-radius: var(--fnx-border-radius-md);
 }
 
@@ -30,7 +30,7 @@
 		padding: 0;
 		color: var(--fnx-stepper-button-color);
 		vertical-align: middle;
-		background-color: var(--fnx-stepper-button-background-color);
+		background: var(--fnx-stepper-button-background);
 		border: 0;
 		cursor: pointer;
 
@@ -56,7 +56,7 @@
 
 		&:active {
 			color: var(--fnx-stepper-button-active-color);
-			background-color: var(--fnx-stepper-button-background-active-color);
+			background: var(--fnx-stepper-button-background-active);
 		}
 
 		&--hidden {
@@ -65,16 +65,12 @@
 
 		&--disabled {
 			color: var(--fnx-stepper-button-disabled-color);
-			background-color: var(
-				--fnx-stepper-button-background-disabled-color
-			);
+			background: var(--fnx-stepper-button-background-disabled);
 			cursor: not-allowed;
 
 			&:active {
 				color: var(--fnx-stepper-button-disabled-color);
-				background-color: var(
-					--fnx-stepper-button-background-disabled-color
-				);
+				background: var(--fnx-stepper-button-background-disabled);
 			}
 		}
 	}
@@ -104,7 +100,7 @@
 		line-height: var(--fnx-stepper-input-line-height);
 		text-align: center;
 		vertical-align: middle;
-		background-color: var(--fnx-stepper-input-background-color);
+		background: var(--fnx-stepper-input-background);
 		border: 0;
 		border-width: 1px 0;
 		border-radius: 0;
@@ -112,9 +108,7 @@
 
 		&:disabled {
 			color: var(--fnx-stepper-input-text-disabled-color);
-			background-color: var(
-				--fnx-stepper-input-background-disabled-color
-			);
+			background: var(--fnx-stepper-input-background-disabled);
 			-webkit-text-fill-color: currentColor; // fix disabled color in iOS
 			opacity: 1;
 		}

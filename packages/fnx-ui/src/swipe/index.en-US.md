@@ -4,7 +4,7 @@ Used to loop play a set of pictures or content.
 
 ## Basic Usage
 
-```tsx | pure
+```tsx
 import { Swipe } from 'fnx-ui';
 
 ReactDOM.render(

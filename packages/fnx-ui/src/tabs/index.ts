@@ -8,4 +8,13 @@ Tabs.Context = TabsContext;
 Tabs.Panel = TabsPanel;
 Tabs.PanelContext = TabsPanelContext;
 
+export type {
+	TabsComponentProps,
+	TabsProps,
+	TabsPanelComponentProps,
+	TabsPanelProps,
+	TabsSlots,
+	TabsContextData,
+} from './interface';
+
 export default Tabs;
