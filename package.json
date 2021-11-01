@@ -28,7 +28,7 @@
     "eslint": "^7.32.0",
     "lerna": "^4.0.0",
     "lerna-changelog": "^2.2.0",
-    "lint-staged": "^11.2.0",
+    "lint-staged": "^11.2.6",
     "prettier": "^2.4.1",
     "yorkie": "^2.0.0"
   },
