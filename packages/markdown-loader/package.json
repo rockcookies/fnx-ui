@@ -1,6 +1,6 @@
 {
   "name": "@fnx-ui/markdown-loader",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Simple and fast React markdown loader",
   "main": "src/index.js",
   "publishConfig": {
