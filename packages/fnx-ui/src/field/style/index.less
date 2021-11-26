@@ -116,6 +116,7 @@
 .fnx-field-input {
 	display: flex;
 	align-items: center;
+	width: 100%;
 	font-size: var(--fnx-field-input-font-size);
 	line-height: var(--fnx-field-input-line-height);
 
@@ -185,20 +186,27 @@
 }
 
 .fnx-field-textarea {
-	&__control {
-		display: block;
+	position: relative;
+	width: 100%;
+
+	&__control,
+	&__auto-size {
 		box-sizing: border-box;
 		width: 100%;
 		min-width: 0; // for flex-shrink
 		margin: 0;
 		padding: 0;
-		color: var(--fnx-field-input-text-color);
 		line-height: inherit;
 		text-align: left;
 		background-color: transparent;
 		border: 0;
 		resize: none;
 		user-select: auto;
+	}
+
+	&__control {
+		display: block;
+		color: var(--fnx-field-input-text-color);
 
 		&:disabled {
 			color: var(--fnx-field-input-text-disabled-color);
@@ -215,6 +223,15 @@
 		&:read-only {
 			cursor: default;
 		}
+	}
+
+	&__auto-size {
+		position: absolute;
+		top: 0;
+		left: 0;
+		overflow: hidden;
+		transform: translateZ(0);
+		visibility: hidden;
 	}
 
 	&__count {

@@ -1,19 +1,17 @@
 import _Icon from './Icon';
 import { createFromIconfontCN } from './IconFont';
 import IconSpinner from './IconSpinner';
-import { IconComponent, IconExportExtra } from './interface';
+import { IconExportExtra } from './interface';
 
-const Icon: IconComponent & IconExportExtra = _Icon as any;
+const Icon: typeof _Icon & IconExportExtra = _Icon as any;
 Icon.createFromIconfontCN = createFromIconfontCN;
 Icon.Spinner = IconSpinner;
 
 export type {
-	IconProps,
 	IconComponentProps,
-	IconComponent,
-	IconSpinnerProps,
+	IconProps,
 	IconSpinnerComponentProps,
-	IconSpinnerComponent,
+	IconSpinnerProps,
 } from './interface';
 
 export default Icon;

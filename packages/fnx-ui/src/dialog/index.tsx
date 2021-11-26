@@ -116,9 +116,12 @@ Dialog.useDialog = () => {
 
 export type {
 	DialogComponentProps,
+	DialogProps,
 	DialogContext,
 	DialogInstance,
-	DialogProps,
+	DialogLocale,
+	DialogMessageAlign,
+	DialogStaticProps,
 } from './interface';
 
 export default Dialog;

@@ -15,6 +15,7 @@ export type {
 	TabsPanelProps,
 	TabsSlots,
 	TabsContextData,
+	TabsPanelContextData,
 } from './interface';
 
 export default Tabs;

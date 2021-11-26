@@ -7,7 +7,7 @@ export interface DialogLocale {
 	cancel: string;
 }
 
-type DialogMessageAlign = 'left' | 'right' | 'center';
+export type DialogMessageAlign = 'left' | 'right' | 'center';
 
 export interface DialogComponentProps
 	extends Omit<PopupComponentProps, 'onClose'> {

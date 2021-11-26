@@ -226,7 +226,7 @@ const Rate = forwardRef<HTMLUListElement, RateProps>((_props, ref) => {
 				role="radio"
 				style={formattedStyle}
 				className={bem('item', itemClasses)}
-				tabIndex={0}
+				tabIndex={disabled ? undefined : 0}
 				aria-setsize={count}
 				aria-posinset={starValue}
 				aria-checked={value > index}
@@ -260,6 +260,10 @@ const Rate = forwardRef<HTMLUListElement, RateProps>((_props, ref) => {
 	return (
 		<ul
 			className={classnames(bem({ disabled }), className)}
+			role="radiogroup"
+			tabIndex={disabled ? undefined : 0}
+			aria-disabled={disabled}
+			aria-readonly={readonly}
 			{...restProps}
 			ref={rootRef}
 		>
@@ -267,6 +271,8 @@ const Rate = forwardRef<HTMLUListElement, RateProps>((_props, ref) => {
 		</ul>
 	);
 });
+
+export type { RateComponentProps, RateProps } from './interface';
 
 Rate.displayName = 'Rate';
 

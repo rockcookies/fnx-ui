@@ -23,12 +23,12 @@ import { noop } from '../utils/misc';
 import { classnames, createBEM } from '../utils/namespace';
 import { toElementArray } from '../utils/react';
 import useSwipe from './hooks/use-swipe';
-import { SwipeComponentRequiredProps, SwipeProps, SwipeRef } from './interface';
+import { SwipeComponentProps, SwipeProps, SwipeRef } from './interface';
 
 const NS = 'fnx-swipe';
 const bem = createBEM(NS);
 
-const DEFAULT_PROPS: SwipeComponentRequiredProps = {
+const DEFAULT_PROPS: Required<SwipeComponentProps> = {
 	height: 0,
 	width: 0,
 	autoplay: 3000,
@@ -44,7 +44,7 @@ const DEFAULT_PROPS: SwipeComponentRequiredProps = {
 
 const Swipe = forwardRef<SwipeRef, SwipeProps>((_props, ref) => {
 	const [props, { className, children: _children, ...restProps }] = useProps<
-		SwipeComponentRequiredProps,
+		Required<SwipeComponentProps>,
 		SwipeProps
 	>(DEFAULT_PROPS, _props);
 

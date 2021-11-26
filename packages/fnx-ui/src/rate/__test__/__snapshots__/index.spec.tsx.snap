@@ -3,7 +3,11 @@
 exports[`<Rate/> should change icon size when using size prop 1`] = `
 <div>
   <ul
+    aria-disabled="false"
+    aria-readonly="false"
     class="fnx-rate"
+    role="radiogroup"
+    tabindex="0"
   >
     <li
       aria-checked="true"
@@ -282,7 +286,11 @@ exports[`<Rate/> should change icon size when using size prop 1`] = `
 exports[`<Rate/> should emit onChange event when rate icon is touch moved 1`] = `
 <div>
   <ul
+    aria-disabled="false"
+    aria-readonly="false"
     class="fnx-rate"
+    role="radiogroup"
+    tabindex="0"
   >
     <li
       aria-checked="true"
@@ -561,7 +569,11 @@ exports[`<Rate/> should emit onChange event when rate icon is touch moved 1`] = 
 exports[`<Rate/> should emit onChange event when rate icon is touch moved and using allow-half prop 1`] = `
 <div>
   <ul
+    aria-disabled="false"
+    aria-readonly="false"
     class="fnx-rate"
+    role="radiogroup"
+    tabindex="0"
   >
     <li
       aria-checked="true"
@@ -840,7 +852,11 @@ exports[`<Rate/> should emit onChange event when rate icon is touch moved and us
 exports[`<Rate/> should render gutter when using gutter prop 1`] = `
 <div>
   <ul
+    aria-disabled="false"
+    aria-readonly="false"
     class="fnx-rate"
+    role="radiogroup"
+    tabindex="0"
   >
     <li
       aria-checked="true"

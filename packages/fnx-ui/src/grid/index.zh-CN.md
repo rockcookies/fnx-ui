@@ -4,23 +4,18 @@
 
 ## 基础用法
 
-通过 `Grid.Item`子元素设置宫格内容
+通过 Grid.Item 子元素设置宫格内容。
 
 ```tsx
-import { Grid, Image } from 'fnx-ui';
+import { Grid } from 'fnx-ui';
 
 ReactDOM.render(
   <>
     <Grid>
-      <Grid.Item>
-        <Image src="https://img17.fn-mart.com/pic/2a021346939822ebb66f/B26n221z_2fdhMZdKz/7imyeafa3yKGj9/CsmRtmA3RAuAVmgsAAKtgt1PF3s715.jpg" />
-      </Grid.Item>
-      <Grid.Item>
-        <Image src="https://img17.fn-mart.com/pic/2a021346939822ebb66f/B26n221z_2fdhMZdKz/7imyeafa3yKGj9/CsmRtmA3RAuAVmgsAAKtgt1PF3s715.jpg" />
-      </Grid.Item>
-      <Grid.Item>
-        <Image src="https://img17.fn-mart.com/pic/2a021346939822ebb66f/B26n221z_2fdhMZdKz/7imyeafa3yKGj9/CsmRtmA3RAuAVmgsAAKtgt1PF3s715.jpg" />
-      </Grid.Item>
+      <Grid.Item>Content</Grid.Item>
+      <Grid.Item>Content</Grid.Item>
+      <Grid.Item>Content</Grid.Item>
+      <Grid.Item>Content</Grid.Item>
     </Grid>
   </>,
   mountNode,
@@ -32,23 +27,14 @@ ReactDOM.render(
 默认一行展示四个格子，可以通过 `columnSize` 自定义列数。
 
 ```tsx
-import { Grid, Image } from 'fnx-ui';
+import { Grid } from 'fnx-ui';
 
 ReactDOM.render(
   <>
     <Grid columnSize={3}>
-      <Grid.Item>
-        <Image src="https://img17.fn-mart.com/pic/2a021346939822ebb66f/B26n221z_2fdhMZdKz/7imyeafa3yKGj9/CsmRtmA3RAuAVmgsAAKtgt1PF3s715.jpg" />
-      </Grid.Item>
-      <Grid.Item>
-        <Image src="https://img17.fn-mart.com/pic/2a021346939822ebb66f/B26n221z_2fdhMZdKz/7imyeafa3yKGj9/CsmRtmA3RAuAVmgsAAKtgt1PF3s715.jpg" />
-      </Grid.Item>
-      <Grid.Item>
-        <Image src="https://img17.fn-mart.com/pic/2a021346939822ebb66f/B26n221z_2fdhMZdKz/7imyeafa3yKGj9/CsmRtmA3RAuAVmgsAAKtgt1PF3s715.jpg" />
-      </Grid.Item>
-      <Grid.Item>
-        <Image src="https://img17.fn-mart.com/pic/2a021346939822ebb66f/B26n221z_2fdhMZdKz/7imyeafa3yKGj9/CsmRtmA3RAuAVmgsAAKtgt1PF3s715.jpg" />
-      </Grid.Item>
+      <Grid.Item>Content</Grid.Item>
+      <Grid.Item>Content</Grid.Item>
+      <Grid.Item>Content</Grid.Item>
     </Grid>
   </>,
   mountNode,
@@ -60,13 +46,22 @@ ReactDOM.render(
 设置 `square` 属性后，格子的高度会和宽度保持一致。
 
 ```tsx
-import { Grid, Image } from 'fnx-ui';
+import { Grid } from 'fnx-ui';
 
 ReactDOM.render(
   <>
     <Grid square>
       <Grid.Item>
-        <Image src="https://img17.fn-mart.com/pic/2a021346939822ebb66f/B26n221z_2fdhMZdKz/7imyeafa3yKGj9/CsmRtmA3RAuAVmgsAAKtgt1PF3s715.jpg" />
+        <Image src="https://dummyimage.com/100x100/000/fff.jpg" />
+      </Grid.Item>
+      <Grid.Item>
+        <Image src="https://dummyimage.com/100x100/000/fff.jpg" />
+      </Grid.Item>
+      <Grid.Item>
+        <Image src="https://dummyimage.com/100x100/000/fff.jpg" />
+      </Grid.Item>
+      <Grid.Item>
+        <Image src="https://dummyimage.com/100x100/000/fff.jpg" />
       </Grid.Item>
     </Grid>
   </>,
@@ -79,19 +74,42 @@ ReactDOM.render(
 通过 `gutter` 属性设置格子之间的距离。
 
 ```tsx
-import { Grid, Image } from 'fnx-ui';
+import { Grid } from 'fnx-ui';
 
 ReactDOM.render(
   <>
     <Grid gutter="5">
+      <Grid.Item>Content</Grid.Item>
+      <Grid.Item>Content</Grid.Item>
+      <Grid.Item>Content</Grid.Item>
+      <Grid.Item>Content</Grid.Item>
+    </Grid>
+  </>,
+  mountNode,
+);
+```
+
+## 徽标提示
+
+搭配 Badge 使用。
+
+```tsx
+import { Grid, Image, Badge, Icon } from 'fnx-ui';
+
+ReactDOM.render(
+  <>
+    <Grid columnSize={2}>
       <Grid.Item>
-        <Image src="https://img17.fn-mart.com/pic/2a021346939822ebb66f/B26n221z_2fdhMZdKz/7imyeafa3yKGj9/CsmRtmA3RAuAVmgsAAKtgt1PF3s715.jpg" />
+        <Badge dot>
+          <Icon size="30px" name="file" />
+          <p>Content</p>
+        </Badge>
       </Grid.Item>
       <Grid.Item>
-        <Image src="https://img17.fn-mart.com/pic/2a021346939822ebb66f/B26n221z_2fdhMZdKz/7imyeafa3yKGj9/CsmRtmA3RAuAVmgsAAKtgt1PF3s715.jpg" />
-      </Grid.Item>
-      <Grid.Item>
-        <Image src="https://img17.fn-mart.com/pic/2a021346939822ebb66f/B26n221z_2fdhMZdKz/7imyeafa3yKGj9/CsmRtmA3RAuAVmgsAAKtgt1PF3s715.jpg" />
+        <Badge count={100} max={99}>
+          <Icon size="30px" name="picture" />
+          <p>Content</p>
+        </Badge>
       </Grid.Item>
     </Grid>
   </>,
@@ -101,21 +119,19 @@ ReactDOM.render(
 
 ## API
 
-| 参数       | 说明                            | 类型               | 默认值  |
+### Props
+
+| 名称       | 说明                            | 类型               | 默认值  |
 | ---------- | ------------------------------- | ------------------ | ------- |
 | columnSize | 列数                            | `number \| string` | `4`     |
 | clickable  | 是否开启格子点击反馈            | `boolean`          | `false` |
-| gutter     | 格子之间的间距，默认单位为 `px` | `number \| string` | -       |
+| gutter     | 格子之间的间距，默认单位为 `px` | `number \| string` | `0`     |
 | border     | 是否显示边框                    | `boolean`          | `true`  |
 | square     | 是否将格子固定为正方形          | `boolean`          | `false` |
 
-## GridItem API
+## Grid.Item Props
 
-| 参数      | 说明                       | 类型      | 默认值  |
-| --------- | -------------------------- | --------- | ------- |
-| clickable | 是否开启所有格子点击反馈   | `boolean` | `false` |
-| square    | 是否将所有格子固定为正方形 | `boolean` | `false` |
-
-```
-
-```
+| 名称      | 说明                   | 类型      | 默认值  |
+| --------- | ---------------------- | --------- | ------- |
+| clickable | 是否开启格子点击反馈   | `boolean` | `false` |
+| square    | 是否将格子固定为正方形 | `boolean` | `false` |

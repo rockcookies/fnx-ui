@@ -7,10 +7,11 @@ const Cell: typeof _Cell & CellExportExtra = _Cell as any;
 Cell.Group = CellGroup;
 
 export type {
-	CellComponentProps,
 	CellGroupComponentProps,
 	CellGroupProps,
+	CellComponentProps,
 	CellProps,
+	CellItemsAlign,
 } from './interface';
 
 export default Cell;

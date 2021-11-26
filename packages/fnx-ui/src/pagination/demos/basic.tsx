@@ -26,7 +26,7 @@ export default function Basic(): ReturnType<React.FC> {
 	return (
 		<>
 			<DemoBlock cardMode={true} title={i18n.basicUsage}>
-				<Pagination total={80} />
+				<Pagination total={80} defaultCurrent={1} />
 			</DemoBlock>
 
 			<DemoBlock cardMode={true} title={i18n.simpleMode}>

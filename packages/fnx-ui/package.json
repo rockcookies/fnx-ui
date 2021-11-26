@@ -72,7 +72,7 @@
     "@fnx-ui/cli": "^0.0.8",
     "@testing-library/react": "^12.1.2",
     "@testing-library/react-hooks": "^7.0.2",
-    "@types/jest": "^27.0.2",
+    "@types/jest": "^27.0.3",
     "@types/qs": "^6.9.7",
     "@types/react": "^16.9.0",
     "@types/react-dom": "^16.9.0",
@@ -90,7 +90,7 @@
   "dependencies": {
     "@types/react-is": "^17.0.3",
     "@types/react-transition-group": "^4.4.4",
-    "rc-field-form": "^1.22.0-2",
+    "rc-field-form": "^1.22.0",
     "react-is": "^17.0.2",
     "react-transition-group": "^4.4.2",
     "resize-observer-polyfill": "^1.5.1"

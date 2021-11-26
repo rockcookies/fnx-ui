@@ -1,8 +1,8 @@
 import React, { useCallback, useRef, useState } from 'react';
+import { SwipeComponentProps } from '..';
 import useSafeState from '../../hooks/use-safe-state';
 import { clamp } from '../../utils/format';
 import { ElementRect } from '../../utils/interface';
-import { SwipeComponentRequiredProps } from '../interface';
 
 interface SwipeStatus {
 	activeIndex?: number;
@@ -14,7 +14,7 @@ interface SwipeStatus {
 }
 
 interface UseSwipeOptions {
-	propsRef: React.MutableRefObject<SwipeComponentRequiredProps>;
+	propsRef: React.MutableRefObject<Required<SwipeComponentProps>>;
 	rootRef: React.RefObject<HTMLDivElement>;
 	swipeLength: number;
 }

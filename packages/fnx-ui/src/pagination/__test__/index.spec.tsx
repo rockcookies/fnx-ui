@@ -100,7 +100,7 @@ describe('<Pagination/>', () => {
 		);
 		const PageItemBtn = TestsDOM.mustQuerySelector(
 			container,
-			'.fnx-pagination__page',
+			'.fnx-pagination__page button',
 		);
 		fireEvent.click(PageItemBtn);
 		expect(onChange).toHaveBeenCalled();

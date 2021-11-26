@@ -171,10 +171,10 @@ List.displayName = 'List';
 
 export type {
 	ListComponentProps,
-	ListDirection,
-	ListSlots,
 	ListProps,
 	ListRef,
+	ListSlots,
+	ListDirection,
 	ListStatus,
 } from './interface';
 

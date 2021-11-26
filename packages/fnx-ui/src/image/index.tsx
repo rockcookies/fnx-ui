@@ -136,8 +136,8 @@ Image.displayName = 'Image';
 
 export type {
 	ImageComponentProps,
+	ImageProps,
 	ImageFit,
 	ImageSlots,
-	ImageProps,
 } from './interface';
 export default Image;

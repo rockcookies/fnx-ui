@@ -33,6 +33,18 @@
 		cursor: pointer;
 		user-select: none;
 
+		button {
+			flex: 1;
+			height: 100%;
+			padding: 0;
+			background: transparent;
+			border: none;
+
+			&[disabled] {
+				cursor: not-allowed;
+			}
+		}
+
 		&:active {
 			color: var(--fnx-pagination-item-active-color);
 			background: var(--fnx-pagination-item-active-background);

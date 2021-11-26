@@ -2,12 +2,12 @@
 
 ## Basic Usage
 
-```tsx
+```tsx | pure
 import { Pagination } from 'fnx-ui';
 
 ReactDOM.render(
   <>
-    <Pagination total="80" />
+    <Pagination total={80} />
   </>,
   mountNode,
 );
@@ -17,7 +17,7 @@ ReactDOM.render(
 
 Set the `mode` Set to `simple` to switch to simple mode, at which point the paging device does not show the specific page number button.
 
-```tsx
+```tsx | pure
 import { Pagination } from 'fnx-ui';
 
 ReactDOM.render(
@@ -32,7 +32,7 @@ ReactDOM.render(
 
 Set up `forcellipses`, you will show the omitted button, click to quickly jump.
 
-```tsx
+```tsx | pure
 import { Pagination } from 'fnx-ui';
 
 ReactDOM.render(
@@ -50,9 +50,9 @@ ReactDOM.render(
 
 ## Custom Button
 
-Content from the paging button via `prev`,` next`, etc..
+Content from the paging button via `prev`,`next`, etc..
 
-```tsx
+```tsx | pure
 import { Pagination } from 'fnx-ui';
 
 ReactDOM.render(
@@ -73,9 +73,9 @@ ReactDOM.render(
 
 | Parameter        | Description                                   | Type                  | Default value |
 | ---------------- | --------------------------------------------- | --------------------- | ------------- |
-| defaultCurrent   | Default selection page number                 | `number`              | -             |
+| defaultCurrent   | Default selection page number                 | `number`              | `1`           |
 | current          | Current page number                           | `number`              | -             |
-| mode             | Display mode                                  | `'multi' \| 'simple'` | `multi`       |
+| mode             | Display mode                                  | `'multi' \| 'simple'` | `'multi'`     |
 | slots            | Customized Previous, next page button content | `PaginationSlots`     | `{}`          |
 | total            | total                                         | `number`              | `82`          |
 | pageSize         | Number of records per page                    | `number`              | `10`          |
@@ -89,7 +89,7 @@ ReactDOM.render(
 | ---------- | ------------------------------------ | ------------------------------------- |
 | onChange   | Trigger when the page number changes | `(current: number, pageSize: number)` |
 
-### Slots Data Structure
+### Slots Data Structure(PaginationSlots)
 
 | Parameter | Description             | Type        | Default value |
 | --------- | ----------------------- | ----------- | ------------- |

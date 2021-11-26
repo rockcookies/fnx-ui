@@ -6,14 +6,14 @@ const Checkbox: typeof _Checkbox & CheckboxExportExtra = _Checkbox as any;
 Checkbox.Group = InternalCheckboxGroup;
 
 export type {
-	CheckboxBaseProps,
 	CheckboxComponentProps,
 	CheckboxProps,
 	CheckboxRef,
-	CheckboxValue,
 	CheckboxGroupComponentProps,
 	CheckboxGroupProps,
 	CheckboxGroupRef,
+	CheckboxBaseProps,
+	CheckboxValue,
 } from './interface';
 
 export default Checkbox;

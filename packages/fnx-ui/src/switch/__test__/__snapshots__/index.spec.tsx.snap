@@ -8,6 +8,7 @@ exports[`<Switch/> should apply active color to loading icon 1`] = `
     data-testid="switch"
     role="switch"
     style="background-color: red;"
+    tabindex="0"
   >
     <span
       class="fnx-switch__handle"
@@ -52,6 +53,7 @@ exports[`<Switch/> should apply inactive color to loading icon 1`] = `
     class="fnx-switch"
     data-testid="switch"
     role="switch"
+    tabindex="0"
   >
     <span
       class="fnx-switch__handle"

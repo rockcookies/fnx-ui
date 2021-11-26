@@ -43,5 +43,9 @@ const Divider = forwardRef<HTMLDivElement, DividerProps>((_props, ref) => {
 
 Divider.displayName = 'Divider';
 
-export type { DividerProps, DividerComponentProps } from './interface';
+export type {
+	DividerComponentProps,
+	DividerProps,
+	DividerContentPosition,
+} from './interface';
 export default Divider;

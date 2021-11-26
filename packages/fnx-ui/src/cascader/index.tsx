@@ -34,6 +34,7 @@ type RequiredCascaderProps = Required<
 		| 'onChange'
 		| 'swipeable'
 		| 'closeIcon'
+		| 'slots'
 	>
 >;
 
@@ -45,6 +46,7 @@ const DEFAULT_PROPS: RequiredCascaderProps = {
 	onChange: noop,
 	swipeable: false,
 	closeIcon: <Icon name="cross" />,
+	slots: {},
 };
 
 interface Tab {
@@ -123,6 +125,7 @@ const InternalCascader: ForwardRefRenderFunction<
 			onChange,
 			swipeable,
 			closeIcon,
+			slots,
 		},
 		{
 			data,
@@ -233,6 +236,8 @@ const InternalCascader: ForwardRefRenderFunction<
 	) => {
 		const isLoading = !!dataNames.loading(option);
 		const isSelected = option === active;
+		const isDisabled = dataNames.disabled(option);
+		const label = dataNames.label(option);
 
 		let icon: ReactNode;
 
@@ -245,15 +250,23 @@ const InternalCascader: ForwardRefRenderFunction<
 		return (
 			<li
 				key={idx}
+				role="menuitemradio"
+				tabIndex={isDisabled ? undefined : isSelected ? 0 : -1}
+				aria-checked={isSelected ? 'true' : undefined}
+				aria-disabled={isDisabled ? 'true' : undefined}
 				className={bem('option', {
 					selected: isSelected,
-					disabled: dataNames.disabled(option),
+					disabled: isDisabled,
 					loading: isLoading,
 				})}
 				style={{ color: isSelected ? activeColor : undefined }}
 				onClick={() => handleSelect(tabIndex, option)}
 			>
-				<span className={bem('label')}>{dataNames.label(option)}</span>
+				{slots.option ? (
+					slots.option(option, { selected: isSelected })
+				) : (
+					<span className={bem('label')}>{label}</span>
+				)}
 				{icon}
 			</li>
 		);
@@ -292,8 +305,9 @@ const InternalCascader: ForwardRefRenderFunction<
 								</span>
 							}
 						>
+							{slots.optionsTop && slots.optionsTop(idx)}
 							<div className={bem('options-container')}>
-								<ul className={bem('options')}>
+								<ul role="menu" className={bem('options')}>
 									{tab.options.map((option, i) =>
 										renderOption(
 											idx,
@@ -314,6 +328,7 @@ const InternalCascader: ForwardRefRenderFunction<
 										/>
 									)}
 							</div>
+							{slots.optionsBottom && slots.optionsBottom(idx)}
 						</Tabs.Panel>
 					);
 				})}
@@ -333,10 +348,11 @@ InternalCascader.displayName = 'Cascader';
 
 export type {
 	CascaderComponentProps,
+	CascaderProps,
 	CascaderDataNames,
 	CascaderOption,
-	CascaderProps,
 	CascaderValue,
+	CascaderSlots,
 } from './interface';
 
 const Cascader = forwardRef<HTMLDivElement, CascaderProps>(

@@ -1,15 +1,13 @@
-import { SwipeComponent, SwipeExportExtra } from './interface';
+import { SwipeExportExtra } from './interface';
 import _Swipe from './Swipe';
 import SwipeItem from './SwipeItem';
 
-const Swipe: SwipeComponent & SwipeExportExtra = _Swipe as any;
+const Swipe: typeof _Swipe & SwipeExportExtra = _Swipe as any;
 Swipe.Item = SwipeItem;
 
 export type {
 	SwipeComponentProps,
-	SwipeComponent,
-	SwipeProps,
-	SwipeItemComponent,
 	SwipeItemProps,
+	SwipeProps,
 } from './interface';
 export default Swipe;

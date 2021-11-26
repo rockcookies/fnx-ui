@@ -90,6 +90,6 @@ const Skeleton: FC<SkeletonProps> = (_props: SkeletonProps) => {
 
 Skeleton.displayName = 'Skeleton';
 
-export type { SkeletonProps } from './interface';
+export type { SkeletonComponentProps, SkeletonProps } from './interface';
 
 export default Skeleton;

@@ -14,6 +14,7 @@ export type {
 	TimePickerComponentProps,
 	TimePickerProps,
 	TimePickerRef,
+	DatePickerField,
 } from './interface';
 
 export default DatePicker;

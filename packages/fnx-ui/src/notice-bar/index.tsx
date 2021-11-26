@@ -246,4 +246,10 @@ const NoticeBar = forwardRef<NoticeBarRef, NoticeBarProps>((_props, ref) => {
 
 NoticeBar.displayName = 'NoticeBar';
 
+export type {
+	NoticeBarComponentProps,
+	NoticeBarProps,
+	NoticeBarRef,
+} from './interface';
+
 export default NoticeBar;

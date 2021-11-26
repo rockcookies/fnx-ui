@@ -62,6 +62,7 @@ const FieldTextArea = forwardRef<FieldTextAreaRef, FieldTextAreaProps>(
 
 		const rootRef = useRef<HTMLSpanElement>(null);
 		const inputRef = useRef<HTMLTextAreaElement>(null);
+		const autoSizeRef = useRef<HTMLTextAreaElement>(null);
 
 		useImperativeHandle<FieldTextAreaRef, FieldTextAreaRef>(ref, () => {
 			return {
@@ -126,16 +127,18 @@ const FieldTextArea = forwardRef<FieldTextAreaRef, FieldTextAreaProps>(
 		};
 
 		useEffect(() => {
-			const inputElement = inputRef.current;
-
-			if (!inputElement) {
+			if (!autoSize) {
 				return;
 			}
 
-			if (autoSize) {
-				inputElement.style.height = 'auto';
-				inputElement.style.height = `${inputElement.scrollHeight}px`;
+			const inputElement = inputRef.current;
+			const autoSizeElement = autoSizeRef.current;
+
+			if (!inputElement || !autoSizeElement) {
+				return;
 			}
+
+			inputElement.style.height = `${autoSizeElement.scrollHeight}px`;
 		}, [autoSize, displayCompositionValue]);
 
 		const formatTextAreaStyle = (): CSSProperties => {
@@ -176,6 +179,16 @@ const FieldTextArea = forwardRef<FieldTextAreaRef, FieldTextAreaProps>(
 					onCompositionStart={onComposition}
 					onCompositionEnd={onComposition}
 					onChange={(e) => onCompositionValueChange(e.target.value)}
+				/>
+
+				<textarea
+					aria-hidden="true"
+					tabIndex={-1}
+					ref={autoSizeRef}
+					className={bem('auto-size')}
+					value={displayCompositionValue}
+					rows={rows}
+					readOnly
 				/>
 
 				{renderCount()}

@@ -1,11 +1,6 @@
-import {
-	ComponentType,
-	ForwardRefExoticComponent,
-	HTMLAttributes,
-	RefAttributes,
-	SVGAttributes,
-	SVGProps,
-} from 'react';
+import { ComponentType, HTMLAttributes, SVGAttributes, SVGProps } from 'react';
+import Icon from './Icon';
+import IconSpinner from './IconSpinner';
 
 export interface IconComponentProps {
 	name?: string;
@@ -18,10 +13,6 @@ export interface IconComponentProps {
 
 export type IconProps = IconComponentProps & HTMLAttributes<HTMLSpanElement>;
 
-export type IconComponent = ForwardRefExoticComponent<
-	IconProps & RefAttributes<HTMLSpanElement>
->;
-
 export interface IconSpinnerComponentProps {
 	size?: string | number;
 	color?: string;
@@ -30,15 +21,11 @@ export interface IconSpinnerComponentProps {
 export type IconSpinnerProps = IconSpinnerComponentProps &
 	HTMLAttributes<HTMLSpanElement>;
 
-export type IconSpinnerComponent = ForwardRefExoticComponent<
-	IconSpinnerProps & RefAttributes<HTMLSpanElement>
->;
-
 export interface IconExportExtra {
 	createFromIconfontCN(
 		scriptUrl: string,
 		options?: SVGAttributes<any>,
-	): IconComponent;
+	): typeof Icon;
 
-	Spinner: IconSpinnerComponent;
+	Spinner: typeof IconSpinner;
 }

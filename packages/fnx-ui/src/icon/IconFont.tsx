@@ -1,5 +1,5 @@
 import React, { forwardRef, ReactNode, SVGAttributes, useEffect } from 'react';
-import { IconComponent, IconProps } from './interface';
+import { IconProps } from './interface';
 import { bem, DEFAULT_SVG_PROPS, DEFAULT_SVG_VIEW_BOX } from './Icon';
 import { classnames } from '../utils/namespace';
 import { addUnit } from '../utils/format';
@@ -31,7 +31,7 @@ const loadScript = (scriptUrl: string) => {
 export function createFromIconfontCN(
 	scriptUrl: string,
 	options: SVGAttributes<any> = {},
-): IconComponent {
+) {
 	const IconFont = forwardRef<HTMLSpanElement, IconProps>((props, ref) => {
 		useEffect(() => {
 			loadScript(scriptUrl);

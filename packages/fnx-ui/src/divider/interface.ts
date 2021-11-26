@@ -1,6 +1,6 @@
 import { HTMLAttributes } from 'react';
 
-type DividerContentPosition = 'left' | 'right' | 'center';
+export type DividerContentPosition = 'left' | 'right' | 'center';
 
 export interface DividerComponentProps {
 	dashed?: boolean;

@@ -1,5 +1,4 @@
 import { HTMLAttributes, ReactNode } from 'react';
-import Swipe from './Swipe';
 import SwipeItem from './SwipeItem';
 
 export interface SwipeComponentProps {
@@ -16,8 +15,6 @@ export interface SwipeComponentProps {
 	stopPropagation?: boolean;
 }
 
-export type SwipeComponentRequiredProps = Required<SwipeComponentProps>;
-
 export type SwipeProps = SwipeComponentProps & HTMLAttributes<HTMLDivElement>;
 
 export type SwipeItemProps = HTMLAttributes<HTMLDivElement>;
@@ -31,9 +28,6 @@ export interface SwipeRef {
 	swipeTo: (index: number, options?: { animation?: boolean }) => void;
 }
 
-export type SwipeComponent = typeof Swipe;
-export type SwipeItemComponent = typeof SwipeItem;
-
 export interface SwipeExportExtra {
-	Item: SwipeItemComponent;
+	Item: typeof SwipeItem;
 }

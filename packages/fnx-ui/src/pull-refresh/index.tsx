@@ -299,9 +299,9 @@ PullRefresh.displayName = 'PullRefresh';
 
 export type {
 	PullRefreshComponentProps,
-	PullRefreshIndicatorNode,
 	PullRefreshProps,
-	PullRefreshSlots as PullRefreshIndicator,
+	PullRefreshIndicatorNode,
+	PullRefreshSlots,
 } from './interface';
 
 export default PullRefresh;

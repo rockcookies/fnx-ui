@@ -1,11 +1,9 @@
-import React, { FC, useContext, useEffect, useState } from 'react';
-import { useMemo } from 'react';
+import React, { FC, useContext, useEffect, useMemo, useState } from 'react';
 import { ConfigContext } from '../config-provider/context';
 import useDefaultsRef from '../hooks/use-defaults-ref';
 import Icon from '../icon';
 import PopupHelper from '../popup/utils/popup-helper';
 import {
-	ToastComponent,
 	ToastContext,
 	ToastExportExtra,
 	ToastInstance,
@@ -56,7 +54,7 @@ function createToast(
 	}, options.container);
 }
 
-const Toast: ToastComponent & ToastExportExtra = CToast as any;
+const Toast: typeof CToast & ToastExportExtra = CToast as any;
 
 const show = (
 	message: string | ToastProps,
@@ -114,11 +112,11 @@ Toast.allowMultiple = (allow) => {
 };
 
 export type {
-	ToastComponent,
+	ToastComponentProps,
+	ToastProps,
+	ToastPosition,
 	ToastContext,
 	ToastInstance,
-	ToastPosition,
-	ToastProps,
 } from './interface';
 
 export default Toast;

@@ -76,6 +76,7 @@ const Switch = forwardRef<HTMLDivElement, SwitchProps>((_props, ref) => {
 				className,
 			)}
 			style={formatStyle()}
+			tabIndex={disabled ? undefined : 0}
 			aria-checked={checked}
 			onClick={handleClick}
 			ref={ref}

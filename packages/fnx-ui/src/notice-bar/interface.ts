@@ -20,7 +20,3 @@ export interface NoticeBarRef {
 	root: HTMLDivElement | null;
 	reset: () => void;
 }
-
-export interface NoticeBarErrorBoundaryProps {
-	content?: string;
-}

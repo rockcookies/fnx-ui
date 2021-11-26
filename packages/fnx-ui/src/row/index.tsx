@@ -47,9 +47,10 @@ const Row = forwardRef<HTMLDivElement, RowProps>((props, ref) => {
 Row.displayName = 'Row';
 
 export type {
+	RowComponentProps,
+	RowProps,
 	RowAlign,
 	RowJustify,
-	RowProps,
-	RowComponentProps,
 } from './interface';
+
 export default Row;

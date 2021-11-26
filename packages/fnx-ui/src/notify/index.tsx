@@ -92,9 +92,10 @@ Notify.allowMultiple = (allow) => {
 };
 
 export type {
+	NotifyComponentProps,
+	NotifyProps,
 	NotifyContext,
 	NotifyInstance,
-	NotifyProps,
 	NotifyType,
 } from './interface';
 

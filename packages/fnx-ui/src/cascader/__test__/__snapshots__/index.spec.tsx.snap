@@ -141,9 +141,13 @@ exports[`<Cascader/> defaultValue and dataNames props 1`] = `
                 >
                   <ul
                     class="fnx-cascader__options"
+                    role="menu"
                   >
                     <li
+                      aria-checked="true"
                       class="fnx-cascader__option fnx-cascader__option--selected"
+                      role="menuitemradio"
+                      tabindex="0"
                     >
                       <span
                         class="fnx-cascader__label"
@@ -169,6 +173,8 @@ exports[`<Cascader/> defaultValue and dataNames props 1`] = `
                     </li>
                     <li
                       class="fnx-cascader__option"
+                      role="menuitemradio"
+                      tabindex="-1"
                     >
                       <span
                         class="fnx-cascader__label"
@@ -282,9 +288,12 @@ exports[`<Cascader/> onCancel、closeIcon props 1`] = `
                 >
                   <ul
                     class="fnx-cascader__options"
+                    role="menu"
                   >
                     <li
                       class="fnx-cascader__option"
+                      role="menuitemradio"
+                      tabindex="-1"
                     >
                       <span
                         class="fnx-cascader__label"
@@ -294,6 +303,8 @@ exports[`<Cascader/> onCancel、closeIcon props 1`] = `
                     </li>
                     <li
                       class="fnx-cascader__option"
+                      role="menuitemradio"
+                      tabindex="-1"
                     >
                       <span
                         class="fnx-cascader__label"

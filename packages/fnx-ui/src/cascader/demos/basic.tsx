@@ -17,31 +17,33 @@ const I18N: Dictionary<Dictionary> = {
 		selectArea: '请选择地区',
 		customColor: '自定义颜色',
 		asyncOptions: '异步加载选项',
+		customContent: '自定义选项上方内容',
+		currentLevel: (level: number) => `当前为第 ${level} 级`,
 		areaData: [
 			{
-				label: '中国',
+				label: '湖北省',
 				children: [
 					{
-						label: '北京',
-						disabled: true,
-						children: [{ label: '海淀区' }, { label: '朝阳区' }],
+						label: '武汉市',
+						children: [{ label: '江岸区' }, { label: '硚口区' }],
 					},
 					{
-						label: '上海',
-						children: [{ label: '闸北区' }, { label: '静安区' }],
+						label: '宜昌市',
+						disabled: true,
+						children: [{ label: '西陵区' }, { label: '夷陵区' }],
 					},
 				],
 			},
 			{
-				label: '美国',
+				label: '江西省',
 				children: [
 					{
-						label: '纽约',
-						children: [{ label: '曼哈顿' }, { label: '布鲁克林' }],
+						label: '南昌市',
+						children: [{ label: '东湖区' }, { label: '西湖区' }],
 					},
 					{
-						label: '加利福尼亚',
-						children: [{ label: '洛杉矶' }, { label: '旧金山' }],
+						label: '景德镇市',
+						children: [{ label: '昌江区' }, { label: '珠山区' }],
 					},
 				],
 			},
@@ -53,36 +55,35 @@ const I18N: Dictionary<Dictionary> = {
 		selectArea: 'Select Area',
 		customColor: 'Custom Color',
 		asyncOptions: 'Async Options',
+		customContent: 'Custom Content',
+		currentLevel: (level: number) => `Current level is ${level}`,
 		areaData: [
 			{
-				label: 'China',
+				label: 'Hubei',
 				children: [
 					{
-						label: 'Beijing',
-						disabled: true,
-						children: [{ label: 'Haidian' }, { label: 'Chaoyang' }],
+						label: 'Wuhan',
+						children: [{ label: 'JiangAn' }, { label: 'QiaoKou' }],
 					},
 					{
-						label: 'Shanghai',
-						children: [{ label: 'Zhabei' }, { label: 'Jingan' }],
+						label: 'Yichang',
+						disabled: true,
+						children: [{ label: 'XiLing' }, { label: 'YiLing' }],
 					},
 				],
 			},
 			{
-				label: 'United State',
+				label: 'Jiangxi',
 				children: [
 					{
-						label: 'New York',
-						children: [
-							{ label: 'Manhattan' },
-							{ label: 'Brooklyn' },
-						],
+						label: 'Nanchang',
+						children: [{ label: 'DongHu' }, { label: 'XiHu' }],
 					},
 					{
-						label: 'California',
+						label: 'Jingdezhen',
 						children: [
-							{ label: 'Los Angeles' },
-							{ label: 'San Francisco' },
+							{ label: 'ChangJiang' },
+							{ label: 'ZhuShan' },
 						],
 					},
 				],
@@ -217,6 +218,32 @@ export default function Basic(): ReturnType<React.FC> {
 
 									setAsyncData((prev) => [...prev]);
 								}, 1000);
+							}}
+						/>
+					}
+				>
+					{(value) => renderField(value)}
+				</Popup.Select>
+			</DemoBlock>
+			<DemoBlock title={i18n.customContent} cardMode>
+				<Popup.Select<string[]>
+					round
+					select={
+						<Cascader
+							data={i18n.areaData}
+							title={i18n.selectArea}
+							dataNames={{ value: 'label' }}
+							slots={{
+								optionsTop: (idx) => (
+									<div
+										style={{
+											padding: '10px 16px 0',
+											color: 'var(--fnx-gray-500)',
+										}}
+									>
+										{i18n.currentLevel(idx + 1)}
+									</div>
+								),
 							}}
 						/>
 					}

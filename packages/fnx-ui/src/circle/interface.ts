@@ -6,7 +6,7 @@ export type CircleGapPosition = 'top' | 'right' | 'bottom' | 'left';
 
 export type CircleStringGradients = { [percentage: string]: string };
 
-export interface CircleProps extends HTMLAttributes<HTMLDivElement> {
+export interface CircleComponentProps {
 	size?: string | number;
 	strokeColor?: string | CircleStringGradients;
 	strokeLinecap?: CircleLinecap;
@@ -19,3 +19,5 @@ export interface CircleProps extends HTMLAttributes<HTMLDivElement> {
 	gapDegree?: number;
 	gapPosition?: CircleGapPosition;
 }
+
+export type CircleProps = CircleComponentProps & HTMLAttributes<HTMLDivElement>;

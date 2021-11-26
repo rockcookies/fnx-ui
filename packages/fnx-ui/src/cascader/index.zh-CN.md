@@ -4,33 +4,57 @@
 
 ## 基础用法
 
-```tsx
-import { Toast } from 'fnx-ui';
+级联选择组件可以搭配 Field 和 Popup 组件使用。
 
-let areaData = [
+```tsx
+import { Cascader, Icon, Field, Popup } from 'fnx-ui';
+import { useState } from 'react';
+
+const options = [
   {
-    label: 'China',
+    label: 'Hubei',
+    value: '420000',
     children: [
-      {
-        label: 'Beijing',
-        disabled: true,
-        children: [{ label: 'Haidian' }, { label: 'Chaoyang' }],
-      },
-      {
-        label: 'Shanghai',
-        children: [{ label: 'Zhabei' }, { label: 'Jingan' }],
-      },
+      { label: 'Wuhan', value: '420100' },
+      { label: 'Yichang', value: '420500' },
+    ],
+  },
+  {
+    label: 'Jiangxi',
+    value: '360000',
+    children: [
+      { label: 'Nanchang', value: '360100' },
+      { label: 'Jingdezhen', value: '360200' },
     ],
   },
 ];
 
+function App() {
+  const [fields, setFields] = useState<string>();
+
+  return (
+    <Popup.Select
+      round
+      select={
+        <Cascader
+          data={options}
+          title="Select Area"
+          onConfirm={(_, options) => {
+            setFields(options.map((option) => option.label).join(' / '));
+          }}
+        />
+      }
+    >
+      <Field label="Area" clickable rightIcon={<Icon name="arrow-right" />}>
+        <Field.Input readOnly placeholder="Select Area" value={fields} />
+      </Field>
+    </Popup.Select>
+  );
+}
+
 ReactDOM.render(
   <>
-    <Cascader
-      data={areaData}
-      title="Please select region"
-      dataNames={{ value: 'label' }}
-    />
+    <App />
   </>,
   mountNode,
 );
@@ -41,32 +65,30 @@ ReactDOM.render(
 通过 `activeColor` 属性来设置选中状态的高亮颜色。
 
 ```tsx
-import { Popup } from 'fnx-ui';
+import { Cascader } from 'fnx-ui';
 
-let areaData = [
+const options = [
   {
-    label: 'China',
+    label: 'Hubei',
+    value: '420000',
     children: [
-      {
-        label: 'Beijing',
-        disabled: true,
-        children: [{ label: 'Haidian' }, { label: 'Chaoyang' }],
-      },
-      {
-        label: 'Shanghai',
-        children: [{ label: 'Zhabei' }, { label: 'Jingan' }],
-      },
+      { label: 'Wuhan', value: '420100' },
+      { label: 'Yichang', value: '420500' },
+    ],
+  },
+  {
+    label: 'Jiangxi',
+    value: '360000',
+    children: [
+      { label: 'Nanchang', value: '360100' },
+      { label: 'Jingdezhen', value: '360200' },
     ],
   },
 ];
 
 ReactDOM.render(
   <>
-    <Cascader
-      data={areaData}
-      title="Please select region"
-      activeColor="#1989fa"
-    />
+    <Cascader data={options} title="Select Area" activeColor="#1989fa" />
   </>,
   mountNode,
 );
@@ -78,91 +100,153 @@ ReactDOM.render(
 
 ```tsx
 import { Popup, Cascader, Field, Icon } from 'fnx-ui';
+import { useState } from 'react';
 
-const areaData = [
+const data = [
   {
-    label: 'China',
+    label: 'Hubei',
+    value: '420000',
     children: [
       {
-        label: 'Beijing',
-        disabled: true,
-        children: [{ label: 'Haidian' }, { label: 'Chaoyang' }],
+        label: 'Wuhan',
+        value: '420100',
+        children: [
+          {
+            label: 'JiangAn',
+            value: '420102',
+          },
+          {
+            label: 'QiaoKou',
+            value: '420104',
+          },
+        ],
       },
       {
-        label: 'Shanghai',
-        children: [{ label: 'Zhabei' }, { label: 'Jingan' }],
+        label: 'Yichang',
+        value: '420500',
+        children: [
+          {
+            label: 'XiLing',
+            value: '420502',
+          },
+          {
+            label: 'YiLing',
+            value: '420506',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    label: 'Jiangxi',
+    value: '360000',
+    children: [
+      {
+        label: 'Nanchang',
+        value: '360100',
+        children: [
+          {
+            label: 'DongHu',
+            value: '360102',
+          },
+          {
+            label: 'XiHu',
+            value: '360103',
+          },
+        ],
+      },
+      {
+        label: 'Jingdezhen',
+        value: '360200',
+        children: [
+          {
+            label: 'ChangJiang',
+            value: '360202',
+          },
+          {
+            label: 'ZhuShan',
+            value: '360203',
+          },
+        ],
       },
     ],
   },
 ];
 
-const [asyncData, setAsyncData] = useState(() =>
-  areaData.map((item) => {
-    return { label: item.label };
-  }),
-);
+function App() {
+  const [fields, setFields] = useState<string>();
 
-const findOption = (tree, label) => {
-  for (const item of tree) {
-    if (item.label === label) {
-      return item;
-    }
+  const [asyncData, setAsyncData] = useState<CascaderOption[]>(() =>
+    data.map((item) => {
+      return { label: item.label, value: item.value };
+    }),
+  );
 
-    if (item.children) {
-      const option = findOption(item.children, label);
+  const findOption = (
+    tree: CascaderOption[],
+    value: string,
+  ): CascaderOption | undefined => {
+    for (const item of tree) {
+      if (item.value === value) {
+        return item;
+      }
 
-      if (option) {
-        return option;
+      if (item.children) {
+        const option = findOption(item.children, value);
+
+        if (option) {
+          return option;
+        }
       }
     }
-  }
-};
+  };
 
-const renderField = (value) => (
-  <Field label="Field Label" clickable rightIcon={<Icon name="arrow-right" />}>
-    <Field.Input
-      readOnly
-      placeholder="Placeholder"
-      value={value && value.length > 0 ? value.join(' / ') : undefined}
-    />
-  </Field>
-);
-
-ReactDOM.render(
-  <>
+  return (
     <Popup.Select
       round
       select={
         <Cascader
           data={asyncData}
-          title="Async"
-          dataNames={{ value: 'label' }}
+          title="Select Area"
           onLoadData={(options) => {
             const option = options[options.length - 1];
+
             option.loading = true;
             setAsyncData((prev) => [...prev]);
 
             setTimeout(() => {
-              const item = findOption(areaData, option.label);
+              const item = findOption(data, option.value);
 
               if (!item) {
                 return;
               }
 
               option.loading = false;
-              option.children = item.children?.map((o) => ({
+              option.children = item.children?.map<CascaderOption>((o) => ({
                 label: o.label,
+                value: o.value,
                 children: o.children == null ? [] : undefined,
               }));
 
               setAsyncData((prev) => [...prev]);
             }, 1000);
           }}
+          onConfirm={(_, options) => {
+            setFields(options.map((option) => option.label).join(' / '));
+          }}
         />
       }
     >
-      {(value) => renderField(value)}
+      <Field label="Area" clickable rightIcon={<Icon name="arrow-right" />}>
+        <Field.Input readOnly placeholder="Select Area" value={fields} />
+      </Field>
     </Popup.Select>
+  );
+}
+
+ReactDOM.render(
+  <>
+    <App />
   </>,
   mountNode,
 );
@@ -173,21 +257,23 @@ ReactDOM.render(
 通过 `dataNames` 属性可以自定义 `options` 里的字段名称。
 
 ```tsx
-import { Toast } from 'fnx-ui';
+import { Cascader } from 'fnx-ui';
 
-let areaData = [
+const options = [
   {
-    label: 'China',
+    text: 'Hubei',
+    value: '420000',
     list: [
-      {
-        label: 'Beijing',
-        disabled: true,
-        list: [{ label: 'Haidian' }, { label: 'Chaoyang' }],
-      },
-      {
-        label: 'Shanghai',
-        list: [{ label: 'Zhabei' }, { label: 'Jingan' }],
-      },
+      { text: 'Wuhan', value: '420100' },
+      { text: 'Yichang', value: '420500' },
+    ],
+  },
+  {
+    text: 'Jiangxi',
+    value: '360000',
+    list: [
+      { text: 'Nanchang', value: '360100' },
+      { text: 'Jingdezhen', value: '360200' },
     ],
   },
 ];
@@ -195,9 +281,9 @@ let areaData = [
 ReactDOM.render(
   <>
     <Cascader
-      data={areaData}
-      title="Please select region"
-      dataNames={{ value: 'label', children: 'list' }}
+      data={options}
+      title="Select Area"
+      dataNames={{ label: ['text'], children: 'list' }}
     />
   </>,
   mountNode,
@@ -206,18 +292,21 @@ ReactDOM.render(
 
 ## API
 
-| 参数         | 说明                         | 类型                   | 默认值    |
-| ------------ | ---------------------------- | ---------------------- | --------- |
-| data         | 可选项数据源                 | `CascaderOption[]`     | `[]`      |
-| defaultValue | 默认选中项的值               | `number[] \| string[]` | `[]`      |
-| title        | 顶部标题                     | `ReactNode`            | -         |
-| dataNames    | 自定义 data 结构中的字段     | `CascaderDataNames`    | -         |
-| placeholder  | 未选中时的提示文案           | `ReactNode`            | `请选择`  |
-| swipeable    | 是否可以 touchable 切换 tabs | `boolean`              | `false`   |
-| activeColor  | 选中状态的高亮颜色           | `string`               | `#2196F3` |
-| closeIcon    | 自定义关闭图标               | `ReactNode`            | -         |
+### Cascader Props
 
-## 事件
+| 名称         | 说明                     | 类型                   | 默认值    |
+| ------------ | ------------------------ | ---------------------- | --------- |
+| defaultValue | 默认选中项的值           | `number[] \| string[]` | `[]`      |
+| data         | 可选项数据源             | `CascaderOption[]`     | `[]`      |
+| dataNames    | 自定义 data 结构中的字段 | `CascaderDataNames`    | -         |
+| title        | 顶部标题                 | `ReactNode`            | -         |
+| placeholder  | 未选中时的提示文案       | `ReactNode`            | `请选择`  |
+| activeColor  | 选中状态的高亮颜色       | `string`               | `#2196F3` |
+| swipeable    | 是否开启手势左右滑动切换 | `boolean`              | `false`   |
+| closeIcon    | 自定义关闭图标           | `ReactNode`            | -         |
+| slots        | 组件插槽                 | `CascaderSlots`        | -         |
+
+## Cascader Events
 
 | 事件名     | 说明                   | 回调参数                                                 |
 | ---------- | ---------------------- | -------------------------------------------------------- |
@@ -226,22 +315,20 @@ ReactDOM.render(
 | onCancel   | 点击关闭图标时触发     | -                                                        |
 | onChange   | 选中项变化时触发       | `value: string[] \| number[], options: CascaderOption[]` |
 
-### data 数据结构
+### Cascader Data Names
 
-| 参数     | 说明                | 类型               | 默认值 |
+| 名称     | 说明                | 类型               | 默认值 |
 | -------- | ------------------- | ------------------ | ------ |
 | label    | 选项展示内容        | `ReactNode`        | -      |
-| value    | 选项对应的值        | `CascaderOption`   | -      |
+| value    | 选项对应的值        | `CascaderValue`    | -      |
 | loading  | 是否加载            | `boolean`          | -      |
 | disabled | 是否禁用            | `boolean`          | -      |
 | children | 子元素(类型同 data) | `CascaderOption[]` | -      |
 
-### dataNames 数据结构
+### Cascader Slots
 
-| 参数     | 说明         | 类型                 | 默认值     |
-| -------- | ------------ | -------------------- | ---------- |
-| label    | 选项展示内容 | `string \| string[]` | `label`    |
-| value    | 选项对应的值 | `string \| string[]` | `value`    |
-| loading  | 是否加载     | `string \| string[]` | `loading`  |
-| disabled | 是否禁用     | `string \| string[]` | `disabled` |
-| children | 子元素       | `string \| string[]` | `children` |
+| 名称          | 说明                 | 参数                                                     |
+| ------------- | -------------------- | -------------------------------------------------------- |
+| option        | 自定义选项文字       | `(option: T, state: { selected: boolean }) => ReactNode` |
+| optionsTop    | 自定义选项上方的内容 | `(tabIndex: number) => ReactNode`                        |
+| optionsBottom | 自定义选项下方的内容 | `(tabIndex: number) => ReactNode`                        |

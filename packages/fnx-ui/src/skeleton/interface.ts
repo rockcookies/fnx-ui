@@ -1,7 +1,6 @@
 import { HTMLAttributes } from 'react';
 
-export interface SkeletonProps
-	extends Omit<HTMLAttributes<HTMLDivElement>, 'title'> {
+export interface SkeletonComponentProps {
 	title?: boolean;
 	titleWidth?: string | number;
 	avatar?: boolean;
@@ -13,3 +12,6 @@ export interface SkeletonProps
 	loading?: boolean;
 	animate?: boolean;
 }
+
+export type SkeletonProps = SkeletonComponentProps &
+	Omit<HTMLAttributes<HTMLDivElement>, 'title'>;

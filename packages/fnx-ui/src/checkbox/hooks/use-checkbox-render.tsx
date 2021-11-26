@@ -108,7 +108,7 @@ export default function useCheckboxRender(
 					}),
 					className,
 				)}
-				tabIndex={disabled ? -1 : 0}
+				tabIndex={disabled ? undefined : 0}
 				aria-checked={checked}
 				{...restProps}
 				ref={ref}

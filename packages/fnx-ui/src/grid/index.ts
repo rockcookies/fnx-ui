@@ -6,4 +6,11 @@ const Grid: typeof _Grid & GridExportExtra = _Grid as any;
 
 Grid.Item = GridItem;
 
+export type {
+	GridItemComponentProps,
+	GridItemProps,
+	GridComponentProps,
+	GridProps,
+} from './interface';
+
 export default Grid;

@@ -1,13 +1,17 @@
 # Pagination 分页
 
+数据量过多时，采用分页的形式将数据分隔，每次只加载一个页面。
+
 ## 基础用法
+
+基础翻页。
 
 ```tsx
 import { Pagination } from 'fnx-ui';
 
 ReactDOM.render(
   <>
-    <Pagination total="80" />
+    <Pagination total={50} defaultCurrent={1} />
   </>,
   mountNode,
 );
@@ -22,7 +26,7 @@ import { Pagination } from 'fnx-ui';
 
 ReactDOM.render(
   <>
-    <Pagination total={60} mode="simple" />
+    <Pagination total={50} mode="simple" />
   </>,
   mountNode,
 );
@@ -30,7 +34,7 @@ ReactDOM.render(
 
 ## 显示省略号
 
-设置 `forceEllipses` 后会展示省略号按钮，点击后可以快速跳转。
+默认状态下当页数超出，设置 `forceEllipses` 后会展示省略号按钮，点击后可以快速跳转。
 
 ```tsx
 import { Pagination } from 'fnx-ui';
@@ -71,17 +75,17 @@ ReactDOM.render(
 
 ## API
 
-| 参数             | 说明                         | 类型                  | 默认值  |
-| ---------------- | ---------------------------- | --------------------- | ------- |
-| defaultCurrent   | 默认选中页码                 | `number`              | `1`     |
-| current          | 当前页码                     | `number`              | -       |
-| mode             | 显示模式                     | `'multi' \| 'simple'` | `multi` |
-| slots            | 自定义上一页，下一页按钮内容 | `PaginationSlots`     | `{}`    |
-| total            | 总记录数                     | `number`              | `82`    |
-| pageSize         | 每页记录数                   | `number`              | `10`    |
-| pageItemCount    | 显示的页码个数               | `number`              | `5`     |
-| forceEllipses    | 是否显示省略号               | `boolean`             | `false` |
-| hideOnSinglePage | 只有一页时，是否隐藏         | `boolean`             | `false` |
+| 参数             | 说明                         | 类型                  | 默认值    |
+| ---------------- | ---------------------------- | --------------------- | --------- |
+| defaultCurrent   | 默认选中页码                 | `number`              | `1`       |
+| current          | 当前页码                     | `number`              | -         |
+| mode             | 显示模式                     | `'multi' \| 'simple'` | `'multi'` |
+| slots            | 自定义上一页，下一页按钮内容 | `PaginationSlots`     | `{}`      |
+| total            | 总记录数                     | `number`              | `82`      |
+| pageSize         | 每页记录数                   | `number`              | `10`      |
+| pageItemCount    | 显示的页码个数               | `number`              | `5`       |
+| forceEllipses    | 是否显示省略号               | `boolean`             | `false`   |
+| hideOnSinglePage | 只有一页时，是否隐藏         | `boolean`             | `false`   |
 
 ## 事件
 
@@ -89,7 +93,7 @@ ReactDOM.render(
 | -------- | -------------- | ------------------------------------- |
 | onChange | 页码改变时触发 | `(current: number, pageSize: number)` |
 
-### slots 数据结构
+### slots 数据结构(PaginationSlots)
 
 | 参数 | 说明             | 类型        | 默认值 |
 | ---- | ---------------- | ----------- | ------ |

@@ -8,18 +8,19 @@ Picker.Multi = PickerMulti;
 Picker.Cascade = PickerCascade;
 
 export type {
-	PickerValue,
-	PickerDataNames,
-	PickerOption,
 	PickerProps,
 	PickerComponentProps,
 	PickerRef,
-	PickerMultiProps,
 	PickerMultiComponentProps,
+	PickerMultiProps,
 	PickerMultiRef,
-	PickerCascadeProps,
 	PickerCascadeComponentProps,
+	PickerCascadeProps,
 	PickerCascadeRef,
+	PickerValue,
+	PickerDataNames,
+	PickerOption,
+	PickerOptionOrValue,
 } from './interface';
 
 export default Picker;

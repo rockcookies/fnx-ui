@@ -26,11 +26,7 @@ export interface FieldProps extends CellProps {
 
 export type FieldInputType = 'text' | 'tel' | 'digit' | 'number' | 'password';
 
-export interface FieldInputProps
-	extends Omit<
-		InputHTMLAttributes<HTMLInputElement>,
-		'onChange' | 'onFocus' | 'onBlur'
-	> {
+export interface FieldInputComponentProps {
 	value?: string;
 	defaultValue?: string;
 	onChange?: (value: string) => void;
@@ -43,16 +39,18 @@ export interface FieldInputProps
 	clearIcon?: ReactNode;
 }
 
+export type FieldInputProps = FieldInputComponentProps &
+	Omit<
+		InputHTMLAttributes<HTMLInputElement>,
+		'onChange' | 'onFocus' | 'onBlur'
+	>;
+
 export type FieldTextAreaCountFormatter = (params: {
 	count: number;
 	maxLength?: number;
 }) => string;
 
-export interface FieldTextAreaProps
-	extends Omit<
-		TextareaHTMLAttributes<HTMLTextAreaElement>,
-		'onChange' | 'onFocus' | 'onBlur'
-	> {
+export interface FieldTextAreaComponentProps {
 	value?: string;
 	defaultValue?: string;
 	onChange?: (value: string) => void;
@@ -62,6 +60,12 @@ export interface FieldTextAreaProps
 	autoSize?: boolean;
 	showCount?: boolean | FieldTextAreaCountFormatter;
 }
+
+export type FieldTextAreaProps = FieldTextAreaComponentProps &
+	Omit<
+		TextareaHTMLAttributes<HTMLTextAreaElement>,
+		'onChange' | 'onFocus' | 'onBlur'
+	>;
 
 export interface FieldTextAreaRef {
 	input: HTMLTextAreaElement | null;

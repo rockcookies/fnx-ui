@@ -1,9 +1,4 @@
-import {
-	ForwardRefExoticComponent,
-	HTMLAttributes,
-	ReactNode,
-	RefAttributes,
-} from 'react';
+import { HTMLAttributes, ReactNode } from 'react';
 import { PopupComponentProps } from '../popup';
 
 export type ToastPosition = 'top' | 'middle' | 'bottom';
@@ -19,10 +14,6 @@ export interface ToastComponentProps
 }
 
 export type ToastProps = ToastComponentProps & HTMLAttributes<HTMLDivElement>;
-
-export type ToastComponent = ForwardRefExoticComponent<
-	ToastProps & RefAttributes<HTMLDivElement>
->;
 
 export interface ToastContext {
 	show: (props: string | ToastProps) => ToastInstance;

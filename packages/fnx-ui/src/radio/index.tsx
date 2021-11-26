@@ -9,9 +9,9 @@ Radio.Group = RadioGroup;
 export type {
 	RadioComponentProps,
 	RadioProps,
-	RadioValue,
 	RadioGroupComponentProps,
 	RadioGroupProps,
+	RadioValue,
 } from './interface';
 
 export default Radio;

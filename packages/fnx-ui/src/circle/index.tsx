@@ -262,9 +262,10 @@ const Circle = forwardRef<HTMLDivElement, CircleProps>((_props, ref) => {
 Circle.displayName = 'Circle';
 
 export type {
+	CircleComponentProps,
+	CircleProps,
 	CircleLinecap,
 	CircleGapPosition,
-	CircleProps,
 	CircleStringGradients,
 } from './interface';
 

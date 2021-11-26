@@ -60,6 +60,8 @@ exports[`<Uploader/> test remove 1`] = `
         </div>
         <div
           class="fnx-uploader__preview-remove"
+          role="button"
+          tabindex="0"
         >
           <span
             class="fnx-icon fnx-uploader__preview-remove-icon"
@@ -116,6 +118,8 @@ exports[`<Uploader/> test remove 1`] = `
         </span>
         <div
           class="fnx-uploader__preview-remove"
+          role="button"
+          tabindex="0"
         >
           <span
             class="fnx-icon fnx-uploader__preview-remove-icon"
@@ -205,6 +209,8 @@ exports[`<Uploader/> test remove 2`] = `
         </div>
         <div
           class="fnx-uploader__preview-remove"
+          role="button"
+          tabindex="0"
         >
           <span
             class="fnx-icon fnx-uploader__preview-remove-icon"
@@ -261,6 +267,8 @@ exports[`<Uploader/> test remove 2`] = `
         </span>
         <div
           class="fnx-uploader__preview-remove"
+          role="button"
+          tabindex="0"
         >
           <span
             class="fnx-icon fnx-uploader__preview-remove-icon"
@@ -359,6 +367,8 @@ exports[`<Uploader/> test remove 3`] = `
         </span>
         <div
           class="fnx-uploader__preview-remove"
+          role="button"
+          tabindex="0"
         >
           <span
             class="fnx-icon fnx-uploader__preview-remove-icon"
@@ -545,6 +555,8 @@ exports[`<Uploader/> thumbnail 1`] = `
         </div>
         <div
           class="fnx-uploader__preview-remove"
+          role="button"
+          tabindex="0"
         >
           <span
             class="fnx-icon fnx-uploader__preview-remove-icon"
@@ -601,6 +613,8 @@ exports[`<Uploader/> thumbnail 1`] = `
         </span>
         <div
           class="fnx-uploader__preview-remove"
+          role="button"
+          tabindex="0"
         >
           <span
             class="fnx-icon fnx-uploader__preview-remove-icon"

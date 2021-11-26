@@ -19,4 +19,7 @@ export type {
 	CalendarRangeProps,
 	CalendarMultiComponentProps,
 	CalendarMultiProps,
+	CalendarValue,
+	CalendarSlots,
+	CalendarDayType,
 } from './interface';

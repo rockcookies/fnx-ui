@@ -4,7 +4,7 @@ export type CascaderValue = string | number;
 
 export interface CascaderOption {
 	label?: ReactNode;
-	value?: CascaderOption;
+	value?: CascaderValue;
 	loading?: boolean;
 	disabled?: boolean;
 	children?: CascaderOption[];
@@ -33,6 +33,13 @@ export interface CascaderComponentProps<T = CascaderOption> {
 	swipeable?: boolean;
 	closeIcon?: ReactNode;
 	activeColor?: string;
+	slots?: CascaderSlots<T>;
+}
+
+export interface CascaderSlots<T = CascaderOption> {
+	option?: (option: T, state: { selected: boolean }) => ReactNode;
+	optionsTop?: (tabIndex: number) => ReactNode;
+	optionsBottom?: (tabIndex: number) => ReactNode;
 }
 
 export type CascaderProps<T = CascaderOption> = CascaderComponentProps<T> &

@@ -8,32 +8,48 @@ exports[`<Pagination/> should render defaultCurrent and ref correctly  1`] = `
     <li
       class="fnx-pagination__item fnx-pagination__prev fnx-hairline"
     >
-      Previous
+      <button
+        type="button"
+      >
+        Previous
+      </button>
     </li>
     <li
       class="fnx-pagination__item fnx-pagination__page fnx-hairline"
     >
-      4
+      <button>
+        4
+      </button>
     </li>
     <li
       class="fnx-pagination__item fnx-pagination__page fnx-hairline"
     >
-      5
+      <button>
+        5
+      </button>
     </li>
     <li
       class="fnx-pagination__item fnx-pagination__page fnx-hairline"
     >
-      6
+      <button>
+        6
+      </button>
     </li>
     <li
       class="fnx-pagination__item fnx-pagination__page fnx-hairline"
     >
-      7
+      <button>
+        7
+      </button>
     </li>
     <li
       class="fnx-pagination__item fnx-pagination__item--active fnx-pagination__page fnx-hairline"
     >
-      8
+      <button
+        aria-current="true"
+      >
+        8
+      </button>
     </li>
     <li
       class="fnx-pagination__item fnx-pagination__item--disabled fnx-pagination__next fnx-hairline"
@@ -52,42 +68,62 @@ exports[`<Pagination/> should render end forceEllipses correctly 1`] = `
     <li
       class="fnx-pagination__item fnx-pagination__prev fnx-hairline"
     >
-      Previous
+      <button
+        type="button"
+      >
+        Previous
+      </button>
     </li>
     <li
       class="fnx-pagination__item fnx-pagination__page fnx-hairline"
     >
-      ...
+      <button>
+        ...
+      </button>
     </li>
     <li
       class="fnx-pagination__item fnx-pagination__page fnx-hairline"
     >
-      3
+      <button>
+        3
+      </button>
     </li>
     <li
       class="fnx-pagination__item fnx-pagination__page fnx-hairline"
     >
-      4
+      <button>
+        4
+      </button>
     </li>
     <li
       class="fnx-pagination__item fnx-pagination__item--active fnx-pagination__page fnx-hairline"
     >
-      5
+      <button
+        aria-current="true"
+      >
+        5
+      </button>
     </li>
     <li
       class="fnx-pagination__item fnx-pagination__page fnx-hairline"
     >
-      6
+      <button>
+        6
+      </button>
     </li>
     <li
       class="fnx-pagination__item fnx-pagination__page fnx-hairline"
     >
-      7
+      <button>
+        7
+      </button>
     </li>
     <li
       class="fnx-pagination__item fnx-pagination__page fnx-hairline"
     >
-      ...
+      <button>
+        ...
+      </button>
     </li>
     <li
       class="fnx-pagination__item fnx-pagination__next fnx-hairline"
@@ -106,7 +142,12 @@ exports[`<Pagination/> should render simple Mode correctly 1`] = `
     <li
       class="fnx-pagination__item fnx-pagination__item--disabled fnx-pagination__prev fnx-hairline"
     >
-      Previous
+      <button
+        disabled=""
+        type="button"
+      >
+        Previous
+      </button>
     </li>
     <li
       class="fnx-pagination__page-dec"
@@ -132,47 +173,64 @@ exports[`<Pagination/> should render slots correctly 1`] = `
     <li
       class="fnx-pagination__item fnx-pagination__item--disabled fnx-pagination__prev fnx-hairline"
     >
-      <span
-        class="fnx-icon"
+      <button
+        disabled=""
+        type="button"
       >
-        <svg
-          aria-hidden="true"
-          fill="currentColor"
-          focusable="false"
-          height="1em"
-          viewBox="0 0 1024 1024"
-          width="1em"
+        <span
+          class="fnx-icon"
         >
-          <path
-            d="M303.220736 520.22784c-3.29728-13.923328 0.484352-29.182976 11.344896-40.04352l341.925888-341.925888c16.661504-16.662528 43.676672-16.662528 60.3392 0s16.662528 43.677696 0 60.340224L404.996096 510.43328l311.883776 311.883776c16.662528 16.662528 16.662528 43.677696 0 60.340224s-43.677696 16.662528-60.340224 0L314.614784 540.731392a42.467328 42.467328 0 0 1-11.394048-20.503552z"
-          />
-        </svg>
-      </span>
+          <svg
+            aria-hidden="true"
+            fill="currentColor"
+            focusable="false"
+            height="1em"
+            viewBox="0 0 1024 1024"
+            width="1em"
+          >
+            <path
+              d="M303.220736 520.22784c-3.29728-13.923328 0.484352-29.182976 11.344896-40.04352l341.925888-341.925888c16.661504-16.662528 43.676672-16.662528 60.3392 0s16.662528 43.677696 0 60.340224L404.996096 510.43328l311.883776 311.883776c16.662528 16.662528 16.662528 43.677696 0 60.340224s-43.677696 16.662528-60.340224 0L314.614784 540.731392a42.467328 42.467328 0 0 1-11.394048-20.503552z"
+            />
+          </svg>
+        </span>
+      </button>
     </li>
     <li
       class="fnx-pagination__item fnx-pagination__item--active fnx-pagination__page fnx-hairline"
     >
-      1
+      <button
+        aria-current="true"
+      >
+        1
+      </button>
     </li>
     <li
       class="fnx-pagination__item fnx-pagination__page fnx-hairline"
     >
-      2
+      <button>
+        2
+      </button>
     </li>
     <li
       class="fnx-pagination__item fnx-pagination__page fnx-hairline"
     >
-      3
+      <button>
+        3
+      </button>
     </li>
     <li
       class="fnx-pagination__item fnx-pagination__page fnx-hairline"
     >
-      4
+      <button>
+        4
+      </button>
     </li>
     <li
       class="fnx-pagination__item fnx-pagination__page fnx-hairline"
     >
-      5
+      <button>
+        5
+      </button>
     </li>
     <li
       class="fnx-pagination__item fnx-pagination__next fnx-hairline"

@@ -111,7 +111,12 @@ const UploaderPreviewItem = forwardRef<
 		}
 
 		return (
-			<div className={bem('preview-remove')} onClick={handleRemove}>
+			<div
+				role="button"
+				tabIndex={0}
+				className={bem('preview-remove')}
+				onClick={handleRemove}
+			>
 				<Icon name="cross" className={bem('preview-remove-icon')} />
 			</div>
 		);

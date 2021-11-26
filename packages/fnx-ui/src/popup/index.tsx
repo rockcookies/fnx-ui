@@ -8,12 +8,12 @@ Popup.Portal = Portal;
 Popup.Select = PopupSelect;
 
 export type {
-	PopupPosition,
-	PortalProps,
 	PopupComponentProps,
 	PopupProps,
 	PopupSelectComponentProps,
 	PopupSelectProps,
+	PortalProps,
+	PopupPosition,
 } from './interface';
 
 export default Popup;

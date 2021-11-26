@@ -101,11 +101,15 @@ const Pagination = forwardRef<HTMLUListElement, PaginationProps>(
 						bem('page'),
 						BORDER,
 					])}
-					onClick={() => {
-						handleChange(current);
-					}}
 				>
-					{text}
+					<button
+						aria-current={active || undefined}
+						onClick={() => {
+							handleChange(current);
+						}}
+					>
+						{text}
+					</button>
 				</li>
 			);
 		};
@@ -179,11 +183,14 @@ const Pagination = forwardRef<HTMLUListElement, PaginationProps>(
 						bem('prev'),
 						BORDER,
 					)}
-					onClick={() => {
-						canPrev && handleChange(current - 1);
-					}}
 				>
-					{slots.prev || locale.prev}
+					<button
+						type="button"
+						disabled={!canPrev}
+						onClick={() => handleChange(current - 1)}
+					>
+						{slots.prev || locale.prev}
+					</button>
 				</li>
 				{renderPageList()}
 				<li
@@ -207,9 +214,9 @@ Pagination.displayName = 'Pagination';
 
 export type {
 	PaginationComponentProps,
+	PaginationProps,
 	PaginationSlots,
 	PaginationMode,
-	PaginationProps,
 } from './interface';
 
 export default Pagination;

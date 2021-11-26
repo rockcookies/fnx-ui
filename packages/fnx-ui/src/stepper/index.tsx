@@ -328,6 +328,7 @@ const InternalStepper: ForwardRefRenderFunction<StepperRef, StepperProps> = (
 		<span
 			className={classnames(bem(), className)}
 			style={style}
+			role="group"
 			{...restProps}
 			ref={rootRef}
 		>
@@ -338,6 +339,7 @@ const InternalStepper: ForwardRefRenderFunction<StepperRef, StepperProps> = (
 					hidden: !showMinus,
 					disabled: minusDisabled,
 				})}
+				aria-disabled={minusDisabled || undefined}
 				onClick={(e) => stepClick.current('minus', e)}
 				onTouchStart={() => handleTouchStart('minus')}
 				onTouchCancel={(e) => handleTouchCancel(e)}
@@ -373,6 +375,7 @@ const InternalStepper: ForwardRefRenderFunction<StepperRef, StepperProps> = (
 					hidden: !showPlus,
 					disabled: plusDisabled,
 				})}
+				aria-disabled={plusDisabled || undefined}
 				onClick={(e) => stepClick.current('plus', e)}
 				onTouchStart={() => handleTouchStart('plus')}
 				onTouchCancel={(e) => handleTouchCancel(e)}
@@ -389,5 +392,13 @@ const Stepper = forwardRef<StepperRef, StepperProps>(InternalStepper) as <
 >(
 	props: ForwardRefProps<StepperProps<T>, StepperRef>,
 ) => ReactElement;
+
+export type {
+	StepperComponentProps,
+	StepperProps,
+	StepperRef,
+	StepperMode,
+	StepperValue,
+} from './interface';
 
 export default Stepper;
