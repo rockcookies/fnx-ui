@@ -1,0 +1,1 @@
+import{r as o}from"./vendor.e33a1242.js";import{D as e}from"./index.ca041f5d.js";function r(r,s){const{locale:t}=o.exports.useContext(e);return[o.exports.useMemo((()=>r[t]||r[s]),[t,r,s])]}export{r as u};
