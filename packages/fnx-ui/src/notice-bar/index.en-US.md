@@ -11,7 +11,7 @@ import { NoticeBar } from 'fnx-ui';
 
 ReactDOM.render(
   <>
-    <NoticeBar leftIcon={<Icon size="20px" name="picture" />}>
+    <NoticeBar leftIcon={<Icon size="20px" name="photo" />}>
       Life is like all kinds of chocolate. You never know which one belongs to
       you.
     </NoticeBar>
@@ -88,7 +88,7 @@ ReactDOM.render(
   <>
     <NoticeBar
       style={{ height: '40px', lineHeight: '40px' }}
-      leftIcon={<Icon size="20px" name="picture" />}
+      leftIcon={<Icon size="20px" name="photo" />}
       rightIcon={<Icon size="20px" name="success" />}
     >
       <Swipe

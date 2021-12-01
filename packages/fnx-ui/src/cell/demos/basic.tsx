@@ -65,7 +65,7 @@ export default function Basic(): ReturnType<React.FC> {
 				<Cell
 					leftIcon={<Icon name="success" />}
 					title={i18n.cell}
-					rightIcon={<Icon name="star-full" />}
+					rightIcon={<Icon name="star" />}
 				></Cell>
 				<Cell title={i18n.cell} description={i18n.desc}>
 					{i18n.content}
@@ -85,7 +85,7 @@ export default function Basic(): ReturnType<React.FC> {
 				<Cell title={i18n.cell} leftIcon={<Icon name="success" />}>
 					{i18n.content}
 				</Cell>
-				<Cell title={i18n.cell} leftIcon={<Icon name="star-full" />}>
+				<Cell title={i18n.cell} leftIcon={<Icon name="star" />}>
 					{i18n.content}
 				</Cell>
 			</DemoBlock>

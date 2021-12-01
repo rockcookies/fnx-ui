@@ -136,7 +136,7 @@ ReactDOM.render(
 
 ## API
 
-| Parameter | Description                                                                                      | Type                                     | Default value |
+| Name      | Description                                                                                      | Type                                     | Default value |
 | --------- | ------------------------------------------------------------------------------------------------ | ---------------------------------------- | ------------- |
 | name      | Icon name                                                                                        | `string`                                 | -             |
 | size      | Icon size, such as `20px` `2em`, the default unit is `px`                                        | `number \| string`                       | -             |
@@ -145,16 +145,16 @@ ReactDOM.render(
 | component | Controls how icons are rendered, usually a `React` component with a render root label of `<svg>` | `ComponentType<SVGProps<SVGSVGElement>>` | -             |
 | viewBox   | SVG viewBox                                                                                      | `string`                                 | -             |
 
-## IconSpinner
+## Icon.Spinner
 
-| Parameter | Description                                               | Type               | Default value |
-| --------- | --------------------------------------------------------- | ------------------ | ------------- |
-| size      | Icon size, such as `20px` `2em`, the default unit is `px` | `number \| string` | -             |
-| color     | Icon color                                                | `string`           | -             |
+| Name  | Description                                               | Type               | Default value |
+| ----- | --------------------------------------------------------- | ------------------ | ------------- |
+| size  | Icon size, such as `20px` `2em`, the default unit is `px` | `number \| string` | -             |
+| color | Icon color                                                | `string`           | -             |
 
 ### Custom font Icon
 
-| Parameter | Description                                                 | Type                 | Default value |
+| Name      | Description                                                 | Type                 | Default value |
 | --------- | ----------------------------------------------------------- | -------------------- | ------------- |
 | scriptUrl | Custom font icon address                                    | `string`             | -             |
 | options   | Set additional properties for SVG icon `<icon/>` components | `SVGAttributes<any>` | -             |

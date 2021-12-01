@@ -58,7 +58,7 @@ const UploaderPreviewItem = forwardRef<
 		if (status === 'uploading' || status === 'failed') {
 			const icon =
 				status === 'failed' ? (
-					<Icon name="close" className={bem('mask-icon')} />
+					<Icon name="close-o" className={bem('mask-icon')} />
 				) : (
 					<Icon.Spinner className={bem('mask-icon-loading')} />
 				);
@@ -96,7 +96,7 @@ const UploaderPreviewItem = forwardRef<
 
 		return (
 			<div className={bem('file')} onClick={onPreview}>
-				<Icon name="file" className={bem('file-icon')} />
+				<Icon name="file-o" className={bem('file-icon')} />
 				<div className={bem('file-name')}>{name}</div>
 				{cover}
 			</div>

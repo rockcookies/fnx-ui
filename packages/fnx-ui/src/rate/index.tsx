@@ -63,7 +63,7 @@ const Rate = forwardRef<HTMLUListElement, RateProps>((_props, ref) => {
 		},
 	] = useProps<RequiredRateProps, RateProps>(DEFAULT_PROPS, _props);
 
-	const character = _character || <Icon name="star-full"></Icon>;
+	const character = _character || <Icon name="star"></Icon>;
 	const voidCharacter = _voidCharacter || character;
 
 	const {

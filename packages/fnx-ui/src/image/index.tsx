@@ -19,9 +19,9 @@ type ImageStatus = 'none' | 'normal' | 'loading' | 'error';
 const NS = 'fnx-image';
 const bem = createBEM(NS);
 
-const LOADING = <Icon name="picture" />;
+const LOADING = <Icon name="photo" />;
 
-const ERROR = <Icon name="picture-wrong" />;
+const ERROR = <Icon name="photo-fail" />;
 
 type ImageRequiredProps = Required<
 	Pick<ImageProps, 'fit' | 'radius' | 'slots' | 'onLoad' | 'onError'>

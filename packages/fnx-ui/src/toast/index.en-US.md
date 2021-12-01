@@ -43,7 +43,7 @@ import { Toast, Icon } from 'fnx-ui';
 
 Toast.show({
   message: 'Custom Icon',
-  icon: <Icon name="star-full" spin />,
+  icon: <Icon name="star" spin />,
 });
 
 Toast.show({

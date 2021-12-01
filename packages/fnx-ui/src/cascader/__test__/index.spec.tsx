@@ -146,7 +146,7 @@ describe('<Cascader/>', () => {
 			<Cascader
 				data={areaData}
 				dataNames={{ value: 'label' }}
-				closeIcon={<Icon name="close" />}
+				closeIcon={<Icon name="close-o" />}
 				onCancel={onCancel}
 			></Cascader>,
 		);

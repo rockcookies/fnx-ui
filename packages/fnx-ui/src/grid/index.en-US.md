@@ -99,13 +99,13 @@ ReactDOM.render(
     <Grid columnSize={2}>
       <Grid.Item>
         <Badge dot>
-          <Icon size="30px" name="file" />
+          <Icon size="30px" name="file-o" />
           <p>Content</p>
         </Badge>
       </Grid.Item>
       <Grid.Item>
         <Badge count={100} max={99}>
-          <Icon size="30px" name="picture" />
+          <Icon size="30px" name="photo" />
           <p>Content</p>
         </Badge>
       </Grid.Item>

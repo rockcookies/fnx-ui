@@ -119,14 +119,14 @@ export default function Basic(): ReturnType<React.FC> {
 				{renderCell(i18n.customIcon, () =>
 					toast.show({
 						message: i18n.text,
-						icon: <Icon name="star-full" />,
+						icon: <Icon name="star" />,
 					}),
 				)}
 				{renderCell(i18n.loadingTitle, () =>
 					toast.loading({
 						message: i18n.text,
 						forbidClick: true,
-						icon: <Icon name="star-full" spin />,
+						icon: <Icon name="star" spin />,
 					}),
 				)}
 			</DemoBlock>

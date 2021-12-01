@@ -47,7 +47,7 @@ export default function Basic(): ReturnType<React.FC> {
 	const create = (count: number) => {
 		return new Array(count).fill(0).map((_, idx) => (
 			<Grid.Item className={bem('item')} key={idx}>
-				<Icon className={bem('icon')} name="picture" />
+				<Icon className={bem('icon')} name="photo" />
 				<p className={bem('text')}>{i18n.text}</p>
 			</Grid.Item>
 		));
@@ -91,7 +91,7 @@ export default function Basic(): ReturnType<React.FC> {
 							<Icon
 								className={bem('icon')}
 								size="30px"
-								name="file"
+								name="file-o"
 							/>
 							<p className={bem('text')}>{i18n.text}</p>
 						</Badge>
@@ -101,7 +101,7 @@ export default function Basic(): ReturnType<React.FC> {
 							<Icon
 								className={bem('icon')}
 								size="30px"
-								name="picture"
+								name="photo"
 							/>
 							<p className={bem('text')}>{i18n.text}</p>
 						</Badge>

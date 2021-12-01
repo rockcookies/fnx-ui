@@ -143,12 +143,12 @@ export default function Basic(): ReturnType<React.FC> {
 			<Cell.Group title={i18n.iconInput}>
 				<Field
 					label={i18n.text}
-					leftIcon={<Icon name="file" />}
-					rightIcon={<Icon name="star-full" />}
+					leftIcon={<Icon name="file-o" />}
+					rightIcon={<Icon name="star" />}
 				>
 					<Field.Input placeholder={i18n.iconVisiblePH} />
 				</Field>
-				<Field label={i18n.text} leftIcon={<Icon name="file" />}>
+				<Field label={i18n.text} leftIcon={<Icon name="file-o" />}>
 					<Field.Input placeholder={i18n.iconClearPH} clearable />
 				</Field>
 			</Cell.Group>

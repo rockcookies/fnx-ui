@@ -31,7 +31,7 @@ const DEFAULT_PROPS: FieldInputRequiredProps = {
 	type: 'text',
 	inputAlign: 'left',
 	clearable: false,
-	clearIcon: <Icon name="cross-fill" />,
+	clearIcon: <Icon name="close" />,
 	clearTrigger: 'focus',
 	readOnly: false,
 	disabled: false,
