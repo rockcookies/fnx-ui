@@ -175,7 +175,10 @@ export default function Basic(): ReturnType<React.FC> {
 
 			<Cell.Group title={i18n.autoHeightInput}>
 				<Field label={i18n.remarkLabel}>
-					<Field.TextArea placeholder={i18n.remarkPH} autoSize />
+					<Field.TextArea
+						placeholder={i18n.remarkPH}
+						autoSize={{ minHeight: 48, maxHeight: 96 }}
+					/>
 				</Field>
 			</Cell.Group>
 

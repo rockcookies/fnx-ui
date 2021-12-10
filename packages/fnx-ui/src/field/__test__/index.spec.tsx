@@ -317,4 +317,24 @@ describe('<Form.Item/>', () => {
 
 		expect(help.textContent).toEqual('validate Error');
 	});
+
+	it('should autoSize textarea field', async () => {
+		const { container } = render(
+			<Field label="field">
+				<Field.TextArea autoSize={{}} />
+			</Field>,
+		);
+
+		expect(container).toMatchSnapshot();
+	});
+
+	it('should allow autoSize prop be be an object', async () => {
+		const { container } = render(
+			<Field label="field">
+				<Field.TextArea autoSize={{ minHeight: 50 }} />
+			</Field>,
+		);
+
+		expect(container).toMatchSnapshot();
+	});
 });

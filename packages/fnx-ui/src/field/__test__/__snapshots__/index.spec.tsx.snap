@@ -35,3 +35,87 @@ exports[`<Form.Item/> label、labelAlign、labelWidth props 1`] = `
   </div>
 </div>
 `;
+
+exports[`<Form.Item/> should allow autoSize prop be be an object 1`] = `
+<div>
+  <div
+    class="fnx-cell fnx-cell--align-top fnx-field"
+  >
+    <div
+      class="fnx-cell__title fnx-field__label fnx-field__label--text-left"
+    >
+      field
+    </div>
+    <div
+      class="fnx-cell__content fnx-field__control"
+    >
+      <div
+        class="fnx-field__control-body"
+      >
+        <div
+          class="fnx-field__control-item"
+        >
+          <span
+            class="fnx-field-textarea"
+          >
+            <textarea
+              class="fnx-field-textarea__control"
+              rows="1"
+              style="min-height: 50px; height: 50px;"
+            />
+            <textarea
+              aria-hidden="true"
+              class="fnx-field-textarea__auto-size"
+              readonly=""
+              rows="1"
+              tabindex="-1"
+            />
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`<Form.Item/> should autoSize textarea field 1`] = `
+<div>
+  <div
+    class="fnx-cell fnx-cell--align-top fnx-field"
+  >
+    <div
+      class="fnx-cell__title fnx-field__label fnx-field__label--text-left"
+    >
+      field
+    </div>
+    <div
+      class="fnx-cell__content fnx-field__control"
+    >
+      <div
+        class="fnx-field__control-body"
+      >
+        <div
+          class="fnx-field__control-item"
+        >
+          <span
+            class="fnx-field-textarea"
+          >
+            <textarea
+              class="fnx-field-textarea__control"
+              rows="1"
+              style="min-height: 0px; height: 0px;"
+            />
+            <textarea
+              aria-hidden="true"
+              class="fnx-field-textarea__auto-size"
+              readonly=""
+              rows="1"
+              tabindex="-1"
+            />
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

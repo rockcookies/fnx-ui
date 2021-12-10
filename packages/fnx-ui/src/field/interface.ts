@@ -50,6 +50,11 @@ export type FieldTextAreaCountFormatter = (params: {
 	maxLength?: number;
 }) => string;
 
+export interface FieldTextAreaAutoSizeConfig {
+	minHeight?: number | string;
+	maxHeight?: number | string;
+}
+
 export interface FieldTextAreaComponentProps {
 	value?: string;
 	defaultValue?: string;
@@ -57,7 +62,7 @@ export interface FieldTextAreaComponentProps {
 	onFocus?: (value: string) => void;
 	onBlur?: (value: string) => void;
 	rows?: number;
-	autoSize?: boolean;
+	autoSize?: boolean | FieldTextAreaAutoSizeConfig;
 	showCount?: boolean | FieldTextAreaCountFormatter;
 }
 

@@ -16,6 +16,7 @@ export type {
 	FieldTextAreaProps,
 	FieldTextAreaRef,
 	FieldTextAreaCountFormatter,
+	FieldTextAreaAutoSizeConfig,
 	FieldInputType,
 } from './interface';
 

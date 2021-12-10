@@ -6,7 +6,10 @@ import React, {
 } from 'react';
 import useCompositionChange from '../hooks/use-composition-change';
 import useControlledState from '../hooks/use-controlled-state';
+import useCreation from '../hooks/use-creation';
 import useFocus from '../hooks/use-focus';
+import { clamp, unitToPx } from '../utils/format';
+import { isEqualArrays } from '../utils/misc';
 import { classnames, createBEM } from '../utils/namespace';
 import { createDefaultsForwardRef } from '../utils/react';
 import {
@@ -47,7 +50,7 @@ const FieldTextArea = createDefaultsForwardRef<
 		{
 			defaultValue,
 			showCount,
-			autoSize,
+			autoSize: _autoSize,
 			rows,
 			readOnly,
 			disabled,
@@ -73,6 +76,29 @@ const FieldTextArea = createDefaultsForwardRef<
 				input: inputRef.current,
 			};
 		});
+
+		const autoSize = useCreation<[number, number] | undefined>(
+			(prev) => {
+				if (_autoSize === false) {
+					return;
+				}
+
+				const next: [number, number] =
+					_autoSize === true
+						? [0, Number.MAX_SAFE_INTEGER]
+						: [
+								_autoSize.minHeight
+									? unitToPx(_autoSize.minHeight)
+									: 0,
+								_autoSize.maxHeight
+									? unitToPx(_autoSize.maxHeight)
+									: Number.MAX_SAFE_INTEGER,
+						  ];
+
+				return prev && isEqualArrays(prev, next) ? prev : next;
+			},
+			[_autoSize],
+		);
 
 		const { value, onChangeRef, controlled } = useControlledState<string>({
 			value: _value,
@@ -141,7 +167,11 @@ const FieldTextArea = createDefaultsForwardRef<
 				return;
 			}
 
-			inputElement.style.height = `${autoSizeElement.scrollHeight}px`;
+			inputElement.style.height = `${clamp(
+				autoSizeElement.scrollHeight,
+				autoSize[0],
+				autoSize[1],
+			)}px`;
 		}, [autoSize, displayCompositionValue]);
 
 		const formatTextAreaStyle = (): CSSProperties => {
@@ -149,6 +179,8 @@ const FieldTextArea = createDefaultsForwardRef<
 
 			if (!autoSize) {
 				formattedStyle.height = 'auto';
+			} else {
+				formattedStyle.minHeight = `${autoSize[0]}px`;
 			}
 
 			return formattedStyle;
