@@ -1,64 +1,65 @@
-import React, { forwardRef, useImperativeHandle, useMemo, useRef } from 'react';
+import React, { useImperativeHandle, useMemo, useRef } from 'react';
 import useControlledState from '../hooks/use-controlled-state';
-import useProps from '../hooks/use-props';
 import { useLocale } from '../locale';
 import { BORDER } from '../utils/constants';
 import { clamp } from '../utils/format';
 import { noop } from '../utils/misc';
 import { classnames, createBEM } from '../utils/namespace';
+import { createDefaultsForwardRef } from '../utils/react';
 import { PaginationProps } from './interface';
 
 const NS = 'fnx-pagination';
 const bem = createBEM(NS);
 
-type PaginationRequiredProps = Required<
-	Pick<
-		PaginationProps,
-		| 'total'
-		| 'defaultCurrent'
-		| 'pageSize'
-		| 'hideOnSinglePage'
-		| 'forceEllipses'
-		| 'onChange'
-		| 'mode'
-		| 'slots'
-		| 'pageItemCount'
+const Pagination = createDefaultsForwardRef<
+	HTMLUListElement,
+	PaginationProps,
+	Required<
+		Pick<
+			PaginationProps,
+			| 'total'
+			| 'defaultCurrent'
+			| 'pageSize'
+			| 'hideOnSinglePage'
+			| 'forceEllipses'
+			| 'onChange'
+			| 'mode'
+			| 'slots'
+			| 'pageItemCount'
+		>
 	>
->;
-
-const DEFAULT_PROPS: PaginationRequiredProps = {
-	total: 82,
-	defaultCurrent: 1,
-	pageSize: 10,
-	hideOnSinglePage: false,
-	forceEllipses: false,
-	onChange: noop,
-	mode: 'multi',
-	slots: {},
-	pageItemCount: 5,
-};
-
-const Pagination = forwardRef<HTMLUListElement, PaginationProps>(
-	(_props, ref) => {
+>(
+	'Pagination',
+	{
+		total: 82,
+		defaultCurrent: 1,
+		pageSize: 10,
+		hideOnSinglePage: false,
+		forceEllipses: false,
+		onChange: noop,
+		mode: 'multi',
+		slots: {},
+		pageItemCount: 5,
+	},
+	(
+		{
+			total,
+			defaultCurrent,
+			pageSize,
+			hideOnSinglePage,
+			forceEllipses,
+			onChange: _onChange,
+			mode,
+			slots,
+			pageItemCount,
+			// optionals
+			current: __current,
+			className,
+			...restProps
+		},
+		ref,
+	) => {
 		const locale = useLocale('pagination');
-
-		const [
-			{
-				total,
-				defaultCurrent,
-				pageSize,
-				hideOnSinglePage,
-				forceEllipses,
-				onChange: _onChange,
-				mode,
-				slots,
-				pageItemCount,
-			},
-			{ current: __current, className, ...restProps },
-		] = useProps<PaginationRequiredProps, PaginationProps>(
-			DEFAULT_PROPS,
-			_props,
-		);
 
 		const { value: _current, onChangeRef } = useControlledState<number>({
 			value: __current,
@@ -210,13 +211,11 @@ const Pagination = forwardRef<HTMLUListElement, PaginationProps>(
 	},
 );
 
-Pagination.displayName = 'Pagination';
-
 export type {
 	PaginationComponentProps,
+	PaginationMode,
 	PaginationProps,
 	PaginationSlots,
-	PaginationMode,
 } from './interface';
 
 export default Pagination;

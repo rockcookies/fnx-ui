@@ -1,7 +1,8 @@
-import React, { forwardRef, ReactNode, SVGAttributes } from 'react';
+import React, { ReactNode, SVGAttributes } from 'react';
 import { addUnit } from '../utils/format';
 import { Dictionary } from '../utils/interface';
 import { classnames, createBEM } from '../utils/namespace';
+import { createForwardRef } from '../utils/react';
 import { IconProps } from './interface';
 
 export const NS = 'fnx-icon';
@@ -82,62 +83,63 @@ export const DEFAULT_ICONS: Dictionary<ReactNode> = {
 	),
 };
 
-const Icon = forwardRef<HTMLSpanElement, IconProps>((props, ref) => {
-	const {
-		className,
-		name,
-		component: SvgComponent,
-		spin,
-		children,
-		viewBox,
-		size,
-		color,
-		style,
-		...rest
-	} = props;
+const Icon = createForwardRef<HTMLSpanElement, IconProps>(
+	'Icon',
+	(props, ref) => {
+		const {
+			className,
+			name,
+			component: SvgComponent,
+			spin,
+			children,
+			viewBox,
+			size,
+			color,
+			style,
+			...rest
+		} = props;
 
-	let icon: ReactNode;
+		let icon: ReactNode;
 
-	if (SvgComponent) {
-		icon = (
-			<SvgComponent
-				{...DEFAULT_SVG_PROPS}
-				viewBox={viewBox || DEFAULT_SVG_VIEW_BOX}
-			/>
-		);
-	} else if (children) {
-		icon = (
-			<svg
-				{...DEFAULT_SVG_PROPS}
-				viewBox={viewBox || DEFAULT_SVG_VIEW_BOX}
-			>
-				{children}
-			</svg>
-		);
-	} else if (name) {
-		const elements = DEFAULT_ICONS[name];
-
-		if (elements) {
+		if (SvgComponent) {
 			icon = (
-				<svg {...DEFAULT_SVG_PROPS} viewBox={DEFAULT_SVG_VIEW_BOX}>
-					{elements}
+				<SvgComponent
+					{...DEFAULT_SVG_PROPS}
+					viewBox={viewBox || DEFAULT_SVG_VIEW_BOX}
+				/>
+			);
+		} else if (children) {
+			icon = (
+				<svg
+					{...DEFAULT_SVG_PROPS}
+					viewBox={viewBox || DEFAULT_SVG_VIEW_BOX}
+				>
+					{children}
 				</svg>
 			);
+		} else if (name) {
+			const elements = DEFAULT_ICONS[name];
+
+			if (elements) {
+				icon = (
+					<svg {...DEFAULT_SVG_PROPS} viewBox={DEFAULT_SVG_VIEW_BOX}>
+						{elements}
+					</svg>
+				);
+			}
 		}
-	}
 
-	return (
-		<span
-			className={classnames(bem({ spin }), className)}
-			{...rest}
-			style={{ color, fontSize: addUnit(size), ...style }}
-			ref={ref}
-		>
-			{icon}
-		</span>
-	);
-});
-
-Icon.displayName = 'Icon';
+		return (
+			<span
+				className={classnames(bem({ spin }), className)}
+				{...rest}
+				style={{ color, fontSize: addUnit(size), ...style }}
+				ref={ref}
+			>
+				{icon}
+			</span>
+		);
+	},
+);
 
 export default Icon;

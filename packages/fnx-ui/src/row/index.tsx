@@ -1,13 +1,14 @@
-import React, { CSSProperties, forwardRef } from 'react';
+import React, { CSSProperties } from 'react';
 import { addUnit } from '../utils/format';
 import { classnames, createBEM } from '../utils/namespace';
+import { createForwardRef } from '../utils/react';
 import RowContext from './context';
 import { RowProps } from './interface';
 
 const NS = 'fnx-row';
 const bem = createBEM(NS);
 
-const Row = forwardRef<HTMLDivElement, RowProps>((props, ref) => {
+const Row = createForwardRef<HTMLDivElement, RowProps>('Row', (props, ref) => {
 	const {
 		justify,
 		align,
@@ -44,13 +45,11 @@ const Row = forwardRef<HTMLDivElement, RowProps>((props, ref) => {
 	);
 });
 
-Row.displayName = 'Row';
-
 export type {
-	RowComponentProps,
-	RowProps,
 	RowAlign,
+	RowComponentProps,
 	RowJustify,
+	RowProps,
 } from './interface';
 
 export default Row;

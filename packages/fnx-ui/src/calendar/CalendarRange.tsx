@@ -1,8 +1,10 @@
-import React, { forwardRef } from 'react';
+import React from 'react';
+import { createForwardRef } from '../utils/react';
 import CalendarContainer from './CalendarContainer';
 import { CalendarRangeProps } from './interface';
 
-const CalendarRange = forwardRef<HTMLDivElement, CalendarRangeProps>(
+const CalendarRange = createForwardRef<HTMLDivElement, CalendarRangeProps>(
+	'CalendarRange',
 	(
 		{
 			defaultValue,
@@ -45,7 +47,5 @@ const CalendarRange = forwardRef<HTMLDivElement, CalendarRangeProps>(
 		);
 	},
 );
-
-CalendarRange.displayName = 'CalendarRange';
 
 export default CalendarRange;

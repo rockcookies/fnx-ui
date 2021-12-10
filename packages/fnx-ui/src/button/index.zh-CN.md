@@ -209,26 +209,26 @@ ReactDOM.render(
 
 ## API
 
-### Props
+### Button Props
 
-| 名称            | 说明                                      | 类型                                                           | 默认值             |
-| --------------- | ----------------------------------------- | -------------------------------------------------------------- | ------------------ |
-| type            | 按钮类型                                  | `'primary' \| 'success' \| 'warning' \| 'danger' \| 'default'` | `default`          |
-| size            | 按钮尺寸                                  | `'lg' \|'md' \|'sm' 'xs'`                                      | `md`               |
-| iconPosition    | 按钮中图标的位置                          | `'left' \| 'right'`                                            | `left`             |
-| loading         | 按钮是否显示加载状态                      | `boolean`                                                      | `false`            |
-| loadingIcon     | 按钮加载状态图标                          | `ReactNode`                                                    | `<Icon.Spinner />` |
-| loadingChildren | 加载状态中显示内容                        | `ReactNode`                                                    | -                  |
-| disabled        | 按钮是否禁用                              | `boolean`                                                      | `false`            |
-| hairline        | 按钮是否使用 0.5px 边框                   | `boolean`                                                      | `false`            |
-| plain           | 按钮是否为朴素按钮                        | `boolean`                                                      | `false`            |
-| shape           | 按钮形状                                  | `'rect' \| 'radius' \| 'round'`                                | `radius`           |
-| block           | 按钮是否显示为块级                        | `boolean`                                                      | `false`            |
-| color           | 按钮颜色，支持传入 linear-gradient 渐变色 | `string`                                                       | -                  |
-| htmlType        | 原生 button 标签的 `type` 属性            | `ButtonHTMLAttributes<HTMLButtonElement>['type']`              | -                  |
+| 名称            | 说明                                      | 类型                                                                   | 默认值             | 版本 |
+| --------------- | ----------------------------------------- | ---------------------------------------------------------------------- | ------------------ | ---- |
+| type            | 按钮类型                                  | `'primary'` \| `'success'` \| `'warning'` \| `'danger'` \| `'default'` | `'default'`        |      |
+| size            | 按钮尺寸                                  | `'lg'` \| `'md'` \| `'sm'` \| `'xs'`                                   | `'md'`             |      |
+| iconPosition    | 按钮中图标的位置                          | `'left'` \| `'right'`                                                  | `'left'`           |      |
+| loading         | 按钮是否显示加载状态                      | `boolean`                                                              | `false`            |      |
+| loadingIcon     | 按钮加载状态图标                          | `ReactNode`                                                            | `<Icon.Spinner />` |      |
+| loadingChildren | 加载状态中显示内容                        | `ReactNode`                                                            | -                  |      |
+| disabled        | 按钮是否禁用                              | `boolean`                                                              | `false`            |      |
+| hairline        | 按钮是否使用 0.5px 边框                   | `boolean`                                                              | `false`            |      |
+| plain           | 按钮是否为朴素按钮                        | `boolean`                                                              | `false`            |      |
+| shape           | 按钮形状                                  | `'rect'` \| `'radius'` \| `'round'`                                    | `'radius'`         |      |
+| block           | 按钮是否显示为块级                        | `boolean`                                                              | `false`            |      |
+| color           | 按钮颜色，支持传入 linear-gradient 渐变色 | `string`                                                               | -                  |      |
+| htmlType        | 原生 button 标签的 `type` 属性            | `ButtonHTMLAttributes<HTMLButtonElement>['type']`                      | -                  |      |
 
-### Events
+### Button Events
 
-| 事件名  | 说明                                     | 回调参数            |
-| ------- | ---------------------------------------- | ------------------- |
-| onClick | 点击按钮，且按钮状态不为加载或禁用时触发 | `event: MouseEvent` |
+| 事件名  | 说明                                     | 类型                          | 版本 |
+| ------- | ---------------------------------------- | ----------------------------- | ---- |
+| onClick | 点击按钮，且按钮状态不为加载或禁用时触发 | `(event: MouseEvent) => void` |      |

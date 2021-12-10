@@ -11,6 +11,7 @@ Tabs.PanelContext = TabsPanelContext;
 export type {
 	TabsComponentProps,
 	TabsProps,
+	TabsRef,
 	TabsPanelComponentProps,
 	TabsPanelProps,
 	TabsSlots,

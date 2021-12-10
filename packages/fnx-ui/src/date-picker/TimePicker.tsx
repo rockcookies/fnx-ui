@@ -1,121 +1,123 @@
-import React, { forwardRef, useImperativeHandle, useMemo, useRef } from 'react';
+import React, { useImperativeHandle, useMemo, useRef } from 'react';
 import useCreation from '../hooks/use-creation';
-import useProps from '../hooks/use-props';
 import { isDate } from '../utils/detect';
 import { padZero } from '../utils/format';
+import { createDefaultsForwardRef } from '../utils/react';
 import DatePicker from './DatePicker';
 import { DatePickerRef, TimePickerProps, TimePickerRef } from './interface';
 
-type TimePickerRequiredProps = Required<
-	Pick<
-		TimePickerProps,
-		| 'minHour'
-		| 'maxHour'
-		| 'minMinute'
-		| 'maxMinute'
-		| 'filter'
-		| 'formatter'
+const TimePicker = createDefaultsForwardRef<
+	TimePickerRef,
+	TimePickerProps,
+	Required<
+		Pick<
+			TimePickerProps,
+			| 'minHour'
+			| 'maxHour'
+			| 'minMinute'
+			| 'maxMinute'
+			| 'filter'
+			| 'formatter'
+		>
 	>
->;
-
-const DEFAULT_PROPS: TimePickerRequiredProps = {
-	minHour: 0,
-	maxHour: 23,
-	minMinute: 0,
-	maxMinute: 59,
-	filter: (_, v) => v,
-	formatter: (_, v) => v,
-};
-
-const TimePicker = forwardRef<TimePickerRef, TimePickerProps>((_props, ref) => {
-	const [
-		props,
+>(
+	'TimePicker',
+	{
+		minHour: 0,
+		maxHour: 23,
+		minMinute: 0,
+		maxMinute: 59,
+		filter: (_, v) => v,
+		formatter: (_, v) => v,
+	},
+	(
 		{
+			minHour,
+			maxHour,
+			minMinute,
+			maxMinute,
+			formatter,
+			filter,
+			// optionals
 			defaultValue: _defaultValue,
 			onChange,
 			onConfirm,
 			onCancel,
 			...restProps
 		},
-	] = useProps<TimePickerRequiredProps, TimePickerProps>(
-		DEFAULT_PROPS,
-		_props,
-	);
+		ref,
+	) => {
+		const pickerRef = useRef<DatePickerRef>(null);
 
-	const { minHour, maxHour, minMinute, maxMinute } = props;
+		const rootRef = useMemo<TimePickerRef>(
+			() => ({
+				root: (pickerRef.current && pickerRef.current.root) || null,
+				getValue: () => {
+					const dateValue =
+						pickerRef.current && pickerRef.current.getValue();
 
-	const pickerRef = useRef<DatePickerRef>(null);
+					if (isDate(dateValue)) {
+						return `${padZero(dateValue.getHours())}:${padZero(
+							dateValue.getMinutes(),
+						)}`;
+					}
+				},
+			}),
+			[],
+		);
 
-	const rootRef = useMemo<TimePickerRef>(
-		() => ({
-			root: (pickerRef.current && pickerRef.current.root) || null,
-			getValue: () => {
-				const dateValue =
-					pickerRef.current && pickerRef.current.getValue();
+		useImperativeHandle<TimePickerRef, TimePickerRef>(ref, () => rootRef, [
+			rootRef,
+		]);
 
-				if (isDate(dateValue)) {
-					return `${padZero(dateValue.getHours())}:${padZero(
-						dateValue.getMinutes(),
-					)}`;
-				}
-			},
-		}),
-		[],
-	);
+		const defaultValue = useCreation<Date>(() => {
+			let hour = 0;
+			let minute = 0;
 
-	useImperativeHandle<TimePickerRef, TimePickerRef>(ref, () => rootRef, [
-		rootRef,
-	]);
+			if (typeof _defaultValue === 'string') {
+				const [h, m] = _defaultValue.split(':');
 
-	const defaultValue = useCreation<Date>(() => {
-		let hour = 0;
-		let minute = 0;
+				hour = +h;
+				minute = +m;
+			} else if (isDate(_defaultValue)) {
+				hour = _defaultValue.getHours();
+				minute = _defaultValue.getMinutes();
+			}
 
-		if (typeof _defaultValue === 'string') {
-			const [h, m] = _defaultValue.split(':');
+			return new Date(0, 0, 0, hour, minute);
+		}, []);
 
-			hour = +h;
-			minute = +m;
-		} else if (isDate(_defaultValue)) {
-			hour = _defaultValue.getHours();
-			minute = _defaultValue.getMinutes();
-		}
+		const minDate = useMemo(
+			() => new Date(0, 0, 0, minHour, minMinute),
+			[minHour, minMinute],
+		);
 
-		return new Date(0, 0, 0, hour, minute);
-	}, []);
+		const maxDate = useMemo(
+			() => new Date(0, 0, 0, maxHour, maxMinute),
+			[maxHour, maxMinute],
+		);
 
-	const minDate = useMemo(
-		() => new Date(0, 0, 0, minHour, minMinute),
-		[minHour, minMinute],
-	);
+		const emit = (listener?: (v?: string) => void) => {
+			const value = rootRef.getValue();
+			listener && listener(value);
+		};
 
-	const maxDate = useMemo(
-		() => new Date(0, 0, 0, maxHour, maxMinute),
-		[maxHour, maxMinute],
-	);
-
-	const emit = (listener?: (v?: string) => void) => {
-		const value = rootRef.getValue();
-		listener && listener(value);
-	};
-
-	return (
-		<DatePicker
-			ref={pickerRef}
-			columnsLayout="hour,minute"
-			defaultValue={defaultValue}
-			minDate={minDate}
-			maxDate={maxDate}
-			onChange={() => emit(onChange)}
-			onCancel={() => emit(onCancel)}
-			onConfirm={() => emit(onConfirm)}
-			formatter={props.formatter}
-			filter={props.filter}
-			{...restProps}
-		></DatePicker>
-	);
-});
-
-TimePicker.displayName = 'TimePicker';
+		return (
+			<DatePicker
+				ref={pickerRef}
+				columnsLayout="hour,minute"
+				defaultValue={defaultValue}
+				minDate={minDate}
+				maxDate={maxDate}
+				onChange={() => emit(onChange)}
+				onCancel={() => emit(onCancel)}
+				onConfirm={() => emit(onConfirm)}
+				formatter={formatter}
+				filter={filter}
+				{...restProps}
+			></DatePicker>
+		);
+	},
+);
 
 export default TimePicker;

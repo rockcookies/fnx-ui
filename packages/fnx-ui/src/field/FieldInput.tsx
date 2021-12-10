@@ -1,44 +1,46 @@
-import React, { forwardRef, useImperativeHandle, useMemo, useRef } from 'react';
+import React, { useImperativeHandle, useMemo, useRef } from 'react';
 import useCompositionChange from '../hooks/use-composition-change';
 import useControlledState from '../hooks/use-controlled-state';
 import useFocus from '../hooks/use-focus';
-import useProps from '../hooks/use-props';
 import Icon from '../icon';
 import { formatNumber } from '../utils/format';
 import { classnames, createBEM } from '../utils/namespace';
+import { createDefaultsForwardRef } from '../utils/react';
 import { FieldInputProps, FieldInputRef } from './interface';
 import { limitValueLength, mapInputType } from './utils';
 
 const NS = 'fnx-field-input';
 const bem = createBEM(NS);
 
-type FieldInputRequiredProps = Required<
-	Pick<
-		FieldInputProps,
-		| 'defaultValue'
-		| 'clearable'
-		| 'type'
-		| 'inputAlign'
-		| 'clearIcon'
-		| 'clearTrigger'
-		| 'readOnly'
-		| 'disabled'
+const FieldInput = createDefaultsForwardRef<
+	FieldInputRef,
+	FieldInputProps,
+	Required<
+		Pick<
+			FieldInputProps,
+			| 'defaultValue'
+			| 'clearable'
+			| 'type'
+			| 'inputAlign'
+			| 'clearIcon'
+			| 'clearTrigger'
+			| 'readOnly'
+			| 'disabled'
+		>
 	>
->;
-
-const DEFAULT_PROPS: FieldInputRequiredProps = {
-	defaultValue: '',
-	type: 'text',
-	inputAlign: 'left',
-	clearable: false,
-	clearIcon: <Icon name="close" />,
-	clearTrigger: 'focus',
-	readOnly: false,
-	disabled: false,
-};
-
-const FieldInput = forwardRef<FieldInputRef, FieldInputProps>((_props, ref) => {
-	const [
+>(
+	'FieldInput',
+	{
+		defaultValue: '',
+		type: 'text',
+		inputAlign: 'left',
+		clearable: false,
+		clearIcon: <Icon name="close" />,
+		clearTrigger: 'focus',
+		readOnly: false,
+		disabled: false,
+	},
+	(
 		{
 			defaultValue,
 			type: inputType,
@@ -48,8 +50,7 @@ const FieldInput = forwardRef<FieldInputRef, FieldInputProps>((_props, ref) => {
 			clearTrigger,
 			readOnly,
 			disabled,
-		},
-		{
+			// optionals
 			value: _value,
 			onChange: _onChange,
 			onFocus: _onFocus,
@@ -59,121 +60,117 @@ const FieldInput = forwardRef<FieldInputRef, FieldInputProps>((_props, ref) => {
 			style,
 			...restProps
 		},
-	] = useProps<FieldInputRequiredProps, FieldInputProps>(
-		DEFAULT_PROPS,
-		_props,
-	);
+		ref,
+	) => {
+		const rootRef = useRef<HTMLSpanElement>(null);
+		const inputRef = useRef<HTMLInputElement>(null);
 
-	const rootRef = useRef<HTMLSpanElement>(null);
-	const inputRef = useRef<HTMLInputElement>(null);
+		useImperativeHandle<FieldInputRef, FieldInputRef>(ref, () => {
+			return {
+				root: rootRef.current,
+				input: inputRef.current,
+			};
+		});
 
-	useImperativeHandle<FieldInputRef, FieldInputRef>(ref, () => {
-		return {
-			root: rootRef.current,
-			input: inputRef.current,
-		};
-	});
+		const { value, onChangeRef, controlled } = useControlledState<string>({
+			value: _value,
+			defaultValue,
+			onChange: _onChange,
+		});
 
-	const { value, onChangeRef, controlled } = useControlledState<string>({
-		value: _value,
-		defaultValue,
-		onChange: _onChange,
-	});
-
-	let displayValue = value;
-	if (maxLength != null && !controlled) {
-		displayValue = limitValueLength(value, maxLength);
-	}
-
-	const handleValueChange = (nextValue: string) => {
-		nextValue = limitValueLength(nextValue, maxLength);
-
-		if (inputType === 'number' || inputType === 'digit') {
-			const isNumber = inputType === 'number';
-
-			nextValue = formatNumber(nextValue, {
-				allowDot: isNumber,
-				allowMinus: isNumber,
-			});
+		let displayValue = value;
+		if (maxLength != null && !controlled) {
+			displayValue = limitValueLength(value, maxLength);
 		}
 
-		if (nextValue !== value) {
-			onChangeRef.current(nextValue);
-		}
-	};
+		const handleValueChange = (nextValue: string) => {
+			nextValue = limitValueLength(nextValue, maxLength);
 
-	const {
-		value: displayCompositionValue,
-		onComposition,
-		onChange: onCompositionValueChange,
-	} = useCompositionChange(displayValue, handleValueChange);
+			if (inputType === 'number' || inputType === 'digit') {
+				const isNumber = inputType === 'number';
 
-	const { focus, onFocus, onBlur } = useFocus(value, {
-		readonly: readOnly,
-		node: inputRef,
-		onFocus: _onFocus,
-		onBlur: _onBlur,
-	});
-
-	const inputProps = useMemo(() => mapInputType(inputType), [inputType]);
-
-	const renderClear = () => {
-		if (clearable && !readOnly) {
-			const hasValue = value !== '';
-			const hasTrigger =
-				clearTrigger === 'always' ||
-				(clearTrigger === 'focus' && focus);
-
-			if (hasValue && hasTrigger) {
-				return (
-					<i
-						className={bem('clear')}
-						onTouchStart={() => handleValueChange('')}
-					>
-						{clearIcon}
-					</i>
-				);
+				nextValue = formatNumber(nextValue, {
+					allowDot: isNumber,
+					allowMinus: isNumber,
+				});
 			}
-		}
-	};
 
-	return (
-		<span
-			ref={rootRef}
-			className={classnames(
-				bem([
-					{
-						focused: focus,
-						disabled,
+			if (nextValue !== value) {
+				onChangeRef.current(nextValue);
+			}
+		};
 
-						...(inputAlign !== 'left'
-							? { [`text-${inputAlign}`]: true }
-							: {}),
-					},
-				]),
-				className,
-			)}
-			style={style}
-		>
-			<input
-				{...restProps}
-				className={bem('control')}
-				ref={inputRef}
-				value={displayCompositionValue}
-				{...inputProps}
-				disabled={disabled}
-				readOnly={readOnly}
-				onBlur={onBlur}
-				onFocus={onFocus}
-				onCompositionStart={onComposition}
-				onCompositionEnd={onComposition}
-				onChange={(e) => onCompositionValueChange(e.target.value)}
-			/>
-			{renderClear()}
-		</span>
-	);
-});
+		const {
+			value: displayCompositionValue,
+			onComposition,
+			onChange: onCompositionValueChange,
+		} = useCompositionChange(displayValue, handleValueChange);
 
-FieldInput.displayName = 'FieldInput';
+		const { focus, onFocus, onBlur } = useFocus(value, {
+			readonly: readOnly,
+			node: inputRef,
+			onFocus: _onFocus,
+			onBlur: _onBlur,
+		});
+
+		const inputProps = useMemo(() => mapInputType(inputType), [inputType]);
+
+		const renderClear = () => {
+			if (clearable && !readOnly) {
+				const hasValue = value !== '';
+				const hasTrigger =
+					clearTrigger === 'always' ||
+					(clearTrigger === 'focus' && focus);
+
+				if (hasValue && hasTrigger) {
+					return (
+						<i
+							className={bem('clear')}
+							onTouchStart={() => handleValueChange('')}
+						>
+							{clearIcon}
+						</i>
+					);
+				}
+			}
+		};
+
+		return (
+			<span
+				ref={rootRef}
+				className={classnames(
+					bem([
+						{
+							focused: focus,
+							disabled,
+
+							...(inputAlign !== 'left'
+								? { [`text-${inputAlign}`]: true }
+								: {}),
+						},
+					]),
+					className,
+				)}
+				style={style}
+			>
+				<input
+					{...restProps}
+					className={bem('control')}
+					ref={inputRef}
+					value={displayCompositionValue}
+					{...inputProps}
+					disabled={disabled}
+					readOnly={readOnly}
+					onBlur={onBlur}
+					onFocus={onFocus}
+					onCompositionStart={onComposition}
+					onCompositionEnd={onComposition}
+					onChange={(e) => onCompositionValueChange(e.target.value)}
+				/>
+				{renderClear()}
+			</span>
+		);
+	},
+);
 
 export default FieldInput;

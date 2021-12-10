@@ -207,26 +207,26 @@ ReactDOM.render(
 
 ## API
 
-### Props
+### Button Props
 
-| Name            | Description                                                                         | Type                                                           | Default            |
-| --------------- | ----------------------------------------------------------------------------------- | -------------------------------------------------------------- | ------------------ |
-| type            | Button type                                                                         | `'primary' \| 'success' \| 'warning' \| 'danger' \| 'default'` | `default`          |
-| size            | Button size                                                                         | `'lg' \|'md' \|'sm' 'xs'`                                      | `md`               |
-| iconPosition    | The position of the icon in the button                                              | `'left' \| 'right'`                                            | `left`             |
-| loading         | Whether the button shows the loading status                                         | `boolean`                                                      | `false`            |
-| loadingIcon     | Load status icon                                                                    | `ReactNode`                                                    | `<Icon.Spinner />` |
-| disabled        | Whether the button is disabled                                                      | `ReactNode`                                                    | -                  |
-| loadingChildren | Display content in loading status                                                   | `boolean`                                                      | `false`            |
-| hairline        | Use 0.5px border                                                                    | `boolean`                                                      | `false`            |
-| plain           | Whether the button is plain                                                         | `boolean`                                                      | `false`            |
-| shape           | Button shape                                                                        | `'rect' \| 'radius' \| 'round'`                                | `radius`           |
-| block           | Whether the button is displayed as block                                            | `boolean`                                                      | `false`            |
-| color           | Button color (support `#FFF`, `#FFFFFF`, `yellow`, `rgb(0, 0, 0)` formatted colors) | string`                                                        | -                  |
-| htmlType        | The `type` attribute of the button's DOM.                                           | `ButtonHTMLAttributes<HTMLButtonElement>['type']`              | -                  |
+| Name            | Description                                                                         | Type                                                                   | Default            | Version |
+| --------------- | ----------------------------------------------------------------------------------- | ---------------------------------------------------------------------- | ------------------ | ------- |
+| type            | Button type                                                                         | `'primary'` \| `'success'` \| `'warning'` \| `'danger'` \| `'default'` | `'default'`        |         |
+| size            | Button size                                                                         | `'lg'` \| `'md'` \| `'sm'` \| `'xs'`                                   | `'md'`             |         |
+| iconPosition    | The position of the icon in the button                                              | `'left'` \| `'right'`                                                  | `'left'`           |         |
+| loading         | Whether the button shows the loading status                                         | `boolean`                                                              | `false`            |         |
+| loadingIcon     | Load status icon                                                                    | `ReactNode`                                                            | `<Icon.Spinner />` |         |
+| disabled        | Whether the button is disabled                                                      | `ReactNode`                                                            | -                  |         |
+| loadingChildren | Display content in loading status                                                   | `boolean`                                                              | `false`            |         |
+| hairline        | Use 0.5px border                                                                    | `boolean`                                                              | `false`            |         |
+| plain           | Whether the button is plain                                                         | `boolean`                                                              | `false`            |         |
+| shape           | Button shape                                                                        | `'rect'` \| `'radius'` \| `'round'`                                    | `'radius'`         |         |
+| block           | Whether the button is displayed as block                                            | `boolean`                                                              | `false`            |         |
+| color           | Button color (support `#FFF`, `#FFFFFF`, `yellow`, `rgb(0, 0, 0)` formatted colors) | `string`                                                               | -                  |         |
+| htmlType        | The `type` attribute of the button's DOM                                            | `ButtonHTMLAttributes<HTMLButtonElement>['type']`                      | -                  |         |
 
-### Events
+### Button Events
 
-| Event Name | Description                                                                          | Callback Arguments  |
-| ---------- | ------------------------------------------------------------------------------------ | ------------------- |
-| onClick    | Triggered when the button is clicked and the button status is not loaded or disabled | `event: MouseEvent` |
+| Event Name | Description                                                                          | Type                          | Version |
+| ---------- | ------------------------------------------------------------------------------------ | ----------------------------- | ------- |
+| onClick    | Triggered when the button is clicked and the button status is not loaded or disabled | `(event: MouseEvent) => void` |         |

@@ -1,6 +1,5 @@
 import React, {
 	CSSProperties,
-	forwardRef,
 	useEffect,
 	useImperativeHandle,
 	useRef,
@@ -8,8 +7,8 @@ import React, {
 import useCompositionChange from '../hooks/use-composition-change';
 import useControlledState from '../hooks/use-controlled-state';
 import useFocus from '../hooks/use-focus';
-import useProps from '../hooks/use-props';
 import { classnames, createBEM } from '../utils/namespace';
+import { createDefaultsForwardRef } from '../utils/react';
 import {
 	FieldTextAreaCountFormatter,
 	FieldTextAreaProps,
@@ -20,46 +19,50 @@ import { limitValueLength } from './utils';
 const NS = 'fnx-field-textarea';
 const bem = createBEM(NS);
 
-type FieldTextAreaRequiredProps = Required<
-	Pick<
-		FieldTextAreaProps,
-		| 'defaultValue'
-		| 'showCount'
-		| 'autoSize'
-		| 'rows'
-		| 'readOnly'
-		| 'disabled'
+const FieldTextArea = createDefaultsForwardRef<
+	FieldTextAreaRef,
+	FieldTextAreaProps,
+	Required<
+		Pick<
+			FieldTextAreaProps,
+			| 'defaultValue'
+			| 'showCount'
+			| 'autoSize'
+			| 'rows'
+			| 'readOnly'
+			| 'disabled'
+		>
 	>
->;
-
-const DEFAULT_PROPS: FieldTextAreaRequiredProps = {
-	defaultValue: '',
-	showCount: false,
-	autoSize: false,
-	rows: 1,
-	readOnly: false,
-	disabled: false,
-};
-
-const FieldTextArea = forwardRef<FieldTextAreaRef, FieldTextAreaProps>(
-	(_props, ref) => {
-		const [
-			{ defaultValue, showCount, autoSize, rows, readOnly, disabled },
-			{
-				value: _value,
-				onChange: _onChange,
-				onFocus: _onFocus,
-				onBlur: _onBlur,
-				maxLength,
-				className,
-				style,
-				...restProps
-			},
-		] = useProps<FieldTextAreaRequiredProps, FieldTextAreaProps>(
-			DEFAULT_PROPS,
-			_props,
-		);
-
+>(
+	'FieldTextArea',
+	{
+		defaultValue: '',
+		showCount: false,
+		autoSize: false,
+		rows: 1,
+		readOnly: false,
+		disabled: false,
+	},
+	(
+		{
+			defaultValue,
+			showCount,
+			autoSize,
+			rows,
+			readOnly,
+			disabled,
+			// optionals
+			value: _value,
+			onChange: _onChange,
+			onFocus: _onFocus,
+			onBlur: _onBlur,
+			maxLength,
+			className,
+			style,
+			...restProps
+		},
+		ref,
+	) => {
 		const rootRef = useRef<HTMLSpanElement>(null);
 		const inputRef = useRef<HTMLTextAreaElement>(null);
 		const autoSizeRef = useRef<HTMLTextAreaElement>(null);
@@ -196,7 +199,5 @@ const FieldTextArea = forwardRef<FieldTextAreaRef, FieldTextAreaProps>(
 		);
 	},
 );
-
-FieldTextArea.displayName = 'FieldTextArea';
 
 export default FieldTextArea;

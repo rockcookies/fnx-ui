@@ -1,79 +1,54 @@
-import React, {
-	cloneElement,
-	forwardRef,
-	isValidElement,
-	useContext,
-	useMemo,
-} from 'react';
+import React, { cloneElement, isValidElement, useContext } from 'react';
 import Cell from '../cell';
+import { FormHelpAlign, FormLabelAlign } from '../form';
 import { FormContext, FormItemContext } from '../form/context';
 import useDefaults from '../hooks/use-defaults';
-import useProps from '../hooks/use-props';
 import { addUnit } from '../utils/format';
 import { Dictionary } from '../utils/interface';
 import { classnames, createBEM } from '../utils/namespace';
+import { createDefaultsForwardRef } from '../utils/react';
 import { FieldProps } from './interface';
 
 const NS = 'fnx-field';
 const bem = createBEM(NS);
 
-type FieldRequiredProps = Required<
-	Pick<
-		FieldProps,
-		| 'labelAlign'
-		| 'helpAlign'
-		| 'colon'
-		| 'required'
-		| 'labelProps'
-		| 'controlProps'
-		| 'titleProps'
-		| 'contentProps'
-		| 'disabled'
-		| 'help'
+const Field = createDefaultsForwardRef<
+	HTMLDivElement,
+	FieldProps,
+	Required<
+		Pick<
+			FieldProps,
+			| 'labelProps'
+			| 'controlProps'
+			| 'titleProps'
+			| 'contentProps'
+			| 'disabled'
+			| 'help'
+		>
 	>
->;
-
-const Field = forwardRef<HTMLDivElement, FieldProps>((_props, ref) => {
-	const formContext = useContext(FormContext);
-	const { meta, isRequired: fieldIsRequired } = useContext(FormItemContext);
-
-	const requiredProps = useMemo<FieldRequiredProps>(() => {
-		return {
-			labelAlign: formContext.labelAlign || 'left',
-			helpAlign: formContext.helpAlign || 'left',
-			colon: formContext.colon != null ? formContext.colon : false,
-			required:
-				typeof formContext.requiredMark === 'boolean'
-					? formContext.requiredMark
-					: false,
-			labelProps: {},
-			controlProps: {},
-			titleProps: {},
-			contentProps: {},
-			disabled: false,
-			help: [],
-		};
-	}, [
-		formContext.colon,
-		formContext.helpAlign,
-		formContext.labelAlign,
-		formContext.requiredMark,
-	]);
-
-	const [
+>(
+	'Field',
+	{
+		labelProps: {},
+		controlProps: {},
+		titleProps: {},
+		contentProps: {},
+		disabled: false,
+		help: [],
+	},
+	(
 		{
-			labelAlign,
-			helpAlign,
-			colon,
-			required,
 			labelProps,
 			controlProps,
 			titleProps,
 			contentProps,
 			disabled,
 			help,
-		},
-		{
+			// optionals
+			labelAlign: _labelAlign,
+			helpAlign: _helpAlign,
+			colon: _colon,
+			required: _required,
 			labelWidth: _labelWidth,
 			label,
 			controlPrefix,
@@ -82,107 +57,135 @@ const Field = forwardRef<HTMLDivElement, FieldProps>((_props, ref) => {
 			children,
 			...restProps
 		},
-	] = useProps<FieldRequiredProps, FieldProps>(requiredProps, _props);
+		ref,
+	) => {
+		const formContext = useContext(FormContext);
+		const { meta, isRequired: fieldIsRequired } =
+			useContext(FormItemContext);
 
-	const labelWidth = useDefaults<string | number | undefined>(
-		undefined,
-		_labelWidth,
-		formContext.labelWidth,
-	);
+		const labelAlign = useDefaults<FormLabelAlign>(
+			'left',
+			_labelAlign,
+			formContext.labelAlign,
+		);
 
-	let helps = (meta && meta.errors) || [];
+		const helpAlign = useDefaults<FormHelpAlign>(
+			'left',
+			_helpAlign,
+			formContext.helpAlign,
+		);
+		const colon = useDefaults<boolean>(false, _colon, formContext.colon);
+		const required = useDefaults<boolean>(
+			formContext.requiredMark === true,
+			_required,
+		);
 
-	if (Array.isArray(help)) {
-		helps = [...help, ...helps];
-	} else {
-		helps = [help, ...helps];
-	}
+		const labelWidth = useDefaults<string | number | undefined>(
+			undefined,
+			_labelWidth,
+			formContext.labelWidth,
+		);
 
-	const classes: Dictionary = {};
+		let helps = (meta && meta.errors) || [];
 
-	if (meta && meta.validating) {
-		classes.validating = true;
-	} else if (helps.length > 0) {
-		classes.error = true;
-	} else if (meta && meta.touched) {
-		classes.success = true;
-	}
-
-	const renderChildren = () => {
-		if (!isValidElement(children)) {
-			return children;
+		if (Array.isArray(help)) {
+			helps = [...help, ...helps];
+		} else {
+			helps = [help, ...helps];
 		}
 
-		if (children.props.disabled != null) {
-			return children;
+		const classes: Dictionary = {};
+
+		if (meta && meta.validating) {
+			classes.validating = true;
+		} else if (helps.length > 0) {
+			classes.error = true;
+		} else if (meta && meta.touched) {
+			classes.success = true;
 		}
 
-		return cloneElement(children, {
-			...children.props,
-			disabled,
-		});
-	};
+		const renderChildren = () => {
+			if (!isValidElement(children)) {
+				return children;
+			}
 
-	return (
-		<Cell
-			{...restProps}
-			className={classnames(
-				bem([
-					{
-						...classes,
-						required:
-							fieldIsRequired != null
-								? fieldIsRequired
-								: required,
-						disabled,
+			if (children.props.disabled != null) {
+				return children;
+			}
+
+			return cloneElement(children, {
+				...children.props,
+				disabled,
+			});
+		};
+
+		return (
+			<Cell
+				{...restProps}
+				className={classnames(
+					bem([
+						{
+							...classes,
+							required:
+								fieldIsRequired != null
+									? fieldIsRequired
+									: required,
+							disabled,
+						},
+					]),
+					className,
+				)}
+				ref={ref}
+				title={label}
+				titleProps={{
+					...labelProps,
+					className: classnames(
+						bem('label', [`text-${labelAlign}`, { colon }]),
+						labelProps.className,
+						titleProps.className,
+					),
+					style: {
+						...(labelWidth !== 0
+							? { width: addUnit(labelWidth) }
+							: {}),
+						...titleProps.style,
 					},
-				]),
-				className,
-			)}
-			ref={ref}
-			title={label}
-			titleProps={{
-				...labelProps,
-				className: classnames(
-					bem('label', [`text-${labelAlign}`, { colon }]),
-					labelProps.className,
-					titleProps.className,
-				),
-				style: {
-					...(labelWidth !== 0 ? { width: addUnit(labelWidth) } : {}),
-					...titleProps.style,
-				},
-			}}
-			contentProps={{
-				...controlProps,
-				...contentProps,
-				className: classnames(
-					bem('control'),
-					controlProps.className,
-					contentProps.className,
-				),
-			}}
-		>
-			<div className={bem('control-body')}>
-				{controlPrefix && (
-					<div className={bem('control-prefix')}>{controlPrefix}</div>
-				)}
-				<div className={bem('control-item')}>{renderChildren()}</div>
-				{controlSuffix && (
-					<div className={bem('control-suffix')}>{controlSuffix}</div>
-				)}
-			</div>
-			{helps.length > 0 && (
-				<div className={bem('help', [`text-${helpAlign}`])}>
-					{helps.map((err, idx) => (
-						<div key={idx}>{err}</div>
-					))}
+				}}
+				contentProps={{
+					...controlProps,
+					...contentProps,
+					className: classnames(
+						bem('control'),
+						controlProps.className,
+						contentProps.className,
+					),
+				}}
+			>
+				<div className={bem('control-body')}>
+					{controlPrefix && (
+						<div className={bem('control-prefix')}>
+							{controlPrefix}
+						</div>
+					)}
+					<div className={bem('control-item')}>
+						{renderChildren()}
+					</div>
+					{controlSuffix && (
+						<div className={bem('control-suffix')}>
+							{controlSuffix}
+						</div>
+					)}
 				</div>
-			)}
-		</Cell>
-	);
-});
-
-Field.displayName = 'Field';
+				{helps.length > 0 && (
+					<div className={bem('help', [`text-${helpAlign}`])}>
+						{helps.map((err, idx) => (
+							<div key={idx}>{err}</div>
+						))}
+					</div>
+				)}
+			</Cell>
+		);
+	},
+);
 
 export default Field;

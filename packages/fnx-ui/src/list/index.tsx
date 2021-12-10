@@ -1,5 +1,4 @@
 import React, {
-	forwardRef,
 	useCallback,
 	useContext,
 	useEffect,
@@ -7,174 +6,194 @@ import React, {
 	useMemo,
 	useRef,
 } from 'react';
-import Tabs from '../tabs';
-import useProps from '../hooks/use-props';
 import useDefaultsRef from '../hooks/use-defaults-ref';
 import useUpdateEffect from '../hooks/use-update-effect';
 import Loading from '../loading';
 import { useLocale } from '../locale';
+import Tabs from '../tabs';
 import { getScrollParent } from '../utils/dom/scroll';
 import { getElementRect, isHidden } from '../utils/dom/style';
 import { noop } from '../utils/misc';
 import { classnames, createBEM } from '../utils/namespace';
+import { createDefaultsForwardRef } from '../utils/react';
 import { ListComponentProps, ListProps, ListRef } from './interface';
 
 const NS = 'fnx-list';
 const bem = createBEM(NS);
 
-type ListRequiredProps = Required<ListComponentProps>;
+const List = createDefaultsForwardRef<
+	ListRef,
+	ListProps,
+	Required<ListComponentProps>
+>(
+	'List',
+	{
+		status: 'default',
+		offset: 50,
+		direction: 'down',
+		slots: {},
+		onLoad: noop,
+		immediateCheck: true,
+		scrollListenTo: null,
+	},
+	(
+		{
+			status,
+			offset,
+			direction,
+			slots,
+			onLoad,
+			immediateCheck,
+			scrollListenTo,
+			// Optionals
+			className,
+			children,
+			...restProps
+		},
+		ref,
+	) => {
+		const locale = useLocale('list');
 
-const DEFAULT_PROPS: ListRequiredProps = {
-	status: 'default',
-	offset: 50,
-	direction: 'down',
-	slots: {},
-	onLoad: noop,
-	immediateCheck: true,
-	scrollListenTo: null,
-};
+		const propsRef = useDefaultsRef<Required<ListComponentProps>>({
+			status,
+			offset,
+			direction,
+			slots,
+			onLoad,
+			immediateCheck,
+			scrollListenTo,
+		});
 
-const List = forwardRef<ListRef, ListProps>((_props, ref) => {
-	const locale = useLocale('list');
+		const rootRef = useRef<HTMLDivElement>(null);
+		const scrollParentRef = useRef<HTMLElement | Window>();
+		const placeholderRef = useRef<HTMLDivElement>(null);
 
-	const [props, { className, children, ...restProps }] = useProps<
-		ListRequiredProps,
-		ListProps
-	>(DEFAULT_PROPS, _props);
+		const { active: tabPanelActive } = useContext(Tabs.PanelContext);
+		const tabPanelActiveRef = useDefaultsRef(tabPanelActive);
 
-	const propsRef = useDefaultsRef(props);
+		const check = useCallback(() => {
+			const { status } = propsRef.current;
 
-	const rootRef = useRef<HTMLDivElement>(null);
-	const scrollParentRef = useRef<HTMLElement | Window>();
-	const placeholderRef = useRef<HTMLDivElement>(null);
+			if (status !== 'default') return;
 
-	const { status, direction, slots } = props;
+			const root = rootRef.current;
+			const scrollParent = scrollParentRef.current;
+			const placeholder = placeholderRef.current;
 
-	const { active: tabPanelActive } = useContext(Tabs.PanelContext);
-	const tabPanelActiveRef = useDefaultsRef(tabPanelActive);
+			if (
+				!scrollParent ||
+				!placeholder ||
+				!root ||
+				// skip check when inside an inactive tab
+				tabPanelActiveRef.current === false
+			) {
+				return;
+			}
 
-	const check = useCallback(() => {
-		const { status } = propsRef.current;
+			const scrollParentRect = getElementRect(scrollParent);
 
-		if (status !== 'default') return;
+			if (scrollParentRect.height <= 0 || isHidden(root)) {
+				return;
+			}
 
-		const root = rootRef.current;
-		const scrollParent = scrollParentRef.current;
-		const placeholder = placeholderRef.current;
+			let isReachEdge = false;
+			const placeholderRect = getElementRect(placeholder);
 
-		if (
-			!scrollParent ||
-			!placeholder ||
-			!root ||
-			// skip check when inside an inactive tab
-			tabPanelActiveRef.current === false
-		) {
-			return;
-		}
+			const { direction, offset } = propsRef.current;
 
-		const scrollParentRect = getElementRect(scrollParent);
+			if (direction === 'up') {
+				isReachEdge =
+					scrollParentRect.top - placeholderRect.top <= offset;
+			} else {
+				isReachEdge =
+					placeholderRect.bottom - scrollParentRect.bottom <= offset;
+			}
 
-		if (scrollParentRect.height <= 0 || isHidden(root)) {
-			return;
-		}
+			if (isReachEdge) {
+				propsRef.current.onLoad();
+			}
+		}, [propsRef, tabPanelActiveRef]);
 
-		let isReachEdge = false;
-		const placeholderRect = getElementRect(placeholder);
+		const listRef = useMemo<ListRef>(
+			() => ({
+				root: rootRef.current,
+				scrollParent: scrollParentRef.current || null,
+				check,
+			}),
+			[check],
+		);
 
-		const { direction, offset } = propsRef.current;
+		useImperativeHandle<ListRef, ListRef>(ref, () => listRef, [listRef]);
 
-		if (direction === 'up') {
-			isReachEdge = scrollParentRect.top - placeholderRect.top <= offset;
-		} else {
-			isReachEdge =
-				placeholderRect.bottom - scrollParentRect.bottom <= offset;
-		}
+		useEffect(() => {
+			const node = rootRef.current;
+			if (!node) return;
 
-		if (isReachEdge) {
-			propsRef.current.onLoad();
-		}
-	}, [propsRef, tabPanelActiveRef]);
+			const { scrollListenTo, immediateCheck } = propsRef.current;
 
-	const listRef = useMemo<ListRef>(
-		() => ({
-			root: rootRef.current,
-			scrollParent: scrollParentRef.current || null,
-			check,
-		}),
-		[check],
-	);
+			if (typeof scrollListenTo === 'function') {
+				scrollParentRef.current = scrollListenTo();
+			} else if (scrollListenTo) {
+				scrollParentRef.current = scrollListenTo;
+			}
 
-	useImperativeHandle<ListRef, ListRef>(ref, () => listRef, [listRef]);
+			const scrollParent =
+				scrollParentRef.current || getScrollParent(node);
+			scrollParentRef.current = scrollParent;
 
-	useEffect(() => {
-		const node = rootRef.current;
-		if (!node) return;
+			scrollParent.addEventListener('scroll', check);
 
-		const { scrollListenTo, immediateCheck } = propsRef.current;
+			if (immediateCheck) {
+				check();
+			}
 
-		if (typeof scrollListenTo === 'function') {
-			scrollParentRef.current = scrollListenTo();
-		} else if (scrollListenTo) {
-			scrollParentRef.current = scrollListenTo;
-		}
+			return () => {
+				scrollParent.removeEventListener('scroll', check);
+			};
+		}, [check, propsRef]);
 
-		const scrollParent = scrollParentRef.current || getScrollParent(node);
-		scrollParentRef.current = scrollParent;
-
-		scrollParent.addEventListener('scroll', check);
-
-		if (immediateCheck) {
+		useUpdateEffect(() => {
 			check();
-		}
+		}, [check, tabPanelActive, status]);
 
-		return () => {
-			scrollParent.removeEventListener('scroll', check);
+		const renderSlots = () => {
+			let el = slots[status];
+
+			if (status === 'loading' && el == null) {
+				el = <Loading size={16} text={locale.loading} />;
+			}
+
+			if (el) {
+				return <div className={bem('indicator')}>{el}</div>;
+			}
 		};
-	}, [check, propsRef]);
 
-	useUpdateEffect(() => {
-		check();
-	}, [check, tabPanelActive, status]);
+		const placeholder = (
+			<div ref={placeholderRef} className={bem('placeholder')} />
+		);
 
-	const renderSlots = () => {
-		let el = slots[status];
-
-		if (status === 'loading' && el == null) {
-			el = <Loading size={16} text={locale.loading} />;
-		}
-
-		if (el) {
-			return <div className={bem('indicator')}>{el}</div>;
-		}
-	};
-
-	const placeholder = (
-		<div ref={placeholderRef} className={bem('placeholder')} />
-	);
-
-	return (
-		<div
-			className={classnames(bem([status]), className)}
-			role="feed"
-			aria-busy={status === 'loading'}
-			{...restProps}
-			ref={rootRef}
-		>
-			{direction === 'down' ? children : placeholder}
-			{renderSlots()}
-			{direction === 'up' ? children : placeholder}
-		</div>
-	);
-});
-
-List.displayName = 'List';
+		return (
+			<div
+				className={classnames(bem([status]), className)}
+				role="feed"
+				aria-busy={status === 'loading'}
+				{...restProps}
+				ref={rootRef}
+			>
+				{direction === 'down' ? children : placeholder}
+				{renderSlots()}
+				{direction === 'up' ? children : placeholder}
+			</div>
+		);
+	},
+);
 
 export type {
 	ListComponentProps,
+	ListDirection,
 	ListProps,
 	ListRef,
 	ListSlots,
-	ListDirection,
 	ListStatus,
 } from './interface';
 

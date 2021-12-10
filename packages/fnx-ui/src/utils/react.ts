@@ -1,4 +1,13 @@
-import { Children, ReactElement } from 'react';
+import {
+	Children,
+	forwardRef,
+	ForwardRefExoticComponent,
+	ForwardRefRenderFunction,
+	FunctionComponent,
+	PropsWithoutRef,
+	ReactElement,
+	RefAttributes,
+} from 'react';
 import { isFragment } from 'react-is';
 
 export const toElementArray = (
@@ -23,4 +32,44 @@ export const toElementArray = (
 	});
 
 	return ret;
+};
+
+export const createForwardRef = <R, P = any>(
+	displayName: string,
+	render: ForwardRefRenderFunction<R, P>,
+): ForwardRefExoticComponent<PropsWithoutRef<P> & RefAttributes<R>> => {
+	const fc = forwardRef(render);
+	fc.displayName = displayName;
+	return fc;
+};
+
+export const createDefaultsForwardRef = <R, P, D>(
+	displayName: string,
+	defaultProps: D,
+	render: ForwardRefRenderFunction<R, P & D>,
+): ForwardRefExoticComponent<
+	PropsWithoutRef<P & Partial<D>> & RefAttributes<R>
+> => {
+	const fc = forwardRef(render);
+	fc.displayName = displayName;
+	fc.defaultProps = defaultProps;
+	return fc as any;
+};
+
+export const createFC = <P = any>(
+	displayName: string,
+	fc: FunctionComponent<P>,
+): FunctionComponent<P> => {
+	fc.displayName = displayName;
+	return fc;
+};
+
+export const createDefaultsFC = <P, D>(
+	displayName: string,
+	defaultProps: D,
+	fc: FunctionComponent<P & D>,
+): FunctionComponent<P & Partial<D>> => {
+	fc.displayName = displayName;
+	fc.defaultProps = defaultProps;
+	return fc as any;
 };

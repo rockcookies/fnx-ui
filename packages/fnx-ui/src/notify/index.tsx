@@ -1,7 +1,8 @@
-import React, { FC, useContext, useEffect, useMemo, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { ConfigContext } from '../config-provider/context';
 import useDefaultsRef from '../hooks/use-defaults-ref';
 import PopupHelper from '../popup/utils/popup-helper';
+import { createFC } from '../utils/react';
 import {
 	NotifyContext,
 	NotifyExportExtra,
@@ -23,7 +24,7 @@ function createNotify(
 	options: NotifyOptions = {},
 ): NotifyInstance {
 	return helper.create<NotifyProps>(({ onUpdate, remove }) => {
-		const NotifyStatic: FC<NotifyProps> = () => {
+		const NotifyStatic = createFC<NotifyProps>('NotifyStatic', () => {
 			const [{ onAfterHide, ...props }, setProps] = useState(baseProps);
 
 			useEffect(() => {
@@ -45,9 +46,7 @@ function createNotify(
 					}}
 				/>
 			);
-		};
-
-		NotifyStatic.displayName = 'Notify';
+		});
 
 		return NotifyStatic;
 	}, options.container);
@@ -93,9 +92,9 @@ Notify.allowMultiple = (allow) => {
 
 export type {
 	NotifyComponentProps,
-	NotifyProps,
 	NotifyContext,
 	NotifyInstance,
+	NotifyProps,
 	NotifyType,
 } from './interface';
 

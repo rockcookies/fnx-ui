@@ -1,12 +1,5 @@
-import React, {
-	forwardRef,
-	ForwardRefRenderFunction,
-	ReactElement,
-	ReactNode,
-	useState,
-} from 'react';
+import React, { ReactElement, ReactNode, useState } from 'react';
 import useDefaultsRef from '../hooks/use-defaults-ref';
-import useProps from '../hooks/use-props';
 import useUpdateEffect from '../hooks/use-update-effect';
 import Icon from '../icon';
 import Loading from '../loading';
@@ -16,6 +9,7 @@ import { clamp } from '../utils/format';
 import { ForwardRefProps } from '../utils/interface';
 import { noop } from '../utils/misc';
 import { classnames, createBEM } from '../utils/namespace';
+import { createDefaultsForwardRef } from '../utils/react';
 import useCascaderDataNames, {
 	CascaderDataGetters,
 } from './hooks/use-cascader-data-names';
@@ -23,31 +17,6 @@ import { CascaderOption, CascaderProps } from './interface';
 
 const NS = 'fnx-cascader';
 const bem = createBEM(NS);
-
-type RequiredCascaderProps = Required<
-	Pick<
-		CascaderProps,
-		| 'defaultValue'
-		| 'dataNames'
-		| 'onConfirm'
-		| 'onCancel'
-		| 'onChange'
-		| 'swipeable'
-		| 'closeIcon'
-		| 'slots'
-	>
->;
-
-const DEFAULT_PROPS: RequiredCascaderProps = {
-	defaultValue: [],
-	dataNames: {},
-	onConfirm: noop,
-	onCancel: noop,
-	onChange: noop,
-	swipeable: false,
-	closeIcon: <Icon name="cross" />,
-	slots: {},
-};
 
 interface Tab {
 	options: CascaderOption[];
@@ -110,13 +79,35 @@ function getActiveOptions(tabs: Tab[]): CascaderOption[] {
 	return output;
 }
 
-const InternalCascader: ForwardRefRenderFunction<
+const Cascader = createDefaultsForwardRef<
 	HTMLDivElement,
-	CascaderProps
-> = (_props, ref) => {
-	const i18n = useLocale('cascader');
-
-	const [
+	CascaderProps,
+	Required<
+		Pick<
+			CascaderProps,
+			| 'defaultValue'
+			| 'dataNames'
+			| 'onConfirm'
+			| 'onCancel'
+			| 'onChange'
+			| 'swipeable'
+			| 'closeIcon'
+			| 'slots'
+		>
+	>
+>(
+	'Cascader',
+	{
+		defaultValue: [],
+		dataNames: {},
+		onConfirm: noop,
+		onCancel: noop,
+		onChange: noop,
+		swipeable: false,
+		closeIcon: <Icon name="cross" />,
+		slots: {},
+	},
+	(
 		{
 			defaultValue,
 			dataNames: _dataNames,
@@ -126,8 +117,7 @@ const InternalCascader: ForwardRefRenderFunction<
 			swipeable,
 			closeIcon,
 			slots,
-		},
-		{
+			// optionals
 			data,
 			title,
 			placeholder,
@@ -136,229 +126,231 @@ const InternalCascader: ForwardRefRenderFunction<
 			className,
 			...restProps
 		},
-	] = useProps<RequiredCascaderProps, CascaderProps>(DEFAULT_PROPS, _props);
+		ref,
+	) => {
+		const i18n = useLocale('cascader');
 
-	const dataNames = useCascaderDataNames(_dataNames);
+		const dataNames = useCascaderDataNames(_dataNames);
 
-	const [tabs, setTabs] = useState<Tab[]>(() =>
-		getTabs(dataNames, defaultValue, data),
-	);
-	const tabsRef = useDefaultsRef(tabs);
+		const [tabs, setTabs] = useState<Tab[]>(() =>
+			getTabs(dataNames, defaultValue, data),
+		);
+		const tabsRef = useDefaultsRef(tabs);
 
-	const [tabActive, setTabActive] = useState(
-		// 因为有 defaultValue 所以这里不能为 0
-		() => Math.max(getActiveOptions(tabs).length - 1, 0),
-	);
+		const [tabActive, setTabActive] = useState(
+			// 因为有 defaultValue 所以这里不能为 0
+			() => Math.max(getActiveOptions(tabs).length - 1, 0),
+		);
 
-	const handleSelect = (tabIndex: number, option: CascaderOption) => {
-		if (dataNames.disabled(option)) {
-			return;
-		}
+		const handleSelect = (tabIndex: number, option: CascaderOption) => {
+			if (dataNames.disabled(option)) {
+				return;
+			}
 
-		const nextTabs = tabs
-			.slice(0, tabIndex + 1)
-			.map<Tab>((tab, idx) =>
-				tabIndex === idx ? { ...tab, active: option } : tab,
+			const nextTabs = tabs
+				.slice(0, tabIndex + 1)
+				.map<Tab>((tab, idx) =>
+					tabIndex === idx ? { ...tab, active: option } : tab,
+				);
+
+			const _children = dataNames.children(option);
+			const children = Array.isArray(_children) ? _children : undefined;
+
+			const activeOptions = getActiveOptions(nextTabs);
+			const activeValues = activeOptions.map((option) =>
+				dataNames.value(option),
 			);
 
-		const _children = dataNames.children(option);
-		const children = Array.isArray(_children) ? _children : undefined;
+			onChange(activeValues, activeOptions);
 
-		const activeOptions = getActiveOptions(nextTabs);
-		const activeValues = activeOptions.map((option) =>
-			dataNames.value(option),
-		);
+			// 切换到下一 tab
+			if (children && children.length > 0) {
+				setTabs(nextTabs.concat({ options: children }));
+				setTabActive(tabIndex + 1);
+				return;
+			}
 
-		onChange(activeValues, activeOptions);
+			// 已经到子节点
+			if ((children && children.length <= 0) || !onLoadData) {
+				setTabs(nextTabs);
+				onConfirm(activeValues, activeOptions);
+				return;
+			}
 
-		// 切换到下一 tab
-		if (children && children.length > 0) {
-			setTabs(nextTabs.concat({ options: children }));
+			// 触发加载
+			if (!dataNames.loading(option) && onLoadData) {
+				onLoadData(getActiveOptions(nextTabs));
+			}
+
+			setTabs(nextTabs.concat([{ options: [] }]));
 			setTabActive(tabIndex + 1);
-			return;
-		}
+		};
 
-		// 已经到子节点
-		if ((children && children.length <= 0) || !onLoadData) {
+		useUpdateEffect(() => {
+			const nextTabs = getTabs(
+				dataNames,
+				getActiveOptions(tabsRef.current).map((option) =>
+					dataNames.value(option),
+				),
+				data,
+			);
+
 			setTabs(nextTabs);
-			onConfirm(activeValues, activeOptions);
-			return;
-		}
 
-		// 触发加载
-		if (!dataNames.loading(option) && onLoadData) {
-			onLoadData(getActiveOptions(nextTabs));
-		}
+			setTabActive((prev) => {
+				return clamp(prev, 0, Math.max(nextTabs.length - 1, 0));
+			});
+		}, [dataNames, data, tabsRef]);
 
-		setTabs(nextTabs.concat([{ options: [] }]));
-		setTabActive(tabIndex + 1);
-	};
+		const renderHeader = () => {
+			return (
+				<div className={bem('header')}>
+					<div className={bem('title')}>{title}</div>
+					{closeIcon !== false && (
+						<span
+							className={bem('close-icon')}
+							onClick={() => {
+								onCancel();
+							}}
+						>
+							{closeIcon || <Icon name="cross" />}
+						</span>
+					)}
+				</div>
+			);
+		};
 
-	useUpdateEffect(() => {
-		const nextTabs = getTabs(
-			dataNames,
-			getActiveOptions(tabsRef.current).map((option) =>
-				dataNames.value(option),
-			),
-			data,
-		);
+		const renderOption = (
+			tabIndex: number,
+			option: CascaderOption,
+			idx: number,
+			active?: CascaderOption,
+		) => {
+			const isLoading = !!dataNames.loading(option);
+			const isSelected = option === active;
+			const isDisabled = dataNames.disabled(option);
+			const label = dataNames.label(option);
 
-		setTabs(nextTabs);
+			let icon: ReactNode;
 
-		setTabActive((prev) => {
-			return clamp(prev, 0, Math.max(nextTabs.length - 1, 0));
-		});
-	}, [dataNames, data, tabsRef]);
+			if (isLoading) {
+				icon = <Icon.Spinner className={bem('loading-icon')} />;
+			} else if (isSelected) {
+				icon = <Icon name="success" className={bem('selected-icon')} />;
+			}
 
-	const renderHeader = () => {
+			return (
+				<li
+					key={idx}
+					role="menuitemradio"
+					tabIndex={isDisabled ? undefined : isSelected ? 0 : -1}
+					aria-checked={isSelected ? 'true' : undefined}
+					aria-disabled={isDisabled ? 'true' : undefined}
+					className={bem('option', {
+						selected: isSelected,
+						disabled: isDisabled,
+						loading: isLoading,
+					})}
+					style={{ color: isSelected ? activeColor : undefined }}
+					onClick={() => handleSelect(tabIndex, option)}
+				>
+					{slots.option ? (
+						slots.option(option, { selected: isSelected })
+					) : (
+						<span className={bem('label')}>{label}</span>
+					)}
+					{icon}
+				</li>
+			);
+		};
+
+		const renderTabs = () => {
+			if (!tabs.length) {
+				return;
+			}
+
+			return (
+				<Tabs
+					animated
+					swipeable={swipeable}
+					tabSwipeThreshold={0}
+					className={bem('tabs')}
+					activeKey={tabActive}
+					trackColor={activeColor}
+					onChange={(key) => setTabActive(parseInt(key, 10))}
+				>
+					{tabs.map((tab, idx) => {
+						const prevTab = tabs[idx - 1];
+
+						return (
+							<Tabs.Panel
+								key={idx}
+								title={
+									<span
+										className={bem('tab-title', {
+											unselected: !tab.active,
+										})}
+									>
+										{tab.active
+											? dataNames.label(tab.active)
+											: placeholder || i18n.select}
+									</span>
+								}
+							>
+								{slots.optionsTop && slots.optionsTop(idx)}
+								<div className={bem('options-container')}>
+									<ul role="menu" className={bem('options')}>
+										{tab.options.map((option, i) =>
+											renderOption(
+												idx,
+												option,
+												i,
+												tab.active,
+											),
+										)}
+									</ul>
+
+									{prevTab &&
+										prevTab.active &&
+										dataNames.loading(prevTab.active) && (
+											<Loading
+												className={bem('loading')}
+												color={activeColor}
+												size={30}
+											/>
+										)}
+								</div>
+								{slots.optionsBottom &&
+									slots.optionsBottom(idx)}
+							</Tabs.Panel>
+						);
+					})}
+				</Tabs>
+			);
+		};
+
 		return (
-			<div className={bem('header')}>
-				<div className={bem('title')}>{title}</div>
-				{closeIcon !== false && (
-					<span
-						className={bem('close-icon')}
-						onClick={() => {
-							onCancel();
-						}}
-					>
-						{closeIcon || <Icon name="cross" />}
-					</span>
-				)}
+			<div
+				className={classnames(bem(), className)}
+				{...restProps}
+				ref={ref}
+			>
+				{renderHeader()}
+				{renderTabs()}
 			</div>
 		);
-	};
-
-	const renderOption = (
-		tabIndex: number,
-		option: CascaderOption,
-		idx: number,
-		active?: CascaderOption,
-	) => {
-		const isLoading = !!dataNames.loading(option);
-		const isSelected = option === active;
-		const isDisabled = dataNames.disabled(option);
-		const label = dataNames.label(option);
-
-		let icon: ReactNode;
-
-		if (isLoading) {
-			icon = <Icon.Spinner className={bem('loading-icon')} />;
-		} else if (isSelected) {
-			icon = <Icon name="success" className={bem('selected-icon')} />;
-		}
-
-		return (
-			<li
-				key={idx}
-				role="menuitemradio"
-				tabIndex={isDisabled ? undefined : isSelected ? 0 : -1}
-				aria-checked={isSelected ? 'true' : undefined}
-				aria-disabled={isDisabled ? 'true' : undefined}
-				className={bem('option', {
-					selected: isSelected,
-					disabled: isDisabled,
-					loading: isLoading,
-				})}
-				style={{ color: isSelected ? activeColor : undefined }}
-				onClick={() => handleSelect(tabIndex, option)}
-			>
-				{slots.option ? (
-					slots.option(option, { selected: isSelected })
-				) : (
-					<span className={bem('label')}>{label}</span>
-				)}
-				{icon}
-			</li>
-		);
-	};
-
-	const renderTabs = () => {
-		if (!tabs.length) {
-			return;
-		}
-
-		return (
-			<Tabs
-				animated
-				swipeable={swipeable}
-				tabSwipeThreshold={0}
-				className={bem('tabs')}
-				activeKey={tabActive}
-				trackColor={activeColor}
-				onChange={(key) => setTabActive(parseInt(key, 10))}
-			>
-				{tabs.map((tab, idx) => {
-					const prevTab = tabs[idx - 1];
-
-					return (
-						<Tabs.Panel
-							key={idx}
-							title={
-								<span
-									className={bem('tab-title', {
-										unselected: !tab.active,
-									})}
-								>
-									{tab.active
-										? dataNames.label(tab.active)
-										: placeholder || i18n.select}
-								</span>
-							}
-						>
-							{slots.optionsTop && slots.optionsTop(idx)}
-							<div className={bem('options-container')}>
-								<ul role="menu" className={bem('options')}>
-									{tab.options.map((option, i) =>
-										renderOption(
-											idx,
-											option,
-											i,
-											tab.active,
-										),
-									)}
-								</ul>
-
-								{prevTab &&
-									prevTab.active &&
-									dataNames.loading(prevTab.active) && (
-										<Loading
-											className={bem('loading')}
-											color={activeColor}
-											size={30}
-										/>
-									)}
-							</div>
-							{slots.optionsBottom && slots.optionsBottom(idx)}
-						</Tabs.Panel>
-					);
-				})}
-			</Tabs>
-		);
-	};
-
-	return (
-		<div className={classnames(bem(), className)} {...restProps} ref={ref}>
-			{renderHeader()}
-			{renderTabs()}
-		</div>
-	);
-};
-
-InternalCascader.displayName = 'Cascader';
-
-export type {
-	CascaderComponentProps,
-	CascaderProps,
-	CascaderDataNames,
-	CascaderOption,
-	CascaderValue,
-	CascaderSlots,
-} from './interface';
-
-const Cascader = forwardRef<HTMLDivElement, CascaderProps>(
-	InternalCascader,
+	},
 ) as <T = CascaderOption>(
 	props: ForwardRefProps<CascaderProps<T>, HTMLDivElement>,
 ) => ReactElement;
+
+export type {
+	CascaderComponentProps,
+	CascaderDataNames,
+	CascaderOption,
+	CascaderProps,
+	CascaderSlots,
+	CascaderValue,
+} from './interface';
 
 export default Cascader;

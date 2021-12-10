@@ -116,29 +116,29 @@ toast2.clear();
 
 Toast 继承了 [Popup](#/zh-CN/components/popup) 的属性并新增了如下属性：
 
-| 名称           | 说明                                    | 类型                            | 默认值     |
-| -------------- | --------------------------------------- | ------------------------------- | ---------- |
-| position       | 展示位置                                | `'top' \| 'bottom' \| 'middle'` | `'middle'` |
-| message        | 文本内容，支持通过`\n`换行              | `string`                        | -          |
-| icon           | 自定义图标                              | `ReactNode`                     | -          |
-| duration       | 展示时长(ms)，值为 0 时，Toast 不会消失 | `number`                        | `2000`     |
-| forbidClick    | 是否禁止背景点击                        | `boolean`                       | `false`    |
-| clickCloseable | 是否在点击后关闭                        | `boolean`                       | -          |
+| 名称           | 说明                                    | 类型                                | 默认值     | 版本 |
+| -------------- | --------------------------------------- | ----------------------------------- | ---------- | ---- |
+| position       | 展示位置                                | `'top'` \| `'bottom'` \| `'middle'` | `'middle'` |      |
+| message        | 文本内容，支持通过 `\n` 换行            | `string`                            | -          |      |
+| icon           | 自定义图标                              | `ReactNode`                         | -          |      |
+| duration       | 展示时长(ms)，值为 0 时，Toast 不会消失 | `number`                            | `2000`     |      |
+| forbidClick    | 是否禁止背景点击                        | `boolean`                           | `false`    |      |
+| clickCloseable | 是否在点击后关闭                        | `boolean`                           | -          |      |
 
 ### Toast 全局方法
 
-| 方法名              | 说明                               | 参数                                             | 返回值     |
-| ------------------- | ---------------------------------- | ------------------------------------------------ | ---------- |
-| Toast.show          | 展示提示                           | `(props: string \| ToastProps) => ToastInstance` | Toast 实例 |
-| Toast.loading       | 展示加载提示                       | `(props: string \| ToastProps) => ToastInstance` | Toast 实例 |
-| Toast.success       | 展示成功提示                       | `(props: string \| ToastProps) => ToastInstance` | Toast 实例 |
-| Toast.fail          | 展示失败提示                       | `(props: string \| ToastProps) => ToastInstance` | Toast 实例 |
-| Toast.clearAll      | 关闭所有提示                       | -                                                | -          |
-| Toast.allowMultiple | 是否在页面中允许同时存在多个 Toast | `(allow: boolean)`                               | -          |
+| 方法名              | 说明                               | 类型                                             | 版本 |
+| ------------------- | ---------------------------------- | ------------------------------------------------ | ---- |
+| Toast.show          | 展示提示                           | `(props: string \| ToastProps) => ToastInstance` |      |
+| Toast.loading       | 展示加载提示                       | `(props: string \| ToastProps) => ToastInstance` |      |
+| Toast.success       | 展示成功提示                       | `(props: string \| ToastProps) => ToastInstance` |      |
+| Toast.fail          | 展示失败提示                       | `(props: string \| ToastProps) => ToastInstance` |      |
+| Toast.clearAll      | 关闭所有提示                       | `() => void`                                     |      |
+| Toast.allowMultiple | 是否在页面中允许同时存在多个 Toast | `(allow: boolean) => void`                       |      |
 
 ### Toast 实例方法
 
-| 方法名 | 说明            | 参数                  | 返回值 |
-| ------ | --------------- | --------------------- | ------ |
-| update | 更新展示提示    | `(props: ToastProps)` | -      |
-| clear  | 销毁 Toast 实例 | -                     | -      |
+| 方法名 | 说明            | 类型                          | 版本 |
+| ------ | --------------- | ----------------------------- | ---- |
+| update | 更新展示提示    | `(props: ToastProps) => void` |      |
+| clear  | 销毁 Toast 实例 | `() => void`                  |      |

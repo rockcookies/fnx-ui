@@ -4,7 +4,7 @@
 
 ## Basic Usage
 
-Set the width percentage of the column by adding the `span` attribute to `Col`. In addition, adding the `offset` attribute can set the offset width of the column, and the calculation method is the same as that of `span`.
+Set the width percentage of the column by adding the `span` attribute to Col. In addition, adding the `offset` attribute can set the offset width of the column, and the calculation method is the same as that of `span`.
 
 ```tsx
 import { Row, Col } from 'fnx-ui';
@@ -90,15 +90,17 @@ ReactDOM.render(
 
 ## API
 
-| Parameter | Description                    | Type     | Default value |
-| --------- | ------------------------------ | -------- | ------------- |
-| span      | Column element width           | `number` | -             |
-| offset    | Column element offset distance | `number` | -             |
+### Col Props
 
-## Row API
+| Name   | Description                    | Type     | Default | Version |
+| ------ | ------------------------------ | -------- | ------- | ------- |
+| span   | Column element width           | `number` | -       |         |
+| offset | Column element offset distance | `number` | -       |         |
 
-| Parameter | Description                                    | Type                                                            | Default value |
-| --------- | ---------------------------------------------- | --------------------------------------------------------------- | ------------- |
-| gutter    | The spacing between column elements is in `px` | `number`                                                        | -             |
-| justify   | Spindle alignment                              | `'start' \|'end' \| 'center' \| 'pace-around' \|'space-betwee'` | -             |
-| align     | Cross axis alignment                           | `'top' \|'middle' \| 'bottom' \|'stretch'`                      | -             |
+### Row Props
+
+| Name    | Description                                    | Type                                                                       | Default | Version |
+| ------- | ---------------------------------------------- | -------------------------------------------------------------------------- | ------- | ------- |
+| gutter  | The spacing between column elements is in `px` | `number`                                                                   | -       |         |
+| justify | Spindle alignment                              | `'start'` \| `'end'` \| `'center'` \| `'pace-around'` \| `'space-between'` | -       |         |
+| align   | Cross axis alignment                           | `'top'` \| `'middle'` \| `'bottom'` \| `'stretch'`                         | -       |         |

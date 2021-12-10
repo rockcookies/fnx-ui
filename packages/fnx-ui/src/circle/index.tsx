@@ -1,32 +1,11 @@
-import React, { useMemo, useEffect, useRef, forwardRef } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import { getSizeStyle } from '../utils/format';
 import { classnames, createBEM } from '../utils/namespace';
-import { CircleProps, CircleGapPosition } from './interface';
-import useProps from '../hooks/use-props';
+import { createDefaultsForwardRef } from '../utils/react';
+import { CircleGapPosition, CircleProps } from './interface';
 
 const NS = 'fnx-circle';
 const bem = createBEM(NS);
-
-type RequiredCircleProps = Required<
-	Pick<
-		CircleProps,
-		| 'progress'
-		| 'speed'
-		| 'strokeWidth'
-		| 'strokeLinecap'
-		| 'gapDegree'
-		| 'clockwise'
-	>
->;
-
-const DEFAULT_PROPS: RequiredCircleProps = {
-	strokeWidth: 5,
-	progress: 100,
-	speed: 1,
-	strokeLinecap: 'round',
-	gapDegree: 0,
-	clockwise: true,
-};
 
 let uid = 0;
 
@@ -129,10 +108,39 @@ const useTransitionDuration = (progressList: number[], speed: number) => {
 	return [paths];
 };
 
-const Circle = forwardRef<HTMLDivElement, CircleProps>((_props, ref) => {
-	const [
-		{ strokeWidth, progress, speed, strokeLinecap, gapDegree, clockwise },
+const Circle = createDefaultsForwardRef<
+	HTMLDivElement,
+	CircleProps,
+	Required<
+		Pick<
+			CircleProps,
+			| 'progress'
+			| 'speed'
+			| 'strokeWidth'
+			| 'strokeLinecap'
+			| 'gapDegree'
+			| 'clockwise'
+		>
+	>
+>(
+	'Circle',
+	{
+		strokeWidth: 5,
+		progress: 100,
+		speed: 1,
+		strokeLinecap: 'round',
+		gapDegree: 0,
+		clockwise: true,
+	},
+	(
 		{
+			strokeWidth,
+			progress,
+			speed,
+			strokeLinecap,
+			gapDegree,
+			clockwise,
+			// optionals
 			size,
 			gapPosition,
 			strokeColor,
@@ -142,130 +150,130 @@ const Circle = forwardRef<HTMLDivElement, CircleProps>((_props, ref) => {
 			children,
 			...restProps
 		},
-	] = useProps<RequiredCircleProps, CircleProps>(DEFAULT_PROPS, _props);
+		ref,
+	) => {
+		const progressList = toArray(progress);
+		const [paths] = useTransitionDuration(progressList, speed);
+		const strokeColorList = toArray(strokeColor);
+		const { pathString, pathStyle } = getPathStyles(
+			0,
+			100,
+			strokeWidth,
+			trailColor,
+			gapDegree,
+			gapPosition,
+		);
 
-	const progressList = toArray(progress);
-	const [paths] = useTransitionDuration(progressList, speed);
-	const strokeColorList = toArray(strokeColor);
-	const { pathString, pathStyle } = getPathStyles(
-		0,
-		100,
-		strokeWidth,
-		trailColor,
-		gapDegree,
-		gapPosition,
-	);
+		const gradient = strokeColorList.find(
+			(color) =>
+				Object.prototype.toString.call(color) === '[object Object]',
+		);
 
-	const gradient = strokeColorList.find(
-		(color) => Object.prototype.toString.call(color) === '[object Object]',
-	);
+		const id = useMemo(() => {
+			uid += 1;
+			return `fnx-circle-linearGradient-${uid}`;
+		}, []);
 
-	const id = useMemo(() => {
-		uid += 1;
-		return `fnx-circle-linearGradient-${uid}`;
-	}, []);
+		const getStokeList = () => {
+			let stackPtg = 0;
+			return progressList.map((ptg, index) => {
+				const color =
+					strokeColorList[index] ||
+					strokeColorList[strokeColorList.length - 1];
 
-	const getStokeList = () => {
-		let stackPtg = 0;
-		return progressList.map((ptg, index) => {
-			const color =
-				strokeColorList[index] ||
-				strokeColorList[strokeColorList.length - 1];
+				const stroke =
+					Object.prototype.toString.call(color) === '[object Object]'
+						? `url(#${id})`
+						: '#1989fa';
 
-			const stroke =
-				Object.prototype.toString.call(color) === '[object Object]'
-					? `url(#${id})`
-					: '#1989fa';
+				const pathStyles = getPathStyles(
+					stackPtg,
+					ptg,
+					strokeWidth,
+					color,
+					gapDegree,
+					gapPosition,
+					clockwise,
+				);
+				stackPtg += ptg;
 
-			const pathStyles = getPathStyles(
-				stackPtg,
-				ptg,
-				strokeWidth,
-				color,
-				gapDegree,
-				gapPosition,
-				clockwise,
-			);
-			stackPtg += ptg;
+				return (
+					<path
+						key={index}
+						className={bem('hover')}
+						d={pathStyles.pathString}
+						stroke={stroke}
+						strokeLinecap={strokeLinecap}
+						strokeWidth={strokeWidth}
+						opacity={ptg === 0 ? 0 : 1}
+						fillOpacity="0"
+						style={pathStyles.pathStyle}
+						ref={paths[index]}
+					/>
+				);
+			});
+		};
 
-			return (
-				<path
-					key={index}
-					className={bem('hover')}
-					d={pathStyles.pathString}
-					stroke={stroke}
-					strokeLinecap={strokeLinecap}
-					strokeWidth={strokeWidth}
-					opacity={ptg === 0 ? 0 : 1}
-					fillOpacity="0"
-					style={pathStyles.pathStyle}
-					ref={paths[index]}
-				/>
-			);
-		});
-	};
+		return (
+			<div
+				className={classnames(bem(), className)}
+				style={{
+					...style,
+					...getSizeStyle(size),
+				}}
+				{...restProps}
+				ref={ref}
+			>
+				<svg viewBox="0 0 100 100">
+					{gradient && (
+						<defs>
+							<linearGradient
+								id={id}
+								x1="100%"
+								y1="0%"
+								x2="0%"
+								y2="0%"
+							>
+								{Object.keys(gradient)
+									.sort(
+										(a, b) =>
+											stripPercentToNumber(a) -
+											stripPercentToNumber(b),
+									)
+									.map((key, index) => (
+										<stop
+											key={index}
+											offset={key}
+											stopOpacity={1}
+											stopColor={gradient[key]}
+										/>
+									))}
+							</linearGradient>
+						</defs>
+					)}
+					<path
+						className={bem('trail')}
+						d={pathString}
+						stroke={trailColor}
+						strokeLinecap={strokeLinecap}
+						strokeWidth={strokeWidth}
+						fillOpacity="0"
+						style={pathStyle}
+					/>
+					{getStokeList().reverse()}
+				</svg>
 
-	return (
-		<div
-			className={classnames(bem(), className)}
-			style={{
-				...style,
-				...getSizeStyle(size),
-			}}
-			{...restProps}
-			ref={ref}
-		>
-			<svg viewBox="0 0 100 100">
-				{gradient && (
-					<defs>
-						<linearGradient
-							id={id}
-							x1="100%"
-							y1="0%"
-							x2="0%"
-							y2="0%"
-						>
-							{Object.keys(gradient)
-								.sort(
-									(a, b) =>
-										stripPercentToNumber(a) -
-										stripPercentToNumber(b),
-								)
-								.map((key, index) => (
-									<stop
-										key={index}
-										offset={key}
-										stopOpacity={1}
-										stopColor={gradient[key]}
-									/>
-								))}
-						</linearGradient>
-					</defs>
-				)}
-				<path
-					className={bem('trail')}
-					d={pathString}
-					stroke={trailColor}
-					strokeLinecap={strokeLinecap}
-					strokeWidth={strokeWidth}
-					fillOpacity="0"
-					style={pathStyle}
-				/>
-				{getStokeList().reverse()}
-			</svg>
-
-			<div className={bem('text')}>{children}</div>
-		</div>
-	);
-});
-
-Circle.displayName = 'Circle';
+				<div className={bem('text')}>{children}</div>
+			</div>
+		);
+	},
+);
 
 export type {
 	CircleComponentProps,
-	CircleProps,
-	CircleLinecap,
 	CircleGapPosition,
+	CircleLinecap,
+	CircleProps,
 	CircleStringGradients,
 } from './interface';
 

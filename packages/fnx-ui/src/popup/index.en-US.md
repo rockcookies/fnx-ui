@@ -124,60 +124,58 @@ ReactDOM.render(
 
 ### Popup Props
 
-| Name                | Description                                            | Type                                                | Default               |
-| ------------------- | ------------------------------------------------------ | --------------------------------------------------- | --------------------- |
-| visible             | Whether to show popup                                  | `boolean`                                           | `false`               |
-| renderOnShow        | Whether to render util appeared                        | `boolean`                                           | `true`                |
-| destroyOnHide       | Whether to unmount child components on hide            | `boolean`                                           | `false`               |
-| mountTo             | Specifies a target element where Popup will be mounted | `HTMLElement \| () => HTMLElement \| false`         | `() => document.body` |
-| transitionDuration  | Transition duration, unit millisecond                  | `number`                                            | `300`                 |
-| transitionName      | Transition class name                                  | `string`                                            | -                     |
-| lockScroll          | Whether to lock background scroll                      | `boolean`                                           | `true`                |
-| position            | Popup position                                         | `'top' \| 'bottom' \| 'left' \| 'right' \|'center'` | `'center'`            |
-| round               | Whether to show round corner                           | `boolean`                                           | `false`               |
-| safeAreaInsetBottom | Whether to enable bottom safe area adaptation          | `boolean`                                           | `false`               |
-| overlay             | Whether to show overlay                                | `boolean`                                           | `true`                |
-| overlayClassName    | Custom overlay class                                   | `string`                                            | -                     |
-| overlayStyle        | Custom overlay style                                   | `CSSProperties`                                     | -                     |
-| overlayCloseable    | Whether to close when overlay is clicked               | `boolean`                                           | `true`                |
+| Name                | Description                                            | Type                                                          | Default               | Version |
+| ------------------- | ------------------------------------------------------ | ------------------------------------------------------------- | --------------------- | ------- |
+| visible             | Whether to show popup                                  | `boolean`                                                     | `false`               |         |
+| renderOnShow        | Whether to render util appeared                        | `boolean`                                                     | `true`                |         |
+| destroyOnHide       | Whether to unmount child components on hide            | `boolean`                                                     | `false`               |         |
+| mountTo             | Specifies a target element where Popup will be mounted | `HTMLElement` \| `() => HTMLElement` \| `false`               | `() => document.body` |         |
+| transitionDuration  | Transition duration, unit millisecond                  | `number`                                                      | `300`                 |         |
+| transitionName      | Transition class name                                  | `string`                                                      | -                     |         |
+| lockScroll          | Whether to lock background scroll                      | `boolean`                                                     | `true`                |         |
+| position            | Popup position                                         | `'top' ` \| `'bottom'` \| `'left'` \| `'right'` \| `'center'` | `'center'`            |         |
+| round               | Whether to show round corner                           | `boolean`                                                     | `false`               |         |
+| safeAreaInsetBottom | Whether to enable bottom safe area adaptation          | `boolean`                                                     | `false`               |         |
+| overlay             | Whether to show overlay                                | `boolean`                                                     | `true`                |         |
+| overlayClassName    | Custom overlay class                                   | `string`                                                      | -                     |         |
+| overlayStyle        | Custom overlay style                                   | `CSSProperties`                                               | -                     |         |
+| overlayCloseable    | Whether to close when overlay is clicked               | `boolean`                                                     | `true`                |         |
 
-#### Note
+**The state of Popup will be preserved at it's component lifecycle by default, if you wish to open it with a brand new state every time, set `destroyOnClose` on it.**
 
-- The state of Popup will be preserved at it's component lifecycle by default, if you wish to open it with a brand new state everytime, set `destroyOnClose` on it.
+### Popup Events
 
-## Events
+| Event name     | Description                            | Type         | Version |
+| -------------- | -------------------------------------- | ------------ | ------- |
+| onOverlayClick | Emitted when overlay is clicked        | `() => void` |         |
+| onClose        | Emitted when Popup is closing          | `() => void` |         |
+| onBeforeHide   | Emitted when before the hide animation | `() => void` |         |
+| onHide         | Emitted when popup hiding              | `() => void` |         |
+| onAfterHide    | Emitted when after the hide animation  | `() => void` |         |
+| onBeforeShow   | Emitted when before the show animation | `() => void` |         |
+| onShow         | Execute when popup showing             | `() => void` |         |
+| onAfterShow    | Emitted when after the show animation  | `() => void` |         |
 
-| Event name     | Description                            | Callback Arguments |
-| -------------- | -------------------------------------- | ------------------ |
-| onOverlayClick | Emitted when overlay is clicked        | -                  |
-| onClose        | Emitted when Popup is closing          | -                  |
-| onBeforeHide   | Emitted when before the hide animation | -                  |
-| onHide         | Emitted when popup hiding              | -                  |
-| onAfterHide    | Emitted when after the hide animation  | -                  |
-| onBeforeShow   | Emitted when before the show animation | -                  |
-| onShow         | Execute when popup showing             | -                  |
-| onAfterShow    | Emitted when after the show animation  | -                  |
-
-## Popup.Select Props
+### Popup.Select Props
 
 Popup.Select extends Popup props and add the following props:
 
-| Name                       | Description          | Type                                      | Default value  |
-| -------------------------- | -------------------- | ----------------------------------------- | -------------- |
-| disabled                   | Is it disabled?      | `boolean`                                 | `false`        |
-| value                      | Option value         | `any`                                     | -              |
-| defaultValue               | Default option value | `any`                                     | -              |
-| select                     | popup layer content  | `ReactNode`                               | -              |
-| selectDefaultValuePropName | Default name         | `string`                                  | `defaultValue` |
-| selectConfirmTrigger       | Confirm button name  | `string`                                  | `onConfirm`    |
-| selectCancelTrigger        | Cancel button name   | `string`                                  | `onCancel`     |
-| trigger                    | Trigger behavior     | `string`                                  | `onClick`      |
-| children                   | Child element        | `ReactNode \| (value?: any) => ReactNode` | -              |
+| Name                       | Description          | Type                                        | Default        | Version |
+| -------------------------- | -------------------- | ------------------------------------------- | -------------- | ------- |
+| disabled                   | Is it disabled?      | `boolean`                                   | `false`        |         |
+| value                      | Option value         | `any`                                       | -              |         |
+| defaultValue               | Default option value | `any`                                       | -              |         |
+| select                     | popup layer content  | `ReactNode`                                 | -              |         |
+| selectDefaultValuePropName | Default name         | `string`                                    | `defaultValue` |         |
+| selectConfirmTrigger       | Confirm button name  | `string`                                    | `onConfirm`    |         |
+| selectCancelTrigger        | Cancel button name   | `string`                                    | `onCancel`     |         |
+| trigger                    | Trigger behavior     | `string`                                    | `onClick`      |         |
+| children                   | Child element        | `ReactNode` \| `(value?: any) => ReactNode` | -              |         |
 
-## PopupSelect Events
+### Popup.Select Events
 
 Popup.Select extends Popup events and add the following events:
 
-| Event Name | Description            | Callback Arguments     |
-| ---------- | ---------------------- | ---------------------- |
-| onChange   | `value` 发生改变时触发 | `(value: any) => void` |
+| Event Name | Description                        | Type                   | Version |
+| ---------- | ---------------------------------- | ---------------------- | ------- |
+| onChange   | Triggered when the `value` changes | `(value: any) => void` |         |

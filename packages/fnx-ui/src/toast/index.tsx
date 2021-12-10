@@ -1,8 +1,9 @@
-import React, { FC, useContext, useEffect, useMemo, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { ConfigContext } from '../config-provider/context';
 import useDefaultsRef from '../hooks/use-defaults-ref';
 import Icon from '../icon';
 import PopupHelper from '../popup/utils/popup-helper';
+import { createFC } from '../utils/react';
 import {
 	ToastContext,
 	ToastExportExtra,
@@ -24,7 +25,7 @@ function createToast(
 	options: ToastOptions = {},
 ): ToastInstance {
 	return helper.create<ToastProps>(({ onUpdate, remove }) => {
-		const ToastStatic: FC<ToastProps> = () => {
+		const ToastStatic = createFC<ToastProps>('ToastStatic', () => {
 			const [{ onAfterHide, ...props }, setProps] = useState(baseProps);
 
 			useEffect(() => {
@@ -46,9 +47,7 @@ function createToast(
 					}}
 				/>
 			);
-		};
-
-		ToastStatic.displayName = 'Toast';
+		});
 
 		return ToastStatic;
 	}, options.container);
@@ -113,10 +112,10 @@ Toast.allowMultiple = (allow) => {
 
 export type {
 	ToastComponentProps,
-	ToastProps,
-	ToastPosition,
 	ToastContext,
 	ToastInstance,
+	ToastPosition,
+	ToastProps,
 } from './interface';
 
 export default Toast;

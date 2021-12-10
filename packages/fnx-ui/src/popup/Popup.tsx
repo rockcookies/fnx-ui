@@ -1,6 +1,5 @@
 import React, {
 	CSSProperties,
-	forwardRef,
 	useContext,
 	useEffect,
 	useImperativeHandle,
@@ -12,12 +11,12 @@ import { CSSTransition } from 'react-transition-group';
 import ConfigProvider from '../config-provider';
 import useDefaults from '../hooks/use-defaults';
 import { PopupVisibleContext } from '../hooks/use-popup-reopen';
-import useProps from '../hooks/use-props';
 import useScrollLock from '../hooks/use-scroll-lock';
 import Overlay from '../overlay';
 import { noop } from '../utils/misc';
 import { classnames, createBEM } from '../utils/namespace';
-import { PopupComponent, PopupProps } from './interface';
+import { createDefaultsForwardRef } from '../utils/react';
+import { PopupProps } from './interface';
 import Portal from './Portal';
 
 const NS = 'fnx-popup';
@@ -25,80 +24,80 @@ const bem = createBEM(NS);
 
 let globalZIndex = 2000;
 
-type RequiredPopupProps = Required<
-	Pick<
-		PopupProps,
-		| 'visible'
-		| 'renderOnShow'
-		| 'destroyOnHide'
-		| 'lockScroll'
-		| 'position'
-		| 'overlay'
-		| 'overlayCloseable'
-		| 'onOverlayClick'
-		| 'onClose'
-		| 'onBeforeHide'
-		| 'onHide'
-		| 'onAfterHide'
-		| 'onBeforeShow'
-		| 'onShow'
-		| 'onAfterShow'
+const Popup = createDefaultsForwardRef<
+	HTMLDivElement,
+	PopupProps,
+	Required<
+		Pick<
+			PopupProps,
+			| 'visible'
+			| 'renderOnShow'
+			| 'destroyOnHide'
+			| 'lockScroll'
+			| 'position'
+			| 'overlay'
+			| 'overlayCloseable'
+			| 'onOverlayClick'
+			| 'onClose'
+			| 'onBeforeHide'
+			| 'onHide'
+			| 'onAfterHide'
+			| 'onBeforeShow'
+			| 'onShow'
+			| 'onAfterShow'
+		>
 	>
->;
-
-const DEFAULT_PROPS: RequiredPopupProps = {
-	visible: false,
-	renderOnShow: true,
-	destroyOnHide: false,
-	lockScroll: true,
-	position: 'center',
-	overlay: true,
-	overlayCloseable: true,
-	onOverlayClick: noop,
-	onClose: noop,
-	onBeforeHide: noop,
-	onHide: noop,
-	onAfterHide: noop,
-	onBeforeShow: noop,
-	onShow: noop,
-	onAfterShow: noop,
-};
-
-const Popup: PopupComponent = forwardRef<HTMLDivElement, PopupProps>(
-	(_props, ref) => {
-		const [
-			{
-				visible,
-				renderOnShow,
-				destroyOnHide,
-				lockScroll,
-				position,
-				overlay,
-				overlayCloseable,
-				onOverlayClick,
-				onClose,
-				onBeforeHide,
-				onHide,
-				onAfterHide,
-				onBeforeShow,
-				onShow,
-				onAfterShow,
-			},
-			{
-				mountTo,
-				transitionDuration: _transitionDuration,
-				transitionName,
-				round,
-				safeAreaInsetBottom: _safeAreaInsetBottom,
-				overlayClassName,
-				overlayStyle,
-				children,
-				className,
-				style,
-				...restProps
-			},
-		] = useProps<RequiredPopupProps, PopupProps>(DEFAULT_PROPS, _props);
-
+>(
+	'Popup',
+	{
+		visible: false,
+		renderOnShow: true,
+		destroyOnHide: false,
+		lockScroll: true,
+		position: 'center',
+		overlay: true,
+		overlayCloseable: true,
+		onOverlayClick: noop,
+		onClose: noop,
+		onBeforeHide: noop,
+		onHide: noop,
+		onAfterHide: noop,
+		onBeforeShow: noop,
+		onShow: noop,
+		onAfterShow: noop,
+	},
+	(
+		{
+			visible,
+			renderOnShow,
+			destroyOnHide,
+			lockScroll,
+			position,
+			overlay,
+			overlayCloseable,
+			onOverlayClick,
+			onClose,
+			onBeforeHide,
+			onHide,
+			onAfterHide,
+			onBeforeShow,
+			onShow,
+			onAfterShow,
+			// optionals
+			mountTo,
+			transitionDuration: _transitionDuration,
+			transitionName,
+			round,
+			safeAreaInsetBottom: _safeAreaInsetBottom,
+			overlayClassName,
+			overlayStyle,
+			children,
+			className,
+			style,
+			...restProps
+		},
+		ref,
+	) => {
 		const popupRef = useRef<HTMLDivElement | null>(null);
 
 		const configContext = useContext(ConfigProvider.Context);
@@ -237,7 +236,5 @@ const Popup: PopupComponent = forwardRef<HTMLDivElement, PopupProps>(
 		);
 	},
 );
-
-Popup.displayName = 'Popup';
 
 export default Popup;

@@ -1,7 +1,5 @@
 import RcFieldForm from 'rc-field-form';
 import React, {
-	forwardRef,
-	ForwardRefRenderFunction,
 	HTMLAttributes,
 	ReactElement,
 	useImperativeHandle,
@@ -12,6 +10,7 @@ import { useLocale } from '../locale';
 import { ForwardRefProps } from '../utils/interface';
 import { deepAssign, deepClone } from '../utils/misc';
 import { classnames, createBEM } from '../utils/namespace';
+import { createForwardRef } from '../utils/react';
 import { FormContext } from './context';
 import useForm from './hooks/use-form';
 import { FormContextData, FormInstance, FormProps } from './interface';
@@ -19,10 +18,10 @@ import { FormContextData, FormInstance, FormProps } from './interface';
 const NS = 'fnx-form';
 const bem = createBEM(NS);
 
-const FormContainer = forwardRef<
+const FormContainer = createForwardRef<
 	HTMLFormElement,
 	HTMLAttributes<HTMLFormElement>
->((props, ref) => {
+>('FormContainer', (props, ref) => {
 	const formRef = useRef<HTMLFormElement>(null);
 	useImperativeHandle<HTMLFormElement | null, HTMLFormElement | null>(
 		ref,
@@ -35,12 +34,7 @@ const FormContainer = forwardRef<
 	return <form {...props} ref={formRef}></form>;
 });
 
-FormContainer.displayName = 'FormContainer';
-
-const InternalForm: ForwardRefRenderFunction<FormInstance, FormProps> = (
-	props,
-	ref,
-) => {
+const Form = createForwardRef<FormInstance, FormProps>('Form', (props, ref) => {
 	const {
 		colon,
 		requiredMark,
@@ -93,13 +87,7 @@ const InternalForm: ForwardRefRenderFunction<FormInstance, FormProps> = (
 			/>
 		</FormContext.Provider>
 	);
-};
-
-InternalForm.displayName = 'Form';
-
-const Form = forwardRef<FormInstance, FormProps>(InternalForm) as <
-	Values = any,
->(
+}) as <Values = any>(
 	props: ForwardRefProps<FormProps<Values>, FormInstance<Values>>,
 ) => ReactElement;
 

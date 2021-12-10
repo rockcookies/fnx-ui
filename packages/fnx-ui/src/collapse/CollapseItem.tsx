@@ -1,6 +1,5 @@
 import React, {
 	CSSProperties,
-	forwardRef,
 	ReactNode,
 	useCallback,
 	useContext,
@@ -12,44 +11,50 @@ import React, {
 import { CSSTransition } from 'react-transition-group';
 import Cell from '../cell';
 import ConfigProvider from '../config-provider';
-import useProps from '../hooks/use-props';
+import useDefaults from '../hooks/use-defaults';
 import Icon from '../icon/Icon';
 import { classnames, createBEM } from '../utils/namespace';
+import { createDefaultsForwardRef } from '../utils/react';
 import CollapseContext from './context';
 import { CollapseItemProps } from './interface';
 
 const NS = 'fnx-collapse-item';
 const bem = createBEM(NS);
 
-type RequiredCollapseItemProps = Required<
-	Pick<
-		CollapseItemProps,
-		| 'titleProps'
-		| 'headerProps'
-		| 'disabled'
-		| 'ghost'
-		| 'transitionDuration'
-	>
->;
-
-const CollapseItem = forwardRef<HTMLDivElement, CollapseItemProps>(
-	(_props, ref) => {
+const CollapseItem = createDefaultsForwardRef<
+	HTMLDivElement,
+	CollapseItemProps,
+	Required<Pick<CollapseItemProps, 'titleProps' | 'headerProps' | 'disabled'>>
+>(
+	'CollapseItem',
+	{
+		titleProps: {},
+		headerProps: {},
+		disabled: false,
+	},
+	(
+		{
+			titleProps,
+			headerProps,
+			disabled,
+			// optionals
+			ghost: _ghost,
+			transitionDuration: _transitionDuration,
+			title,
+			className,
+			children,
+			...restProps
+		},
+		ref,
+	) => {
 		const { activeKey, onChange, accordion, ...ctx } =
 			useContext(CollapseContext);
 		const configContext = useContext(ConfigProvider.Context);
 
-		const [
-			{ titleProps, headerProps, disabled, ghost, transitionDuration },
-			{ title, className, children, ...restProps },
-		] = useProps<RequiredCollapseItemProps, CollapseItemProps>(
-			{
-				titleProps: {},
-				headerProps: {},
-				disabled: false,
-				ghost: ctx.ghost,
-				transitionDuration: configContext.transitionDuration,
-			},
-			_props,
+		const ghost = useDefaults<boolean>(ctx.ghost, _ghost);
+		const transitionDuration = useDefaults<number>(
+			configContext.transitionDuration,
+			_transitionDuration,
 		);
 
 		const wrapperRef = useRef<HTMLDivElement | null>(null);
@@ -205,7 +210,5 @@ const CollapseItem = forwardRef<HTMLDivElement, CollapseItemProps>(
 		);
 	},
 );
-
-CollapseItem.displayName = 'CollapseItem';
 
 export default CollapseItem;

@@ -4,11 +4,6 @@ export const _bem = createBEM('fnx-calendar');
 
 export type CalendarMode = 'single' | 'multiple' | 'range';
 
-export interface CalendarMonthRef {
-	root: HTMLDivElement | null;
-	getHeight(): number;
-}
-
 export function compareMonth(d1: Date, d2: Date) {
 	const year1 = d1.getFullYear();
 	const year2 = d2.getFullYear();

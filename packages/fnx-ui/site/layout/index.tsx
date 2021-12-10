@@ -1,9 +1,12 @@
-import React, { FC, Suspense, useCallback, useMemo, useState } from 'react';
-import { useRouteMatch } from 'react-router-dom';
+import React, { Suspense, useCallback, useMemo, useState } from 'react';
 import Helmet from 'react-helmet';
+import { useRouteMatch } from 'umi';
 import pkg from '../../package.json';
 import { Dictionary } from '../../src/utils/interface';
 import { createBEM } from '../../src/utils/namespace';
+import { createFC } from '../../src/utils/react';
+import ErrorFallback from '../components/ErrorFallback';
+import PageLoading from '../components/PageLoading';
 import configResponsive from '../hooks/config-responsive';
 import useTheme from '../hooks/use-theme';
 import Index from '../pages/Index';
@@ -13,8 +16,6 @@ import { SiteContext } from './context';
 import './index.less';
 import SiteHeader from './SiteHeader';
 import SideMenuTree from './SiteMenuTree';
-import PageLoading from '../components/PageLoading';
-import ErrorFallback from '../components/ErrorFallback';
 
 const bem = createBEM('site');
 
@@ -36,7 +37,7 @@ const I18N: Dictionary<Dictionary<string>> = {
 	},
 };
 
-const Layout: FC = () => {
+const Layout = createFC('Layout', () => {
 	const [responsive] = useResponsive();
 
 	const matches = useRouteMatch<Dictionary<string | undefined>>(
@@ -160,8 +161,6 @@ const Layout: FC = () => {
 			</section>
 		</SiteContext.Provider>
 	);
-};
-
-Layout.displayName = 'Layout';
+});
 
 export default Layout;

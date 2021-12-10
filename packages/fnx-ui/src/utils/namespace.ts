@@ -81,7 +81,7 @@ export function classnames(...classNames: any[]): string {
 		tmp,
 		x,
 		str = '';
-	while (i < arguments.length) {
+	while (i < classNames.length) {
 		if ((tmp = classNames[i++])) {
 			if ((x = toVal(tmp))) {
 				str && (str += ' ');

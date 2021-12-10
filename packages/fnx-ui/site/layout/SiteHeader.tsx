@@ -1,7 +1,8 @@
-import React, { FC, useContext, useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react';
+import { Link } from 'umi';
 import pkg from '../../package.json';
 import { createBEM } from '../../src/utils/namespace';
+import { createFC } from '../../src/utils/react';
 import logo from '../assets/logo.svg';
 import SITE_DATA from '../site-data';
 import { SiteContext } from './context';
@@ -68,7 +69,7 @@ const MENU_ICON = (
 	</svg>
 );
 
-const SiteHeader: FC = () => {
+const SiteHeader = createFC('SiteHeader', () => {
 	const { theme, setTheme, locale, category, menu, responsive } =
 		useContext(SiteContext);
 
@@ -205,8 +206,6 @@ const SiteHeader: FC = () => {
 			</div>
 		</header>
 	);
-};
-
-SiteHeader.displayName = 'SiteHeader';
+});
 
 export default SiteHeader;

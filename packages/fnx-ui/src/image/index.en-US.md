@@ -1,6 +1,6 @@
 # Image
 
-The enhanced version of the `img` tag provides a variety of picture filling modes、loading prompt and loading failure prompt.
+Enhanced `img` tag with multiple image fill modes, support for image lazy loading, loading hint, loading failure hint.
 
 ## Basic Usages
 
@@ -14,7 +14,7 @@ ReactDOM.render(
     <Image
       width="100"
       height="100"
-      src="https://img17.fn-mart.com/pic/2a021346939822ebb66f/B26n221z_2fdhMZdKz/7imyeafa3yKGj9/CsmRtmA3RAuAVmgsAAKtgt1PF3s715.jpg"
+      src="https://dummyimage.com/100x100/000/fff.jpg"
     />
   </>,
   mountNode,
@@ -34,7 +34,7 @@ ReactDOM.render(
       width="10rem"
       height="10rem"
       fit="contain"
-      src="https://img17.fn-mart.com/pic/2a021346939822ebb66f/B26n221z_2fdhMZdKz/7imyeafa3yKGj9/CsmRtmA3RAuAVmgsAAKtgt1PF3s715.jpg"
+      src="https://dummyimage.com/100x100/000/fff.jpg"
     />
   </>,
   mountNode,
@@ -55,7 +55,7 @@ ReactDOM.render(
       width="10rem"
       height="10rem"
       fit="contain"
-      src="https://img17.fn-mart.com/pic/2a021346939822ebb66f/B26n221z_2fdhMZdKz/7imyeafa3yKGj9/CsmRtmA3RAuAVmgsAAKtgt1PF3s715.jpg"
+      src="https://dummyimage.com/100x100/000/fff.jpg"
     />
   </>,
   mountNode,
@@ -76,7 +76,7 @@ ReactDOM.render(
       width="10rem"
       height="10rem"
       fit="contain"
-      src="https://img17.fn-mart.com/pic/2a021346939822ebb66f/B26n221z_2fdhMZdKz/7imyeafa3yKGj9/CsmRtmA3RAuAVmgsAAKtgt1PF3s715.jpg"
+      src="https://dummyimage.com/100x100/000/fff.jpg"
     />
   </>,
   mountNode,
@@ -85,7 +85,7 @@ ReactDOM.render(
 
 ## Loading
 
-`Image`component provides the default loading prompt, and supports customizing the loading content through `indicator.loading`.
+Image provides the default loading prompt, and supports customizing the loading content through `indicator.loading`.
 
 ```tsx
 import { Image } from 'fnx-ui';
@@ -96,7 +96,7 @@ ReactDOM.render(
       width="10rem"
       height="10rem"
       fit="contain"
-      src="https://img17.fn-mart.com/pic/2a021346939822ebb66f/B26n221z_2fdhMZdKz/7imyeafa3yKGj9/CsmRtmA3RAuAVmgsAAKtgt1PF3s715.jpg"
+      src="https://dummyimage.com/100x100/000/fff.jpg"
       indicator={{
         loading: 'Loading...',
       }}
@@ -108,7 +108,7 @@ ReactDOM.render(
 
 ## Error
 
-`Image` component provides the default loading failure prompt, and supports custom loading failure content through `slots.error`.
+Image provides the default loading failure prompt, and supports custom loading failure content through `slots.error`.
 
 ```tsx
 import { Image } from 'fnx-ui';
@@ -131,18 +131,27 @@ ReactDOM.render(
 
 ## API
 
-| Parameter | Description                       | Type                                                       | Default value |
-| --------- | --------------------------------- | ---------------------------------------------------------- | ------------- |
-| src       | Pictures linking                  | `string`                                                   | -             |
-| fit       | Picture fill mode                 | `'contain' \| 'cover' \| 'fill' \| 'none' \| 'scale-down'` | `fill`        |
-| alt       | Alternate text                    | `string`                                                   | -             |
-| width     | Width, default unit `px`          | `number \| string`                                         | -             |
-| height    | Height, default unit `px`         | `number \| string`                                         | -             |
-| radius    | Fillet size, default unit is `px` | `number \| string`                                         | `0`           |
-| round     | Is it displayed as a circle       | `boolean`                                                  | `false`       |
-| slots     | Custom load failed content        | `{ loading?: ReactNode; error?: ReactNode; }`              | -             |
+### Image Props
 
-### Picture Fill Mode
+| Name   | Description                       | Type                                                               | Default  | Version |
+| ------ | --------------------------------- | ------------------------------------------------------------------ | -------- | ------- |
+| src    | Image src                         | `string`                                                           | -        |         |
+| fit    | Fill mode                         | `'contain'` \| `'cover'` \| `'fill'` \| `'none'` \| `'scale-down'` | `'fill'` |         |
+| alt    | Alternate text                    | `string`                                                           | -        |         |
+| width  | Width, default unit `px`          | `number` \| `string`                                               | -        |         |
+| height | Height, default unit `px`         | `number` \| `string`                                               | -        |         |
+| radius | Fillet size, default unit is `px` | `number` \| `string`                                               | `0`      |         |
+| round  | Whether to be round               | `boolean`                                                          | `false`  |         |
+| slots  | Image slots                       | `ImageSlots`                                                       | -        |         |
+
+### ImageSlots
+
+| Name    | Description                | Type        | Default | Version |
+| ------- | -------------------------- | ----------- | ------- | ------- |
+| loading | Custom loading placeholder | `ReactNode` | -       |         |
+| error   | Custom error placeholder   | `ReactNode` | -       |         |
+
+### Image Fill Mode
 
 | Name       | Description                                                                                                                        |
 | ---------- | ---------------------------------------------------------------------------------------------------------------------------------- |

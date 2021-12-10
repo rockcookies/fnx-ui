@@ -1,9 +1,10 @@
-import React, { FC, useContext, useEffect, useMemo, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { ConfigContext } from '../config-provider/context';
 import useDefaultsRef from '../hooks/use-defaults-ref';
 import PopupHelper from '../popup/utils/popup-helper';
 import { isFunction, isPromise } from '../utils/detect';
 import { noop } from '../utils/misc';
+import { createFC } from '../utils/react';
 import CDialog from './Dialog';
 import {
 	DialogContext,
@@ -21,7 +22,7 @@ const createDialog = (
 	options: { locale?: DialogLocale; container?: HTMLElement } = {},
 ): DialogInstance => {
 	return helper.create<DialogStaticProps>(({ onUpdate, remove }) => {
-		const DialogStatic: FC<DialogStaticProps> = () => {
+		const DialogStatic = createFC<DialogStaticProps>('DialogStatic', () => {
 			const [{ onConfirm, onCancel, onAfterHide, ...props }, setProps] =
 				useState(baseProps);
 
@@ -52,7 +53,10 @@ const createDialog = (
 						}));
 					});
 				} else {
-					setProps((prev) => ({ ...prev, visible: res === false }));
+					setProps((prev) => ({
+						...prev,
+						visible: res === false,
+					}));
 				}
 			};
 
@@ -79,9 +83,7 @@ const createDialog = (
 					}}
 				/>
 			);
-		};
-
-		DialogStatic.displayName = 'Dialog';
+		});
 
 		return DialogStatic;
 	}, options.container);
@@ -116,11 +118,11 @@ Dialog.useDialog = () => {
 
 export type {
 	DialogComponentProps,
-	DialogProps,
 	DialogContext,
 	DialogInstance,
 	DialogLocale,
 	DialogMessageAlign,
+	DialogProps,
 	DialogStaticProps,
 } from './interface';
 

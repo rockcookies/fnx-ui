@@ -1,7 +1,8 @@
 import React, { FC, useContext, useEffect, useMemo, useState } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect } from 'umi';
 import { setScrollTop } from '../../../src/utils/dom/scroll';
 import { createBEM } from '../../../src/utils/namespace';
+import { createFC } from '../../../src/utils/react';
 import Markdown from '../../components/Markdown';
 import { SiteContext } from '../../layout/context';
 import { appendQuery } from '../../utils/history-utils';
@@ -9,7 +10,7 @@ import './index.less';
 
 const bem = createBEM('components');
 
-const Components: FC = () => {
+const Components: FC = createFC('Components', () => {
 	const { locale, menu, theme, responsive } = useContext(SiteContext);
 
 	const demoUrl = useMemo<string | undefined>(() => {
@@ -98,8 +99,6 @@ const Components: FC = () => {
 			)}
 		</div>
 	);
-};
-
-Components.displayName = 'Components';
+});
 
 export default Components;

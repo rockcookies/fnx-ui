@@ -100,29 +100,29 @@ const timer = setInterval(() => {
 
 Toast extends [Popup](#/en-US/components/popup) props and add the following props:
 
-| Name           | Description                                       | Type                            | Default value |
-| -------------- | ------------------------------------------------- | ------------------------------- | ------------- |
-| position       | Toast location                                    | `'top' \| 'bottom' \| 'middle'` | `'middle'`    |
-| message        | Text content, support passing `\n`                | `string`                        | -             |
-| icon           | Custom icon                                       | `ReactNode`                     | -             |
-| duration       | Toast duration(ms), won't disappear if value is 0 | `number`                        | `2000`        |
-| forbidClick    | Whether to forbid click background                | `boolean`                       | `false`       |
-| clickCloseable | Whether to close when click                       | `boolean`                       | -             |
+| Name           | Description                                       | Type                                | Default    | Version |
+| -------------- | ------------------------------------------------- | ----------------------------------- | ---------- | ------- |
+| position       | Toast location                                    | `'top'` \| `'bottom'` \| `'middle'` | `'middle'` |         |
+| message        | Text content, support passing `\n`                | `string`                            | -          |         |
+| icon           | Custom icon                                       | `ReactNode`                         | -          |         |
+| duration       | Toast duration(ms), won't disappear if value is 0 | `number`                            | `2000`     |         |
+| forbidClick    | Whether to forbid click background                | `boolean`                           | `false`    |         |
+| clickCloseable | Whether to close when click                       | `boolean`                           | -          |         |
 
 ### Toast Method
 
-| Event name          | Description                           | Callback Arguments                               | Return Value   |
-| ------------------- | ------------------------------------- | ------------------------------------------------ | -------------- |
-| Toast.show          | Display toast                         | `(props: string \| ToastProps) => ToastInstance` | Toast instance |
-| Toast.loading       | Display loading toast                 | `(props: string \| ToastProps) => ToastInstance` | Toast instance |
-| Toast.success       | Display success toast                 | `(props: string \| ToastProps) => ToastInstance` | Toast instance |
-| Toast.fail          | Display failed toast                  | `(props: string \| ToastProps) => ToastInstance` | Toast instance |
-| Toast.clearAll      | Close toast                           | -                                                | -              |
-| Toast.allowMultiple | Allow multiple toast at the same time | `(allow: boolean)`                               | -              |
+| Event name          | Description                           | Type                                             | Version |
+| ------------------- | ------------------------------------- | ------------------------------------------------ | ------- |
+| Toast.show          | Display toast                         | `(props: string \| ToastProps) => ToastInstance` |         |
+| Toast.loading       | Display loading toast                 | `(props: string \| ToastProps) => ToastInstance` |         |
+| Toast.success       | Display success toast                 | `(props: string \| ToastProps) => ToastInstance` |         |
+| Toast.fail          | Display failed toast                  | `(props: string \| ToastProps) => ToastInstance` |         |
+| Toast.clearAll      | Close toast                           | `() => void`                                     |         |
+| Toast.allowMultiple | Allow multiple toast at the same time | `(allow: boolean) => void`                       |         |
 
 ### Toast Instance Methods
 
-| Method Name | Description            | Parameter             | Return Value |
-| ----------- | ---------------------- | --------------------- | ------------ |
-| update      | Update toast instance  | `(props: ToastProps)` | -            |
-| clear       | Destroy toast instance | -                     | -            |
+| Method Name | Description            | Type                          | Version |
+| ----------- | ---------------------- | ----------------------------- | ------- |
+| update      | Update toast instance  | `(props: ToastProps) => void` |         |
+| clear       | Destroy toast instance | `() => void`                  |         |

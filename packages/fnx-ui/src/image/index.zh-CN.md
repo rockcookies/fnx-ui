@@ -34,7 +34,7 @@ ReactDOM.render(
       width="10rem"
       height="10rem"
       fit="contain"
-      src="https://img17.fn-mart.com/pic/2a021346939822ebb66f/B26n221z_2fdhMZdKz/7imyeafa3yKGj9/CsmRtmA3RAuAVmgsAAKtgt1PF3s715.jpg"
+      src="https://dummyimage.com/100x100/000/fff.jpg"
     />
   </>,
   mountNode,
@@ -55,7 +55,7 @@ ReactDOM.render(
       width="10rem"
       height="10rem"
       fit="contain"
-      src="https://img17.fn-mart.com/pic/2a021346939822ebb66f/B26n221z_2fdhMZdKz/7imyeafa3yKGj9/CsmRtmA3RAuAVmgsAAKtgt1PF3s715.jpg"
+      src="https://dummyimage.com/100x100/000/fff.jpg"
     />
   </>,
   mountNode,
@@ -76,7 +76,7 @@ ReactDOM.render(
       width="10rem"
       height="10rem"
       fit="contain"
-      src="https://img17.fn-mart.com/pic/2a021346939822ebb66f/B26n221z_2fdhMZdKz/7imyeafa3yKGj9/CsmRtmA3RAuAVmgsAAKtgt1PF3s715.jpg"
+      src="https://dummyimage.com/100x100/000/fff.jpg"
     />
   </>,
   mountNode,
@@ -85,7 +85,7 @@ ReactDOM.render(
 
 ## 加载中提示
 
-`Image` 组件提供了默认的加载中提示，支持通过 `indicator.loading` 自定义加载中内容。
+Image 提供了默认的加载中提示，支持通过 `indicator.loading` 自定义加载中内容。
 
 ```tsx
 import { Image } from 'fnx-ui';
@@ -96,7 +96,7 @@ ReactDOM.render(
       width="10rem"
       height="10rem"
       fit="contain"
-      src="https://img17.fn-mart.com/pic/2a021346939822ebb66f/B26n221z_2fdhMZdKz/7imyeafa3yKGj9/CsmRtmA3RAuAVmgsAAKtgt1PF3s715.jpg"
+      src="https://dummyimage.com/100x100/000/fff.jpg"
       indicator={{
         loading: 'Loading...',
       }}
@@ -108,7 +108,7 @@ ReactDOM.render(
 
 ## 加载失败提示
 
-`Image` 组件提供了默认的加载失败提示，支持通过 `slots.error` 自定义加载失败内容。
+Image 提供了默认的加载失败提示，支持通过 `slots.error` 自定义加载失败内容。
 
 ```tsx
 import { Image } from 'fnx-ui';
@@ -131,16 +131,25 @@ ReactDOM.render(
 
 ## API
 
-| 参数   | 说明                     | 类型                                                       | 默认值  |
-| ------ | ------------------------ | ---------------------------------------------------------- | ------- |
-| src    | 图片链接                 | `string`                                                   | -       |
-| fit    | 图片填充模式             | `'contain' \| 'cover' \| 'fill' \| 'none' \| 'scale-down'` | `fill`  |
-| alt    | 替代文本                 | `string`                                                   | -       |
-| width  | 宽度，默认单位为`px`     | `number \| string`                                         | -       |
-| height | 高度，默认单位为`px`     | `number \| string`                                         | -       |
-| radius | 圆角大小，默认单位为`px` | `number \| string`                                         | `0`     |
-| round  | 是否显示为圆形           | `boolean`                                                  | `false` |
-| slots  | 自定义加载失败内容       | `{ loading?: ReactNode; error?: ReactNode; }`              | -       |
+### Image Props
+
+| 名称   | 说明                     | 类型                                                               | 默认值   | 版本 |
+| ------ | ------------------------ | ------------------------------------------------------------------ | -------- | ---- |
+| src    | 图片链接                 | `string`                                                           | -        |      |
+| fit    | 图片填充模式             | `'contain'` \| `'cover'` \| `'fill'` \| `'none'` \| `'scale-down'` | `'fill'` |      |
+| alt    | 替代文本                 | `string`                                                           | -        |      |
+| width  | 宽度，默认单位为`px`     | `number` \| `string`                                               | -        |      |
+| height | 高度，默认单位为`px`     | `number` \| `string`                                               | -        |      |
+| radius | 圆角大小，默认单位为`px` | `number` \| `string`                                               | `0`      |      |
+| round  | 是否显示为圆形           | `boolean`                                                          | `false`  |      |
+| slots  | 图片插槽                 | `ImageSlots`                                                       | -        |      |
+
+### ImageSlots
+
+| 名称    | 说明                       | 类型        | 默认值 | 版本 |
+| ------- | -------------------------- | ----------- | ------ | ---- |
+| loading | 自定义加载中的提示内容     | `ReactNode` | -      |      |
+| error   | 自定义加载失败时的提示内容 | `ReactNode` | -      |      |
 
 ### 图片填充模式
 

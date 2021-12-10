@@ -1,46 +1,48 @@
-import React, { CSSProperties, forwardRef, ReactNode } from 'react';
-import useProps from '../hooks/use-props';
+import React, { CSSProperties, ReactNode } from 'react';
 import Icon from '../icon';
 import { BORDER_SURROUND } from '../utils/constants';
 import { preventDefault } from '../utils/dom/event';
 import { noop } from '../utils/misc';
 import { classnames, createBEM } from '../utils/namespace';
+import { createDefaultsForwardRef } from '../utils/react';
 import { ButtonProps } from './interface';
 
 const NS = 'fnx-button';
 const bem = createBEM(NS);
 
-type ButtonRequiredProps = Required<
-	Pick<
-		ButtonProps,
-		| 'type'
-		| 'size'
-		| 'iconPosition'
-		| 'loading'
-		| 'disabled'
-		| 'hairline'
-		| 'plain'
-		| 'shape'
-		| 'block'
-		| 'onClick'
+const Button = createDefaultsForwardRef<
+	HTMLButtonElement,
+	ButtonProps,
+	Required<
+		Pick<
+			ButtonProps,
+			| 'type'
+			| 'size'
+			| 'iconPosition'
+			| 'loading'
+			| 'disabled'
+			| 'hairline'
+			| 'plain'
+			| 'shape'
+			| 'block'
+			| 'onClick'
+		>
 	>
->;
-
-const DEFAULT_PROPS: ButtonRequiredProps = {
-	type: 'default',
-	size: 'md',
-	iconPosition: 'left',
-	loading: false,
-	disabled: false,
-	hairline: false,
-	plain: false,
-	shape: 'radius',
-	block: false,
-	onClick: noop,
-};
-
-const Button = forwardRef<HTMLButtonElement, ButtonProps>((_props, ref) => {
-	const [
+>(
+	'Button',
+	{
+		type: 'default',
+		size: 'md',
+		iconPosition: 'left',
+		loading: false,
+		disabled: false,
+		hairline: false,
+		plain: false,
+		shape: 'radius',
+		block: false,
+		onClick: noop,
+	},
+	(
 		{
 			type,
 			size,
@@ -52,8 +54,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>((_props, ref) => {
 			shape,
 			block,
 			onClick,
-		},
-		{
+			// optionals
 			icon,
 			loadingIcon,
 			loadingChildren,
@@ -64,92 +65,91 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>((_props, ref) => {
 			children,
 			...restProps
 		},
-	] = useProps<ButtonRequiredProps, ButtonProps>(DEFAULT_PROPS, _props);
+		ref,
+	) => {
+		const formatStyle = (): CSSProperties | undefined => {
+			if (!color) {
+				return style;
+			}
 
-	const formatStyle = (): CSSProperties | undefined => {
-		if (!color) {
-			return style;
-		}
+			const formattedStyle: CSSProperties = {
+				...(plain ? { color } : { background: color }),
+			};
 
-		const formattedStyle: CSSProperties = {
-			...(plain ? { color } : { background: color }),
+			// hide border when color is linear-gradient
+			if (color.indexOf('gradient') !== -1) {
+				formattedStyle.border = 'none';
+			} else {
+				formattedStyle.borderColor = color;
+			}
+
+			return { ...formattedStyle, ...style };
 		};
 
-		// hide border when color is linear-gradient
-		if (color.indexOf('gradient') !== -1) {
-			formattedStyle.border = 'none';
-		} else {
-			formattedStyle.borderColor = color;
-		}
+		const renderIcon = () => {
+			if (loading) {
+				return loadingIcon || <Icon.Spinner />;
+			}
 
-		return { ...formattedStyle, ...style };
-	};
+			return icon;
+		};
 
-	const renderIcon = () => {
-		if (loading) {
-			return loadingIcon || <Icon.Spinner />;
-		}
+		const renderChildren = () => {
+			let node: ReactNode;
 
-		return icon;
-	};
+			if (loading && loadingChildren !== undefined) {
+				node = loadingChildren;
+			} else {
+				node = children;
+			}
 
-	const renderChildren = () => {
-		let node: ReactNode;
+			if (node) {
+				return <span className={bem('text')}>{node}</span>;
+			}
+		};
 
-		if (loading && loadingChildren !== undefined) {
-			node = loadingChildren;
-		} else {
-			node = children;
-		}
+		return (
+			<button
+				className={classnames(
+					bem([
+						type,
+						size,
+						shape !== 'radius' ? shape : undefined,
+						{
+							plain,
+							block,
+							loading,
+							disabled,
+							hairline,
+							'custom-color': color,
+						},
+					]),
+					hairline ? BORDER_SURROUND : undefined,
+					className,
+				)}
+				style={formatStyle()}
+				onClick={(e) => {
+					if (loading) {
+						preventDefault(e);
+					}
 
-		if (node) {
-			return <span className={bem('text')}>{node}</span>;
-		}
-	};
-
-	return (
-		<button
-			className={classnames(
-				bem([
-					type,
-					size,
-					shape !== 'radius' ? shape : undefined,
-					{
-						plain,
-						block,
-						loading,
-						disabled,
-						hairline,
-						'custom-color': color,
-					},
-				]),
-				hairline ? BORDER_SURROUND : undefined,
-				className,
-			)}
-			style={formatStyle()}
-			onClick={(e) => {
-				if (loading) {
-					preventDefault(e);
-				}
-
-				if (!loading && !disabled && onClick) {
-					onClick(e);
-				}
-			}}
-			type={htmlType}
-			{...restProps}
-			ref={ref}
-		>
-			<span className={bem('content')}>
-				{iconPosition === 'left' && renderIcon()}
-				{renderChildren()}
-				{iconPosition === 'right' && renderIcon()}
-			</span>
-		</button>
-	);
-});
-
-Button.displayName = 'Button';
+					if (!loading && !disabled && onClick) {
+						onClick(e);
+					}
+				}}
+				type={htmlType}
+				{...restProps}
+				ref={ref}
+			>
+				<span className={bem('content')}>
+					{iconPosition === 'left' && renderIcon()}
+					{renderChildren()}
+					{iconPosition === 'right' && renderIcon()}
+				</span>
+			</button>
+		);
+	},
+);
 
 export type {
 	ButtonComponentProps,

@@ -1,10 +1,12 @@
-import React, { forwardRef, CSSProperties } from 'react';
+import React, { CSSProperties } from 'react';
 import { noop } from '../utils/misc';
 import { classnames } from '../utils/namespace';
+import { createForwardRef } from '../utils/react';
 import { CalendarDayProps } from './interface';
 import { _bem as bem } from './utils';
 
-const CalendarDay = forwardRef<HTMLDivElement, CalendarDayProps>(
+const CalendarDay = createForwardRef<HTMLDivElement, CalendarDayProps>(
+	'CalendarDay',
 	(props, ref) => {
 		const {
 			color,
@@ -64,7 +66,5 @@ const CalendarDay = forwardRef<HTMLDivElement, CalendarDayProps>(
 		);
 	},
 );
-
-CalendarDay.displayName = 'CalendarDay';
 
 export default CalendarDay;

@@ -1,51 +1,59 @@
-import React, { forwardRef } from 'react';
-import useProps from '../hooks/use-props';
-
+import React from 'react';
 import { classnames, createBEM } from '../utils/namespace';
+import { createDefaultsForwardRef } from '../utils/react';
 import { DividerComponentProps, DividerProps } from './interface';
 
 const NS = 'fnx-divider';
 const bem = createBEM(NS);
 
-type DividerRequiredProps = Required<
-	Pick<DividerComponentProps, 'dashed' | 'hairline' | 'contentPosition'>
->;
-
-const DEFAULT_PROPS: DividerRequiredProps = {
-	dashed: false,
-	hairline: true,
-	contentPosition: 'center',
-};
-
-const Divider = forwardRef<HTMLDivElement, DividerProps>((_props, ref) => {
-	const [
-		{ dashed, hairline, contentPosition },
-		{ className, children, ...restProps },
-	] = useProps<DividerRequiredProps, DividerProps>(DEFAULT_PROPS, _props);
-
-	return (
-		<div
-			className={classnames(
-				bem({
-					dashed,
-					hairline,
-					[`content-${contentPosition}`]: children != null,
-				}),
-				className,
-			)}
-			{...restProps}
-			ref={ref}
-		>
-			{children}
-		</div>
-	);
-});
-
-Divider.displayName = 'Divider';
+const Divider = createDefaultsForwardRef<
+	HTMLDivElement,
+	DividerProps,
+	Required<
+		Pick<DividerComponentProps, 'dashed' | 'hairline' | 'contentPosition'>
+	>
+>(
+	'Divider',
+	{
+		dashed: false,
+		hairline: true,
+		contentPosition: 'center',
+	},
+	(
+		{
+			dashed,
+			hairline,
+			contentPosition,
+			// optionals
+			className,
+			children,
+			...restProps
+		},
+		ref,
+	) => {
+		return (
+			<div
+				className={classnames(
+					bem({
+						dashed,
+						hairline,
+						[`content-${contentPosition}`]: children != null,
+					}),
+					className,
+				)}
+				{...restProps}
+				ref={ref}
+			>
+				{children}
+			</div>
+		);
+	},
+);
 
 export type {
 	DividerComponentProps,
-	DividerProps,
 	DividerContentPosition,
+	DividerProps,
 } from './interface';
+
 export default Divider;

@@ -1,12 +1,15 @@
 import React, {
-	useEffect,
 	ReactNode,
-	forwardRef,
-	useRef,
-	useMemo,
+	useCallback,
+	useEffect,
 	useImperativeHandle,
+	useMemo,
+	useRef,
 } from 'react';
+import useDefaultsRef from '../hooks/use-defaults-ref';
 import { useLocale } from '../locale';
+import { setScrollTop } from '../utils/dom/scroll';
+import { createForwardRef } from '../utils/react';
 import CalendarDay from './CalendarDay';
 import useCalendarMonthTitle from './hooks/use-calendar-month-title';
 import {
@@ -14,13 +17,7 @@ import {
 	CalendarDayType,
 	CalendarSlots,
 } from './interface';
-import {
-	CalendarMonthRef,
-	compareDate,
-	getNextDay,
-	getPrevDay,
-	_bem as bem,
-} from './utils';
+import { compareDate, getNextDay, getPrevDay, _bem as bem } from './utils';
 
 interface CProps {
 	color?: string;
@@ -36,235 +33,281 @@ interface CProps {
 	rangeAllowSameDay?: boolean;
 }
 
-const CalendarMonth = forwardRef<CalendarMonthRef, CProps>((props, ref) => {
-	const locale = useLocale('calendar');
+export interface CalendarMonthRef {
+	root: HTMLDivElement | null;
+	getHeight(): number;
+	scrollIntoView(body: Element): void;
+}
 
-	const {
-		color,
-		month,
-		firstDayOfWeek,
-		dayHeight,
-		mode,
-		value,
-		slots,
-		minDate,
-		maxDate,
-		onClickDay,
-		rangeAllowSameDay,
-	} = props;
+const CalendarMonth = createForwardRef<CalendarMonthRef, CProps>(
+	'CalendarMonth',
+	(props, ref) => {
+		const locale = useLocale('calendar');
 
-	const rootHeightRef = useRef<number>(0);
-	const rootRef = useRef<HTMLDivElement | null>(null);
+		const {
+			color,
+			month,
+			firstDayOfWeek,
+			dayHeight,
+			mode,
+			value,
+			slots,
+			minDate,
+			maxDate,
+			onClickDay,
+			rangeAllowSameDay,
+		} = props;
 
-	const monthTitle = useCalendarMonthTitle();
+		const rootHeightRef = useRef<number>(0);
+		const daysRef = useRef<HTMLDivElement | null>(null);
+		const rootRef = useRef<HTMLDivElement | null>(null);
 
-	useImperativeHandle<CalendarMonthRef, CalendarMonthRef>(
-		ref,
-		() => ({
-			root: rootRef.current,
-			getHeight: () => rootHeightRef.current,
-		}),
-		[],
-	);
+		const slotsRef = useDefaultsRef(slots);
 
-	const offset = useMemo(() => {
-		let offset = month.getDay();
+		const monthTitle = useCalendarMonthTitle();
 
-		if (firstDayOfWeek) {
-			offset = (offset + 7 - firstDayOfWeek) % 7;
-		}
+		const scrollIntoView = useCallback(
+			(body: Element) => {
+				const element =
+					slotsRef.current.subTitle !== false
+						? daysRef.current
+						: rootRef.current;
 
-		return offset;
-	}, [firstDayOfWeek, month]);
+				if (!element) {
+					return;
+				}
 
-	const endDate = useMemo(() => {
-		return new Date(month.getFullYear(), month.getMonth() + 1, 0).getDate();
-	}, [month]);
+				const scrollTop =
+					element.getBoundingClientRect().top -
+					body.getBoundingClientRect().top +
+					body.scrollTop;
 
-	const getRangeDayType = (day: Date): CalendarDayType => {
-		const [startDay, endDay] = value;
+				setScrollTop(body, scrollTop);
+			},
+			[slotsRef],
+		);
 
-		if (!startDay) {
-			return 'normal';
-		}
+		useImperativeHandle<CalendarMonthRef, CalendarMonthRef>(
+			ref,
+			() => ({
+				root: rootRef.current,
+				getHeight: () => rootHeightRef.current,
+				scrollIntoView,
+			}),
+			[scrollIntoView],
+		);
 
-		const compareToStart = compareDate(day, startDay);
+		const offset = useMemo(() => {
+			let offset = month.getDay();
 
-		if (!endDay) {
-			return compareToStart === 0 ? 'start' : 'normal';
-		}
-
-		const compareToEnd = compareDate(day, endDay);
-
-		if (rangeAllowSameDay && compareToStart === 0 && compareToEnd === 0) {
-			return 'start-end';
-		}
-		if (compareToStart === 0) {
-			return 'start';
-		}
-		if (compareToEnd === 0) {
-			return 'end';
-		}
-		if (compareToStart > 0 && compareToEnd < 0) {
-			return 'middle';
-		}
-
-		return 'normal';
-	};
-
-	const getMultipleDayType = (day: Date): CalendarDayType => {
-		const isSelected = (date: Date) =>
-			value.findIndex((v) => compareDate(v, date) === 0) >= 0;
-
-		if (isSelected(day)) {
-			const prevDay = getPrevDay(day);
-			const nextDay = getNextDay(day);
-			const prevSelected = isSelected(prevDay);
-			const nextSelected = isSelected(nextDay);
-
-			if (prevSelected && nextSelected) {
-				return 'multiple-middle';
+			if (firstDayOfWeek) {
+				offset = (offset + 7 - firstDayOfWeek) % 7;
 			}
 
-			if (prevSelected) {
-				return 'end';
+			return offset;
+		}, [firstDayOfWeek, month]);
+
+		const endDate = useMemo(() => {
+			return new Date(
+				month.getFullYear(),
+				month.getMonth() + 1,
+				0,
+			).getDate();
+		}, [month]);
+
+		const getRangeDayType = (day: Date): CalendarDayType => {
+			const [startDay, endDay] = value;
+
+			if (!startDay) {
+				return 'normal';
 			}
 
-			if (nextSelected) {
+			const compareToStart = compareDate(day, startDay);
+
+			if (!endDay) {
+				return compareToStart === 0 ? 'start' : 'normal';
+			}
+
+			const compareToEnd = compareDate(day, endDay);
+
+			if (
+				rangeAllowSameDay &&
+				compareToStart === 0 &&
+				compareToEnd === 0
+			) {
+				return 'start-end';
+			}
+			if (compareToStart === 0) {
 				return 'start';
 			}
+			if (compareToEnd === 0) {
+				return 'end';
+			}
+			if (compareToStart > 0 && compareToEnd < 0) {
+				return 'middle';
+			}
 
-			return 'multiple-selected';
-		}
-
-		return 'normal';
-	};
-
-	const getDayType = (day: Date): CalendarDayType => {
-		if (compareDate(day, minDate) < 0 || compareDate(day, maxDate) > 0) {
-			return 'disabled';
-		}
-
-		if (value.length <= 0) {
 			return 'normal';
-		}
-
-		if (mode === 'single') {
-			return compareDate(day, value[0]) === 0 ? 'selected' : 'normal';
-		} else if (mode === 'multiple') {
-			return getMultipleDayType(day);
-		} else {
-			return getRangeDayType(day);
-		}
-	};
-
-	useEffect(() => {
-		const node = rootRef.current;
-
-		let observer: ResizeObserver | undefined;
-
-		if (node) {
-			rootHeightRef.current = node.getBoundingClientRect().height;
-
-			observer = new ResizeObserver((entries: ResizeObserverEntry[]) => {
-				rootHeightRef.current = entries[0]?.contentRect?.height || 0;
-			});
-
-			observer.observe(node);
-		}
-
-		return () => {
-			observer && observer.disconnect;
 		};
-	}, []);
 
-	const getBottomInfo = (dayType: CalendarDayType) => {
-		if (mode === 'range') {
-			if (dayType === 'start' || dayType === 'end') {
-				return locale[dayType];
+		const getMultipleDayType = (day: Date): CalendarDayType => {
+			const isSelected = (date: Date) =>
+				value.findIndex((v) => compareDate(v, date) === 0) >= 0;
+
+			if (isSelected(day)) {
+				const prevDay = getPrevDay(day);
+				const nextDay = getNextDay(day);
+				const prevSelected = isSelected(prevDay);
+				const nextSelected = isSelected(nextDay);
+
+				if (prevSelected && nextSelected) {
+					return 'multiple-middle';
+				}
+
+				if (prevSelected) {
+					return 'end';
+				}
+
+				if (nextSelected) {
+					return 'start';
+				}
+
+				return 'multiple-selected';
 			}
 
-			if (dayType === 'start-end') {
-				return locale['startEnd'];
+			return 'normal';
+		};
+
+		const getDayType = (day: Date): CalendarDayType => {
+			if (
+				compareDate(day, minDate) < 0 ||
+				compareDate(day, maxDate) > 0
+			) {
+				return 'disabled';
 			}
-		}
-	};
 
-	const renderDays = () => {
-		const days: ReactNode[] = [];
+			if (value.length <= 0) {
+				return 'normal';
+			}
 
-		for (let i = 1; i <= endDate; i++) {
-			const date = new Date(month.getFullYear(), month.getMonth(), i);
-			const type = getDayType(date);
+			if (mode === 'single') {
+				return compareDate(day, value[0]) === 0 ? 'selected' : 'normal';
+			} else if (mode === 'multiple') {
+				return getMultipleDayType(day);
+			} else {
+				return getRangeDayType(day);
+			}
+		};
 
-			const day: CalendarDayComponentProps = {
-				color,
-				date,
-				type,
-				dayHeight,
-				bottomInfo: getBottomInfo(type),
+		useEffect(() => {
+			const node = rootRef.current;
+
+			let observer: ResizeObserver | undefined;
+
+			if (node) {
+				rootHeightRef.current = node.getBoundingClientRect().height;
+
+				observer = new ResizeObserver(
+					(entries: ResizeObserverEntry[]) => {
+						rootHeightRef.current =
+							entries[0]?.contentRect?.height || 0;
+					},
+				);
+
+				observer.observe(node);
+			}
+
+			return () => {
+				observer && observer.disconnect;
 			};
+		}, []);
 
-			days.push(
-				<div
-					className={bem('days-cell')}
-					role="gridcell"
-					tabIndex={type === 'disabled' ? undefined : -1}
-					key={i}
-					style={{
-						marginLeft:
-							i === 1 ? `${(100 * offset) / 7}%` : undefined,
-					}}
-					onClick={() => {
-						onClickDay && onClickDay(day);
-					}}
-				>
-					{slots.day ? slots.day(day) : <CalendarDay {...day} />}
-				</div>,
-			);
-		}
+		const getBottomInfo = (dayType: CalendarDayType) => {
+			if (mode === 'range') {
+				if (dayType === 'start' || dayType === 'end') {
+					return locale[dayType];
+				}
 
-		return days;
-	};
+				if (dayType === 'start-end') {
+					return locale['startEnd'];
+				}
+			}
+		};
 
-	const renderSlot = (
-		defaults: (d: Date) => ReactNode,
-		date?: Date,
-		slot?: boolean | ((date: Date) => ReactNode),
-	) => {
-		if (date == null) {
-			return;
-		}
+		const renderDays = () => {
+			const days: ReactNode[] = [];
 
-		return typeof slot === 'boolean' || slot == null
-			? defaults(date)
-			: slot(date);
-	};
+			for (let i = 1; i <= endDate; i++) {
+				const date = new Date(month.getFullYear(), month.getMonth(), i);
+				const type = getDayType(date);
 
-	return (
-		<div className={bem('month')} ref={rootRef}>
-			{slots.monthTitle !== false && (
-				<div className={bem('month-title')}>
-					{renderSlot(monthTitle, month, slots.monthTitle)}
-				</div>
-			)}
+				const day: CalendarDayComponentProps = {
+					color,
+					date,
+					type,
+					dayHeight,
+					bottomInfo: getBottomInfo(type),
+				};
 
-			<div className={bem('days')}>
-				{slots.monthMark !== false && (
-					<div className={bem('month-mark')}>
-						{renderSlot(
-							(month) => month.getMonth() + 1,
-							month,
-							slots.monthMark,
-						)}
+				days.push(
+					<div
+						className={bem('days-cell')}
+						role="gridcell"
+						tabIndex={type === 'disabled' ? undefined : -1}
+						key={i}
+						style={{
+							marginLeft:
+								i === 1 ? `${(100 * offset) / 7}%` : undefined,
+						}}
+						onClick={() => {
+							onClickDay && onClickDay(day);
+						}}
+					>
+						{slots.day ? slots.day(day) : <CalendarDay {...day} />}
+					</div>,
+				);
+			}
+
+			return days;
+		};
+
+		const renderSlot = (
+			defaults: (d: Date) => ReactNode,
+			date?: Date,
+			slot?: boolean | ((date: Date) => ReactNode),
+		) => {
+			if (date == null) {
+				return;
+			}
+
+			return typeof slot === 'boolean' || slot == null
+				? defaults(date)
+				: slot(date);
+		};
+
+		return (
+			<div className={bem('month')} ref={rootRef}>
+				{slots.monthTitle !== false && (
+					<div className={bem('month-title')}>
+						{renderSlot(monthTitle, month, slots.monthTitle)}
 					</div>
 				)}
-				{renderDays()}
-			</div>
-		</div>
-	);
-});
 
-CalendarMonth.displayName = 'CalendarMonth';
+				<div className={bem('days')} ref={daysRef}>
+					{slots.monthMark !== false && (
+						<div className={bem('month-mark')}>
+							{renderSlot(
+								(month) => month.getMonth() + 1,
+								month,
+								slots.monthMark,
+							)}
+						</div>
+					)}
+					{renderDays()}
+				</div>
+			</div>
+		);
+	},
+);
 
 export default CalendarMonth;

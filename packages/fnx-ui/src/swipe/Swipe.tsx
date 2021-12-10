@@ -1,6 +1,5 @@
 import React, {
 	CSSProperties,
-	forwardRef,
 	isValidElement,
 	ReactNode,
 	useCallback,
@@ -12,7 +11,6 @@ import React, {
 import ResizeObserver from 'resize-observer-polyfill';
 import useDefaultsRef from '../hooks/use-defaults-ref';
 import usePopupReopen from '../hooks/use-popup-reopen';
-import useProps from '../hooks/use-props';
 import {
 	bindEvent,
 	listenDocumentVisibilityChange,
@@ -21,432 +19,475 @@ import {
 import TouchHelper from '../utils/dom/touch-helper';
 import { noop } from '../utils/misc';
 import { classnames, createBEM } from '../utils/namespace';
-import { toElementArray } from '../utils/react';
+import { createDefaultsForwardRef, toElementArray } from '../utils/react';
 import useSwipe from './hooks/use-swipe';
 import { SwipeComponentProps, SwipeProps, SwipeRef } from './interface';
 
 const NS = 'fnx-swipe';
 const bem = createBEM(NS);
 
-const DEFAULT_PROPS: Required<SwipeComponentProps> = {
-	height: 0,
-	width: 0,
-	autoplay: 3000,
-	duration: 500,
-	defaultActiveIndex: 0,
-	loop: true,
-	vertical: false,
-	touchable: true,
-	indicator: null,
-	stopPropagation: true,
-	onActiveIndexChange: noop,
-};
-
-const Swipe = forwardRef<SwipeRef, SwipeProps>((_props, ref) => {
-	const [props, { className, children: _children, ...restProps }] = useProps<
-		Required<SwipeComponentProps>,
-		SwipeProps
-	>(DEFAULT_PROPS, _props);
-
-	const { autoplay, touchable, vertical, duration, indicator } = props;
-
-	const propsRef = useDefaultsRef(props);
-
-	const rootRef = useRef<HTMLDivElement>(null);
-	const wrapperRef = useRef<HTMLDivElement>(null);
-
-	const children = toElementArray(_children);
-	const swipeLength = children.filter((v) => React.isValidElement(v)).length;
-
-	const activeIndexInitializedRef = useRef(false);
-
-	const {
-		stateRef,
-		wrapperOffset,
-		setWrapperOffset,
-		swipeSize,
-		swipeOffset,
-		activeIndex,
-		setActiveIndex,
-		swiping,
-		move,
-		next,
-		prev,
-		stopTransition,
-		stopAutoplay,
-		startAutoplay,
-		reload,
-	} = useSwipe({
-		propsRef,
-		swipeLength,
-		rootRef,
-	});
-
-	const reset = useCallback(
-		(action?: () => void) => {
-			stopTransition();
-			stopAutoplay();
-			action && action();
-			startAutoplay();
+const Swipe = createDefaultsForwardRef<
+	SwipeRef,
+	SwipeProps,
+	Required<SwipeComponentProps>
+>(
+	'Swipe',
+	{
+		height: 0,
+		width: 0,
+		autoplay: 3000,
+		duration: 500,
+		defaultActiveIndex: 0,
+		loop: true,
+		vertical: false,
+		touchable: true,
+		indicator: null,
+		stopPropagation: true,
+		onActiveIndexChange: noop,
+	},
+	(
+		{
+			height,
+			width,
+			autoplay,
+			duration,
+			defaultActiveIndex,
+			loop,
+			vertical,
+			touchable,
+			indicator,
+			stopPropagation,
+			onActiveIndexChange,
+			// optionals
+			className,
+			children: _children,
+			...restProps
 		},
-		[startAutoplay, stopAutoplay, stopTransition],
-	);
+		ref,
+	) => {
+		const propsRef = useDefaultsRef<Required<SwipeComponentProps>>({
+			height,
+			width,
+			autoplay,
+			duration,
+			defaultActiveIndex,
+			loop,
+			vertical,
+			touchable,
+			indicator,
+			stopPropagation,
+			onActiveIndexChange,
+		});
 
-	const swipeRef = useMemo<SwipeRef>(() => {
-		return {
-			root: rootRef.current || null,
-			wrapper: wrapperRef.current || null,
-			reset: () => {
-				reset(reload);
-			},
-			next: () => {
-				reset(next);
-			},
-			prev: () => {
-				reset(prev);
-			},
-			swipeTo: (idx, options) => {
-				reset(() => {
-					const { swipeSize } = stateRef.current;
-					setActiveIndex(idx);
-					move(-idx * swipeSize, {
-						swiping: options && options.animation,
-					});
-				});
-			},
-		};
-	}, [move, next, prev, reload, reset, setActiveIndex, stateRef]);
+		const rootRef = useRef<HTMLDivElement>(null);
+		const wrapperRef = useRef<HTMLDivElement>(null);
 
-	useImperativeHandle<SwipeRef, SwipeRef>(ref, () => swipeRef, [swipeRef]);
+		const children = toElementArray(_children);
+		const swipeLength = children.filter((v) =>
+			React.isValidElement(v),
+		).length;
 
-	const itemStyles = useMemo<CSSProperties[]>(() => {
-		const output: CSSProperties[] = [];
+		const activeIndexInitializedRef = useRef(false);
 
-		for (let i = 0; i < swipeLength; i++) {
-			const formattedStyle: CSSProperties = {};
+		const {
+			stateRef,
+			wrapperOffset,
+			setWrapperOffset,
+			swipeSize,
+			swipeOffset,
+			activeIndex,
+			setActiveIndex,
+			swiping,
+			move,
+			next,
+			prev,
+			stopTransition,
+			stopAutoplay,
+			startAutoplay,
+			reload,
+		} = useSwipe({
+			propsRef,
+			swipeLength,
+			rootRef,
+		});
 
-			if (swipeSize > 0 && swipeOffset) {
-				if (i === 0 && swipeOffset === 'first') {
-					formattedStyle.transform = `translate${
-						vertical ? 'Y' : 'X'
-					}(${swipeLength * swipeSize}px)`;
-				}
-
-				if (i === swipeLength - 1 && swipeOffset === 'last') {
-					formattedStyle.transform = `translate${
-						vertical ? 'Y' : 'X'
-					}(-${swipeLength * swipeSize}px)`;
-				}
-			}
-
-			if (swipeSize > 0) {
-				formattedStyle[
-					vertical ? 'height' : 'width'
-				] = `${swipeSize}px`;
-			}
-
-			output.push(formattedStyle);
-		}
-
-		return output;
-	}, [swipeOffset, vertical, swipeSize, swipeLength]);
-
-	useEffect(() => {
-		if (autoplay > 0) {
-			startAutoplay();
-
-			return () => {
+		const reset = useCallback(
+			(action?: () => void) => {
+				stopTransition();
 				stopAutoplay();
-			};
-		}
-	}, [autoplay, startAutoplay, stopAutoplay]);
-
-	useEffect(() => {
-		if (activeIndex == null) {
-			return;
-		}
-
-		if (activeIndexInitializedRef.current) {
-			propsRef.current.onActiveIndexChange(activeIndex);
-		} else {
-			activeIndexInitializedRef.current = true;
-		}
-	}, [activeIndex, propsRef]);
-
-	useEffect(() => {
-		const node = rootRef.current;
-
-		let observer: ResizeObserver | undefined;
-
-		if (node) {
-			observer = new ResizeObserver((entries: ResizeObserverEntry[]) => {
-				reset(() => {
-					reload(entries[0] && entries[0].contentRect);
-				});
-			});
-
-			observer.observe(node);
-		}
-
-		const clears = Array.from<() => void>([
-			() => {
-				observer && observer.disconnect();
+				action && action();
+				startAutoplay();
 			},
-			listenDocumentVisibilityChange((visibility) => {
-				if (visibility === 'hidden') {
-					stopAutoplay();
-				} else {
-					startAutoplay();
-				}
-			}),
+			[startAutoplay, stopAutoplay, stopTransition],
+		);
+
+		const swipeRef = useMemo<SwipeRef>(() => {
+			return {
+				root: rootRef.current || null,
+				wrapper: wrapperRef.current || null,
+				reset: () => {
+					reset(reload);
+				},
+				next: () => {
+					reset(next);
+				},
+				prev: () => {
+					reset(prev);
+				},
+				swipeTo: (idx, options) => {
+					reset(() => {
+						const { swipeSize } = stateRef.current;
+						setActiveIndex(idx);
+						move(-idx * swipeSize, {
+							swiping: options && options.animation,
+						});
+					});
+				},
+			};
+		}, [move, next, prev, reload, reset, setActiveIndex, stateRef]);
+
+		useImperativeHandle<SwipeRef, SwipeRef>(ref, () => swipeRef, [
+			swipeRef,
 		]);
 
-		return () => {
-			for (const off of clears) {
-				off();
-			}
-		};
-	}, [startAutoplay, reload, stopAutoplay, reset]);
+		const itemStyles = useMemo<CSSProperties[]>(() => {
+			const output: CSSProperties[] = [];
 
-	useEffect(() => {
-		reset(reload);
-	}, [swipeLength, startAutoplay, reload, stopAutoplay, reset]);
+			for (let i = 0; i < swipeLength; i++) {
+				const formattedStyle: CSSProperties = {};
 
-	usePopupReopen(() => reset(reload));
+				if (swipeSize > 0 && swipeOffset) {
+					if (i === 0 && swipeOffset === 'first') {
+						formattedStyle.transform = `translate${
+							vertical ? 'Y' : 'X'
+						}(${swipeLength * swipeSize}px)`;
+					}
 
-	useEffect(() => {
-		const node = wrapperRef.current;
-
-		if (!node || touchable === false) {
-			return;
-		}
-
-		const touch = new TouchHelper();
-		let touchStartTime = 0;
-		let delta = 0;
-		let touchWrapperOffset = 0;
-		let touching = false;
-
-		const onTouchStart = (event: TouchEvent) => {
-			touch.start(event);
-			touchStartTime = Date.now();
-			touching = false;
-		};
-
-		const onTouchMove = (event: TouchEvent) => {
-			touch.move(event);
-
-			const { vertical } = propsRef.current;
-
-			const touchData = touch.touchData;
-
-			if (!touching) {
-				const direction = vertical ? 'vertical' : 'horizontal';
-
-				if (touchData.direction === direction) {
-					stopTransition();
-					stopAutoplay();
-					reload();
-
-					touching = true;
-					touchWrapperOffset = stateRef.current.wrapperOffset || 0;
+					if (i === swipeLength - 1 && swipeOffset === 'last') {
+						formattedStyle.transform = `translate${
+							vertical ? 'Y' : 'X'
+						}(-${swipeLength * swipeSize}px)`;
+					}
 				}
 
+				if (swipeSize > 0) {
+					formattedStyle[
+						vertical ? 'height' : 'width'
+					] = `${swipeSize}px`;
+				}
+
+				output.push(formattedStyle);
+			}
+
+			return output;
+		}, [swipeOffset, vertical, swipeSize, swipeLength]);
+
+		useEffect(() => {
+			if (autoplay > 0) {
+				startAutoplay();
+
+				return () => {
+					stopAutoplay();
+				};
+			}
+		}, [autoplay, startAutoplay, stopAutoplay]);
+
+		useEffect(() => {
+			if (activeIndex == null) {
 				return;
 			}
 
-			delta = touch.isVertical()
-				? touch.touchData.deltaY
-				: touch.touchData.deltaX;
-			const { stopPropagation = true, loop } = propsRef.current;
+			if (activeIndexInitializedRef.current) {
+				propsRef.current.onActiveIndexChange(activeIndex);
+			} else {
+				activeIndexInitializedRef.current = true;
+			}
+		}, [activeIndex, propsRef]);
 
-			move(touchWrapperOffset + delta, { critical: loop });
-			preventDefault(event, stopPropagation);
-		};
+		useEffect(() => {
+			const node = rootRef.current;
 
-		const restore = () => {
-			const duration = Date.now() - touchStartTime;
-			const speed = delta / duration;
+			let observer: ResizeObserver | undefined;
 
-			const {
-				activeIndex = 0,
-				swipeSize,
-				swipeLength,
-			} = stateRef.current;
-			const { loop } = propsRef.current;
+			if (node) {
+				observer = new ResizeObserver(
+					(entries: ResizeObserverEntry[]) => {
+						reset(() => {
+							reload(entries[0] && entries[0].contentRect);
+						});
+					},
+				);
 
-			const quickSwipe = Math.abs(speed) > 0.25;
+				observer.observe(node);
+			}
 
-			const shouldSwipe =
-				(quickSwipe || Math.abs(delta) > swipeSize / 2) &&
-				swipeSize > 0 &&
-				swipeLength > 1;
+			const clears = Array.from<() => void>([
+				() => {
+					observer && observer.disconnect();
+				},
+				listenDocumentVisibilityChange((visibility) => {
+					if (visibility === 'hidden') {
+						stopAutoplay();
+					} else {
+						startAutoplay();
+					}
+				}),
+			]);
 
-			if (!shouldSwipe) {
-				move(-activeIndex * swipeSize, {
-					swiping: true,
-				});
+			return () => {
+				for (const off of clears) {
+					off();
+				}
+			};
+		}, [startAutoplay, reload, stopAutoplay, reset]);
 
+		useEffect(() => {
+			reset(reload);
+		}, [swipeLength, startAutoplay, reload, stopAutoplay, reset]);
+
+		usePopupReopen(() => reset(reload));
+
+		useEffect(() => {
+			const node = wrapperRef.current;
+
+			if (!node || touchable === false) {
 				return;
 			}
 
-			if (quickSwipe) {
-				if (loop) {
-					delta < 0 ? next() : prev();
-				} else if (delta < 0 && activeIndex < swipeLength - 1) {
-					next();
-				} else if (delta > 0 && activeIndex > 0) {
-					prev();
-				} else {
+			const touch = new TouchHelper();
+			let touchStartTime = 0;
+			let delta = 0;
+			let touchWrapperOffset = 0;
+			let touching = false;
+
+			const onTouchStart = (event: TouchEvent) => {
+				touch.start(event);
+				touchStartTime = Date.now();
+				touching = false;
+			};
+
+			const onTouchMove = (event: TouchEvent) => {
+				touch.move(event);
+
+				const { vertical } = propsRef.current;
+
+				const touchData = touch.touchData;
+
+				if (!touching) {
+					const direction = vertical ? 'vertical' : 'horizontal';
+
+					if (touchData.direction === direction) {
+						stopTransition();
+						stopAutoplay();
+						reload();
+
+						touching = true;
+						touchWrapperOffset =
+							stateRef.current.wrapperOffset || 0;
+					}
+
+					return;
+				}
+
+				delta = touch.isVertical()
+					? touch.touchData.deltaY
+					: touch.touchData.deltaX;
+				const { stopPropagation = true, loop } = propsRef.current;
+
+				move(touchWrapperOffset + delta, { critical: loop });
+				preventDefault(event, stopPropagation);
+			};
+
+			const restore = () => {
+				const duration = Date.now() - touchStartTime;
+				const speed = delta / duration;
+
+				const {
+					activeIndex = 0,
+					swipeSize,
+					swipeLength,
+				} = stateRef.current;
+				const { loop } = propsRef.current;
+
+				const quickSwipe = Math.abs(speed) > 0.25;
+
+				const shouldSwipe =
+					(quickSwipe || Math.abs(delta) > swipeSize / 2) &&
+					swipeSize > 0 &&
+					swipeLength > 1;
+
+				if (!shouldSwipe) {
 					move(-activeIndex * swipeSize, {
 						swiping: true,
 					});
+
+					return;
 				}
 
-				return;
-			}
-
-			touchWrapperOffset = touchWrapperOffset + delta;
-
-			if (touchWrapperOffset > 0) {
-				setActiveIndex(loop ? swipeLength - 1 : 0);
-				move(loop ? swipeSize : 0, { swiping: true, critical: loop });
-			} else if (-touchWrapperOffset > swipeSize * (swipeLength - 1)) {
-				setActiveIndex(loop ? 0 : swipeLength - 1);
-				move(-swipeSize * (loop ? swipeLength : swipeLength - 1), {
-					swiping: true,
-					critical: loop,
-				});
-			} else {
-				const nextActiveIndex = Math.ceil(
-					-touchWrapperOffset / swipeSize,
-				);
-				setActiveIndex(nextActiveIndex);
-				move(-nextActiveIndex - swipeSize, {
-					swiping: true,
-					critical: loop,
-				});
-			}
-		};
-
-		const onTouchEnd = () => {
-			if (!touching) {
-				return;
-			}
-
-			restore();
-
-			touching = false;
-			startAutoplay();
-		};
-
-		node.addEventListener('touchstart', onTouchStart, false);
-		bindEvent(node, 'touchmove', onTouchMove, { passive: false });
-		node.addEventListener('touchend', onTouchEnd, false);
-		node.addEventListener('touchcancel', onTouchEnd, false);
-
-		return () => {
-			node.removeEventListener('touchstart', onTouchStart);
-			node.removeEventListener('touchmove', onTouchMove);
-			node.removeEventListener('touchend', onTouchEnd);
-			node.removeEventListener('touchcancel', onTouchEnd);
-		};
-	}, [
-		move,
-		next,
-		prev,
-		propsRef,
-		reload,
-		setActiveIndex,
-		setWrapperOffset,
-		startAutoplay,
-		stateRef,
-		stopAutoplay,
-		stopTransition,
-		touchable,
-	]);
-
-	const getWrapperStyle = (): CSSProperties => {
-		const formattedStyle: CSSProperties = {};
-
-		formattedStyle.transform = `translate${
-			vertical ? 'Y' : 'X'
-		}(${wrapperOffset}px)`;
-
-		if (swipeSize > 0) {
-			formattedStyle[vertical ? 'height' : 'width'] = `${
-				swipeSize * swipeLength
-			}px`;
-		}
-
-		if (swiping) {
-			formattedStyle.transitionDuration = `${duration}ms`;
-		}
-
-		return formattedStyle;
-	};
-
-	const renderIndicators = (): ReactNode => {
-		if (indicator === false || swipeLength <= 0) {
-			return;
-		}
-
-		if (indicator == null || indicator === true) {
-			return (
-				<div className={bem('indicators')}>
-					{new Array(swipeLength).fill(0).map((_, index) => (
-						<i
-							className={bem('indicator', {
-								active: index === (activeIndex || 0),
-							})}
-							key={index}
-						/>
-					))}
-				</div>
-			);
-		}
-
-		return indicator;
-	};
-
-	return (
-		<div
-			ref={rootRef}
-			className={classnames(bem({ vertical }), className)}
-			{...restProps}
-		>
-			<div
-				className={bem('wrapper')}
-				style={getWrapperStyle()}
-				ref={wrapperRef}
-			>
-				{children.map((item, idx) => {
-					if (isValidElement<any>(item)) {
-						const itemStyle = item.props.style;
-						const itemKey = item.key;
-
-						let mergedStyle: CSSProperties = { ...itemStyles[idx] };
-
-						if (typeof itemStyle === 'object') {
-							mergedStyle = { ...mergedStyle, ...itemStyle };
-						}
-
-						return React.cloneElement(item, {
-							...item.props,
-							style: mergedStyle,
-							key: itemKey != null ? itemKey : idx,
+				if (quickSwipe) {
+					if (loop) {
+						delta < 0 ? next() : prev();
+					} else if (delta < 0 && activeIndex < swipeLength - 1) {
+						next();
+					} else if (delta > 0 && activeIndex > 0) {
+						prev();
+					} else {
+						move(-activeIndex * swipeSize, {
+							swiping: true,
 						});
 					}
 
-					return item;
-				})}
+					return;
+				}
+
+				touchWrapperOffset = touchWrapperOffset + delta;
+
+				if (touchWrapperOffset > 0) {
+					setActiveIndex(loop ? swipeLength - 1 : 0);
+					move(loop ? swipeSize : 0, {
+						swiping: true,
+						critical: loop,
+					});
+				} else if (
+					-touchWrapperOffset >
+					swipeSize * (swipeLength - 1)
+				) {
+					setActiveIndex(loop ? 0 : swipeLength - 1);
+					move(-swipeSize * (loop ? swipeLength : swipeLength - 1), {
+						swiping: true,
+						critical: loop,
+					});
+				} else {
+					const nextActiveIndex = Math.ceil(
+						-touchWrapperOffset / swipeSize,
+					);
+					setActiveIndex(nextActiveIndex);
+					move(-nextActiveIndex - swipeSize, {
+						swiping: true,
+						critical: loop,
+					});
+				}
+			};
+
+			const onTouchEnd = () => {
+				if (!touching) {
+					return;
+				}
+
+				restore();
+
+				touching = false;
+				startAutoplay();
+			};
+
+			node.addEventListener('touchstart', onTouchStart, false);
+			bindEvent(node, 'touchmove', onTouchMove, { passive: false });
+			node.addEventListener('touchend', onTouchEnd, false);
+			node.addEventListener('touchcancel', onTouchEnd, false);
+
+			return () => {
+				node.removeEventListener('touchstart', onTouchStart);
+				node.removeEventListener('touchmove', onTouchMove);
+				node.removeEventListener('touchend', onTouchEnd);
+				node.removeEventListener('touchcancel', onTouchEnd);
+			};
+		}, [
+			move,
+			next,
+			prev,
+			propsRef,
+			reload,
+			setActiveIndex,
+			setWrapperOffset,
+			startAutoplay,
+			stateRef,
+			stopAutoplay,
+			stopTransition,
+			touchable,
+		]);
+
+		const getWrapperStyle = (): CSSProperties => {
+			const formattedStyle: CSSProperties = {};
+
+			formattedStyle.transform = `translate${
+				vertical ? 'Y' : 'X'
+			}(${wrapperOffset}px)`;
+
+			if (swipeSize > 0) {
+				formattedStyle[vertical ? 'height' : 'width'] = `${
+					swipeSize * swipeLength
+				}px`;
+			}
+
+			if (swiping) {
+				formattedStyle.transitionDuration = `${duration}ms`;
+			}
+
+			return formattedStyle;
+		};
+
+		const renderIndicators = (): ReactNode => {
+			if (indicator === false || swipeLength <= 0) {
+				return;
+			}
+
+			if (indicator == null || indicator === true) {
+				return (
+					<div className={bem('indicators')}>
+						{new Array(swipeLength).fill(0).map((_, index) => (
+							<i
+								className={bem('indicator', {
+									active: index === (activeIndex || 0),
+								})}
+								key={index}
+							/>
+						))}
+					</div>
+				);
+			}
+
+			return indicator;
+		};
+
+		return (
+			<div
+				ref={rootRef}
+				className={classnames(bem({ vertical }), className)}
+				{...restProps}
+			>
+				<div
+					className={bem('wrapper')}
+					style={getWrapperStyle()}
+					ref={wrapperRef}
+				>
+					{children.map((item, idx) => {
+						if (isValidElement<any>(item)) {
+							const itemStyle = item.props.style;
+							const itemKey = item.key;
+
+							let mergedStyle: CSSProperties = {
+								...itemStyles[idx],
+							};
+
+							if (typeof itemStyle === 'object') {
+								mergedStyle = { ...mergedStyle, ...itemStyle };
+							}
+
+							return React.cloneElement(item, {
+								...item.props,
+								style: mergedStyle,
+								key: itemKey != null ? itemKey : idx,
+							});
+						}
+
+						return item;
+					})}
+				</div>
+
+				{renderIndicators()}
 			</div>
-
-			{renderIndicators()}
-		</div>
-	);
-});
-
-Swipe.displayName = 'Swipe';
+		);
+	},
+);
 
 export default Swipe;

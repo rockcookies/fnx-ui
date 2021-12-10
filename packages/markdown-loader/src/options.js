@@ -1,4 +1,4 @@
-export function resolveOptions(userOptions) {
+exports.resolveOptions = function (userOptions) {
 	const options = Object.assign(
 		{
 			frontmatter: true,
@@ -14,4 +14,4 @@ export function resolveOptions(userOptions) {
 	);
 
 	return options;
-}
+};

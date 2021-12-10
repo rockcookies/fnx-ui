@@ -1,13 +1,14 @@
-import React, { CSSProperties, forwardRef, useContext } from 'react';
+import React, { CSSProperties, useContext } from 'react';
 import RowContext from '../row/context';
 import { addUnit } from '../utils/format';
 import { classnames, createBEM } from '../utils/namespace';
+import { createForwardRef } from '../utils/react';
 import { ColProps } from './interface';
 
 const NS = 'fnx-col';
 const bem = createBEM(NS);
 
-const Col = forwardRef<HTMLDivElement, ColProps>((props, ref) => {
+const Col = createForwardRef<HTMLDivElement, ColProps>('Col', (props, ref) => {
 	const { className, style, children, span, offset, ...restProps } = props;
 
 	const { gutter } = useContext(RowContext);
@@ -36,8 +37,6 @@ const Col = forwardRef<HTMLDivElement, ColProps>((props, ref) => {
 	);
 });
 
-Col.displayName = 'Col';
-
-export type { ColProps, ColComponentProps } from './interface';
+export type { ColComponentProps, ColProps } from './interface';
 
 export default Col;

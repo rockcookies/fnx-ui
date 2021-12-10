@@ -129,7 +129,7 @@ export default function Basic(): ReturnType<React.FC> {
 	return (
 		<>
 			<DemoBlock title={i18n.basicUsage} cardMode>
-				<Cell.Group insert>
+				<Cell.Group>
 					<Popup.Select<Date> round select={<Calendar />}>
 						{(value) =>
 							renderCell(i18n.selectSingle, formatFullDate(value))
@@ -152,7 +152,7 @@ export default function Basic(): ReturnType<React.FC> {
 			</DemoBlock>
 
 			<DemoBlock title={i18n.customCalendar} cardMode>
-				<Cell.Group insert>
+				<Cell.Group>
 					<Popup.Select<Date[]>
 						round
 						select={

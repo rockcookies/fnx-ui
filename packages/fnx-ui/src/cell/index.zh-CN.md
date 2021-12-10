@@ -4,7 +4,7 @@
 
 ## 基础用法
 
-`Cell` 可以单独使用，也可以与 `Cell.Group` 搭配使用，`Cell.Group` 可以为 `Cell` 提供上下外边框。
+Cell 可以单独使用，也可以与 Cell.Group 搭配使用，Cell.Group 可以为 Cell 提供上下外边框。
 
 ```tsx
 import { Cell } from 'fnx-ui';
@@ -24,7 +24,7 @@ ReactDOM.render(
 
 ## 卡片风格
 
-通过 `Cell.Group` 的 `inset` 属性，可以将单元格转换为圆角卡片风格。
+通过 Cell.Group 的 `inset` 属性，可以将单元格转换为圆角卡片风格。
 
 ```tsx
 import { Cell } from 'fnx-ui';
@@ -77,7 +77,7 @@ ReactDOM.render(
 
 ## 可点击的
 
-通过 `clickable` 属性可以使 `Cell` 组件有点击效果。
+通过 `clickable` 属性可以使 Cell 组件有点击效果。
 
 ```tsx
 import { Cell, Icon } from 'fnx-ui';
@@ -94,7 +94,7 @@ ReactDOM.render(
 
 ## 分组标题
 
-通过 `Cell.Group` 的 `title` 属性可以指定分组标题。
+通过 Cell.Group 的 `title` 属性可以指定分组标题。
 
 ```tsx
 import { Cell } from 'fnx-ui';
@@ -139,28 +139,28 @@ ReactDOM.render(
 
 ### Cell Props
 
-| 名称             | 说明                   | 类型                              | 默认值  |
-| ---------------- | ---------------------- | --------------------------------- | ------- |
-| title            | 左侧标题               | `ReactNode`                       | -       |
-| titleProps       | 左侧标题属性           | `HTMLAttributes<HTMLDivElement>`  | -       |
-| content          | 右侧内容               | `ReactNode`                       | -       |
-| contentProps     | 右侧内容属性           | `HTMLAttributes<HTMLDivElement>`  | -       |
-| description      | 标题下方的描述信息     | `ReactNode`                       | -       |
-| descriptionProps | 标题下方的描述信息属性 | `HTMLAttributes<HTMLDivElement`   | -       |
-| leftIcon         | 左侧自定义图标         | `ReactNode`                       | -       |
-| leftIconProps    | 左侧自定义图标属性     | `HTMLAttributes<HTMLSpanElement>` | -       |
-| rightIcon        | 右侧自定义图标         | `ReactNode`                       | -       |
-| rightIconProps   | 右侧自定义图标属性     | `HTMLAttributes<HTMLSpanElement>` | -       |
-| border           | 是否显示内边框         | `boolean`                         | `true`  |
-| itemsAlign       | 对齐方式               | `'top' \| 'middle' \| 'bottom'`   | `'top'` |
-| clickable        | 是否可点击             | `boolean`                         | `false` |
+| 名称             | 说明                   | 类型                                | 默认值  | 版本 |
+| ---------------- | ---------------------- | ----------------------------------- | ------- | ---- |
+| title            | 左侧标题               | `ReactNode`                         | -       |      |
+| titleProps       | 左侧标题属性           | `HTMLAttributes<HTMLDivElement>`    | -       |      |
+| content          | 右侧内容               | `ReactNode`                         | -       |      |
+| contentProps     | 右侧内容属性           | `HTMLAttributes<HTMLDivElement>`    | -       |      |
+| description      | 标题下方的描述信息     | `ReactNode`                         | -       |      |
+| descriptionProps | 标题下方的描述信息属性 | `HTMLAttributes<HTMLDivElement`     | -       |      |
+| leftIcon         | 左侧自定义图标         | `ReactNode`                         | -       |      |
+| leftIconProps    | 左侧自定义图标属性     | `HTMLAttributes<HTMLSpanElement>`   | -       |      |
+| rightIcon        | 右侧自定义图标         | `ReactNode`                         | -       |      |
+| rightIconProps   | 右侧自定义图标属性     | `HTMLAttributes<HTMLSpanElement>`   | -       |      |
+| border           | 是否显示内边框         | `boolean`                           | `true`  |      |
+| itemsAlign       | 对齐方式               | `'top'` \| `'middle'` \| `'bottom'` | `'top'` |      |
+| clickable        | 是否可点击             | `boolean`                           | `false` |      |
 
 ### Cell.Group Props
 
-| 名称       | 说明                   | 类型                             | 默认值 |
-| ---------- | ---------------------- | -------------------------------- | ------ |
-| title      | 分组标题               | `ReactNode`                      | -      |
-| titleProps | 分组标题属性           | `HTMLAttributes<HTMLDivElement>` | -      |
-| border     | 是否显示外边框         | `boolean`                        | `true` |
-| inset      | 是否展示为圆角卡片风格 | `boolean`                        | -      |
-| bodyProps  | 内容属性               | `HTMLAttributes<HTMLDivElement>` | -      |
+| 名称       | 说明                   | 类型                             | 默认值 | 版本 |
+| ---------- | ---------------------- | -------------------------------- | ------ | ---- |
+| title      | 分组标题               | `ReactNode`                      | -      |      |
+| titleProps | 分组标题属性           | `HTMLAttributes<HTMLDivElement>` | -      |      |
+| border     | 是否显示外边框         | `boolean`                        | `true` |      |
+| inset      | 是否展示为圆角卡片风格 | `boolean`                        | -      |      |
+| bodyProps  | 内容属性               | `HTMLAttributes<HTMLDivElement>` | -      |      |

@@ -83,14 +83,12 @@ ReactDOM.render(
 
 我们提供了一个 `createFromIconfontCN` 方法，方便开发者调用在 [iconfont.cn](http://iconfont.cn/) 上自行管理的图标。
 
-> 详见 [iconfont.cn](http://iconfont.cn/) 查看如何生成 symbol 代码的 js 地址。
-
 ```tsx
 import { Icon } from 'fnx-ui';
 
-const MyIcon = Icon.createFromIconfontCN({
-  scriptUrl: '//at.alicdn.com/t/font_8d5l8fzk5b87iudi.js',
-});
+const MyIcon = Icon.createFromIconfontCN(
+  '//at.alicdn.com/t/font_8d5l8fzk5b87iudi.js',
+);
 
 ReactDOM.render(
   <>
@@ -108,7 +106,7 @@ ReactDOM.render(
 // webpack.config.js
 {
   test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-	use: [
+  use: [
     {
       loader: 'babel-loader',
     },
@@ -126,6 +124,7 @@ ReactDOM.render(
 ```tsx
 import { Icon } from 'fnx-ui';
 import MessageSvg from 'path/to/message.svg';
+
 ReactDOM.render(
   <>
     <Icon component={MessageSvg} />
@@ -136,25 +135,27 @@ ReactDOM.render(
 
 ## API
 
-| 名称      | 说明                                                           | 类型                                     | 默认值  |
-| --------- | -------------------------------------------------------------- | ---------------------------------------- | ------- |
-| name      | 图标名称                                                       | `string`                                 | -       |
-| size      | 图标大小，如 `20px` `2em`，默认单位为 `px`                     | `number \| string`                       | -       |
-| color     | 图标颜色                                                       | `string`                                 | -       |
-| spin      | 是否有旋转动画                                                 | `boolean`                                | `false` |
-| component | 控制如何渲染图标，通常是一个渲染根标签为 `<svg>` 的 React 组件 | `ComponentType<SVGProps<SVGSVGElement>>` | -       |
-| viewBox   | SVG viewBox                                                    | `string`                                 | -       |
+### Icon Props
 
-## Icon.Spinner API
+| 名称      | 说明                                                           | 类型                                  | 默认值            | 版本 |
+| --------- | -------------------------------------------------------------- | ------------------------------------- | ----------------- | ---- |
+| name      | 图标名称                                                       | `string`                              | -                 |      |
+| size      | 图标大小，如 `20px` `2em`，默认单位为 `px`                     | `number` \| `string`                  | -                 |      |
+| color     | 图标颜色                                                       | `string`                              | -                 |      |
+| spin      | 是否有旋转动画                                                 | `boolean`                             | `false`           |      |
+| component | 控制如何渲染图标，通常是一个渲染根标签为 `<svg>` 的 React 组件 | `ComponentType<SVGProps<SVGElement>>` | -                 |      |
+| viewBox   | SVG viewBox                                                    | `string`                              | `'0 0 1024 1024'` |      |
 
-| 名称  | 说明                                       | 类型               | 默认值 |
-| ----- | ------------------------------------------ | ------------------ | ------ |
-| size  | 图标大小，如 `20px` `2em`，默认单位为 `px` | `number \| string` | -      |
-| color | 图标颜色                                   | `string`           | -      |
+### Icon.Spinner Props
 
-### 自定义 font 图标
+| 名称  | 说明                                       | 类型                 | 默认值 | 版本 |
+| ----- | ------------------------------------------ | -------------------- | ------ | ---- |
+| size  | 图标大小，如 `20px` `2em`，默认单位为 `px` | `number` \| `string` | -      |      |
+| color | 图标颜色                                   | `string`             | -      |      |
 
-| 名称      | 说明                                 | 类型                 | 默认值 |
-| --------- | ------------------------------------ | -------------------- | ------ |
-| scriptUrl | 自定义字体图标地址                   | `string`             | -      |
-| options   | 为 SVG 图标`<icon/>`组件设置附加属性 | `SVGAttributes<any>` | -      |
+### 自定义 SVG 图标
+
+| 名称      | 说明                                 | 类型                 | 默认值 | 版本 |
+| --------- | ------------------------------------ | -------------------- | ------ | ---- |
+| scriptUrl | 自定义字体图标地址                   | `string`             | -      |      |
+| options   | 为 SVG 图标`<icon/>`组件设置附加属性 | `SVGAttributes<any>` | -      |      |

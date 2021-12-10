@@ -4,7 +4,7 @@ The cell is a single display item in the list.
 
 ## Basic Usage
 
-`Cell` can be used alone or in combination with `Cell.group`.
+Cell can be used alone or in combination with Cell.group.
 
 ```tsx
 import { Cell } from 'fnx-ui';
@@ -24,7 +24,7 @@ ReactDOM.render(
 
 ## Inset Grouped
 
-Use `inset` property of `Cell.Group`, You can convert cells into rounded card styles.
+Use `inset` property of Cell.Group, You can convert cells into rounded card styles.
 
 ```tsx
 import { Cell } from 'fnx-ui';
@@ -77,7 +77,7 @@ ReactDOM.render(
 
 ## Clickable
 
-The `clickable` property enables the `Cell` to have a click effect.
+The `clickable` property enables the Cell to have a click effect.
 
 ```tsx
 import { Cell, Icon } from 'fnx-ui';
@@ -94,7 +94,7 @@ ReactDOM.render(
 
 ## Group Title
 
-Use `title` property of `Cell.Group` to set group title.
+Use `title` property of Cell.Group to set group title.
 
 ```tsx
 import { Cell } from 'fnx-ui';
@@ -139,28 +139,28 @@ ReactDOM.render(
 
 ### Cell Props
 
-| Name             | Description                                 | Type                              | Default |
-| ---------------- | ------------------------------------------- | --------------------------------- | ------- |
-| title            | Left title                                  | `ReactNode`                       | -       |
-| titleProps       | Left title properties                       | `HTMLAttributes<HTMLDivElement>`  | -       |
-| content          | Right content                               | `ReactNode`                       | -       |
-| contentProps     | Right content properties                    | `HTMLAttributes<HTMLDivElement>`  | -       |
-| description      | Description below the title                 | `ReactNode`                       | -       |
-| descriptionProps | Description properties below the title      | `HTMLAttributes<HTMLDivElement`   | -       |
-| leftIcon         | Left custom icon                            | `ReactNode`                       | -       |
-| leftIconProps    | Left custom icon properties                 | `HTMLAttributes<HTMLSpanElement>` | -       |
-| rightIcon        | Custom icon on the right                    | `ReactNode`                       | -       |
-| rightIconProps   | Right custom icon properties                | `HTMLAttributes<HTMLSpanElement>` | -       |
-| border           | Whether to show inner border                | `boolean`                         | `true`  |
-| itemsAlign       | Alignment                                   | `'top' \| 'middle' \| 'bottom'`   | `'top'` |
-| clickable        | Whether to show click feedback when clicked | `boolean`                         | `false` |
+| Name             | Description                                 | Type                                | Default | Version |
+| ---------------- | ------------------------------------------- | ----------------------------------- | ------- | ------- |
+| title            | Left title                                  | `ReactNode`                         | -       |         |
+| titleProps       | Left title properties                       | `HTMLAttributes<HTMLDivElement>`    | -       |         |
+| content          | Right content                               | `ReactNode`                         | -       |         |
+| contentProps     | Right content properties                    | `HTMLAttributes<HTMLDivElement>`    | -       |         |
+| description      | Description below the title                 | `ReactNode`                         | -       |         |
+| descriptionProps | Description properties below the title      | `HTMLAttributes<HTMLDivElement`     | -       |         |
+| leftIcon         | Left custom icon                            | `ReactNode`                         | -       |         |
+| leftIconProps    | Left custom icon properties                 | `HTMLAttributes<HTMLSpanElement>`   | -       |         |
+| rightIcon        | Custom icon on the right                    | `ReactNode`                         | -       |         |
+| rightIconProps   | Right custom icon properties                | `HTMLAttributes<HTMLSpanElement>`   | -       |         |
+| border           | Whether to show inner border                | `boolean`                           | `true`  |         |
+| itemsAlign       | Alignment                                   | `'top'` \| `'middle'` \| `'bottom'` | `'top'` |         |
+| clickable        | Whether to show click feedback when clicked | `boolean`                           | `false` |         |
 
 ### Cell.Group Props
 
-| Name       | Description                  | Type                             | Default |
-| ---------- | ---------------------------- | -------------------------------- | ------- |
-| title      | Group Title                  | `ReactNode`                      | -       |
-| titleProps | Group title properties       | `HTMLAttributes<HTMLDivElement>` | -       |
-| border     | Whether to show outer border | `boolean`                        | `true`  |
-| bodyProps  | Body properties              | `HTMLAttributes<HTMLDivElement>` | -       |
-| inset      | Whether to be inset grouped  | `boolean`                        | -       |
+| Name       | Description                  | Type                             | Default | Version |
+| ---------- | ---------------------------- | -------------------------------- | ------- | ------- |
+| title      | Group Title                  | `ReactNode`                      | -       |         |
+| titleProps | Group title properties       | `HTMLAttributes<HTMLDivElement>` | -       |         |
+| border     | Whether to show outer border | `boolean`                        | `true`  |         |
+| bodyProps  | Body properties              | `HTMLAttributes<HTMLDivElement>` | -       |         |
+| inset      | Whether to be inset grouped  | `boolean`                        | -       |         |

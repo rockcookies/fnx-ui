@@ -1,19 +1,24 @@
-import React, { forwardRef } from 'react';
+import React from 'react';
 import { classnames, createBEM } from '../utils/namespace';
+import { createForwardRef } from '../utils/react';
 import { SwipeItemProps } from './interface';
 
 const NS = 'fnx-swipe-item';
 const bem = createBEM(NS);
 
-const SwipeItem = forwardRef<HTMLDivElement, SwipeItemProps>((props, ref) => {
-	const { className, children, ...restProps } = props;
+const SwipeItem = createForwardRef<HTMLDivElement, SwipeItemProps>(
+	'SwipeItem',
+	({ className, children, ...restProps }, ref) => {
+		return (
+			<div
+				className={classnames(bem(), className)}
+				{...restProps}
+				ref={ref}
+			>
+				{children}
+			</div>
+		);
+	},
+);
 
-	return (
-		<div className={classnames(bem(), className)} {...restProps} ref={ref}>
-			{children}
-		</div>
-	);
-});
-
-SwipeItem.displayName = 'SwipeItem';
 export default SwipeItem;

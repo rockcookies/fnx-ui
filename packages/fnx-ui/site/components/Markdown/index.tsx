@@ -1,6 +1,7 @@
-import React, { FC, HTMLAttributes, useContext, useMemo } from 'react';
+import React, { HTMLAttributes, useContext, useMemo } from 'react';
 import { Dictionary } from '../../../src/utils/interface';
 import { classnames, createBEM } from '../../../src/utils/namespace';
+import { createFC } from '../../../src/utils/react';
 import { SiteContext } from '../../layout/context';
 import './index.less';
 
@@ -19,7 +20,7 @@ const I18N: Dictionary<Dictionary<string>> = {
 	},
 };
 
-const Markdown: FC<CProps> = (_props: CProps) => {
+const Markdown = createFC<CProps>('Markdown', (_props: CProps) => {
 	const { className, html: _html, ...props } = _props;
 	const { locale } = useContext(SiteContext);
 	const i18n = I18N[locale];
@@ -49,8 +50,6 @@ const Markdown: FC<CProps> = (_props: CProps) => {
 				  })}
 		/>
 	);
-};
-
-Markdown.displayName = 'Markdown';
+});
 
 export default Markdown;

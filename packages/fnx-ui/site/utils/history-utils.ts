@@ -1,30 +1,43 @@
-import qs from 'qs';
 import { Dictionary } from '../../src/utils/interface';
+import 'url-search-params-polyfill';
 
 export function parseSearchParams(
 	search: string | null | undefined,
 ): Dictionary<string | undefined> {
-	const query: any = qs.parse((search || '').replace(/^\?/, '')) || {};
+	const query: Dictionary<string | undefined> = {};
 
-	for (const key of Object.keys(query)) {
-		if (Array.isArray(query[key])) {
-			query[key] = query[key][0];
+	for (const [key, value] of new URLSearchParams(
+		(search || '').replace(/^\?/, ''),
+	)) {
+		if (value) {
+			query[key] = value;
 		}
 	}
 
 	return query;
 }
 
-export function appendQuery(url: string, _query: string | Dictionary): string {
-	const query =
-		typeof _query === 'string'
-			? _query
-			: qs.stringify(_query, { skipNulls: true });
-	const urlSign = url.indexOf('?') !== -1 ? '&' : '?';
+export function stringifyQuery(query: Dictionary): string {
+	const params: Dictionary = {};
 
-	return `${url}${urlSign}${query}`;
+	for (const key of Object.keys(query)) {
+		const value = query[key];
+
+		if (value != null) {
+			params[key] = value;
+		}
+	}
+
+	return new URLSearchParams(params).toString();
 }
 
-export function stringifyQuery(query: Dictionary): string {
-	return qs.stringify(query, { skipNulls: true });
+export function appendQuery(url: string, _query: string | Dictionary): string {
+	const query = typeof _query === 'string' ? _query : stringifyQuery(_query);
+
+	if (query) {
+		const urlSign = url.indexOf('?') !== -1 ? '&' : '?';
+		return `${url}${urlSign}${query}`;
+	}
+
+	return url;
 }

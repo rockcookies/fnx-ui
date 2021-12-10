@@ -1,6 +1,4 @@
 import React, {
-	forwardRef,
-	ForwardRefRenderFunction,
 	ReactElement,
 	useImperativeHandle,
 	useRef,
@@ -11,6 +9,7 @@ import useRefState from '../hooks/use-ref-state';
 import useUpdateEffect from '../hooks/use-update-effect';
 import { ForwardRefProps } from '../utils/interface';
 import { isEqualArrays } from '../utils/misc';
+import { createForwardRef } from '../utils/react';
 import usePickerProps, { PickerDataGetters } from './hooks/use-picker-props';
 import {
 	PickerCascadeProps,
@@ -97,152 +96,156 @@ const getColumns = (
 	return output;
 };
 
-const InternalPickerCascade: ForwardRefRenderFunction<
-	PickerCascadeRef,
-	PickerCascadeProps
-> = (_props, ref) => {
-	const [
-		{ optionHeight, visibleOptionsCount, transitionDuration, dataNames },
-		{ defaultValue, data, onChange, onConfirm, onCancel, ...restProps },
-	] = usePickerProps(_props);
+const PickerCascade = createForwardRef<PickerCascadeRef, PickerCascadeProps>(
+	'PickerCascade',
+	(_props, ref) => {
+		const [
+			{
+				optionHeight,
+				visibleOptionsCount,
+				transitionDuration,
+				dataNames,
+			},
+			{ defaultValue, data, onChange, onConfirm, onCancel, ...restProps },
+		] = usePickerProps(_props);
 
-	const rootRef = useRef<HTMLDivElement>(null);
+		const rootRef = useRef<HTMLDivElement>(null);
 
-	const onChangeRef = useDefaultsRef(onChange);
+		const onChangeRef = useDefaultsRef(onChange);
 
-	const [indexes, setIndexes] = useState<number[]>(() =>
-		getIndexes(data || [], dataNames, defaultValue),
-	);
-
-	const [columns, setColumns] = useState<Array<[number, PickerOption[]]>>(
-		() => getColumns(data || [], dataNames, indexes).map((c) => [0, c]),
-	);
-
-	const [options, optionsRef, setOptions] = useRefState(() =>
-		getOptions(
-			indexes,
-			columns.map(([, c]) => c),
-		),
-	);
-
-	const [values, valuesRef, setValues] = useRefState(
-		() => defaultValue || getValues(options, dataNames),
-	);
-
-	useImperativeHandle<PickerCascadeRef, PickerCascadeRef>(
-		ref,
-		() => {
-			return {
-				root: rootRef.current,
-				getOptions: () => optionsRef.current,
-				getValue: () => valuesRef.current,
-			};
-		},
-		[optionsRef, valuesRef],
-	);
-
-	const onColumnChange = (
-		options: PickerOption[],
-		optionIndex: number,
-		level: number,
-	) => {
-		const children =
-			(options[optionIndex] &&
-				dataNames.children(options[optionIndex])) ||
-			[];
-
-		const indexesPart = getIndexes(children, dataNames);
-
-		const nextIndexes = [
-			...indexes.slice(0, level),
-			optionIndex,
-			...indexesPart,
-		];
-
-		const key = getRandomKey();
-
-		const columnsPart = getColumns(children, dataNames, indexesPart).map<
-			[number, PickerOption[]]
-		>((cols) => [key, cols]);
-
-		const nextColumns = [...columns.slice(0, level + 1), ...columnsPart];
-
-		const nextOptions = getOptions(
-			nextIndexes,
-			nextColumns.map(([, c]) => c),
+		const [indexes, setIndexes] = useState<number[]>(() =>
+			getIndexes(data || [], dataNames, defaultValue),
 		);
 
-		setIndexes(nextIndexes);
-		setColumns(nextColumns);
-		setOptions(nextOptions);
-		setValues((prev) => getValues(nextOptions, dataNames, prev));
-	};
-
-	useUpdateEffect(() => {
-		const nextIndexes = getIndexes(
-			data || [],
-			dataNames,
-			valuesRef.current,
+		const [columns, setColumns] = useState<Array<[number, PickerOption[]]>>(
+			() => getColumns(data || [], dataNames, indexes).map((c) => [0, c]),
 		);
 
-		const nextColumns = getColumns(data || [], dataNames, nextIndexes);
+		const [options, optionsRef, setOptions] = useRefState(() =>
+			getOptions(
+				indexes,
+				columns.map(([, c]) => c),
+			),
+		);
 
-		const nextOptions = getOptions(nextIndexes, nextColumns);
+		const [values, valuesRef, setValues] = useRefState(
+			() => defaultValue || getValues(options, dataNames),
+		);
 
-		setIndexes(nextIndexes);
-		setColumns(() => {
+		useImperativeHandle<PickerCascadeRef, PickerCascadeRef>(
+			ref,
+			() => {
+				return {
+					root: rootRef.current,
+					getOptions: () => optionsRef.current,
+					getValue: () => valuesRef.current,
+				};
+			},
+			[optionsRef, valuesRef],
+		);
+
+		const onColumnChange = (
+			options: PickerOption[],
+			optionIndex: number,
+			level: number,
+		) => {
+			const children =
+				(options[optionIndex] &&
+					dataNames.children(options[optionIndex])) ||
+				[];
+
+			const indexesPart = getIndexes(children, dataNames);
+
+			const nextIndexes = [
+				...indexes.slice(0, level),
+				optionIndex,
+				...indexesPart,
+			];
+
 			const key = getRandomKey();
-			return nextColumns.map((col) => [key, col]);
-		});
-		setOptions(nextOptions);
-		setValues((prev) => getValues(nextOptions, dataNames, prev));
-	}, [data, dataNames, setValues]);
 
-	useUpdateEffect(() => {
-		const _onChange = onChangeRef.current;
+			const columnsPart = getColumns(
+				children,
+				dataNames,
+				indexesPart,
+			).map<[number, PickerOption[]]>((cols) => [key, cols]);
 
-		if (_onChange) {
-			_onChange(values, optionsRef.current);
-		}
-	}, [onChangeRef, values]);
+			const nextColumns = [
+				...columns.slice(0, level + 1),
+				...columnsPart,
+			];
 
-	return (
-		<PickerContainer
-			{...restProps}
-			optionHeight={optionHeight}
-			visibleOptionsCount={visibleOptionsCount}
-			ref={rootRef}
-			onConfirm={() => {
-				onConfirm && onConfirm(values, options);
-			}}
-			onCancel={() => {
-				onCancel && onCancel();
-			}}
-		>
-			{columns.map(([key, options], idx) => {
-				return (
-					<PickerColumn
-						key={`${key}-${idx}`}
-						optionHeight={optionHeight}
-						visibleOptionsCount={visibleOptionsCount}
-						transitionDuration={transitionDuration}
-						defaultValue={values[idx]}
-						data={options}
-						dataNames={dataNames}
-						onChange={(_, cIdex) =>
-							onColumnChange(options, cIdex, idx)
-						}
-					/>
-				);
-			})}
-		</PickerContainer>
-	);
-};
+			const nextOptions = getOptions(
+				nextIndexes,
+				nextColumns.map(([, c]) => c),
+			);
 
-InternalPickerCascade.displayName = 'PickerCascade';
+			setIndexes(nextIndexes);
+			setColumns(nextColumns);
+			setOptions(nextOptions);
+			setValues((prev) => getValues(nextOptions, dataNames, prev));
+		};
 
-const PickerCascade = forwardRef<PickerCascadeRef, PickerCascadeProps>(
-	InternalPickerCascade,
+		useUpdateEffect(() => {
+			const nextIndexes = getIndexes(
+				data || [],
+				dataNames,
+				valuesRef.current,
+			);
+
+			const nextColumns = getColumns(data || [], dataNames, nextIndexes);
+
+			const nextOptions = getOptions(nextIndexes, nextColumns);
+
+			setIndexes(nextIndexes);
+			setColumns(() => {
+				const key = getRandomKey();
+				return nextColumns.map((col) => [key, col]);
+			});
+			setOptions(nextOptions);
+			setValues((prev) => getValues(nextOptions, dataNames, prev));
+		}, [data, dataNames, setValues]);
+
+		useUpdateEffect(() => {
+			const _onChange = onChangeRef.current;
+
+			if (_onChange) {
+				_onChange(values, optionsRef.current);
+			}
+		}, [onChangeRef, values]);
+
+		return (
+			<PickerContainer
+				{...restProps}
+				optionHeight={optionHeight}
+				visibleOptionsCount={visibleOptionsCount}
+				ref={rootRef}
+				onConfirm={() => {
+					onConfirm && onConfirm(values, options);
+				}}
+				onCancel={() => {
+					onCancel && onCancel();
+				}}
+			>
+				{columns.map(([key, options], idx) => {
+					return (
+						<PickerColumn
+							key={`${key}-${idx}`}
+							optionHeight={optionHeight}
+							visibleOptionsCount={visibleOptionsCount}
+							transitionDuration={transitionDuration}
+							defaultValue={values[idx]}
+							data={options}
+							dataNames={dataNames}
+							onChange={(_, cIdex) =>
+								onColumnChange(options, cIdex, idx)
+							}
+						/>
+					);
+				})}
+			</PickerContainer>
+		);
+	},
 ) as <T = PickerOption>(
 	props: ForwardRefProps<PickerCascadeProps<T>, PickerCascadeRef<any>>,
 ) => ReactElement;

@@ -1,6 +1,5 @@
 import React, {
 	CSSProperties,
-	forwardRef,
 	useContext,
 	useEffect,
 	useImperativeHandle,
@@ -9,8 +8,8 @@ import React, {
 	useState,
 } from 'react';
 import ConfigProvider from '../config-provider';
+import useDefaults from '../hooks/use-defaults';
 import useDefaultsRef from '../hooks/use-defaults-ref';
-import useProps from '../hooks/use-props';
 import Loading from '../loading';
 import { useLocale } from '../locale';
 import { bindEvent, preventDefault } from '../utils/dom/event';
@@ -18,6 +17,7 @@ import { getScrollParent, getScrollTop } from '../utils/dom/scroll';
 import TouchHelper from '../utils/dom/touch-helper';
 import { noop } from '../utils/misc';
 import { classnames, createBEM } from '../utils/namespace';
+import { createDefaultsForwardRef } from '../utils/react';
 import { PullRefreshComponentProps, PullRefreshProps } from './interface';
 
 const NS = 'fnx-pull-refresh';
@@ -32,31 +32,64 @@ type PullRefreshStatus =
 	| 'pulling'
 	| 'success';
 
-type PullRefreshRequiredProps = Required<PullRefreshComponentProps>;
-
-const PullRefresh = forwardRef<HTMLDivElement, PullRefreshProps>(
-	(_props, ref) => {
+const PullRefresh = createDefaultsForwardRef<
+	HTMLDivElement,
+	PullRefreshProps,
+	Required<
+		Pick<
+			PullRefreshComponentProps,
+			| 'disabled'
+			| 'successDuration'
+			| 'slots'
+			| 'indicatorHeight'
+			| 'refreshing'
+			| 'onRefresh'
+		>
+	>
+>(
+	'PullRefresh',
+	{
+		disabled: false,
+		successDuration: 500,
+		slots: {},
+		indicatorHeight: DEFAULT_INDICATOR_HEIGHT,
+		refreshing: false,
+		onRefresh: noop,
+	},
+	(
+		{
+			disabled,
+			successDuration,
+			slots,
+			indicatorHeight,
+			refreshing,
+			onRefresh,
+			// optional
+			transitionDuration: _transitionDuration,
+			className,
+			style,
+			children,
+			...restProps
+		},
+		ref,
+	) => {
 		const locale = useLocale('pull-refresh');
 		const configContext = useContext(ConfigProvider.Context);
 
-		const [props, { className, style, children, ...restProps }] = useProps<
-			PullRefreshRequiredProps,
-			PullRefreshProps
-		>(
-			{
-				disabled: false,
-				successDuration: 500,
-				transitionDuration: configContext.transitionDuration || 300,
-				slots: {},
-				indicatorHeight: DEFAULT_INDICATOR_HEIGHT,
-				refreshing: false,
-				onRefresh: noop,
-			},
-			_props,
+		const transitionDuration = useDefaults<number>(
+			configContext.transitionDuration,
+			_transitionDuration,
 		);
 
-		const propsRef = useDefaultsRef(props);
-		const { disabled, slots, indicatorHeight, refreshing } = props;
+		const propsRef = useDefaultsRef<Required<PullRefreshComponentProps>>({
+			disabled,
+			successDuration,
+			transitionDuration,
+			slots,
+			indicatorHeight,
+			refreshing,
+			onRefresh,
+		});
 
 		const rootRef = useRef<HTMLDivElement>(null);
 		const trackRef = useRef<HTMLDivElement>(null);
@@ -295,12 +328,10 @@ const PullRefresh = forwardRef<HTMLDivElement, PullRefreshProps>(
 	},
 );
 
-PullRefresh.displayName = 'PullRefresh';
-
 export type {
 	PullRefreshComponentProps,
-	PullRefreshProps,
 	PullRefreshIndicatorNode,
+	PullRefreshProps,
 	PullRefreshSlots,
 } from './interface';
 

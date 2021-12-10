@@ -1,9 +1,10 @@
-import React, { forwardRef, ReactNode, SVGAttributes, useEffect } from 'react';
-import { IconProps } from './interface';
-import { bem, DEFAULT_SVG_PROPS, DEFAULT_SVG_VIEW_BOX } from './Icon';
-import { classnames } from '../utils/namespace';
-import { addUnit } from '../utils/format';
+import React, { ReactNode, SVGAttributes, useEffect } from 'react';
 import { canUseDom } from '../utils/detect';
+import { addUnit } from '../utils/format';
+import { classnames } from '../utils/namespace';
+import { createForwardRef } from '../utils/react';
+import { bem, DEFAULT_SVG_PROPS, DEFAULT_SVG_VIEW_BOX } from './Icon';
+import { IconProps } from './interface';
 
 const scriptCache = new Set<string>();
 
@@ -32,57 +33,58 @@ export function createFromIconfontCN(
 	scriptUrl: string,
 	options: SVGAttributes<any> = {},
 ) {
-	const IconFont = forwardRef<HTMLSpanElement, IconProps>((props, ref) => {
-		useEffect(() => {
-			loadScript(scriptUrl);
-		}, []);
+	const IconFont = createForwardRef<HTMLSpanElement, IconProps>(
+		'IconFont',
+		(props, ref) => {
+			useEffect(() => {
+				loadScript(scriptUrl);
+			}, []);
 
-		const {
-			className,
-			name,
-			component: SvgComponent,
-			spin,
-			children,
-			viewBox,
-			size,
-			color,
-			style,
-			...rest
-		} = props;
+			const {
+				className,
+				name,
+				component: SvgComponent,
+				spin,
+				children,
+				viewBox,
+				size,
+				color,
+				style,
+				...rest
+			} = props;
 
-		let icon: ReactNode;
+			let icon: ReactNode;
 
-		const svgProps: SVGAttributes<any> = {
-			...DEFAULT_SVG_PROPS,
-			...options,
-			viewBox: viewBox || options.viewBox || DEFAULT_SVG_VIEW_BOX,
-		};
+			const svgProps: SVGAttributes<any> = {
+				...DEFAULT_SVG_PROPS,
+				...options,
+				viewBox: viewBox || options.viewBox || DEFAULT_SVG_VIEW_BOX,
+			};
 
-		if (SvgComponent) {
-			icon = <SvgComponent {...svgProps} />;
-		} else if (children) {
-			icon = <svg {...svgProps}>{children}</svg>;
-		} else if (name) {
-			icon = (
-				<svg {...svgProps}>
-					<use xlinkHref={`#${name}`} />
-				</svg>
+			if (SvgComponent) {
+				icon = <SvgComponent {...svgProps} />;
+			} else if (children) {
+				icon = <svg {...svgProps}>{children}</svg>;
+			} else if (name) {
+				icon = (
+					<svg {...svgProps}>
+						<use xlinkHref={`#${name}`} />
+					</svg>
+				);
+			}
+
+			return (
+				<span
+					className={classnames(bem({ spin }), className)}
+					{...rest}
+					style={{ color, fontSize: addUnit(size), ...style }}
+					ref={ref}
+				>
+					{icon}
+				</span>
 			);
-		}
-
-		return (
-			<span
-				className={classnames(bem({ spin }), className)}
-				{...rest}
-				style={{ color, fontSize: addUnit(size), ...style }}
-				ref={ref}
-			>
-				{icon}
-			</span>
-		);
-	});
-
-	IconFont.displayName = 'IconFont';
+		},
+	);
 
 	return IconFont;
 }

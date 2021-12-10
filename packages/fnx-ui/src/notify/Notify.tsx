@@ -1,27 +1,31 @@
-import React, { forwardRef, useEffect, useState } from 'react';
-import useProps from '../hooks/use-props';
+import React, { useEffect, useState } from 'react';
 import Popup from '../popup';
 import { classnames, createBEM } from '../utils/namespace';
+import { createDefaultsForwardRef } from '../utils/react';
 import { NotifyProps } from './interface';
 
 const NS = 'fnx-notify';
 const bem = createBEM(NS);
 
-type NotifyRequiredProps = Required<
-	Pick<NotifyProps, 'type' | 'visible' | 'duration' | 'lockScroll'>
->;
-
-const DEFAULT_PROPS: NotifyRequiredProps = {
-	type: 'danger',
-	visible: false,
-	duration: 2000,
-	lockScroll: false,
-};
-
-const Notify = forwardRef<HTMLDivElement, NotifyProps>((_props, ref) => {
-	const [
-		{ type, visible, duration, lockScroll },
+const Notify = createDefaultsForwardRef<
+	HTMLDivElement,
+	NotifyProps,
+	Required<Pick<NotifyProps, 'type' | 'visible' | 'duration' | 'lockScroll'>>
+>(
+	'Notify',
+	{
+		type: 'danger',
+		visible: false,
+		duration: 2000,
+		lockScroll: false,
+	},
+	(
 		{
+			type,
+			visible,
+			duration,
+			lockScroll,
+			// optionals
 			mountTo,
 			message,
 			color,
@@ -31,47 +35,46 @@ const Notify = forwardRef<HTMLDivElement, NotifyProps>((_props, ref) => {
 			style,
 			...restProps
 		},
-	] = useProps<NotifyRequiredProps, NotifyProps>(DEFAULT_PROPS, _props);
+		ref,
+	) => {
+		const [showing, setShowing] = useState(false);
 
-	const [showing, setShowing] = useState(false);
+		useEffect(() => {
+			setShowing(visible);
 
-	useEffect(() => {
-		setShowing(visible);
+			if (visible && duration > 0) {
+				const timer = setTimeout(() => {
+					setShowing(false);
+				}, duration);
 
-		if (visible && duration > 0) {
-			const timer = setTimeout(() => {
-				setShowing(false);
-			}, duration);
+				return () => {
+					clearTimeout(timer);
+				};
+			}
+		}, [visible, duration]);
 
-			return () => {
-				clearTimeout(timer);
-			};
-		}
-	}, [visible, duration]);
-
-	return (
-		<Popup
-			visible={showing}
-			mountTo={mountTo}
-			className={classnames(bem([type]), className)}
-			renderOnShow={true}
-			destroyOnHide={true}
-			overlay={false}
-			position="top"
-			lockScroll={lockScroll}
-			style={{
-				color,
-				background,
-				...style,
-			}}
-			{...restProps}
-			ref={ref}
-		>
-			{message || children}
-		</Popup>
-	);
-});
-
-Notify.displayName = 'Notify';
+		return (
+			<Popup
+				visible={showing}
+				mountTo={mountTo}
+				className={classnames(bem([type]), className)}
+				renderOnShow={true}
+				destroyOnHide={true}
+				overlay={false}
+				position="top"
+				lockScroll={lockScroll}
+				style={{
+					color,
+					background,
+					...style,
+				}}
+				{...restProps}
+				ref={ref}
+			>
+				{message || children}
+			</Popup>
+		);
+	},
+);
 
 export default Notify;

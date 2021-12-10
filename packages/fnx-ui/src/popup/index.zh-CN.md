@@ -122,60 +122,58 @@ ReactDOM.render(
 
 ### Popup Props
 
-| 名称                | 说明                       | 类型                                                | 默认值                |
-| ------------------- | -------------------------- | --------------------------------------------------- | --------------------- |
-| visible             | 是否显示弹出层             | `boolean`                                           | `false`               |
-| renderOnShow        | 是否在显示弹层时才渲染节点 | `boolean`                                           | `true`                |
-| destroyOnHide       | 是否在关闭弹层时销毁节点   | `boolean`                                           | `false`               |
-| mountTo             | 指定挂载的节点             | `HTMLElement \| () => HTMLElement \| false`         | `() => document.body` |
-| transitionDuration  | 过渡动画时常，单位毫秒     | `number`                                            | `300`                 |
-| transitionName      | 过渡动画类名               | `string`                                            | -                     |
-| lockScroll          | 是否锁定背景滚动           | `boolean`                                           | `true`                |
-| position            | 遮罩层位置                 | `'top' \| 'bottom' \| 'left' \| 'right' \|'center'` | `'center'`            |
-| round               | 是否展示圆角               | `boolean`                                           | `false`               |
-| safeAreaInsetBottom | 是否开启底部安全区适配     | `boolean`                                           | `false`               |
-| overlay             | 是否显示遮罩层             | `boolean`                                           | `true`                |
-| overlayClassName    | 遮罩层 Class 类名          | `string`                                            | -                     |
-| overlayStyle        | 遮罩层样式                 | `CSSProperties`                                     | -                     |
-| overlayCloseable    | 是否点击遮罩层关闭         | `boolean`                                           | `true`                |
+| 名称                | 说明                       | 类型                                                         | 默认值                | 版本 |
+| ------------------- | -------------------------- | ------------------------------------------------------------ | --------------------- | ---- |
+| visible             | 是否显示弹出层             | `boolean`                                                    | `false`               |      |
+| renderOnShow        | 是否在显示弹层时才渲染节点 | `boolean`                                                    | `true`                |      |
+| destroyOnHide       | 是否在关闭弹层时销毁节点   | `boolean`                                                    | `false`               |      |
+| mountTo             | 指定挂载的节点             | `HTMLElement` \| `() => HTMLElement` \| `false`              | `() => document.body` |      |
+| transitionDuration  | 过渡动画时常，单位毫秒     | `number`                                                     | `300`                 |      |
+| transitionName      | 过渡动画类名               | `string`                                                     | -                     |      |
+| lockScroll          | 是否锁定背景滚动           | `boolean`                                                    | `true`                |      |
+| position            | 遮罩层位置                 | `'top'` \| `'bottom'` \| `'left'` \| `'right'` \| `'center'` | `'center'`            |      |
+| round               | 是否展示圆角               | `boolean`                                                    | `false`               |      |
+| safeAreaInsetBottom | 是否开启底部安全区适配     | `boolean`                                                    | `false`               |      |
+| overlay             | 是否显示遮罩层             | `boolean`                                                    | `true`                |      |
+| overlayClassName    | 遮罩层 Class 类名          | `string`                                                     | -                     |      |
+| overlayStyle        | 遮罩层样式                 | `CSSProperties`                                              | -                     |      |
+| overlayCloseable    | 是否点击遮罩层关闭         | `boolean`                                                    | `true`                |      |
 
-#### 注意
-
-- `<Popup />` 默认关闭后状态不会自动清空, 如果希望每次打开都是新内容，请设置 `destroyOnHide`。
+**Popup 默认关闭后状态不会自动清空, 如果希望每次打开都是新内容，请设置 `destroyOnHide`。**
 
 ### Popup Events
 
-| 事件名         | 说明             | 回调参数 |
-| -------------- | ---------------- | -------- |
-| onOverlayClick | 点击遮罩层触发   | -        |
-| onClose        | 关闭事件触发     | -        |
-| onBeforeHide   | 关闭动画之前触发 | -        |
-| onHide         | 关闭动画时触发   | -        |
-| onAfterHide    | 关闭动画后触发   | -        |
-| onBeforeShow   | 显示动画前触发   | -        |
-| onShow         | 显示动画中触发   | -        |
-| onAfterShow    | 显示动画后触发   | -        |
+| 事件名         | 说明             | 类型         | 版本 |
+| -------------- | ---------------- | ------------ | ---- |
+| onOverlayClick | 点击遮罩层触发   | `() => void` |      |
+| onClose        | 关闭事件触发     | `() => void` |      |
+| onBeforeHide   | 关闭动画之前触发 | `() => void` |      |
+| onHide         | 关闭动画时触发   | `() => void` |      |
+| onAfterHide    | 关闭动画后触发   | `() => void` |      |
+| onBeforeShow   | 显示动画前触发   | `() => void` |      |
+| onShow         | 显示动画中触发   | `() => void` |      |
+| onAfterShow    | 显示动画后触发   | `() => void` |      |
 
-## Popup.Select Props
+### Popup.Select Props
 
 Popup.Select 继承了 Popup 的属性并新增了如下属性：
 
-| 名称                       | 说明               | 类型                                      | 默认值         |
-| -------------------------- | ------------------ | ----------------------------------------- | -------------- |
-| disabled                   | 是否禁用           | `boolean`                                 | `false`        |
-| value                      | 选项值             | `any`                                     | -              |
-| defaultValue               | 默认选项值         | `any`                                     | -              |
-| select                     | 弹出层内容         | `ReactNode`                               | -              |
-| selectDefaultValuePropName | 默认值名字         | `string`                                  | `defaultValue` |
-| selectConfirmTrigger       | 确认事件回调名称   | `string`                                  | `onConfirm`    |
-| selectCancelTrigger        | 取消事件回调名称   | `string`                                  | `onCancel`     |
-| trigger                    | 子元素触发事件名称 | `string`                                  | `onClick`      |
-| children                   | 子元素             | `ReactNode \| (value?: any) => ReactNode` | -              |
+| 名称                       | 说明               | 类型                                        | 默认值         | 版本 |
+| -------------------------- | ------------------ | ------------------------------------------- | -------------- | ---- |
+| disabled                   | 是否禁用           | `boolean`                                   | `false`        |      |
+| value                      | 选项值             | `any`                                       | -              |      |
+| defaultValue               | 默认选项值         | `any`                                       | -              |      |
+| select                     | 弹出层内容         | `ReactNode`                                 | -              |      |
+| selectDefaultValuePropName | 默认值名字         | `string`                                    | `defaultValue` |      |
+| selectConfirmTrigger       | 确认事件回调名称   | `string`                                    | `onConfirm`    |      |
+| selectCancelTrigger        | 取消事件回调名称   | `string`                                    | `onCancel`     |      |
+| trigger                    | 子元素触发事件名称 | `string`                                    | `onClick`      |      |
+| children                   | 子元素             | `ReactNode` \| `(value?: any) => ReactNode` | -              |      |
 
-## Popup.Select Events
+### Popup.Select Events
 
 Popup.Select 继承了 Popup 的事件并新增了如下事件：
 
-| 事件名   | 说明                   | 回调参数               |
-| -------- | ---------------------- | ---------------------- |
-| onChange | `value` 发生改变时触发 | `(value: any) => void` |
+| 事件名   | 说明                   | 类型                   | 版本 |
+| -------- | ---------------------- | ---------------------- | ---- |
+| onChange | `value` 发生改变时触发 | `(value: any) => void` |      |

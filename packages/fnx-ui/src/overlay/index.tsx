@@ -1,6 +1,5 @@
 import React, {
 	CSSProperties,
-	forwardRef,
 	useContext,
 	useEffect,
 	useImperativeHandle,
@@ -10,27 +9,29 @@ import React, {
 import { CSSTransition } from 'react-transition-group';
 import ConfigProvider from '../config-provider';
 import useDefaults from '../hooks/use-defaults';
-import useProps from '../hooks/use-props';
 import { bindEvent, preventDefault } from '../utils/dom/event';
 import { classnames, createBEM } from '../utils/namespace';
+import { createDefaultsForwardRef } from '../utils/react';
 import { OverlayProps } from './interface';
 
 const NS = 'fnx-overlay';
 const bem = createBEM(NS);
 
-type OverlayRequiredProps = Required<
-	Pick<OverlayProps, 'visible' | 'lockScroll'>
->;
-
-const DEFAULT_PROPS: OverlayRequiredProps = {
-	visible: false,
-	lockScroll: true,
-};
-
-const Overlay = forwardRef<HTMLDivElement, OverlayProps>((_props, ref) => {
-	const [
-		{ visible, lockScroll },
+const Overlay = createDefaultsForwardRef<
+	HTMLDivElement,
+	OverlayProps,
+	Required<Pick<OverlayProps, 'visible' | 'lockScroll'>>
+>(
+	'Overlay',
+	{
+		visible: false,
+		lockScroll: true,
+	},
+	(
 		{
+			visible,
+			lockScroll,
+			// optionals
 			zIndex,
 			transitionDuration: _transitionDuration,
 			className,
@@ -38,96 +39,95 @@ const Overlay = forwardRef<HTMLDivElement, OverlayProps>((_props, ref) => {
 			children,
 			...restProps
 		},
-	] = useProps<OverlayRequiredProps, OverlayProps>(DEFAULT_PROPS, _props);
-
-	const overlayRef = useRef<HTMLDivElement | null>(null);
-
-	const configContext = useContext(ConfigProvider.Context);
-
-	const transitionDuration = useDefaults<number>(
-		configContext.transitionDuration,
-		_transitionDuration,
-	);
-
-	useImperativeHandle<HTMLDivElement | null, HTMLDivElement | null>(
 		ref,
-		() => overlayRef.current,
-	);
+	) => {
+		const overlayRef = useRef<HTMLDivElement | null>(null);
 
-	const [closing, setClosing] = useState(false);
-	const [rendering, setRendering] = useState(false);
+		const configContext = useContext(ConfigProvider.Context);
 
-	// lock scroll
-	useEffect(() => {
-		// passive events
-		// https://github.com/facebook/react/issues/6436
-		// https://github.com/ZhongAnTech/zarm/issues/505
-		if (lockScroll && rendering && overlayRef.current != null) {
-			const overlay = overlayRef.current;
+		const transitionDuration = useDefaults<number>(
+			configContext.transitionDuration,
+			_transitionDuration,
+		);
 
-			const touchmove = (e: TouchEvent) => {
-				preventDefault(e, true);
-			};
+		useImperativeHandle<HTMLDivElement | null, HTMLDivElement | null>(
+			ref,
+			() => overlayRef.current,
+		);
 
-			bindEvent(overlay, 'touchmove', touchmove, { passive: false });
+		const [closing, setClosing] = useState(false);
+		const [rendering, setRendering] = useState(false);
 
-			return () => {
-				overlay.removeEventListener('touchmove', touchmove);
-			};
-		}
-	}, [rendering, lockScroll]);
+		// lock scroll
+		useEffect(() => {
+			// passive events
+			// https://github.com/facebook/react/issues/6436
+			// https://github.com/ZhongAnTech/zarm/issues/505
+			if (lockScroll && rendering && overlayRef.current != null) {
+				const overlay = overlayRef.current;
 
-	useEffect(() => {
-		if (visible) {
-			setRendering(true);
-			setClosing(false);
-		} else {
-			setClosing(true);
-		}
-	}, [visible]);
+				const touchmove = (e: TouchEvent) => {
+					preventDefault(e, true);
+				};
 
-	const formatStyle = (): CSSProperties => {
-		const formattedStyle: CSSProperties = {};
+				bindEvent(overlay, 'touchmove', touchmove, { passive: false });
 
-		if (zIndex != null) {
-			formattedStyle.zIndex = zIndex;
-		}
+				return () => {
+					overlay.removeEventListener('touchmove', touchmove);
+				};
+			}
+		}, [rendering, lockScroll]);
 
-		if (!rendering) {
-			formattedStyle.display = 'none';
-		}
-
-		if (transitionDuration !== configContext.transitionDuration) {
-			formattedStyle.transitionDuration = `${transitionDuration}ms`;
-		}
-
-		return { ...formattedStyle, ...style };
-	};
-
-	return (
-		<CSSTransition
-			classNames="fnx-fade"
-			in={rendering && !closing}
-			timeout={transitionDuration || 0}
-			nodeRef={overlayRef}
-			onExited={() => {
+		useEffect(() => {
+			if (visible) {
+				setRendering(true);
 				setClosing(false);
-				setRendering(false);
-			}}
-		>
-			<div
-				className={classnames(bem(), className)}
-				style={formatStyle()}
-				{...restProps}
-				ref={overlayRef}
-			>
-				{children}
-			</div>
-		</CSSTransition>
-	);
-});
+			} else {
+				setClosing(true);
+			}
+		}, [visible]);
 
-Overlay.displayName = 'Overlay';
+		const formatStyle = (): CSSProperties => {
+			const formattedStyle: CSSProperties = {};
+
+			if (zIndex != null) {
+				formattedStyle.zIndex = zIndex;
+			}
+
+			if (!rendering) {
+				formattedStyle.display = 'none';
+			}
+
+			if (transitionDuration !== configContext.transitionDuration) {
+				formattedStyle.transitionDuration = `${transitionDuration}ms`;
+			}
+
+			return { ...formattedStyle, ...style };
+		};
+
+		return (
+			<CSSTransition
+				classNames="fnx-fade"
+				in={rendering && !closing}
+				timeout={transitionDuration || 0}
+				nodeRef={overlayRef}
+				onExited={() => {
+					setClosing(false);
+					setRendering(false);
+				}}
+			>
+				<div
+					className={classnames(bem(), className)}
+					style={formatStyle()}
+					{...restProps}
+					ref={overlayRef}
+				>
+					{children}
+				</div>
+			</CSSTransition>
+		);
+	},
+);
 
 export type { OverlayComponentProps, OverlayProps } from './interface';
 export default Overlay;

@@ -36,7 +36,7 @@ function exportContext() {
 	};
 }
 
-export function createMarkdown(options) {
+exports.createMarkdown = function (options) {
 	let markdown;
 
 	if (
@@ -93,4 +93,4 @@ export function createMarkdown(options) {
 
 		return context.build();
 	};
-}
+};

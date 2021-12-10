@@ -25,6 +25,11 @@ export interface TabsComponentProps {
 	slots?: TabsSlots;
 }
 
+export interface TabsRef {
+	root: HTMLDivElement | null;
+	resize: () => void;
+}
+
 export interface TabsSlots {
 	navLeft?: ReactNode;
 	navRight?: ReactNode;

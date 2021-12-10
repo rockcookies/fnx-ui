@@ -1,120 +1,204 @@
 # Calendar
 
-The calendar component is used to select a date or date interval.
+Calendar component for selecting dates or date ranges.
 
-## Basic Usage
+## Select Single Date
+
+Calendar can be used with Cell and Popup.
 
 ```tsx
-import { Calendar } from 'fnx-ui';
+import { Calendar, Cell, Icon, Popup } from 'fnx-ui';
 
 ReactDOM.render(
   <>
-    <Calendar />
+    <Popup.Select round select={<Calendar />}>
+      {(value) => (
+        <Cell
+          title="Calendar"
+          content={
+            value
+              ? `${value.getMonth() + 1}/${value.getDate()}`
+              : 'Please Select'
+          }
+          clickable
+          rightIcon={<Icon name="arrow-right" />}
+        />
+      )}
+    </Popup.Select>
   </>,
   mountNode,
 );
 ```
 
-## Single Date
+## Select Multiple Date
 
-The following demonstrates the use of the pop-up layer to use the calendar component, the Date selection is complete, and the `onConfirm` event will be triggered.
+Use Calendar.Multi to select multiple dates, now the `value` prop is an array, the array contain selected dates.
 
 ```tsx
-import { Popup,Calendar } from 'fnx-ui';
-
-const  confirmHandle=(v)=>{console.log(v)}
+import { Calendar, Cell, Icon, Popup } from 'fnx-ui';
 
 ReactDOM.render(
   <>
-  <Popup.Select  select={<Calendar  onConfirm={confirmHandle} />}>
+    <Popup.Select round select={<Calendar.Multi />}>
+      {(value) => (
+        <Cell
+          title="Calendar"
+          content={value ? `${value.length} dates selected` : 'Please Select'}
+          clickable
+          rightIcon={<Icon name="arrow-right" />}
+        />
+      )}
+    </Popup.Select>
   </>,
   mountNode,
 );
 ```
 
-## Select Multiple
+## Select Date Range
 
-`<Calendar.multi />` You can choose multiple dates, at this time the `Date` is the array structure, the array contains several selected dates.
+Use Calendar.Range to select range dates, now the `value` prop is an array, the first element in the array is the start time and the second element is the end time.
 
 ```tsx
-import { Popup,Calendar } from 'fnx-ui';
+import { Calendar, Cell, Icon, Popup } from 'fnx-ui';
 
-const  confirmHandle=(v)=>{console.log(v)}
+const formatDate = (date: Date) => {
+  if (date) {
+    return `${date.getMonth() + 1}/${date.getDate()}`;
+  }
+};
 
 ReactDOM.render(
   <>
-  <Popup.Select  select={<Calendar.Multi  onConfirm={confirmHandle} />}>
+    <Popup.Select round select={<Calendar.Range />}>
+      {(value) => (
+        <Cell
+          title="Calendar"
+          content={
+            value
+              ? `${formatDate(value[0])} - ${formatDate(value[1])}`
+              : 'Please Select'
+          }
+          clickable
+          rightIcon={<Icon name="arrow-right" />}
+        />
+      )}
+    </Popup.Select>
   </>,
   mountNode,
 );
 ```
 
-## Select Range
+## Custom theme color
 
-`<Calendar.Range />` You can select the date interval. At this time, the `Date` is the` Date` is an array structure, the array first item is the start time, the second item is the end time.
+Use `color` prop to set calendar theme color.
 
 ```tsx
-import { Popup,Calendar } from 'fnx-ui';
-
-const  confirmHandle=(V)=>{console.log(v)}
+import { Calendar, Cell, Icon, Popup } from 'fnx-ui';
 
 ReactDOM.render(
   <>
-  <Popup.Select  select={<Calendar.Range  onConfirm={confirmHandle} />}>
+    <Popup.Select round select={<Calendar color="var(--fnx-success-color)" />}>
+      {(value) => (
+        <Cell
+          title="Please Select"
+          content={value && `${value.getMonth() + 1}/${value.getDate()}`}
+          clickable
+          rightIcon={<Icon name="arrow-right" />}
+        />
+      )}
+    </Popup.Select>
   </>,
   mountNode,
 );
 ```
 
-## MinDate and maxDate
+## Custom confirm text
 
-By `minDate` and` maxdate` define the scope of the calendar.
+Use `confirmText` and `confirmDisabledText` to set confirm text.
 
 ```tsx
-import { Popup,Calendar } from 'fnx-ui';
+import { Calendar, Cell, Icon, Popup } from 'fnx-ui';
 
-const  confirmHandle=(V)=>{console.log(v)}
+const formatDate = (date: Date) => {
+  if (date) {
+    return `${date.getMonth() + 1}/${date.getDate()}`;
+  }
+};
 
 ReactDOM.render(
   <>
     <Popup.Select
-    select={
+      round
+      select={
         <Calendar.Range
-            minDate={new Date('2021/9/1')}
-            maxDate={new Date('2021/9/30')}
-            onConfirm={confirmHandle}
+          confirmText="OK"
+          confirmDisabledText="Select End Date"
         />
-    }
-					>
+      }
+    >
+      {(value) => (
+        <Cell
+          title="Calendar"
+          content={
+            value
+              ? `${formatDate(value[0])} - ${formatDate(value[1])}`
+              : 'Please Select'
+          }
+          clickable
+          rightIcon={<Icon name="arrow-right" />}
+        />
+      )}
+    </Popup.Select>
   </>,
   mountNode,
 );
 ```
 
-## Custom Color
+## Custom Date Range
 
-The color of the calendar can be customized through the `color` property, the selection date and the bottom button take effect.
+Use `minDate` and `maxDate` to set select range.
 
 ```tsx
-import { Popup, Calendar } from 'fnx-ui';
+import { Calendar, Cell, Icon, Popup } from 'fnx-ui';
 
 ReactDOM.render(
   <>
-    <Popup.Select select={<Calendar color="#33ab84" />}></Popup.Select>
+    <Popup.Select
+      round
+      select={
+        <Calendar
+          minDate={new Date('2021/9/1')}
+          maxDate={new Date('2021/10/31')}
+        />
+      }
+    >
+      {(value) => (
+        <Cell
+          title="Please Select"
+          content={value && `${value.getMonth() + 1}/${value.getDate()}`}
+          clickable
+          rightIcon={<Icon name="arrow-right" />}
+        />
+      )}
+    </Popup.Select>
   </>,
   mountNode,
 );
 ```
 
-## Custom content via `Slots`
+## Custom elements
+
+Use `slots` prop to set custom elements.
 
 ```tsx
-import { Popup, Calendar } from 'fnx-ui';
+import { Calendar, Cell, Icon, Popup } from 'fnx-ui';
 
-const dayFormatterss = () => {
+const dayFormatter = (day) => {
   day = { ...day };
+
   const month = day.date.getMonth() + 1;
   const date = day.date.getDate();
+
   if (month === 10) {
     if (date === 1) {
       day.type = 'disabled';
@@ -124,19 +208,21 @@ const dayFormatterss = () => {
       day.type = 'middle';
     }
   }
+
   return day;
 };
 
 ReactDOM.render(
   <>
-    <Popup.Select<Date>
+    <Popup.Select
+      round
       select={
         <Calendar
           minDate={new Date('2021/10/01')}
           maxDate={new Date('2021/11/01')}
           defaultValue={new Date('2021/10/01')}
           slots={{
-            day: (day) => <Calendar.Day {...dayFormatterss(day)} />,
+            day: (day) => <Calendar.Day {...dayFormatter(day)} />,
             subTitle: () => 'SubTitle',
             footer: 'Footer',
             monthMark: false,
@@ -144,7 +230,60 @@ ReactDOM.render(
           }}
         />
       }
-    ></Popup.Select>
+    >
+      {(value) => (
+        <Cell
+          title="Please Select"
+          content={value && `${value.getMonth() + 1}/${value.getDate()}`}
+          clickable
+          rightIcon={<Icon name="arrow-right" />}
+        />
+      )}
+    </Popup.Select>
+  </>,
+  mountNode,
+);
+```
+
+## Max Range
+
+When using Calendar.Range or Calendar.Multi, you can use the `maxSize` prop to specify the maximum number of selectable days.
+
+```tsx
+import { Calendar, Cell, Icon, Popup, Toast } from 'fnx-ui';
+
+const formatDate = (date: Date) => {
+  if (date) {
+    return `${date.getMonth() + 1}/${date.getDate()}`;
+  }
+};
+
+ReactDOM.render(
+  <>
+    <Popup.Select
+      round
+      select={
+        <Calendar.Range
+          maxSize={3}
+          onMaxSize={() => {
+            Toast.show('Choose no more than 3 days');
+          }}
+        />
+      }
+    >
+      {(value) => (
+        <Cell
+          title="Calendar"
+          content={
+            value
+              ? `${formatDate(value[0])} - ${formatDate(value[1])}`
+              : 'Please Select'
+          }
+          clickable
+          rightIcon={<Icon name="arrow-right" />}
+        />
+      )}
+    </Popup.Select>
   </>,
   mountNode,
 );
@@ -152,102 +291,81 @@ ReactDOM.render(
 
 ## API
 
-| Parameter           | Description                            | Type                       | Default value |
-| ------------------- | -------------------------------------- | -------------------------- | ------------- |
-| defaultValue        | Default selection date                 | `Date \| string \| number` | -             |
-| title               | Calendar title                         | `ReactNode`                | `Calendar`    |
-| color               | Calendar color                         | `string`                   | `#378ef0`     |
-| minDate             | Minimum date of optional range         | `Date \| string \| number` | -             |
-| maxDate             | Maximum date of the optional range     | `Date \| string \| number` | -             |
-| dayHeight           | High date                              | `number \| string`         | -             |
-| readonly            | Whether you read                       | `boolean`                  | `false`       |
-| closeIcon           | Custom shutdown icon                   | `ReactNode`                | -             |
-| firstDayOfWeek      | Set the weekday                        | `number`                   | -             |
-| slots               | Custom rendering content               | `CalendarSlots`            | -             |
-| confirmText         | Confirm button text                    | `ReactNode`                | `Confirm`     |
-| confirmDisabledText | Confirm button text when it is invalid | `ReactNode`                | `Confirm`     |
+There are three kinds of calendar:
 
-## CalendarRange API
+- Calendar
+- Calendar.Multi
+- Calendar.Range
 
-| Parameter           | Description                                     | Type                       | Default value |
-| ------------------- | ----------------------------------------------- | -------------------------- | ------------- |
-| defaultValue        | Default selection date                          | `Date \| string \| number` | -             |
-| allowSameDay        | Is it possible to select the beginning and end? | `boolean`                  | `false`       |
-| maxSize             | The maximum number of days selected             | `number`                   | -             |
-| title               | Calendar title                                  | `ReactNode`                | `Calendar`    |
-| color               | Calendar color                                  | `string`                   | `#378ef0`     |
-| minDate             | Minimum date of optional range                  | `Date \| string \| number` | -             |
-| maxDate             | Maximum date of the optional range              | `Date \| string \| number` | -             |
-| dayHeight           | High date                                       | `number \| string`         | -             |
-| readonly            | Whether you read                                | `boolean`                  | `false`       |
-| closeIcon           | Custom shutdown icon                            | `ReactNode`                | -             |
-| firstDayOfWeek      | Set the weekday                                 | `number`                   | -             |
-| slots               | Custom rendering                                | `CalendarSlots`            | -             |
-| confirmText         | Confirm button text                             | `ReactNode`                | `Confirm`     |
-| confirmDisabledText | Confirm button text when it is invalid          | `ReactNode`                | `Confirm`     |
+### Common Props
 
-## CalendarMulti API
+| Name                | Description                                   | Type                           | Default                |
+| ------------------- | --------------------------------------------- | ------------------------------ | ---------------------- |
+| title               | Title of calendar                             | `ReactNode`                    | `'Calendar'`           |
+| color               | Color for the bottom button and selected date | `string`                       | -                      |
+| minDate             | Min date                                      | `Date` \| `string` \| `number` | Today                  |
+| maxDate             | Max date                                      | `Date` \| `string` \| `number` | Six months after today |
+| dayHeight           | Day height                                    | `number` \| `string`           | `64`                   |
+| readonly            | Whether to be readonly                        | `boolean`                      | `false`                |
+| closeIcon           | Custom Close Icon                             | `ReactNode`                    | -                      |
+| firstDayOfWeek      | Set the start day of week                     | `0-6`                          | `0`                    |
+| slots               | Slots                                         | `CalendarSlots`                | -                      |
+| confirmText         | Confirm button text                           | `ReactNode`                    | `'Confirm'`            |
+| confirmDisabledText | Confirm button text when disabled             | `ReactNode`                    | `'Confirm'`            |
 
-| Parameter           | Description                            | Type                       | Default value |
-| ------------------- | -------------------------------------- | -------------------------- | ------------- |
-| defaultValue        | Default selection date                 | `Date \| string \| number` | -             |
-| maxSize             | The maximum number of days selected    | `number`                   | -             |
-| title               | Calendar title                         | `ReactNode`                | `Calendar`    |
-| color               | Calendar color                         | `string`                   | `#378ef0`     |
-| minDate             | Minimum date of optional range         | `Date \| string \| number` | -             |
-| maxDate             | Maximum date of the optional range     | `Date \| string \| number` | -             |
-| dayHeight           | High date                              | `number \| string`         |               |
-| readonly            | Whether you read                       | `boolean`                  | `false`       |
-| closeIcon           | Custom shutdown icon                   | `ReactNode`                | -             |
-| firstDayOfWeek      | Set the weekday                        | `number`                   | -             |
-| slots               | Custom rendering                       | `CalendarSlots`            | -             |
-| confirmText         | Confirm button text                    | `ReactNode`                | `Confirm`     |
-| confirmDisabledText | Confirm button text when it is invalid | `ReactNode`                | `Confirm`     |
+### CalendarSlots
 
-## Events
+| Name       | Description            | Type                                            | Default |
+| ---------- | ---------------------- | ----------------------------------------------- | ------- |
+| day        | Custom day             | `(day: CalendarDayComponentProps) => ReactNode` | -       |
+| subTitle   | Custom subTitle        | ` boolean` \| `((date: Date) => ReactNode)`     | -       |
+| monthMark  | Custom month watermark | `boolean` \| `((date: Date) => ReactNode)`      | -       |
+| monthTitle | Custom month title     | `boolean` \| `((date: Date) => ReactNode)`      | -       |
+| footer     | Custom Calendar footer | `ReactNode`                                     | -       |
 
-| Event Name | Description                         | Callback Arguments |
-| ---------- | ----------------------------------- | ------------------ |
-| onConfirm  | Click the confirm button to trigger | `value: Date`      |
-| onCancel   | Trigger when you click close icon   | -                  |
-| onChange   | Trigger when selecting item changes | `value: Date`      |
+## Calendar Props
 
-## CalendarRange Events
+| Name         | Description                                                            | Type                           | Default |
+| ------------ | ---------------------------------------------------------------------- | ------------------------------ | ------- |
+| defaultValue | Default value                                                          | `Date` \| `string` \| `number` | -       |
+| allowSameDay | Whether the start and end time of the range is allowed on the same day | `boolean`                      | `false` |
 
-| Event Name | Description                                              | Callback Arguments |
-| ---------- | -------------------------------------------------------- | ------------------ |
-| onConfirm  | Click the confirm button to trigger                      | `value: Date[]`    |
-| onCancel   | Trigger when you click close icon                        | -                  |
-| onChange   | Triggered when selecting the end date                    | `value: Date[]`    |
-| onMaxSize  | Trigger when you exceed the maximum date of the selected | -                  |
+## Calendar Events
 
-## CalendarMulti Events
+| Event Name | Description                              | Type                    |
+| ---------- | ---------------------------------------- | ----------------------- |
+| onConfirm  | Triggered when confirm button is clicked | `(value: Date) => void` |
+| onCancel   | Triggered when the close icon is clicked | `() => void`            |
+| onChange   | Triggered when the active option changes | `(value: Date) => void` |
 
-| Event Name | Description                                              | Callback Arguments |
-| ---------- | -------------------------------------------------------- | ------------------ |
-| onConfirm  | Click the confirm button to trigger                      | `value: Date[]`    |
-| onCancel   | Trigger when you click close icon                        | -                  |
-| onChange   | Trigger when selecting item changes                      | `value: Date[]`    |
-| onMaxSize  | Trigger when you exceed the maximum date of the selected | -                  |
+## Calendar.Multi Props
 
-### Slots Data Structure
+| Name         | Description               | Type                              | Default |
+| ------------ | ------------------------- | --------------------------------- | ------- |
+| defaultValue | Default value             | `Array<Date \| string \| number>` | -       |
+| maxSize      | Number of selectable days | `number`                          | -       |
 
-| Parameter  | Description                                               | Type                                            | Default value |
-| ---------- | --------------------------------------------------------- | ----------------------------------------------- | ------------- |
-| day        | Single date setting                                       | `(day: CalendarDayComponentProps) => ReactNode` | -             |
-| subTitle   | Custom head date area content                             | ` boolean \| ((date: Date) => ReactNode)`       | -             |
-| monthMark  | Whether it is displayed on the month background watermark | `boolean \| ((date: Date) => ReactNode)`        | -             |
-| monthTitle | Month title                                               | `boolean \| ((date: Date) => ReactNode)`        | -             |
-| footer     | Customize the bottom area                                 | `ReactNode`                                     | -             |
+## Calendar.Multi Events
 
-### Data structure of day in slots
+| Event Name | Description                              | Type                      |
+| ---------- | ---------------------------------------- | ------------------------- |
+| onConfirm  | Triggered when confirm button is clicked | `(value: Date[]) => void` |
+| onCancel   | Triggered when the close icon is clicked | `() => void`              |
+| onChange   | Triggered when the active option changes | `(value: Date[]) => void` |
+| onMaxSize  | Emitted when exceeded max size           | `() => void`              |
 
-| Parameter  | Description                      | Type                                                                                                                              | Default value |
-| ---------- | -------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- | ------------- |
-| color      | Single dates set color           | `string`                                                                                                                          | -             |
-| dayHeight  | This date corresponds to the row | `string`                                                                                                                          | -             |
-| date       | Correspondence                   | `Date`                                                                                                                            | -             |
-| content    | content                          | `ReactNode`                                                                                                                       | -             |
-| type       | type                             | `'normal' \| 'start' \| 'start-end' \| 'middle' \| 'end' \| 'selected' \| 'multiple-middle' \| 'multiple-selected' \| 'disabled'` | `'normal' `   |
-| topInfo    | Head prompt                      | `ReactNode`                                                                                                                       | -             |
-| bottomInfo | Bottom prompt                    | `ReactNode`                                                                                                                       | -             |
+## Calendar.Range Props
+
+| Name         | Description                  | Type                              | Default |
+| ------------ | ---------------------------- | --------------------------------- | ------- |
+| defaultValue | Default value                | `Array<Date \| string \| number>` | -       |
+| maxSize      | Max count of selectable days | `number`                          | -       |
+
+## Calendar.Range Events
+
+| Event Name | Description                              | Type                      |
+| ---------- | ---------------------------------------- | ------------------------- |
+| onConfirm  | Triggered when confirm button is clicked | `(value: Date[]) => void` |
+| onCancel   | Triggered when the close icon is clicked | `() => void`              |
+| onChange   | Triggered when the active option changes | `(value: Date[]) => void` |
+| onMaxSize  | Emitted when exceeded max size           | `() => void`              |
