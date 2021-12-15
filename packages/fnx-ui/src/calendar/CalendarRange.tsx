@@ -1,9 +1,9 @@
 import React from 'react';
 import { createForwardRef } from '../utils/react';
 import CalendarContainer from './CalendarContainer';
-import { CalendarRangeProps } from './interface';
+import { CalendarRangeProps, CalendarRef } from './interface';
 
-const CalendarRange = createForwardRef<HTMLDivElement, CalendarRangeProps>(
+const CalendarRange = createForwardRef<CalendarRef, CalendarRangeProps>(
 	'CalendarRange',
 	(
 		{

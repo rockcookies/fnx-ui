@@ -8,9 +8,9 @@ import React, {
 	useMemo,
 	useRef,
 } from 'react';
-import ResizeObserver from 'resize-observer-polyfill';
 import useDefaultsRef from '../hooks/use-defaults-ref';
 import usePopupReopen from '../hooks/use-popup-reopen';
+import useWindowSize from '../hooks/use-window-size';
 import {
 	bindEvent,
 	listenDocumentVisibilityChange,
@@ -81,6 +81,8 @@ const Swipe = createDefaultsForwardRef<
 
 		const rootRef = useRef<HTMLDivElement>(null);
 		const wrapperRef = useRef<HTMLDivElement>(null);
+
+		const windowSize = useWindowSize();
 
 		const children = toElementArray(_children);
 		const swipeLength = children.filter((v) =>
@@ -205,45 +207,25 @@ const Swipe = createDefaultsForwardRef<
 		}, [activeIndex, propsRef]);
 
 		useEffect(() => {
-			const node = rootRef.current;
-
-			let observer: ResizeObserver | undefined;
-
-			if (node) {
-				observer = new ResizeObserver(
-					(entries: ResizeObserverEntry[]) => {
-						reset(() => {
-							reload(entries[0] && entries[0].contentRect);
-						});
-					},
-				);
-
-				observer.observe(node);
-			}
-
-			const clears = Array.from<() => void>([
-				() => {
-					observer && observer.disconnect();
-				},
-				listenDocumentVisibilityChange((visibility) => {
-					if (visibility === 'hidden') {
-						stopAutoplay();
-					} else {
-						startAutoplay();
-					}
-				}),
-			]);
-
-			return () => {
-				for (const off of clears) {
-					off();
+			return listenDocumentVisibilityChange((visibility) => {
+				if (visibility === 'hidden') {
+					stopAutoplay();
+				} else {
+					startAutoplay();
 				}
-			};
-		}, [startAutoplay, reload, stopAutoplay, reset]);
+			});
+		}, [startAutoplay, stopAutoplay]);
 
 		useEffect(() => {
 			reset(reload);
-		}, [swipeLength, startAutoplay, reload, stopAutoplay, reset]);
+		}, [
+			swipeLength,
+			windowSize,
+			startAutoplay,
+			reload,
+			stopAutoplay,
+			reset,
+		]);
 
 		usePopupReopen(() => reset(reload));
 

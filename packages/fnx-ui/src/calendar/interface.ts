@@ -56,6 +56,11 @@ export type CalendarElementProps = Omit<
 	'defaultValue' | 'onChange' | 'title'
 >;
 
+export interface CalendarRef {
+	root: HTMLDivElement | null;
+	reset: () => void;
+}
+
 export interface CalendarComponentProps extends CalendarBaseProps {
 	defaultValue?: CalendarValue;
 	onChange?: (value: Date) => void;

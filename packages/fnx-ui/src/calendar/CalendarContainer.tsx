@@ -1,6 +1,8 @@
 import React, {
 	ReactNode,
 	useCallback,
+	useEffect,
+	useImperativeHandle,
 	useMemo,
 	useRef,
 	useState,
@@ -8,6 +10,7 @@ import React, {
 import Button from '../button';
 import useCreation from '../hooks/use-creation';
 import useDefaultsRef from '../hooks/use-defaults-ref';
+import useGetState from '../hooks/use-get-state';
 import useMount from '../hooks/use-mount';
 import usePopupReopen from '../hooks/use-popup-reopen';
 import useUpdateEffect from '../hooks/use-update-effect';
@@ -24,12 +27,12 @@ import { createDefaultsForwardRef } from '../utils/react';
 import CalendarMonth, { CalendarMonthRef } from './CalendarMonth';
 import useCalendarMonthTitle from './hooks/use-calendar-month-title';
 import useCalendarRangeDate from './hooks/use-calendar-range-date';
-import useNodeHeightRef from './hooks/use-node-height-ref';
 import {
 	CalendarBaseProps,
 	CalendarDayComponentProps,
 	CalendarElementProps,
 	CalendarValue,
+	CalendarRef,
 } from './interface';
 import {
 	calcDateNum,
@@ -122,7 +125,7 @@ const formatValue = (
 };
 
 const CalendarContainer = createDefaultsForwardRef<
-	HTMLDivElement,
+	CalendarRef,
 	CProps,
 	Required<
 		Pick<
@@ -187,8 +190,10 @@ const CalendarContainer = createDefaultsForwardRef<
 
 		const [minDate, maxDate] = useCalendarRangeDate(_minDate, _maxDate);
 
+		const rootRef = useRef<HTMLDivElement | null>(null);
+
 		const bodyRef = useRef<HTMLDivElement | null>(null);
-		const bodyHeightRef = useNodeHeightRef(bodyRef);
+		const bodyHeightRef = useRef(0);
 
 		const monthsRef = useRef<Dictionary<CalendarMonthRef | null>>({});
 		const months = useMemo<Date[]>(() => {
@@ -206,6 +211,15 @@ const CalendarContainer = createDefaultsForwardRef<
 
 			return months;
 		}, [minDate, maxDate]);
+
+		useImperativeHandle<CalendarRef, CalendarRef>(ref, () => {
+			return {
+				root: rootRef.current || null,
+				reset: () => {
+					scrollIntoMonth(getMonthsActiveIndex());
+				},
+			};
+		});
 
 		const defaultValue = useCreation<Date[]>(() => {
 			if (Array.isArray(_defaultValue)) {
@@ -231,8 +245,8 @@ const CalendarContainer = createDefaultsForwardRef<
 		const [inputValue, setInputValue] = useState<Date[]>(defaultValue);
 		const onChangeRef = useDefaultsRef(onChange);
 
-		const [monthsActiveIndex, setMonthsActiveIndex] = useState<number>(
-			() => {
+		const [monthsActiveIndex, setMonthsActiveIndex, getMonthsActiveIndex] =
+			useGetState<number>(() => {
 				const activeIndex = isDate(value[0])
 					? months.findIndex(
 							(month) => compareMonth(month, value[0]) === 0,
@@ -240,8 +254,7 @@ const CalendarContainer = createDefaultsForwardRef<
 					: -1;
 
 				return Math.max(activeIndex, 0);
-			},
-		);
+			});
 
 		const footerButtonEnabled = useMemo<boolean>(() => {
 			if (mode === 'single') {
@@ -375,6 +388,14 @@ const CalendarContainer = createDefaultsForwardRef<
 
 			if (month && body) {
 				month.scrollIntoView(body);
+			}
+		}, []);
+
+		useEffect(() => {
+			const node = bodyRef.current;
+
+			if (node) {
+				bodyHeightRef.current = node.getBoundingClientRect().height;
 			}
 		}, []);
 
@@ -529,7 +550,7 @@ const CalendarContainer = createDefaultsForwardRef<
 			<div
 				className={classnames(bem(), className)}
 				{...restProps}
-				ref={ref}
+				ref={rootRef}
 			>
 				{renderHeader()}
 				{renderBody()}

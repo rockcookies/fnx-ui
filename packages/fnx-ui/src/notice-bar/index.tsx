@@ -7,7 +7,7 @@ import React, {
 	useState,
 } from 'react';
 import useDefaultsRef from '../hooks/use-defaults-ref';
-import useDestroyedRef from '../hooks/use-destroyed-ref';
+import useUnmountedRef from '../hooks/use-unmounted-ref';
 import usePopupReopen from '../hooks/use-popup-reopen';
 import Icon from '../icon';
 import { getElementRect } from '../utils/dom/style';
@@ -93,7 +93,7 @@ const NoticeBar = createDefaultsForwardRef<
 		const [playing, setPlaying] = useState<NoticeBarPlayType>();
 		const [visible, setVisible] = useState(true);
 
-		const destroyedRef = useDestroyedRef();
+		const unmountedRef = useUnmountedRef();
 
 		const reset = useCallback(() => {
 			setOffset(undefined);
@@ -109,14 +109,14 @@ const NoticeBar = createDefaultsForwardRef<
 			}
 
 			delayRef.current = setTimeout(() => {
-				if (!destroyedRef.current) {
+				if (!unmountedRef.current) {
 					setPlaying(
 						marquee === 'auto' ? 'first-reset-auto' : 'first-reset',
 					);
 					delayRef.current = undefined;
 				}
 			}, Math.max(propsRef.current.marqueeDelay, 0));
-		}, [marquee, visible, propsRef, destroyedRef]);
+		}, [marquee, visible, propsRef, unmountedRef]);
 
 		usePopupReopen(reset);
 

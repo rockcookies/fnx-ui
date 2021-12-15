@@ -10,7 +10,7 @@ import Button from '../../button';
 import { Dictionary } from '../../utils/interface';
 import { sleep } from '../../utils/misc';
 import { createBEM } from '../../utils/namespace';
-import useDestroyedRef from '../../hooks/use-destroyed-ref';
+import usUnmountedRef from '../../hooks/use-unmounted-ref';
 import PullRefresh from '../index';
 import './basic.less';
 
@@ -59,13 +59,13 @@ export default function Basic(): ReturnType<React.FC> {
 
 	const content = count > 0 ? `${i18n.text}: ${count}` : i18n.try;
 
-	const destroyedRef = useDestroyedRef();
+	const unmountedRef = usUnmountedRef();
 
 	const setRefreshing = (t: Tab, ms = 1000) => {
 		_setRefreshing((prev) => ({ ...prev, [t]: true }));
 
 		sleep(ms).then(() => {
-			if (!destroyedRef.current) {
+			if (!unmountedRef.current) {
 				setCount((prev) => prev + 1);
 				_setRefreshing((prev) => ({ ...prev, [t]: false }));
 			}

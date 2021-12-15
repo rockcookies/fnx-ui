@@ -85,8 +85,9 @@ const Tabs = createDefaultsForwardRef<
 			() => {
 				return {
 					root: rootRef.current,
-					resize: () => {
-						tabsHeaderRef.current?.resize();
+					reset: () => {
+						tabsHeaderRef.current?.reset();
+						swipeRef.current?.reset();
 					},
 				};
 			},

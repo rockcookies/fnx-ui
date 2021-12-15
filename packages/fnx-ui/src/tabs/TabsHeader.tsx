@@ -6,19 +6,21 @@ import React, {
 	useRef,
 	useState,
 } from 'react';
-import ResizeObserver from 'resize-observer-polyfill';
 import useDefaultsRef from '../hooks/use-defaults-ref';
+import useUpdateEffect from '../hooks/use-update-effect';
+import useWindowSize from '../hooks/use-window-size';
 import { BORDER_TOP_BOTTOM } from '../utils/constants';
 import { addUnit } from '../utils/format';
 import { Dictionary } from '../utils/interface';
 import { classnames } from '../utils/namespace';
+import { doubleRaf } from '../utils/raf';
 import { createForwardRef } from '../utils/react';
 import { TabMeta } from './hooks/use-tab-meta-list';
 import { TabsComponentProps, TabsSlots } from './interface';
 import { scrollLeftTo, _bem as bem } from './utils';
 
 export interface TabsHeaderRef {
-	resize: () => void;
+	reset: () => void;
 }
 
 const TabsHeader = createForwardRef<
@@ -65,6 +67,8 @@ const TabsHeader = createForwardRef<
 		const [initialized, setInitialized] = useState(false);
 		const initializedRef = useDefaultsRef(initialized);
 
+		const windowSize = useWindowSize();
+
 		const trackWidth = useMemo(
 			() => addUnit(props.trackWidth),
 			[props.trackWidth],
@@ -78,32 +82,34 @@ const TabsHeader = createForwardRef<
 
 		const scrollTo = useCallback(
 			(index: number, options?: { immediate?: boolean }) => {
-				const tab = tabRefs.current[index];
-				const tabList = tabListRef.current;
+				doubleRaf(() => {
+					const tab = tabRefs.current[index];
+					const tabList = tabListRef.current;
 
-				if (tab == null || tabList == null) {
-					return;
-				}
+					if (tab == null || tabList == null) {
+						return;
+					}
 
-				const immediate = options && options.immediate;
+					const immediate = options && options.immediate;
 
-				setTrackLeft(tab.offsetLeft + tab.offsetWidth / 2);
+					setTrackLeft(tab.offsetLeft + tab.offsetWidth / 2);
 
-				// cancel scroll animate
-				if (scrollTimerRef.current) {
-					scrollTimerRef.current();
-					scrollTimerRef.current = undefined;
-				}
+					// cancel scroll animate
+					if (scrollTimerRef.current) {
+						scrollTimerRef.current();
+						scrollTimerRef.current = undefined;
+					}
 
-				const to =
-					tab.offsetLeft -
-					(tabList.offsetWidth - tab.offsetWidth) / 2;
+					const to =
+						tab.offsetLeft -
+						(tabList.offsetWidth - tab.offsetWidth) / 2;
 
-				scrollTimerRef.current = scrollLeftTo(
-					tabList,
-					to,
-					immediate ? 0 : transitionDurationRef.current,
-				);
+					scrollTimerRef.current = scrollLeftTo(
+						tabList,
+						to,
+						immediate ? 0 : transitionDurationRef.current,
+					);
+				});
 			},
 			[transitionDurationRef],
 		);
@@ -112,9 +118,7 @@ const TabsHeader = createForwardRef<
 			ref,
 			() => {
 				return {
-					resize: () => {
-						scrollTo(activeIndexRef.current);
-					},
+					reset: () => scrollTo(activeIndexRef.current),
 				};
 			},
 			[activeIndexRef, scrollTo],
@@ -126,23 +130,9 @@ const TabsHeader = createForwardRef<
 			scrollTo(activeIndex, { immediate: !initializedRef.current });
 		}, [activeIndex, initializedRef, scrollTo]);
 
-		useEffect(() => {
-			const tabList = tabListRef.current;
-
-			let observer: ResizeObserver | undefined;
-
-			if (tabList) {
-				observer = new ResizeObserver(() => {
-					scrollTo(activeIndexRef.current, { immediate: true });
-				});
-
-				observer.observe(tabList);
-			}
-
-			return () => {
-				observer && observer.disconnect();
-			};
-		}, [activeIndexRef, scrollTo]);
+		useUpdateEffect(() => {
+			scrollTo(activeIndexRef.current);
+		}, [windowSize, activeIndexRef, scrollTo]);
 
 		return (
 			<div

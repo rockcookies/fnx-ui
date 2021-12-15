@@ -27,7 +27,7 @@ export interface TabsComponentProps {
 
 export interface TabsRef {
 	root: HTMLDivElement | null;
-	resize: () => void;
+	reset: () => void;
 }
 
 export interface TabsSlots {

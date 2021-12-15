@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction } from 'react';
-import useDestroyedRef from './use-destroyed-ref';
+import useUnmountedRef from './use-unmounted-ref';
 
 function useSafeState<S>(
 	initialState: S | (() => S),
@@ -10,21 +10,20 @@ function useSafeState<S = undefined>(): [
 	Dispatch<SetStateAction<S | undefined>>,
 ];
 
-function useSafeState(initialState?: any) {
-	const destroyedRef = useDestroyedRef();
+function useSafeState<S>(initialState?: S | (() => S)) {
+	const unmountedRef = useUnmountedRef();
 
 	const [state, setState] = React.useState(initialState);
 
 	const setCurrentState = React.useCallback(
 		(currentState) => {
-			/** 如果组件已经卸载则不再更新 state */
-			if (destroyedRef.current) return;
+			if (unmountedRef.current) return;
 			setState(currentState);
 		},
-		[destroyedRef],
+		[unmountedRef],
 	);
 
-	return [state, setCurrentState] as const;
+	return [state, setCurrentState];
 }
 
 export default useSafeState;

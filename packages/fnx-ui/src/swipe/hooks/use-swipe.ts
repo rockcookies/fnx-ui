@@ -2,7 +2,6 @@ import React, { useCallback, useRef, useState } from 'react';
 import { SwipeComponentProps } from '..';
 import useSafeState from '../../hooks/use-safe-state';
 import { clamp } from '../../utils/format';
-import { ElementRect } from '../../utils/interface';
 
 interface SwipeStatus {
 	activeIndex?: number;
@@ -180,49 +179,43 @@ const useSwipe = ({ propsRef, swipeLength, rootRef }: UseSwipeOptions) => {
 		}, autoplay);
 	}, [next, propsRef, stopAutoplay]);
 
-	const reload = useCallback(
-		(rect?: ElementRect | null) => {
-			const { swipeLength, activeIndex: _activeIndex } = stateRef.current;
-			const { defaultActiveIndex } = propsRef.current;
+	const reload = useCallback(() => {
+		const { swipeLength, activeIndex: _activeIndex } = stateRef.current;
+		const { defaultActiveIndex } = propsRef.current;
 
-			const { vertical, height, width } = propsRef.current;
+		const { vertical, height, width } = propsRef.current;
 
-			let swipeSize = vertical ? height : width;
+		let swipeSize = vertical ? height : width;
 
-			if (swipeSize <= 0) {
-				if (!rect) {
-					const root = rootRef.current;
-					rect = root && root.getBoundingClientRect();
-				}
+		if (swipeSize <= 0) {
+			const rect = rootRef.current?.getBoundingClientRect();
 
-				if (rect) {
-					swipeSize = vertical ? rect.height : rect.width;
-				}
+			if (rect) {
+				swipeSize = vertical ? rect.height : rect.width;
 			}
+		}
 
-			const activeIndex = clamp(
-				_activeIndex != null ? _activeIndex : defaultActiveIndex,
-				0,
-				Math.max(swipeLength - 1, 0),
-			);
+		const activeIndex = clamp(
+			_activeIndex != null ? _activeIndex : defaultActiveIndex,
+			0,
+			Math.max(swipeLength - 1, 0),
+		);
 
-			const wrapperOffset = -activeIndex * swipeSize;
+		const wrapperOffset = -activeIndex * swipeSize;
 
-			setSwiping(false);
-			setSwipeOffset('none');
-			setSwipeSize(swipeSize);
-			setActiveIndex(activeIndex);
-			setWrapperOffset(wrapperOffset);
-		},
-		[
-			propsRef,
-			rootRef,
-			setActiveIndex,
-			setSwipeSize,
-			setSwiping,
-			setWrapperOffset,
-		],
-	);
+		setSwiping(false);
+		setSwipeOffset('none');
+		setSwipeSize(swipeSize);
+		setActiveIndex(activeIndex);
+		setWrapperOffset(wrapperOffset);
+	}, [
+		propsRef,
+		rootRef,
+		setActiveIndex,
+		setSwipeSize,
+		setSwiping,
+		setWrapperOffset,
+	]);
 
 	return {
 		stateRef,

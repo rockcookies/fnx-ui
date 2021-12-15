@@ -7,13 +7,6 @@ import { CalendarDayComponentProps } from '../interface';
 import { ElementRect } from '../../utils/interface';
 
 describe('<Calendar/>', () => {
-	(global as any).ResizeObserver = class ResizeObserver {
-		constructor() {}
-		observe() {}
-		unobserve() {}
-		disconnect() {}
-	};
-
 	const mockGetBoundingClientRect = (
 		rect: Partial<ElementRect>,
 	): (() => void) => {

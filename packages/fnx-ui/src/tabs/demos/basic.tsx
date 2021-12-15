@@ -42,10 +42,7 @@ export default function Basic(): ReturnType<React.FC> {
 				<Tabs defaultActiveKey="3">
 					{[1, 2, 3, 4, 5].map((key) => {
 						return (
-							<Tabs.Panel
-								key={key}
-								title={`${i18n.tab}-- ${key}`}
-							>
+							<Tabs.Panel key={key} title={`${i18n.tab} ${key}`}>
 								{`${i18n.content} ${key}`}
 							</Tabs.Panel>
 						);

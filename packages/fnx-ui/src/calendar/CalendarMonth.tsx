@@ -202,24 +202,9 @@ const CalendarMonth = createForwardRef<CalendarMonthRef, CProps>(
 		useEffect(() => {
 			const node = rootRef.current;
 
-			let observer: ResizeObserver | undefined;
-
 			if (node) {
 				rootHeightRef.current = node.getBoundingClientRect().height;
-
-				observer = new ResizeObserver(
-					(entries: ResizeObserverEntry[]) => {
-						rootHeightRef.current =
-							entries[0]?.contentRect?.height || 0;
-					},
-				);
-
-				observer.observe(node);
 			}
-
-			return () => {
-				observer && observer.disconnect;
-			};
 		}, []);
 
 		const getBottomInfo = (dayType: CalendarDayType) => {

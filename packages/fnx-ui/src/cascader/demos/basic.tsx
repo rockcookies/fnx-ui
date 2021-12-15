@@ -2,7 +2,7 @@ import React, { ReactNode, useCallback, useState } from 'react';
 import DemoBlock from '../../../site/components/DemoBlock';
 import useDemoTranslate from '../../../site/hooks/use-demo-translate';
 import Field from '../../field';
-import useDestroyedRef from '../../hooks/use-destroyed-ref';
+import usUnmountedRef from '../../hooks/use-unmounted-ref';
 import Icon from '../../icon';
 import Popup from '../../popup';
 import { Dictionary } from '../../utils/interface';
@@ -136,7 +136,7 @@ export default function Basic(): ReturnType<React.FC> {
 		}
 	};
 
-	const unMountedRef = useDestroyedRef();
+	const unMountedRef = usUnmountedRef();
 
 	const delay = useCallback(
 		(action: () => void, ms = 1000) => {

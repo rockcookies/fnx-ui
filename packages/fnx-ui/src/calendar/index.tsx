@@ -15,6 +15,7 @@ export type {
 	CalendarDayProps,
 	CalendarComponentProps,
 	CalendarProps,
+	CalendarRef,
 	CalendarRangeComponentProps,
 	CalendarRangeProps,
 	CalendarMultiComponentProps,

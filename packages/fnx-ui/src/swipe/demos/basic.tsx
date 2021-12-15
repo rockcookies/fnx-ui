@@ -103,6 +103,7 @@ export default function Basic(): ReturnType<React.FC> {
 					<Swipe.Item>1</Swipe.Item>
 					<Swipe.Item>2</Swipe.Item>
 					<Swipe.Item>3</Swipe.Item>
+					<Swipe.Item>4</Swipe.Item>
 				</Swipe>
 			</DemoBlock>
 

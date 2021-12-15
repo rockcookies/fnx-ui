@@ -11,7 +11,7 @@ import demo03 from '../../../site/assets/demo-dog-03.jpg';
 import DemoBlock from '../../../site/components/DemoBlock';
 import useDemoTranslate from '../../../site/hooks/use-demo-translate';
 import Button from '../../button';
-import useDestroyedRef from '../../hooks/use-destroyed-ref';
+import usUnmountedRef from '../../hooks/use-unmounted-ref';
 import Icon from '../../icon';
 import Toast from '../../toast';
 import { Dictionary } from '../../utils/interface';
@@ -122,17 +122,17 @@ export default function Basic(): ReturnType<React.FC> {
 		});
 	};
 
-	const destroyedRef = useDestroyedRef();
+	const unmountedRef = usUnmountedRef();
 
 	const delay = useCallback(
 		(action: () => void, ms = 1000) => {
 			sleep(ms).then(() => {
-				if (!destroyedRef.current) {
+				if (!unmountedRef.current) {
 					action();
 				}
 			});
 		},
-		[destroyedRef],
+		[unmountedRef],
 	);
 
 	return (

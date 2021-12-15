@@ -19,12 +19,6 @@ export function preventDefault(
 	}
 }
 
-export function triggerEvent(target: Element, type: string) {
-	const inputEvent = document.createEvent('HTMLEvents');
-	inputEvent.initEvent(type, true, true);
-	target.dispatchEvent(inputEvent);
-}
-
 export let SUPPORTS_PASSIVE = false;
 
 try {
@@ -61,9 +55,11 @@ export function listenWindowResize(cb: () => void): () => void {
 	}
 
 	window.addEventListener('resize', cb);
+	window.addEventListener('orientationchange', cb);
 
 	return () => {
 		window.removeEventListener('resize', cb);
+		window.removeEventListener('orientationchange', cb);
 	};
 }
 
