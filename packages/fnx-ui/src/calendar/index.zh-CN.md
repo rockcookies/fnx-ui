@@ -371,3 +371,9 @@ ReactDOM.render(
 | onCancel  | 点击关闭图标时触发             | `() => void`              |      |
 | onChange  | 选中项变化时触发               | `(value: Date[]) => void` |      |
 | onMaxSize | 范围选择超过最多可选天数时触发 | `() => void`              |      |
+
+## Calendar 实例方法
+
+| 名称  | 说明     | 类型         | 版本 |
+| ----- | -------- | ------------ | ---- |
+| reset | 重置组件 | `() => void` |      |

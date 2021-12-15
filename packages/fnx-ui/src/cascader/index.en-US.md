@@ -294,41 +294,41 @@ ReactDOM.render(
 
 ### Cascader Props
 
-| Name         | Description                                        | Type                   | Default value |
-| ------------ | -------------------------------------------------- | ---------------------- | ------------- |
-| defaultValue | Default value                                      | `number[] \| string[]` | `[]`          |
-| data         | Options                                            | `CascaderOption[]`     | `[]`          |
-| dataNames    | Custom the fields of options                       | `CascaderDataNames`    | -             |
-| title        | Title                                              | `ReactNode`            | -             |
-| placeholder  | Placeholder of unselected tab                      | `ReactNode`            | `请选择`      |
-| activeColor  | Active color                                       | `string`               | `#2196F3`     |
-| swipeable    | Whether to enable gestures to slide left and right | `boolean`              | `false`       |
-| closeIcon    | Custom close icon                                  | `ReactNode`            | -             |
-| slots        | Slots                                              | `CascaderSlots`        | -             |
+| Name         | Description                                                  | Type                     | Default   | Version |
+| ------------ | ------------------------------------------------------------ | ------------------------ | --------- | ------- |
+| defaultValue | Default value                                                | `number[]` \| `string[]` | `[]`      |         |
+| data         | Options                                                      | `CascaderOption[]`       | `[]`      |         |
+| dataNames    | Custom the fields of options                                 | `CascaderDataNames`      | -         |         |
+| title        | Title                                                        | `ReactNode`              | -         |         |
+| placeholder  | Placeholder of unselected tab                                | `ReactNode`              | `Select`  |         |
+| activeColor  | Active color                                                 | `string`                 | `#2196F3` |         |
+| swipeable    | Whether to enable gestures to slide left and right `boolean` | `false`                  |           |         |
+| closeIcon    | Custom close icon                                            | `ReactNode`              | -         |         |
+| slots        | Slots                                                        | `CascaderSlots`          | -         |         |
+
+### CascaderDataNames
+
+| Name     | Description               | Type               | Default | Version |
+| -------- | ------------------------- | ------------------ | ------- | ------- |
+| label    | Option label              | `ReactNode`        | -       |         |
+| value    | Option value              | `CascaderValue`    | -       |         |
+| loading  | Whether option is loading | `boolean`          | -       |         |
+| disabled | Whether to disable option | `boolean`          | -       |         |
+| children | Cascade children          | `CascaderOption[]` | -       |         |
+
+### CascaderSlots
+
+| Name          | Description                          | Type                                                     | Version |
+| ------------- | ------------------------------------ | -------------------------------------------------------- | ------- |
+| option        | Custom option text                   | `(option: T, state: { selected: boolean }) => ReactNode` |         |
+| optionsTop    | Custom the content above the options | `(tabIndex: number) => ReactNode`                        |         |
+| optionsBottom | Custom the content below the options | `(tabIndex: number) => ReactNode`                        |         |
 
 ## Cascader Events
 
-| Event Name | Description                              | Callback parameter                                       |
-| ---------- | ---------------------------------------- | -------------------------------------------------------- |
-| onLoadData | Triggered when loading asynchronously    | `options:CascaderOption[]`                               |
-| onConfirm  | Triggered when all options are selected  | `value: string[] \| number[], options: CascaderOption[]` |
-| onCancel   | Triggered when the close icon is clicked | -                                                        |
-| onChange   | Triggered when the active option changes | `value: string[] \| number[], options: CascaderOption[]` |
-
-### Cascader Data Names
-
-| Name     | Description               | Type               | Default value |
-| -------- | ------------------------- | ------------------ | ------------- |
-| label    | Option label              | `ReactNode`        | -             |
-| value    | Option value              | `CascaderValue`    | -             |
-| loading  | Whether option is loading | `boolean`          | -             |
-| disabled | Whether to disable option | `boolean`          | -             |
-| children | Cascade children          | `CascaderOption[]` | -             |
-
-### Cascader Slots
-
-| 名称          | 说明                                 | 参数                                                     |
-| ------------- | ------------------------------------ | -------------------------------------------------------- |
-| option        | Custom option text                   | `(option: T, state: { selected: boolean }) => ReactNode` |
-| optionsTop    | Custom the content above the options | `(tabIndex: number) => ReactNode`                        |
-| optionsBottom | Custom the content below the options | `(tabIndex: number) => ReactNode`                        |
+| Event Name | Description                              | Type                                                               | Version |
+| ---------- | ---------------------------------------- | ------------------------------------------------------------------ | ------- |
+| onLoadData | Triggered when loading asynchronously    | `(options: CascaderOption[]) => void`                              |         |
+| onConfirm  | Triggered when all options are selected  | `(value: string[] \| number[], options: CascaderOption[]) => void` |         |
+| onCancel   | Triggered when the close icon is clicked | `() => void`                                                       |         |
+| onChange   | Triggered when the active option changes | `(value: string[] \| number[], options: CascaderOption[]) => void` |         |

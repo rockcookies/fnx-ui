@@ -299,73 +299,79 @@ There are three kinds of calendar:
 
 ### Common Props
 
-| Name                | Description                                   | Type                           | Default                |
-| ------------------- | --------------------------------------------- | ------------------------------ | ---------------------- |
-| title               | Title of calendar                             | `ReactNode`                    | `'Calendar'`           |
-| color               | Color for the bottom button and selected date | `string`                       | -                      |
-| minDate             | Min date                                      | `Date` \| `string` \| `number` | Today                  |
-| maxDate             | Max date                                      | `Date` \| `string` \| `number` | Six months after today |
-| dayHeight           | Day height                                    | `number` \| `string`           | `64`                   |
-| readonly            | Whether to be readonly                        | `boolean`                      | `false`                |
-| closeIcon           | Custom Close Icon                             | `ReactNode`                    | -                      |
-| firstDayOfWeek      | Set the start day of week                     | `0-6`                          | `0`                    |
-| slots               | Slots                                         | `CalendarSlots`                | -                      |
-| confirmText         | Confirm button text                           | `ReactNode`                    | `'Confirm'`            |
-| confirmDisabledText | Confirm button text when disabled             | `ReactNode`                    | `'Confirm'`            |
+| Name                | Description                                   | Type                           | Default                | Version |
+| ------------------- | --------------------------------------------- | ------------------------------ | ---------------------- | ------- |
+| title               | Title of calendar                             | `ReactNode`                    | `'Calendar'`           |         |
+| color               | Color for the bottom button and selected date | `string`                       | -                      |         |
+| minDate             | Min date                                      | `Date` \| `string` \| `number` | Today                  |         |
+| maxDate             | Max date                                      | `Date` \| `string` \| `number` | Six months after today |         |
+| dayHeight           | Day height                                    | `number` \| `string`           | `64`                   |         |
+| readonly            | Whether to be readonly                        | `boolean`                      | `false`                |         |
+| closeIcon           | Custom Close Icon                             | `ReactNode`                    | -                      |         |
+| firstDayOfWeek      | Set the start day of week                     | `0-6`                          | `0`                    |         |
+| slots               | Slots                                         | `CalendarSlots`                | -                      |         |
+| confirmText         | Confirm button text                           | `ReactNode`                    | `'Confirm'`            |         |
+| confirmDisabledText | Confirm button text when disabled             | `ReactNode`                    | `'Confirm'`            |         |
 
 ### CalendarSlots
 
-| Name       | Description            | Type                                            | Default |
-| ---------- | ---------------------- | ----------------------------------------------- | ------- |
-| day        | Custom day             | `(day: CalendarDayComponentProps) => ReactNode` | -       |
-| subTitle   | Custom subTitle        | ` boolean` \| `((date: Date) => ReactNode)`     | -       |
-| monthMark  | Custom month watermark | `boolean` \| `((date: Date) => ReactNode)`      | -       |
-| monthTitle | Custom month title     | `boolean` \| `((date: Date) => ReactNode)`      | -       |
-| footer     | Custom Calendar footer | `ReactNode`                                     | -       |
+| Name       | Description            | Type                                            | Default | Version |
+| ---------- | ---------------------- | ----------------------------------------------- | ------- | ------- |
+| day        | Custom day             | `(day: CalendarDayComponentProps) => ReactNode` | -       |         |
+| subTitle   | Custom subTitle        | ` boolean` \| `((date: Date) => ReactNode)`     | -       |         |
+| monthMark  | Custom month watermark | `boolean` \| `((date: Date) => ReactNode)`      | -       |         |
+| monthTitle | Custom month title     | `boolean` \| `((date: Date) => ReactNode)`      | -       |         |
+| footer     | Custom Calendar footer | `ReactNode`                                     | -       |         |
 
 ## Calendar Props
 
-| Name         | Description                                                            | Type                           | Default |
-| ------------ | ---------------------------------------------------------------------- | ------------------------------ | ------- |
-| defaultValue | Default value                                                          | `Date` \| `string` \| `number` | -       |
-| allowSameDay | Whether the start and end time of the range is allowed on the same day | `boolean`                      | `false` |
+| Name         | Description                                                            | Type                           | Default | Version |
+| ------------ | ---------------------------------------------------------------------- | ------------------------------ | ------- | ------- |
+| defaultValue | Default value                                                          | `Date` \| `string` \| `number` | -       |         |
+| allowSameDay | Whether the start and end time of the range is allowed on the same day | `boolean`                      | `false` |         |
 
 ## Calendar Events
 
-| Event Name | Description                              | Type                    |
-| ---------- | ---------------------------------------- | ----------------------- |
-| onConfirm  | Triggered when confirm button is clicked | `(value: Date) => void` |
-| onCancel   | Triggered when the close icon is clicked | `() => void`            |
-| onChange   | Triggered when the active option changes | `(value: Date) => void` |
+| Event Name | Description                              | Type                    | Version |
+| ---------- | ---------------------------------------- | ----------------------- | ------- |
+| onConfirm  | Triggered when confirm button is clicked | `(value: Date) => void` |         |
+| onCancel   | Triggered when the close icon is clicked | `() => void`            |         |
+| onChange   | Triggered when the active option changes | `(value: Date) => void` |         |
 
 ## Calendar.Multi Props
 
-| Name         | Description               | Type                              | Default |
-| ------------ | ------------------------- | --------------------------------- | ------- |
-| defaultValue | Default value             | `Array<Date \| string \| number>` | -       |
-| maxSize      | Number of selectable days | `number`                          | -       |
+| Name         | Description               | Type                              | Default | Version |
+| ------------ | ------------------------- | --------------------------------- | ------- | ------- |
+| defaultValue | Default value             | `Array<Date \| string \| number>` | -       |         |
+| maxSize      | Number of selectable days | `number`                          | -       |         |
 
 ## Calendar.Multi Events
 
-| Event Name | Description                              | Type                      |
-| ---------- | ---------------------------------------- | ------------------------- |
-| onConfirm  | Triggered when confirm button is clicked | `(value: Date[]) => void` |
-| onCancel   | Triggered when the close icon is clicked | `() => void`              |
-| onChange   | Triggered when the active option changes | `(value: Date[]) => void` |
-| onMaxSize  | Emitted when exceeded max size           | `() => void`              |
+| Event Name | Description                              | Type                      | Version |
+| ---------- | ---------------------------------------- | ------------------------- | ------- |
+| onConfirm  | Triggered when confirm button is clicked | `(value: Date[]) => void` |         |
+| onCancel   | Triggered when the close icon is clicked | `() => void`              |         |
+| onChange   | Triggered when the active option changes | `(value: Date[]) => void` |         |
+| onMaxSize  | Emitted when exceeded max size           | `() => void`              |         |
 
 ## Calendar.Range Props
 
-| Name         | Description                  | Type                              | Default |
-| ------------ | ---------------------------- | --------------------------------- | ------- |
-| defaultValue | Default value                | `Array<Date \| string \| number>` | -       |
-| maxSize      | Max count of selectable days | `number`                          | -       |
+| Name         | Description                  | Type                              | Default | Version |
+| ------------ | ---------------------------- | --------------------------------- | ------- | ------- |
+| defaultValue | Default value                | `Array<Date \| string \| number>` | -       |         |
+| maxSize      | Max count of selectable days | `number`                          | -       |         |
 
 ## Calendar.Range Events
 
-| Event Name | Description                              | Type                      |
-| ---------- | ---------------------------------------- | ------------------------- |
-| onConfirm  | Triggered when confirm button is clicked | `(value: Date[]) => void` |
-| onCancel   | Triggered when the close icon is clicked | `() => void`              |
-| onChange   | Triggered when the active option changes | `(value: Date[]) => void` |
-| onMaxSize  | Emitted when exceeded max size           | `() => void`              |
+| Event Name | Description                              | Type                      | Version |
+| ---------- | ---------------------------------------- | ------------------------- | ------- |
+| onConfirm  | Triggered when confirm button is clicked | `(value: Date[]) => void` |         |
+| onCancel   | Triggered when the close icon is clicked | `() => void`              |         |
+| onChange   | Triggered when the active option changes | `(value: Date[]) => void` |         |
+| onMaxSize  | Emitted when exceeded max size           | `() => void`              |         |
+
+## Calendar Instance
+
+| Name  | Description    | Type         | Version |
+| ----- | -------------- | ------------ | ------- |
+| reset | Reset Calendar | `() => void` |         |

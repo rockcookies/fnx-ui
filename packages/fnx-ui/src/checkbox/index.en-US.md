@@ -1,17 +1,17 @@
 # Checkbox
 
-Used to switch between selected and non-selected states.
+A group of options for multiple choices.
 
 ## Basic Usage
 
-Check status through `checkd` bind check box, `defaultChecked` is a checkbox default check status.
+Use `checked` to set Checkbox checked.
 
 ```tsx
 import { Checkbox } from 'fnx-ui';
 
 ReactDOM.render(
   <>
-    <Checkbox checked>Content</Checkbox>
+    <Checkbox checked>Option</Checkbox>
   </>,
   mountNode,
 );
@@ -19,7 +19,7 @@ ReactDOM.render(
 
 ## Disabled
 
-You can disable the checkbox by setting the `disabled` property.
+Use `disabled` prop to set disabled checkbox.
 
 ```tsx
 import { Checkbox } from 'fnx-ui';
@@ -27,7 +27,10 @@ import { Checkbox } from 'fnx-ui';
 ReactDOM.render(
   <>
     <Checkbox checked disabled>
-      Content
+      Option A
+    </Checkbox>
+    <Checkbox checked={false} disabled>
+      Option B
     </Checkbox>
   </>,
   mountNode,
@@ -36,44 +39,44 @@ ReactDOM.render(
 
 ## Custom Shape
 
-Set the `iconshape` property to `Square` , the shape of the check box will become square.
+Use `iconShape` prop to customize icon shape.
 
 ```tsx
 import { Checkbox } from 'fnx-ui';
 
 ReactDOM.render(
   <>
-    <Checkbox iconShape="square">Content</Checkbox>
+    <Checkbox iconShape="square">Option</Checkbox>
   </>,
   mountNode,
 );
 ```
 
-## Custom color
+## Custom Color
 
-Set the icon color selected by the `iconCheckedColor` property setting.
+Use `iconCheckedColor` prop to customize checked icon color.
 
 ```tsx
 import { Checkbox } from 'fnx-ui';
 
 ReactDOM.render(
   <>
-    <Checkbox iconCheckedColor="red">Content</Checkbox>
+    <Checkbox iconCheckedColor="red">Option</Checkbox>
   </>,
   mountNode,
 );
 ```
 
-## Customize
+## Custom Icon Size
 
-Customize the size of the icon via the `iconsize` property.
+Use `iconSize` prop to set the icon size.
 
 ```tsx
 import { Checkbox } from 'fnx-ui';
 
 ReactDOM.render(
   <>
-    <Checkbox iconSize="24px">Content</Checkbox>
+    <Checkbox iconSize="24px">Option</Checkbox>
   </>,
   mountNode,
 );
@@ -81,35 +84,182 @@ ReactDOM.render(
 
 ## Custom Icon
 
-Customized Icon, `checkedIcon` custom selection icon.
+Use `icon` prop to customize unchecked icon, And `checkedIcon` to customize checked icon.
 
 ```tsx
-import { Toast } from 'fnx-ui';
+import { Checkbox, Icon } from 'fnx-ui';
 
 ReactDOM.render(
   <>
     <Checkbox
-      icon="icon"
-      checkedIcon={<div>Custom Icon</div>}
+      icon={<Icon name="circle" />}
+      checkedIcon={<Icon name="success" />}
       iconShape="plain"
     >
-      Content
+      Option
     </Checkbox>
   </>,
   mountNode,
 );
 ```
 
-## Labeldisabled
+## Disable Label Click
 
-After setting the `labeldisabled` property, click on the content other than the icon without trigger the check box to switch.
+Set `labelDisabled` prop to disable label click action.
 
 ```tsx
 import { Checkbox } from 'fnx-ui';
 
 ReactDOM.render(
   <>
-    <Checkbox labelDisabled>Content</Checkbox>
+    <Checkbox labelDisabled>Option</Checkbox>
+  </>,
+  mountNode,
+);
+```
+
+## Checkbox.Group
+
+When Checkboxes are inside a Checkbox.Group, the checked checkboxes's value is an array and bound with CheckboxGroup by `value`.
+
+```tsx
+import { Checkbox } from 'fnx-ui';
+
+ReactDOM.render(
+  <>
+    <Checkbox.Group value={['a']}>
+      <Checkbox value="a">Option A</Checkbox>
+      <Checkbox value="b">Option B</Checkbox>
+    </Checkbox.Group>
+  </>,
+  mountNode,
+);
+```
+
+## Horizontal
+
+Use `direction` prop to customize Checkboxes direction.
+
+```tsx
+import { Checkbox } from 'fnx-ui';
+
+ReactDOM.render(
+  <>
+    <Checkbox.Group direction="horizontal">
+      <Checkbox value="a">Option A</Checkbox>
+      <Checkbox value="b">Option B</Checkbox>
+    </Checkbox.Group>
+  </>,
+  mountNode,
+);
+```
+
+## Maximum amount of checked options
+
+Use `maxCheckedCount` prop to set maximum amount of checked options.
+
+```tsx
+import { Checkbox } from 'fnx-ui';
+
+ReactDOM.render(
+  <>
+    <Checkbox.Group maxCheckedCount={2}>
+      <Checkbox value="a">Option A</Checkbox>
+      <Checkbox value="b">Option B</Checkbox>
+      <Checkbox value="c">Option C</Checkbox>
+    </Checkbox.Group>
+  </>,
+  mountNode,
+);
+```
+
+## Toggle All
+
+Use `toggleAll` method of Checkbox.Group instance to toggle all options.
+
+```tsx
+import { Checkbox, Button } from 'fnx-ui';
+
+function App() {
+  const checkboxGroupRef = useRef<CheckboxGroupRef | null>(null);
+
+  return (
+    <div>
+      <Checkbox.Group ref={checkboxGroupRef}>
+        <Checkbox value="a">Option A</Checkbox>
+        <Checkbox value="b">Option B</Checkbox>
+      </Checkbox.Group>
+
+      <Button
+        onClick={() => {
+          checkboxGroupRef.current?.toggleAll({ checkAll: true });
+        }}
+      >
+        Select All
+      </Button>
+      <Button
+        onClick={() => {
+          checkboxGroupRef.current?.toggleAll({ checkAll: false });
+        }}
+      >
+        Unselect All
+      </Button>
+    </div>
+  );
+}
+
+ReactDOM.render(
+  <>
+    <App />
+  </>,
+  mountNode,
+);
+```
+
+## Inside a Cell
+
+Checkbox can be used with Cell, Use `toggle` method of Checkbox Instance to toggle check state.
+
+```tsx
+import { Cell, Checkbox } from 'fnx-ui';
+import { CheckboxRef } from 'fnx-ui/lib/checkbox';
+import { useRef } from 'react';
+
+function App() {
+  const checkboxRefs = useRef<Record<string, CheckboxRef | null>>({});
+
+  return (
+    <Checkbox.Group>
+      <Cell.Group inset>
+        {['A', 'B'].map((item, idx) => (
+          <Cell
+            key={item}
+            clickable
+            title={`option ${item}`}
+            rightIcon={
+              <Checkbox
+                value={item}
+                onClick={(e) => {
+                  e.stopPropagation();
+                }}
+                ref={(r) => {
+                  checkboxRefs.current[idx] = r;
+                }}
+              />
+            }
+            onClick={() => {
+              checkboxRefs.current[idx]?.toggle();
+            }}
+          />
+        ))}
+      </Cell.Group>
+    </Checkbox.Group>
+  );
+}
+
+ReactDOM.render(
+  <>
+    <App />
   </>,
   mountNode,
 );
@@ -117,58 +267,61 @@ ReactDOM.render(
 
 ## API
 
-| Parameter        | Description                                        | Type                             | Default value |
-| ---------------- | -------------------------------------------------- | -------------------------------- | ------------- |
-| value            | Option value                                       | `string \| number \| boolean`    | `false`       |
-| checked          | Specify whether it is currently selected           | `boolean`                        | `false`       |
-| defaultChecked   | Initiality is selected                             | `boolean`                        | `false`       |
-| disabled         | Failure state                                      | `boolean`                        | `false`       |
-| skipGroup        | Whether it is not being checked by `checkboxgroup` | `boolean`                        | `false`       |
-| icon             | Customize unchecked icon                           | `ReactNode`                      | -             |
-| checkedIcon      | Customize icon                                     | `ReactNode`                      | -             |
-| iconSize         | Check the icon size, the default unit is `px`      | `string \| number`               | -             |
-| iconCheckedColor | Select the status color                            | `string`                         | -             |
-| iconPosition     | Icon location                                      | `'left' \| 'right'`              | `left`        |
-| iconShape        | Icon shape                                         | `'square' \| 'round' \| 'plain'` | `square`      |
-| labelDisabled    | Disable text Click                                 | `boolean`                        | `false`       |
+### Checkbox Basic Props
 
-## Checkbox Event
+| Name             | Description                    | Type                                 | Default      | Version |
+| ---------------- | ------------------------------ | ------------------------------------ | ------------ | ------- |
+| disabled         | Disable checkbox               | `boolean`                            | `false`      |         |
+| direction        | Direction of checkbox          | `'vertical'` \| `'horizontal'`       | `'vertical'` |         |
+| checkedIcon      | Custom checked icon            | `ReactNode`                          | -            |         |
+| icon             | Custom unchecked icon          | `ReactNode`                          | -            |         |
+| iconSize         | Custom icon size               | `string` \| `number`                 | -            |         |
+| iconPosition     | Custom icon position           | `'left'` \| `'right'`                | `'left'`     |         |
+| iconShape        | Custom icon shape              | `'square'` \| `'round'` \| `'plain'` | `'square'`   |         |
+| iconCheckedColor | Checked icon color             | `string`                             | -            |         |
+| labelDisabled    | Whether to disable label click | `boolean`                            | `false`      |         |
 
-| Event Name | Description                   | Callback Arguments   |
-| ---------- | ----------------------------- | -------------------- |
-| onChange   | Events triggered when binding | `(checked: boolean)` |
+### Checkbox Props
 
-## CheckboxGroup API
+Checkbox Props extends Checkbox Basic Props，and add the following props:
 
-| Parameter        | Description                                 | Type                                | Default value |
-| ---------------- | ------------------------------------------- | ----------------------------------- | ------------- |
-| value            | Specify the selected option                 | `string[] \| number[] \| boolean[]` | `[]`          |
-| defaultValue     | Options selected by default                 | `string[] \| number[] \| boolean[]` | `[]`          |
-| direction        | Control arrangement                         | `'vertical' \| 'horizontal'`        | `vertical`    |
-| maxCheckedCount  | Maximum number of numbers                   | `number`                            | -             |
-| disabled         | Whether to disable all check boxes          | `boolean`                           | `false`       |
-| iconSize         | All check box icons, default units for `px` | `string \| number`                  | -             |
-| iconShape        | All check box icons                         | `'square' \| 'round' \| 'plain'`    | `square`      |
-| labelDisabled    | All checkbox Disable text Click             | `boolean`                           | `false`       |
-| iconPosition     | Set all icons position                      | `'left' \| 'right'`                 | `left`        |
-| iconCheckedColor | Set all selected status colors              | `string`                            | -             |
-| icon             | Set all custom icons                        | `ReactNode`                         | -             |
-| checkedIcon      | Set all custom selection icons              | `ReactNode`                         | -             |
+| Name           | Description                          | Type                              | Default | Version |
+| -------------- | ------------------------------------ | --------------------------------- | ------- | ------- |
+| value          | Checkbox value                       | `string` \| `number` \| `boolean` | -       |         |
+| checked        | Whether the checkbox is selected     | `boolean`                         | -       |         |
+| defaultChecked | Whether initial checkbox is selected | `boolean`                         | `false` |         |
+| skipGroup      | Whether to bind with Checkbox.Group  | `boolean`                         | `true`  |         |
 
-## checkboxGroup Events
+### Checkbox Events
 
-| Event Name | Description                   | Callback Arguments |
-| ---------- | ----------------------------- | ------------------ |
-| onChange   | Events triggered when binding | `v:T[]`            |
+| Event name | Description                | Type                         | Version |
+| ---------- | -------------------------- | ---------------------------- | ------- |
+| onChange   | Emitted when value changed | `(checked: boolean) => void` |         |
 
-### checkboxGroupRef Instance Method
+### Checkbox Instance
 
-| Name        | Description                                                                                         | Arguments                             |
-| ----------- | --------------------------------------------------------------------------------------------------- | ------------------------------------- |
-| toggleAll() | Switch selection, pass the `true` to select,`false` to cancel the selection, do not call the refuse | `(options?: { checkAll?: boolean })}` |
+| Name   | Description        | Type         | Version |
+| ------ | ------------------ | ------------ | ------- |
+| toggle | Toggle check state | `() => void` |         |
 
-### checkboxRef Instance Method
+### Checkbox.Group Props
 
-| Name     | Description             | Arguments |
-| -------- | ----------------------- | --------- |
-| toggle() | Switch` Checkbox` State | -         |
+Checkbox.Group Props extends Checkbox Basic Props，and add the following props:
+
+| Name            | Description                       | Type                                    | Default | Version |
+| --------------- | --------------------------------- | --------------------------------------- | ------- | ------- |
+| value           | Currently selected value          | `string[]` \| `number[]` \| `boolean[]` | -       |         |
+| defaultValue    | Default selected value            | `string[]` \| `number[]` \| `boolean[]` | `[]`    |         |
+| maxCheckedCount | Maximum amount of checked options | `number`                                | -       |         |
+
+### Checkbox.Group Events
+
+| Event name | Description                | Type                                                 | Version |
+| ---------- | -------------------------- | ---------------------------------------------------- | ------- |
+| onChange   | Emitted when value changed | `(value: string[] \| number[] \| boolean[]) => void` |         |
+
+### Checkbox.Group Instance
+
+| Name      | Description                           | Type                                         | Version |
+| --------- | ------------------------------------- | -------------------------------------------- | ------- |
+| toggleAll | Toggle check status of all checkboxes | `(options?: { checkAll?: boolean }) => void` |         |

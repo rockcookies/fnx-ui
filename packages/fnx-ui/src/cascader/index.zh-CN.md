@@ -294,41 +294,41 @@ ReactDOM.render(
 
 ### Cascader Props
 
-| 名称         | 说明                     | 类型                   | 默认值    |
-| ------------ | ------------------------ | ---------------------- | --------- |
-| defaultValue | 默认选中项的值           | `number[] \| string[]` | `[]`      |
-| data         | 可选项数据源             | `CascaderOption[]`     | `[]`      |
-| dataNames    | 自定义 data 结构中的字段 | `CascaderDataNames`    | -         |
-| title        | 顶部标题                 | `ReactNode`            | -         |
-| placeholder  | 未选中时的提示文案       | `ReactNode`            | `请选择`  |
-| activeColor  | 选中状态的高亮颜色       | `string`               | `#2196F3` |
-| swipeable    | 是否开启手势左右滑动切换 | `boolean`              | `false`   |
-| closeIcon    | 自定义关闭图标           | `ReactNode`            | -         |
-| slots        | 组件插槽                 | `CascaderSlots`        | -         |
+| 名称         | 说明                     | 类型                     | 默认值    | 版本 |
+| ------------ | ------------------------ | ------------------------ | --------- | ---- |
+| defaultValue | 默认选中项的值           | `number[]` \| `string[]` | `[]`      |      |
+| data         | 可选项数据源             | `CascaderOption[]`       | `[]`      |      |
+| dataNames    | 自定义 data 结构中的字段 | `CascaderDataNames`      | -         |      |
+| title        | 顶部标题                 | `ReactNode`              | -         |      |
+| placeholder  | 未选中时的提示文案       | `ReactNode`              | `请选择`  |      |
+| activeColor  | 选中状态的高亮颜色       | `string`                 | `#2196F3` |      |
+| swipeable    | 是否开启手势左右滑动切换 | `boolean`                | `false`   |      |
+| closeIcon    | 自定义关闭图标           | `ReactNode`              | -         |      |
+| slots        | 组件插槽                 | `CascaderSlots`          | -         |      |
 
-## Cascader Events
+### CascaderDataNames
 
-| 事件名     | 说明                   | 回调参数                                                 |
-| ---------- | ---------------------- | -------------------------------------------------------- |
-| onLoadData | 异步加载时触发         | `options:CascaderOption[]`                               |
-| onConfirm  | 全部选项选择完成后触发 | `value: string[] \| number[], options: CascaderOption[]` |
-| onCancel   | 点击关闭图标时触发     | -                                                        |
-| onChange   | 选中项变化时触发       | `value: string[] \| number[], options: CascaderOption[]` |
+| 名称     | 说明                | 类型               | 默认值 | 版本 |
+| -------- | ------------------- | ------------------ | ------ | ---- |
+| label    | 选项展示内容        | `ReactNode`        | -      |      |
+| value    | 选项对应的值        | `CascaderValue`    | -      |      |
+| loading  | 是否加载            | `boolean`          | -      |      |
+| disabled | 是否禁用            | `boolean`          | -      |      |
+| children | 子元素(类型同 data) | `CascaderOption[]` | -      |      |
 
-### Cascader Data Names
+### CascaderSlots
 
-| 名称     | 说明                | 类型               | 默认值 |
-| -------- | ------------------- | ------------------ | ------ |
-| label    | 选项展示内容        | `ReactNode`        | -      |
-| value    | 选项对应的值        | `CascaderValue`    | -      |
-| loading  | 是否加载            | `boolean`          | -      |
-| disabled | 是否禁用            | `boolean`          | -      |
-| children | 子元素(类型同 data) | `CascaderOption[]` | -      |
+| 名称          | 说明                 | 类型                                                     | 版本 |
+| ------------- | -------------------- | -------------------------------------------------------- | ---- |
+| option        | 自定义选项文字       | `(option: T, state: { selected: boolean }) => ReactNode` |      |
+| optionsTop    | 自定义选项上方的内容 | `(tabIndex: number) => ReactNode`                        |      |
+| optionsBottom | 自定义选项下方的内容 | `(tabIndex: number) => ReactNode`                        |      |
 
-### Cascader Slots
+### Cascader Events
 
-| 名称          | 说明                 | 参数                                                     |
-| ------------- | -------------------- | -------------------------------------------------------- |
-| option        | 自定义选项文字       | `(option: T, state: { selected: boolean }) => ReactNode` |
-| optionsTop    | 自定义选项上方的内容 | `(tabIndex: number) => ReactNode`                        |
-| optionsBottom | 自定义选项下方的内容 | `(tabIndex: number) => ReactNode`                        |
+| 事件名     | 说明                   | 类型                                                               | 版本 |
+| ---------- | ---------------------- | ------------------------------------------------------------------ | ---- |
+| onLoadData | 异步加载时触发         | `(options: CascaderOption[]) => void`                              |      |
+| onConfirm  | 全部选项选择完成后触发 | `(value: string[] \| number[], options: CascaderOption[]) => void` |      |
+| onCancel   | 点击关闭图标时触发     | `() => void`                                                       |      |
+| onChange   | 选中项变化时触发       | `(value: string[] \| number[], options: CascaderOption[]) => void` |      |
