@@ -100,7 +100,7 @@ export default function Basic(): ReturnType<React.FC> {
 				</Radio.Group>
 			</DemoBlock>
 			<DemoBlock cardMode title={i18n.insideACell}>
-				<Cell.Group>
+				<Cell.Group inset>
 					{[1, 2, 3].map((key) => {
 						return (
 							<Cell

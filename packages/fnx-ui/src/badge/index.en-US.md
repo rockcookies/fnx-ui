@@ -1,6 +1,6 @@
 # Badge
 
-Small numerical value or status descriptor for UI element, Badge normally appears in proximity to notifications or user avatars with eye-catching appeal, typically displaying unread messages count.
+Small numerical value or status descriptor for UI elements.
 
 ## Basic Usage
 
@@ -74,7 +74,7 @@ ReactDOM.render(
 );
 ```
 
-## 自定义徽标内容
+## Custom Content
 
 `count` prop support custom element.
 
@@ -90,6 +90,29 @@ ReactDOM.render(
       <div>content</div>
     </Badge>
     <Badge count={<Icon name="arrow-right" />}>
+      <div>content</div>
+    </Badge>
+  </>,
+  mountNode,
+);
+```
+
+## Custom Position
+
+Use `position` prop to set the position of badge.
+
+```tsx
+import { Badge } from 'fnx-ui';
+
+ReactDOM.render(
+  <>
+    <Badge count={10} position="top-left">
+      <div>content</div>
+    </Badge>
+    <Badge count={10} position="bottom-left">
+      <div>content</div>
+    </Badge>
+    <Badge count={10} position="bottom-right">
       <div>content</div>
     </Badge>
   </>,
@@ -122,13 +145,14 @@ ReactDOM.render(
 
 ## API
 
-### Props
+### Badge Props
 
-| Name     | Description                                                                                                           | Type                   | Default   |
-| -------- | --------------------------------------------------------------------------------------------------------------------- | ---------------------- | --------- |
-| count    | Badge content                                                                                                         | `ReactNode`            | -         |
-| showZero | Whether to display the badge, even if provided value equals 0.                                                        | `boolean`              | `true`    |
-| dot      | Whether to show a small red point                                                                                     | `boolean`              | `false`   |
-| max      | Maximum value, more than the maximum is displayed `{max} +`, only when count is number                                | `number \| string`     | -         |
-| color    | Badge color                                                                                                           | `string`               | `#ee0a24` |
-| offset   | Offset of badge dot, two of the arrays respectively correspond to the offset of the horizontal and vertical direction | `number[] \| string[]` | -         |
+| Name     | Description                                                             | Type                                                | Default                   | Version |
+| -------- | ----------------------------------------------------------------------- | --------------------------------------------------- | ------------------------- | ------- |
+| count    | Badge content                                                           | `ReactNode`                                         | -                         |         |
+| showZero | Whether to show badge when `count` is zero                              | `boolean`                                           | `true`                    |         |
+| dot      | Whether to show dot                                                     | `boolean`                                           | `false`                   |         |
+| max      | Max value, show `{max}+` when exceed, only works when `count` is number | `number \| string`                                  |                           |
+| color    | Background color                                                        | `string`                                            | `var(--fnx-danger-color)` |         |
+| offset   | Offset of badge dot                                                     | `[number \| string, number \| string]`              | -                         |         |
+| position | Badge position                                                          | `'top-left'` \| `'bottom-left'` \| `'bottom-right'` | `'top-left'`              | 0.0.9   |

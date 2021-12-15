@@ -4,14 +4,16 @@ Used to select a single state in multiple preparation options.
 
 ## Basic Usage
 
+Use `value` to set Radio checked.
+
 ```tsx
 import { Radio } from 'fnx-ui';
 
 ReactDOM.render(
   <>
-    <Radio.Group defaultValue={1}>
-      <Radio value={1}>Content</Radio>
-      <Radio value={2}>Content</Radio>
+    <Radio.Group defaultValue="A">
+      <Radio value="A">Option A</Radio>
+      <Radio value="B">Option B</Radio>
     </Radio.Group>
   </>,
   mountNode,
@@ -20,117 +22,120 @@ ReactDOM.render(
 
 ## Disabled
 
-Passing the option to switch by `disabled` attribute，Setting up `disabled` on `Radio` to disable a single option，`Radio.group` You can disable group options。
+Use `disabled` prop to set disabled radio.
 
 ```tsx
 import { Radio } from 'fnx-ui';
 
 ReactDOM.render(
   <>
-    <Radio.Group defaultValue={2} disabled>
-      <Radio value={1}>Content</Radio>
-      <Radio value={2}>Content</Radio>
+    <Radio.Group defaultValue="A" disabled>
+      <Radio value="A">Option A</Radio>
+      <Radio value="B">Option B</Radio>
     </Radio.Group>
   </>,
   mountNode,
 );
 ```
 
-## Custom shapes and colors
+## Custom Shape
 
-Change shape via `iconshape`；Change color via `iconcheckedcolor`。
+Use `iconShape` prop to customize icon shape.
 
 ```tsx
 import { Radio } from 'fnx-ui';
 
 ReactDOM.render(
   <>
-    <Radio.Group defaultValue={1}>
-      <Radio value={1} iconShape="square" iconCheckedColor="blue">
-        Content
+    <Radio.Group defaultValue="A" iconShape="square">
+      <Radio value="A">Option A</Radio>
+      <Radio value="B">Option B</Radio>
+      <Radio value="C" iconShape="round">
+        Option C
       </Radio>
-      <Radio value={2}>Content</Radio>
     </Radio.Group>
   </>,
   mountNode,
 );
 ```
 
-## Iconsize
+## Custom Color
 
-`iconsize` Admission to digital type, set font size, unit `px`.
+Use `iconCheckedColor` prop to customize checked icon color.
 
 ```tsx
 import { Radio } from 'fnx-ui';
 
 ReactDOM.render(
   <>
-    <Radio iconSize={20} defaultChecked>
-      Content
-    </Radio>
+    <Radio.Group defaultValue="A" iconCheckedColor="red">
+      <Radio value="A">Option A</Radio>
+      <Radio value="B">Option B</Radio>
+      <Radio value="C">Option C</Radio>
+    </Radio.Group>
   </>,
   mountNode,
 );
 ```
 
-R
+## Custom Icon Size
 
-## Icon
-
-`icon` Type, custom icon for `ReactNode`.
+Use `iconSize` prop to set the icon size.
 
 ```tsx
 import { Radio } from 'fnx-ui';
+
+ReactDOM.render(
+  <>
+    <Radio.Group defaultValue="A" iconSize={20}>
+      <Radio value="A" iconSize={14}>
+        Option A
+      </Radio>
+      <Radio value="B">Option B</Radio>
+      <Radio value="C">Option C</Radio>
+    </Radio.Group>
+  </>,
+  mountNode,
+);
+```
+
+## Custom Icon
+
+Use `icon` prop to customize unchecked icon, And `checkedIcon` to customize checked icon.
+
+```tsx
+import { Radio, Icon } from 'fnx-ui';
 
 ReactDOM.render(
   <>
     <Radio.Group
-      defaultValue={2}
+      defaultValue="A"
+      icon={<Icon name="circle" />}
+      checkedIcon={<Icon name="success" />}
       iconShape="plain"
-      icon={
-        <img src="https://img17.fn-mart.com/pic/2a021346939822ebb66f/B26n221z_2fdhMZdKz/7imyeafa3yKGj9/CsmRtmA3RAuAVmgsAAKtgt1PF3s715.jpg" />
-      }
-      checkedIcon={
-        <img src="https://img17.fn-mart.com/pic/2a021346939822ebb66f/B26n221z_2fdhMZdKz/7imyeafa3yKGj9/CsmRtmA3RAuAVmgsAAKtgt1PF3s715.jpg" />
-      }
     >
-      <Radio value={1}>Content</Radio>
-      <Radio value={2}>Content</Radio>
+      <Radio value="A">Option A</Radio>
+      <Radio value="B">Option B</Radio>
+      <Radio value="C">Option C</Radio>
     </Radio.Group>
   </>,
   mountNode,
 );
 ```
 
-## LabelDisabled
+## Disable Label Click
 
-Set the `labeldisabled` property, disable text click.
-
-```tsx
-import { Radio } from 'fnx-ui';
-
-ReactDOM.render(
-  <>
-    <Radio labelDisabled defaultChecked>
-      Content
-    </Radio>
-  </>,
-  mountNode,
-);
-```
-
-## Horizontal Arrangement
-
-`Direction` Control the display direction of the text with the box.
+Set `labelDisabled` prop to disable label click action.
 
 ```tsx
 import { Radio } from 'fnx-ui';
 
 ReactDOM.render(
   <>
-    <Radio.Group defaultValue={2} direction="horizontal">
-      <Radio value={1}>Content</Radio>
-      <Radio value={2}>Content</Radio>
+    <Radio.Group defaultValue="A" labelDisabled>
+      <Radio value="A">Option A</Radio>
+      <Radio value="B">Option B</Radio>
+      <Radio value="C">Option C</Radio>
     </Radio.Group>
   </>,
   mountNode,
@@ -139,69 +144,105 @@ ReactDOM.render(
 
 ## Inside a Cell
 
+Radio can be used with Cell, Use `toggle` method of Radio Instance to toggle check state.
+
 ```tsx
 import { Radio } from 'fnx-ui';
 
 ReactDOM.render(
   <>
-    <Cell.Group>
-      {[1, 2, 3].map((key) => {
-        return (
-          <Cell
-            key={key}
-            clickable
-            title="Radio Cell"
-            rightIcon={<Radio checked={radio === key} />}
-          />
-        );
-      })}
-    </Cell.Group>
+    <Radio.Group defaultValue="A" labelDisabled direction="horizontal">
+      <Radio value="A">Option A</Radio>
+      <Radio value="B">Option B</Radio>
+      <Radio value="C">Option C</Radio>
+    </Radio.Group>
   </>,
   mountNode,
 );
 ```
 
-## Radio API
+## Inside a Cell
 
-| Parameter        | Description                                      | Type                             | Default value |
-| ---------------- | ------------------------------------------------ | -------------------------------- | ------------- |
-| value            | Determine if it is selected according to `value` | `string \| number \| boolean`    | -             |
-| defaultChecked   | Initialization is selected                       | `boolean`                        | `false`       |
-| skipGroup        | Do you accept `Radiogroup Props`                 | `boolean`                        | `false`       |
-| checked          | Specify whether it is currently selected         | `boolean`                        | `false`       |
-| disabled         | Whether to disable all check boxes               | `boolean`                        | `false`       |
-| iconSize         | Check box icon size, default unit is `px`        | `string \| number`               | -             |
-| iconShape        | Check box icon shape                             | `'square' \| 'round' \| 'plain'` | `square`      |
-| labelDisabled    | Check box Disable text Click                     | `boolean`                        | `false`       |
-| iconPosition     | Set icon location                                | `'left' \| 'right'`              | `left`        |
-| iconCheckedColor | Set selected status color                        | `string`                         | -             |
-| icon             | Set a custom icon                                | `ReactNode`                      | -             |
-| checkedIcon      | Set custom selection icon                        | `ReactNode`                      | -             |
+Radio can be used with Cell.
 
-## RadioGroup API
+```tsx
+import { Cell, Radio } from 'fnx-ui';
+import { useState } from 'react';
 
-| Parameter        | Description                                      | Type                             | Default value |
-| ---------------- | ------------------------------------------------ | -------------------------------- | ------------- |
-| value            | Determine if it is selected according to `value` | `string \| number \| boolean`    | -             |
-| defaultChecked   | Initialization is selected                       | `boolean`                        | `false`       |
-| direction        | Control arrangement                              | `'vertical' \| 'horizontal'`     | `vertical`    |
-| disabled         | Whether to disable all check boxes               | `boolean`                        | `false`       |
-| iconSize         | All check box icons, the default unit is `px`    | `string \| number`               | -             |
-| iconShape        | All check box icons                              | `'square' \| 'round' \| 'plain'` | `square`      |
-| labelDisabled    | All checkbox Disable text Click                  | `boolean`                        | `false`       |
-| iconPosition     | Set all icons position                           | `'left' \| 'right'`              | `left`        |
-| iconCheckedColor | Set all selected status colors                   | `string`                         | -             |
-| icon             | Set all custom icons                             | `ReactNode`                      | -             |
-| checkedIcon      | Set all custom selection icons                   | `ReactNode`                      | -             |
+function App() {
+  const [radio, setRadio] = useState('A');
 
-## 事件
+  return (
+    <Cell.Group>
+      {['A', 'B', 'C'].map((key) => {
+        return (
+          <Cell
+            key={key}
+            clickable
+            title={`Option ${key}`}
+            rightIcon={<Radio checked={radio === key} />}
+            onClick={() => {
+              setRadio(key);
+            }}
+          />
+        );
+      })}
+    </Cell.Group>
+  );
+}
 
-| Event Name | Description                           | Callback Arguments   |
-| ---------- | ------------------------------------- | -------------------- |
-| onChange   | Trigger when selecting a state change | `(checked: boolean)` |
+ReactDOM.render(
+  <>
+    <App />
+  </>,
+  mountNode,
+);
+```
 
-## RadioGroup Event
+## API
 
-| Event Name | Description                                                          | Callback Arguments |
-| ---------- | -------------------------------------------------------------------- | ------------------ |
-| onChange   | Trigger when the value changes, the type depends on the type `value` | `(v: T)`           |
+### Radio Basic Props
+
+| Name             | Description                    | Type                                 | Default      | Version |
+| ---------------- | ------------------------------ | ------------------------------------ | ------------ | ------- |
+| disabled         | Disable radio                  | `boolean`                            | `false`      |         |
+| direction        | Direction of radio             | `'vertical'` \| `'horizontal'`       | `'vertical'` |         |
+| checkedIcon      | Custom checked icon            | `ReactNode`                          | -            |         |
+| icon             | Custom unchecked icon          | `ReactNode`                          | -            |         |
+| iconSize         | Custom icon size               | `string` \| `number`                 | -            |         |
+| iconPosition     | Custom icon position           | `'left'` \| `'right'`                | `'left'`     |         |
+| iconShape        | Custom icon shape              | `'square'` \| `'round'` \| `'plain'` | `'square'`   |         |
+| iconCheckedColor | Checked icon color             | `string`                             | -            |         |
+| labelDisabled    | Whether to disable label click | `boolean`                            | `false`      |         |
+
+### Radio Props
+
+Radio Props extends Radio Basic Props，and add the following props:
+
+| Name           | Description                       | Type                              | Default | Version |
+| -------------- | --------------------------------- | --------------------------------- | ------- | ------- |
+| value          | Radio value                       | `string` \| `number` \| `boolean` | -       |         |
+| checked        | Whether the radio is selected     | `boolean`                         | -       |         |
+| defaultChecked | Whether initial radio is selected | `boolean`                         | `false` |         |
+| skipGroup      | Whether to bind with Radio.Group  | `boolean`                         | `true`  |         |
+
+### Radio Events
+
+| 事件名   | 说明                     | 类型                         | 版本 |
+| -------- | ------------------------ | ---------------------------- | ---- |
+| onChange | 当绑定值变化时触发的事件 | `(checked: boolean) => void` |      |
+
+### Radio.Group Props
+
+Radio.Group Props extends Radio Basic Props，and add the following props:
+
+| Name         | Description              | Type                              | Default | Version |
+| ------------ | ------------------------ | --------------------------------- | ------- | ------- |
+| value        | Currently selected value | `string` \| `number` \| `boolean` | -       |         |
+| defaultValue | Default selected value   | `string` \| `number` \| `boolean` | -       |         |
+
+### Radio.Group Events
+
+| Event name | Description                | Type                                           | Version |
+| ---------- | -------------------------- | ---------------------------------------------- | ------- |
+| onChange   | Emitted when value changed | `(value: string \| number \| boolean) => void` |         |
