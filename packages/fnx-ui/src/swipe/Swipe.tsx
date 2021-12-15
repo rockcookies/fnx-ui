@@ -251,7 +251,9 @@ const Swipe = createDefaultsForwardRef<
 			const onTouchMove = (event: TouchEvent) => {
 				touch.move(event);
 
-				const { vertical } = propsRef.current;
+				const { vertical, stopPropagation, loop } = propsRef.current;
+
+				preventDefault(event, stopPropagation);
 
 				const touchData = touch.touchData;
 
@@ -274,10 +276,8 @@ const Swipe = createDefaultsForwardRef<
 				delta = touch.isVertical()
 					? touch.touchData.deltaY
 					: touch.touchData.deltaX;
-				const { stopPropagation = true, loop } = propsRef.current;
 
 				move(touchWrapperOffset + delta, { critical: loop });
-				preventDefault(event, stopPropagation);
 			};
 
 			const restore = () => {
