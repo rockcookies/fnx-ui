@@ -30,29 +30,29 @@ export default function useCheckboxRender(
 	}: HTMLAttributes<HTMLDivElement> & CheckboxBaseProps,
 	context: Partial<CheckboxBaseProps>,
 ): (o: RenderOptions) => ReactElement {
-	const disabled = useDefaults(false, context.disabled, _disabled);
-	const direction = useDefaults('vertical', context.direction, _direction);
-	const iconSize = useDefaults(undefined, context.iconSize, _iconSize);
+	const disabled = useDefaults(false, _disabled, context.disabled);
+	const direction = useDefaults('vertical', _direction, context.direction);
+	const iconSize = useDefaults(undefined, _iconSize, context.iconSize);
 	const iconPosition = useDefaults(
 		'left',
-		context.iconPosition,
 		_iconPosition,
+		context.iconPosition,
 	);
 
 	const iconShape = useDefaults<string>(
 		'round',
-		context.iconShape,
 		_iconShape,
+		context.iconShape,
 	);
 	const iconCheckedColor = useDefaults(
 		undefined,
-		context.iconCheckedColor,
 		_iconCheckedColor,
+		context.iconCheckedColor,
 	);
 	const labelDisabled = useDefaults(
 		false,
-		context.labelDisabled,
 		_labelDisabled,
+		context.labelDisabled,
 	);
 	const icon = _icon ? _icon : context.icon;
 	const checkedIcon = _checkedIcon ? _checkedIcon : context.checkedIcon;
