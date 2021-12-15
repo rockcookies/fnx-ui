@@ -8,18 +8,20 @@ const bem = createBEM(NS);
 
 const Badge = createDefaultsFC<
 	BadgeProps,
-	Required<Pick<BadgeProps, 'showZero' | 'max' | 'count'>>
+	Required<Pick<BadgeProps, 'showZero' | 'max' | 'count' | 'position'>>
 >(
 	'Badge',
 	{
 		showZero: true,
 		max: 99,
 		count: 8,
+		position: 'top-right',
 	},
 	({
 		showZero,
 		max,
 		count,
+		position,
 		// optionals
 		color,
 		dot,
@@ -70,10 +72,13 @@ const Badge = createDefaultsFC<
 			return (
 				<span
 					className={classnames(
-						bem({
-							dot,
-							fixed: children,
-						}),
+						bem([
+							position,
+							{
+								dot,
+								fixed: children,
+							},
+						]),
 						className,
 					)}
 					style={formatStyle()}
@@ -97,6 +102,10 @@ const Badge = createDefaultsFC<
 	},
 );
 
-export type { BadgeComponentProps, BadgeProps } from './interface';
+export type {
+	BadgeComponentProps,
+	BadgeProps,
+	BadgePosition,
+} from './interface';
 
 export default Badge;

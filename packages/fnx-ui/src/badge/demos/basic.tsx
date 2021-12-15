@@ -16,6 +16,7 @@ const I18N: Dictionary<Dictionary<string>> = {
 		standalone: '独立展示',
 		customColor: '自定义颜色',
 		customContent: '自定义徽标内容',
+		customPosition: '自定义徽标位置',
 	},
 	'en-US': {
 		basicUsage: 'Basic usage',
@@ -23,6 +24,7 @@ const I18N: Dictionary<Dictionary<string>> = {
 		standalone: 'Standalone',
 		customColor: 'Custom Color',
 		customContent: 'Custom Content',
+		customPosition: 'Custom Position',
 	},
 };
 
@@ -67,7 +69,6 @@ export default function Basic(): ReturnType<React.FC> {
 					<p className={bem('children')}></p>
 				</Badge>
 			</DemoBlock>
-
 			<DemoBlock title={i18n.customContent}>
 				<Badge count={<Icon className={bem('icon')} name="success" />}>
 					<p className={bem('children')}></p>
@@ -81,7 +82,17 @@ export default function Basic(): ReturnType<React.FC> {
 					<p className={bem('children')}></p>
 				</Badge>
 			</DemoBlock>
-
+			<DemoBlock title={i18n.customPosition}>
+				<Badge count={10} position="top-left">
+					<p className={bem('children')}></p>
+				</Badge>
+				<Badge count={10} position="bottom-left">
+					<p className={bem('children')}></p>
+				</Badge>
+				<Badge count={10} position="bottom-right">
+					<p className={bem('children')}></p>
+				</Badge>
+			</DemoBlock>
 			<DemoBlock title={i18n.standalone}>
 				<Badge count={20} style={{ marginLeft: '16px' }} />
 				<Badge max={99} count={100} style={{ marginLeft: '16px' }} />

@@ -7,7 +7,7 @@ exports[`<Badge/> should change count position when using offset prop 1`] = `
   >
     children
     <span
-      class="fnx-badge fnx-badge--fixed"
+      class="fnx-badge fnx-badge--top-right fnx-badge--fixed"
       style="top: 20px; right: -10px;"
     >
       8
@@ -23,7 +23,7 @@ exports[`<Badge/> should change count position when using offset prop 2`] = `
   >
     children
     <span
-      class="fnx-badge fnx-badge--fixed"
+      class="fnx-badge fnx-badge--top-right fnx-badge--fixed"
       style="top: -20px; right: 10px;"
     >
       8
@@ -39,7 +39,7 @@ exports[`<Badge/> should change dot position when using offset prop with custom 
   >
     children
     <span
-      class="fnx-badge fnx-badge--dot fnx-badge--fixed"
+      class="fnx-badge fnx-badge--top-right fnx-badge--dot fnx-badge--fixed"
     />
   </div>
 </div>
@@ -48,7 +48,7 @@ exports[`<Badge/> should change dot position when using offset prop with custom 
 exports[`<Badge/> should change dot position when using offset prop without children 1`] = `
 <div>
   <span
-    class="fnx-badge fnx-badge--dot"
+    class="fnx-badge fnx-badge--top-right fnx-badge--dot"
     style="margin-top: 20px; margin-left: 10px;"
   />
 </div>
@@ -61,7 +61,7 @@ exports[`<Badge/> should not render zero when show-zero is false 1`] = `
   >
     children
     <span
-      class="fnx-badge fnx-badge--fixed"
+      class="fnx-badge fnx-badge--top-right fnx-badge--fixed"
     />
   </div>
 </div>
@@ -74,7 +74,7 @@ exports[`<Badge/> should render children correctly 1`] = `
   >
     children
     <span
-      class="fnx-badge fnx-badge--fixed"
+      class="fnx-badge fnx-badge--top-right fnx-badge--fixed"
     >
       8
     </span>
@@ -85,7 +85,7 @@ exports[`<Badge/> should render children correctly 1`] = `
 exports[`<Badge/> should render default count when children is not exist 1`] = `
 <div>
   <span
-    class="fnx-badge"
+    class="fnx-badge fnx-badge--top-right"
   >
     8
   </span>
@@ -99,7 +99,7 @@ exports[`<Badge/> should render nothing when count is zero 1`] = `
   >
     children
     <span
-      class="fnx-badge fnx-badge--fixed"
+      class="fnx-badge fnx-badge--top-right fnx-badge--fixed"
     >
       0
     </span>
