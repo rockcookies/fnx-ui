@@ -152,7 +152,7 @@ ReactDOM.render(
 | count    | Badge content                                                           | `ReactNode`                                         | -                         |         |
 | showZero | Whether to show badge when `count` is zero                              | `boolean`                                           | `true`                    |         |
 | dot      | Whether to show dot                                                     | `boolean`                                           | `false`                   |         |
-| max      | Max value, show `{max}+` when exceed, only works when `count` is number | `number \| string`                                  |                           |
+| max      | Max value, show `{max}+` when exceed, only works when `count` is number | `number \| string`                                  |                           |         |
 | color    | Background color                                                        | `string`                                            | `var(--fnx-danger-color)` |         |
 | offset   | Offset of badge dot                                                     | `[number \| string, number \| string]`              | -                         |         |
 | position | Badge position                                                          | `'top-left'` \| `'bottom-left'` \| `'bottom-right'` | `'top-left'`              | 0.0.9   |

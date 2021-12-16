@@ -152,7 +152,7 @@ ReactDOM.render(
 | count    | 徽标内容                                                                    | `ReactNode`                                         | -                         |       |
 | showZero | 当 `count` 为数字 0 时，是否展示徽标                                        | `boolean`                                           | `true`                    |       |
 | dot      | 是否展示为小红点                                                            | `boolean`                                           | `false`                   |       |
-| max      | 最大值，超过最大值会显示 `{max}+` ，仅当 `count` 为数字时有效               | `number \| string`                                  |                           |
+| max      | 最大值，超过最大值会显示 `{max}+` ，仅当 `count` 为数字时有效               | `number \| string`                                  |                           |       |
 | color    | 徽标背景颜色                                                                | `string`                                            | `var(--fnx-danger-color)` |       |
 | offset   | 设置徽标的偏移量，数组的两项分别对应水平和垂直方向的偏移量，默认单位为 `px` | `[number \| string, number \| string]`              | -                         |       |
 | position | 徽标位置                                                                    | `'top-left'` \| `'bottom-left'` \| `'bottom-right'` | `'top-left'`              | 0.0.9 |

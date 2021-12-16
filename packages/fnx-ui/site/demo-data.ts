@@ -40,4 +40,5 @@ export const DEMO_DATA: Dictionary<React.LazyExoticComponent<any>> = {
 	'error-boundary': lazy(() => import('../src/error-boundary/demos/basic')),
 	calendar: lazy(() => import('../src/calendar/demos/basic')),
 	notify: lazy(() => import('../src/notify/demos/basic')),
+	'config-provider': lazy(() => import('../src/config-provider/demos/basic')),
 };

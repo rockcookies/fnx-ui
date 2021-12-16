@@ -55,6 +55,14 @@ const SITE_COMPONENTS: SiteMenuGroup[] = [
 				markdown: () => import('../src/toast/index.en-US.md'),
 				markdownCN: () => import('../src/toast/index.zh-CN.md'),
 			},
+			{
+				key: 'config-provider',
+				title: 'ConfigProvider',
+				titleCN: '全集配置',
+				markdown: () => import('../src/config-provider/index.en-US.md'),
+				markdownCN: () =>
+					import('../src/config-provider/index.zh-CN.md'),
+			},
 		],
 	},
 	{

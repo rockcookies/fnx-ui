@@ -22,7 +22,7 @@ Run the App.
 import React from 'react';
 import { render } from 'react-dom';
 import { ConfigProvider, Button } from 'fnx-ui';
-import enUS from 'fnx-ui/es/locale/en-US';
+import enUS from 'fnx-ui/lib/locale/en-US';
 
 import 'fnx-ui/dist/fnx.css';
 

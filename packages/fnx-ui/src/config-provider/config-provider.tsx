@@ -1,46 +1,51 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import { changeConfirmLocale } from '../dialog/locale';
-import useCreation from '../hooks/use-creation';
 import { createFC } from '../utils/react';
-import { ConfigContext, DEFAULT_CONFIG_CONTEXT } from './context';
+import { ConfigContext } from './context';
 import { ConfigContextData, ConfigProviderProps } from './interface';
 
 const ConfigProvider = createFC(
 	'ConfigProvider',
-	({ children, ...restProps }: ConfigProviderProps) => {
+	({ children, locale, ...restProps }: ConfigProviderProps) => {
 		const parentContext = useContext(ConfigContext);
 
-		const context = useCreation<ConfigContextData>(
-			(prev) => {
-				const next: ConfigContextData = {
-					...DEFAULT_CONFIG_CONTEXT,
-					...parentContext,
-					...restProps,
-				};
+		const next: ConfigContextData = {
+			...parentContext,
+			...restProps,
+			locale: locale || parentContext.locale,
+		};
 
-				if (!prev) {
-					return next;
-				}
+		const contextRef = useRef<ConfigContextData>();
 
-				const prevKeys = Object.keys(prev);
-				const nextKeys = Object.keys(next);
+		if (contextRef.current != null) {
+			const prev = contextRef.current;
 
-				return prevKeys.length === nextKeys.length &&
-					prevKeys.every(
-						(key) => (prev as any)[key] !== (next as any)[key],
-					)
+			const prevKeys = Object.keys(prev);
+			const nextKeys = Object.keys(next);
+
+			contextRef.current =
+				prevKeys.length === nextKeys.length &&
+				prevKeys.every(
+					(key) => (prev as any)[key] === (next as any)[key],
+				)
 					? prev
 					: next;
-			},
-			[restProps, parentContext],
-		);
+		} else {
+			contextRef.current = next;
+		}
 
 		useEffect(() => {
-			changeConfirmLocale(context.locale && context.locale.dialog);
-		}, [context.locale]);
+			if (locale) {
+				changeConfirmLocale(locale.dialog);
+
+				return () => {
+					changeConfirmLocale();
+				};
+			}
+		}, [locale]);
 
 		return (
-			<ConfigContext.Provider value={context}>
+			<ConfigContext.Provider value={contextRef.current}>
 				{children}
 			</ConfigContext.Provider>
 		);

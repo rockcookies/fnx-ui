@@ -22,7 +22,7 @@ $ yarn add fnx-ui
 import React from 'react';
 import { render } from 'react-dom';
 import { ConfigProvider, Button } from 'fnx-ui';
-import zhCN from 'fnx-ui/es/locale/zh-CN';
+import zhCN from 'fnx-ui/lib/locale/zh-CN';
 
 import 'fnx-ui/dist/fnx.css';
 
