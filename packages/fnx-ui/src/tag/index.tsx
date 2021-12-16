@@ -6,6 +6,7 @@ import React, {
 } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import ConfigProvider from '../config-provider';
+import { DEFAULT_CONFIG_CONTEXT } from '../config-provider/context';
 import useControlledState from '../hooks/use-controlled-state';
 import useDefaults from '../hooks/use-defaults';
 import Icon from '../icon';
@@ -86,7 +87,7 @@ const Tag = createDefaultsForwardRef<
 
 			if (
 				transitionDuration != null &&
-				transitionDuration !== configContext.transitionDuration
+				transitionDuration !== DEFAULT_CONFIG_CONTEXT.transitionDuration
 			) {
 				formattedStyle.transitionDuration = `${transitionDuration}ms`;
 			}

@@ -8,6 +8,7 @@ import React, {
 } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import ConfigProvider from '../config-provider';
+import { DEFAULT_CONFIG_CONTEXT } from '../config-provider/context';
 import useDefaults from '../hooks/use-defaults';
 import { bindEvent, preventDefault } from '../utils/dom/event';
 import { classnames, createBEM } from '../utils/namespace';
@@ -98,7 +99,9 @@ const Overlay = createDefaultsForwardRef<
 				formattedStyle.display = 'none';
 			}
 
-			if (transitionDuration !== configContext.transitionDuration) {
+			if (
+				transitionDuration !== DEFAULT_CONFIG_CONTEXT.transitionDuration
+			) {
 				formattedStyle.transitionDuration = `${transitionDuration}ms`;
 			}
 

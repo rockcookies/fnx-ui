@@ -9,6 +9,7 @@ import React, {
 } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import ConfigProvider from '../config-provider';
+import { DEFAULT_CONFIG_CONTEXT } from '../config-provider/context';
 import useDefaults from '../hooks/use-defaults';
 import { PopupVisibleContext } from '../hooks/use-popup-reopen';
 import useScrollLock from '../hooks/use-scroll-lock';
@@ -157,7 +158,7 @@ const Popup = createDefaultsForwardRef<
 
 			if (
 				transitionDuration != null &&
-				transitionDuration !== configContext.transitionDuration
+				transitionDuration !== DEFAULT_CONFIG_CONTEXT.transitionDuration
 			) {
 				formattedStyle.transitionDuration = `${transitionDuration}ms`;
 			}
@@ -217,10 +218,8 @@ const Popup = createDefaultsForwardRef<
 										round,
 										[position]: position,
 									}),
-									safeAreaInsetBottom
-										? 'fnx-safe-area-bottom'
-										: undefined,
-
+									safeAreaInsetBottom &&
+										'fnx-safe-area-bottom',
 									className,
 								)}
 								style={formatStyle()}
