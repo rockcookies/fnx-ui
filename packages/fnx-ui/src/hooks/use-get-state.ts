@@ -8,7 +8,11 @@ function useGetState<S>(
 
 function useGetState<S = undefined>(
 	initialState: S | undefined,
-): [S | undefined, Dispatch<SetStateAction<S>>, GetState<S>];
+): [
+	S | undefined,
+	Dispatch<SetStateAction<S | undefined>>,
+	GetState<S | undefined>,
+];
 
 function useGetState<S>(
 	initialState: S | (() => S),

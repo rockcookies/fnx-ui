@@ -10,6 +10,7 @@ import React, {
 	useRef,
 	useState,
 } from 'react';
+import configComponentProps from '../hooks/config-component-props';
 import useControlledState from '../hooks/use-controlled-state';
 import useDefaultsRef from '../hooks/use-defaults-ref';
 import useFocus from '../hooks/use-focus';
@@ -18,7 +19,7 @@ import { addUnit, formatNumber } from '../utils/format';
 import { ForwardRefProps } from '../utils/interface';
 import { noop } from '../utils/misc';
 import { classnames, createBEM } from '../utils/namespace';
-import { createDefaultsForwardRef } from '../utils/react';
+import { createForwardRef } from '../utils/react';
 import { StepperProps, StepperRef, StepperValue } from './interface';
 import { addValue, getValidNumber } from './utils';
 
@@ -28,9 +29,7 @@ const LONG_PRESS_START_TIME = 600;
 const NS = 'fnx-stepper';
 const bem = createBEM(NS);
 
-const Stepper = createDefaultsForwardRef<
-	StepperRef,
-	StepperProps,
+const useProps = configComponentProps<
 	Required<
 		Pick<
 			StepperProps,
@@ -49,53 +48,56 @@ const Stepper = createDefaultsForwardRef<
 			| 'onStep'
 		>
 	>
->(
+>({
+	defaultValue: '',
+	mode: 'string',
+	allowEmpty: false,
+	step: 1,
+	showInput: true,
+	showPlus: true,
+	showMinus: true,
+	disabled: false,
+	disablePlus: false,
+	disableMinus: false,
+	disableInput: false,
+	longPress: true,
+	onStep: noop,
+});
+
+const Stepper = createForwardRef<StepperRef, StepperProps>(
 	'Stepper',
-	{
-		defaultValue: '',
-		mode: 'string',
-		allowEmpty: false,
-		step: 1,
-		showInput: true,
-		showPlus: true,
-		showMinus: true,
-		disabled: false,
-		disablePlus: false,
-		disableMinus: false,
-		disableInput: false,
-		longPress: true,
-		onStep: noop,
-	},
-	(
-		{
-			defaultValue,
-			mode,
-			allowEmpty,
-			step: _step,
-			showInput,
-			showPlus,
-			showMinus,
-			disabled,
-			disablePlus,
-			disableMinus,
-			disableInput,
-			longPress,
-			onStep,
-			// optionals
-			onChange: _onChange,
-			value: _value,
-			min: _min,
-			max: _max,
-			buttonSize,
-			inputWidth,
-			precision,
-			className,
-			style,
-			...restProps
-		},
-		ref,
-	) => {
+	(_props, ref) => {
 		const timerRef = useRef<NodeJS.Timeout>();
+
+		const [
+			{
+				defaultValue,
+				mode,
+				allowEmpty,
+				step: _step,
+				showInput,
+				showPlus,
+				showMinus,
+				disabled,
+				disablePlus,
+				disableMinus,
+				disableInput,
+				longPress,
+				onStep,
+			},
+			{
+				onChange: _onChange,
+				value: _value,
+				min: _min,
+				max: _max,
+				buttonSize,
+				inputWidth,
+				precision,
+				className,
+				style,
+				...restProps
+			},
+		] = useProps(_props);
 
 		const min = useMemo(() => getValidNumber(_min), [_min]);
 		const max = useMemo(() => getValidNumber(_max), [_max]);

@@ -33,10 +33,6 @@ exports[`<Tabs/> slots 1`] = `
               1
             </div>
           </div>
-          <div
-            class="fnx-tabs__track"
-            style="left: 0px; transition-duration: 300ms;"
-          />
         </div>
         <div
           class="fnx-tabs__nav-right"

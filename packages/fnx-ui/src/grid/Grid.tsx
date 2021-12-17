@@ -1,47 +1,38 @@
 import React, { cloneElement, isValidElement } from 'react';
+import configComponentProps from '../hooks/config-component-props';
 import { BORDER_TOP } from '../utils/constants';
 import { addUnit } from '../utils/format';
 import { classnames, createBEM } from '../utils/namespace';
-import { createDefaultsForwardRef, toElementArray } from '../utils/react';
+import { createForwardRef, toElementArray } from '../utils/react';
 import { GridContext } from './context';
 import { GridProps } from './interface';
 
 const NS = 'fnx-grid';
 const bem = createBEM(NS);
 
-const Grid = createDefaultsForwardRef<
-	HTMLDivElement,
-	GridProps,
+const useProps = configComponentProps<
 	Required<
 		Pick<
 			GridProps,
 			'columnSize' | 'clickable' | 'gutter' | 'border' | 'square'
 		>
 	>
->(
+>({
+	columnSize: 4,
+	clickable: false,
+	gutter: 0,
+	border: true,
+	square: false,
+});
+
+const Grid = createForwardRef<HTMLDivElement, GridProps>(
 	'Grid',
-	{
-		columnSize: 4,
-		clickable: false,
-		gutter: 0,
-		border: true,
-		square: false,
-	},
-	(
-		{
-			columnSize,
-			clickable,
-			gutter,
-			border,
-			square,
-			// optionals
-			className,
-			children: _children,
-			style,
-			...restProps
-		},
-		ref,
-	) => {
+	(_props, ref) => {
+		const [
+			{ columnSize, clickable, gutter, border, square },
+			{ className, children: _children, style, ...restProps },
+		] = useProps(_props);
+
 		const children = toElementArray(_children);
 
 		return (

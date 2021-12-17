@@ -1,19 +1,18 @@
 import React, { useImperativeHandle, useMemo, useRef } from 'react';
+import configComponentProps from '../hooks/config-component-props';
 import useControlledState from '../hooks/use-controlled-state';
 import { useLocale } from '../locale';
 import { BORDER } from '../utils/constants';
 import { clamp } from '../utils/format';
 import { noop } from '../utils/misc';
 import { classnames, createBEM } from '../utils/namespace';
-import { createDefaultsForwardRef } from '../utils/react';
+import { createForwardRef } from '../utils/react';
 import { PaginationProps } from './interface';
 
 const NS = 'fnx-pagination';
 const bem = createBEM(NS);
 
-const Pagination = createDefaultsForwardRef<
-	HTMLUListElement,
-	PaginationProps,
+const useProps = configComponentProps<
 	Required<
 		Pick<
 			PaginationProps,
@@ -28,38 +27,37 @@ const Pagination = createDefaultsForwardRef<
 			| 'pageItemCount'
 		>
 	>
->(
+>({
+	total: 82,
+	defaultCurrent: 1,
+	pageSize: 10,
+	hideOnSinglePage: false,
+	forceEllipses: false,
+	onChange: noop,
+	mode: 'multi',
+	slots: {},
+	pageItemCount: 5,
+});
+
+const Pagination = createForwardRef<HTMLUListElement, PaginationProps>(
 	'Pagination',
-	{
-		total: 82,
-		defaultCurrent: 1,
-		pageSize: 10,
-		hideOnSinglePage: false,
-		forceEllipses: false,
-		onChange: noop,
-		mode: 'multi',
-		slots: {},
-		pageItemCount: 5,
-	},
-	(
-		{
-			total,
-			defaultCurrent,
-			pageSize,
-			hideOnSinglePage,
-			forceEllipses,
-			onChange: _onChange,
-			mode,
-			slots,
-			pageItemCount,
-			// optionals
-			current: __current,
-			className,
-			...restProps
-		},
-		ref,
-	) => {
+	(_props, ref) => {
 		const locale = useLocale('pagination');
+
+		const [
+			{
+				total,
+				defaultCurrent,
+				pageSize,
+				hideOnSinglePage,
+				forceEllipses,
+				onChange: _onChange,
+				mode,
+				slots,
+				pageItemCount,
+			},
+			{ current: __current, className, ...restProps },
+		] = useProps(_props);
 
 		const { value: _current, onChangeRef } = useControlledState<number>({
 			value: __current,

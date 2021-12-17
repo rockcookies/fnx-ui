@@ -11,42 +11,40 @@ import React, {
 import { CSSTransition } from 'react-transition-group';
 import Cell from '../cell';
 import ConfigProvider from '../config-provider';
+import configComponentProps from '../hooks/config-component-props';
 import useDefaults from '../hooks/use-defaults';
 import Icon from '../icon/Icon';
 import { classnames, createBEM } from '../utils/namespace';
-import { createDefaultsForwardRef } from '../utils/react';
+import { createForwardRef } from '../utils/react';
 import CollapseContext from './context';
 import { CollapseItemProps } from './interface';
 
 const NS = 'fnx-collapse-item';
 const bem = createBEM(NS);
 
-const CollapseItem = createDefaultsForwardRef<
-	HTMLDivElement,
-	CollapseItemProps,
+const useProps = configComponentProps<
 	Required<Pick<CollapseItemProps, 'titleProps' | 'headerProps' | 'disabled'>>
->(
+>({
+	titleProps: {},
+	headerProps: {},
+	disabled: false,
+});
+
+const CollapseItem = createForwardRef<HTMLDivElement, CollapseItemProps>(
 	'CollapseItem',
-	{
-		titleProps: {},
-		headerProps: {},
-		disabled: false,
-	},
-	(
-		{
-			titleProps,
-			headerProps,
-			disabled,
-			// optionals
-			ghost: _ghost,
-			transitionDuration: _transitionDuration,
-			title,
-			className,
-			children,
-			...restProps
-		},
-		ref,
-	) => {
+	(_props, ref) => {
+		const [
+			{ titleProps, headerProps, disabled },
+			{
+				ghost: _ghost,
+				transitionDuration: _transitionDuration,
+				title,
+				className,
+				children,
+				...restProps
+			},
+		] = useProps(_props);
+
 		const { activeKey, onChange, accordion, ...ctx } =
 			useContext(CollapseContext);
 		const configContext = useContext(ConfigProvider.Context);

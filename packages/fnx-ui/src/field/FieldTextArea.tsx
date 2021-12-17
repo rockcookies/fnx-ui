@@ -4,6 +4,7 @@ import React, {
 	useImperativeHandle,
 	useRef,
 } from 'react';
+import configComponentProps from '../hooks/config-component-props';
 import useCompositionChange from '../hooks/use-composition-change';
 import useControlledState from '../hooks/use-controlled-state';
 import useCreation from '../hooks/use-creation';
@@ -11,7 +12,7 @@ import useFocus from '../hooks/use-focus';
 import { clamp, unitToPx } from '../utils/format';
 import { isEqualArrays } from '../utils/misc';
 import { classnames, createBEM } from '../utils/namespace';
-import { createDefaultsForwardRef } from '../utils/react';
+import { createForwardRef } from '../utils/react';
 import {
 	FieldTextAreaCountFormatter,
 	FieldTextAreaProps,
@@ -22,9 +23,7 @@ import { limitValueLength } from './utils';
 const NS = 'fnx-field-textarea';
 const bem = createBEM(NS);
 
-const FieldTextArea = createDefaultsForwardRef<
-	FieldTextAreaRef,
-	FieldTextAreaProps,
+const useProps = configComponentProps<
 	Required<
 		Pick<
 			FieldTextAreaProps,
@@ -36,39 +35,42 @@ const FieldTextArea = createDefaultsForwardRef<
 			| 'disabled'
 		>
 	>
->(
+>({
+	defaultValue: '',
+	showCount: false,
+	autoSize: false,
+	rows: 1,
+	readOnly: false,
+	disabled: false,
+});
+
+const FieldTextArea = createForwardRef<FieldTextAreaRef, FieldTextAreaProps>(
 	'FieldTextArea',
-	{
-		defaultValue: '',
-		showCount: false,
-		autoSize: false,
-		rows: 1,
-		readOnly: false,
-		disabled: false,
-	},
-	(
-		{
-			defaultValue,
-			showCount,
-			autoSize: _autoSize,
-			rows,
-			readOnly,
-			disabled,
-			// optionals
-			value: _value,
-			onChange: _onChange,
-			onFocus: _onFocus,
-			onBlur: _onBlur,
-			maxLength,
-			className,
-			style,
-			...restProps
-		},
-		ref,
-	) => {
+	(_props, ref) => {
 		const rootRef = useRef<HTMLSpanElement>(null);
 		const inputRef = useRef<HTMLTextAreaElement>(null);
 		const autoSizeRef = useRef<HTMLTextAreaElement>(null);
+
+		const [
+			{
+				defaultValue,
+				showCount,
+				autoSize: _autoSize,
+				rows,
+				readOnly,
+				disabled,
+			},
+			{
+				value: _value,
+				onChange: _onChange,
+				onFocus: _onFocus,
+				onBlur: _onBlur,
+				maxLength,
+				className,
+				style,
+				...restProps
+			},
+		] = useProps(_props);
 
 		useImperativeHandle<FieldTextAreaRef, FieldTextAreaRef>(ref, () => {
 			return {

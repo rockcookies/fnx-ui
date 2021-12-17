@@ -2,19 +2,18 @@ import React, { cloneElement, isValidElement, useContext } from 'react';
 import Cell from '../cell';
 import { FormHelpAlign, FormLabelAlign } from '../form';
 import { FormContext, FormItemContext } from '../form/context';
+import configComponentProps from '../hooks/config-component-props';
 import useDefaults from '../hooks/use-defaults';
 import { addUnit } from '../utils/format';
 import { Dictionary } from '../utils/interface';
 import { classnames, createBEM } from '../utils/namespace';
-import { createDefaultsForwardRef } from '../utils/react';
+import { createForwardRef } from '../utils/react';
 import { FieldProps } from './interface';
 
 const NS = 'fnx-field';
 const bem = createBEM(NS);
 
-const Field = createDefaultsForwardRef<
-	HTMLDivElement,
-	FieldProps,
+const useProps = configComponentProps<
 	Required<
 		Pick<
 			FieldProps,
@@ -26,39 +25,42 @@ const Field = createDefaultsForwardRef<
 			| 'help'
 		>
 	>
->(
+>({
+	labelProps: {},
+	controlProps: {},
+	titleProps: {},
+	contentProps: {},
+	disabled: false,
+	help: [],
+});
+
+const Field = createForwardRef<HTMLDivElement, FieldProps>(
 	'Field',
-	{
-		labelProps: {},
-		controlProps: {},
-		titleProps: {},
-		contentProps: {},
-		disabled: false,
-		help: [],
-	},
-	(
-		{
-			labelProps,
-			controlProps,
-			titleProps,
-			contentProps,
-			disabled,
-			help,
-			// optionals
-			labelAlign: _labelAlign,
-			helpAlign: _helpAlign,
-			colon: _colon,
-			required: _required,
-			labelWidth: _labelWidth,
-			label,
-			controlPrefix,
-			controlSuffix,
-			className,
-			children,
-			...restProps
-		},
-		ref,
-	) => {
+	(_props, ref) => {
+		const [
+			{
+				labelProps,
+				controlProps,
+				titleProps,
+				contentProps,
+				disabled,
+				help,
+			},
+			{
+				labelAlign: _labelAlign,
+				helpAlign: _helpAlign,
+				colon: _colon,
+				required: _required,
+				labelWidth: _labelWidth,
+				label,
+				controlPrefix,
+				controlSuffix,
+				className,
+				children,
+				...restProps
+			},
+		] = useProps(_props);
+
 		const formContext = useContext(FormContext);
 		const { meta, isRequired: fieldIsRequired } =
 			useContext(FormItemContext);

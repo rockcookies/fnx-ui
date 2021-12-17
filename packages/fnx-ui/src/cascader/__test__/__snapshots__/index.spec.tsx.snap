@@ -90,10 +90,6 @@ exports[`<Cascader/> defaultValue and dataNames props 1`] = `
                 </span>
               </div>
             </div>
-            <div
-              class="fnx-tabs__track"
-              style="left: 0px; transition-duration: 300ms;"
-            />
           </div>
         </div>
       </div>
@@ -257,10 +253,6 @@ exports[`<Cascader/> onCancel、closeIcon props 1`] = `
                 </span>
               </div>
             </div>
-            <div
-              class="fnx-tabs__track"
-              style="left: 0px; transition-duration: 300ms;"
-            />
           </div>
         </div>
       </div>

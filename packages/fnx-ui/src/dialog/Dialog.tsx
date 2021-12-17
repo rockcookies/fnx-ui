@@ -1,20 +1,19 @@
 import React from 'react';
 import Button, { ButtonProps } from '../button';
+import configComponentProps from '../hooks/config-component-props';
 import { useLocale } from '../locale';
 import Popup from '../popup';
 import { BORDER_LEFT, BORDER_TOP } from '../utils/constants';
 import { addUnit } from '../utils/format';
 import { noop } from '../utils/misc';
 import { classnames, createBEM } from '../utils/namespace';
-import { createDefaultsForwardRef } from '../utils/react';
+import { createForwardRef } from '../utils/react';
 import { DialogProps } from './interface';
 
 const NS = 'fnx-dialog';
 const bem = createBEM(NS);
 
-const Dialog = createDefaultsForwardRef<
-	HTMLDivElement,
-	DialogProps,
+const useProps = configComponentProps<
 	Required<
 		Pick<
 			DialogProps,
@@ -29,47 +28,50 @@ const Dialog = createDefaultsForwardRef<
 			| 'bodyProps'
 		>
 	>
->(
+>({
+	messageAlign: 'center',
+	onConfirm: noop,
+	onCancel: noop,
+	confirmLoading: false,
+	confirmButtonProps: {},
+	cancelLoading: false,
+	cancelButtonProps: {},
+	transitionName: 'fnx-dialog-bounce',
+	bodyProps: {},
+});
+
+const Dialog = createForwardRef<HTMLDivElement, DialogProps>(
 	'Dialog',
-	{
-		messageAlign: 'center',
-		onConfirm: noop,
-		onCancel: noop,
-		confirmLoading: false,
-		confirmButtonProps: {},
-		cancelLoading: false,
-		cancelButtonProps: {},
-		transitionName: 'fnx-dialog-bounce',
-		bodyProps: {},
-	},
-	(
-		{
-			messageAlign,
-			onConfirm,
-			onCancel,
-			confirmLoading,
-			cancelLoading,
-			confirmButtonProps,
-			cancelButtonProps,
-			transitionName,
-			bodyProps,
-			// optionals
-			title,
-			footer,
-			width,
-			message,
-			confirmButton,
-			confirmText,
-			cancelButton,
-			cancelText,
-			style,
-			className,
-			children,
-			...resetProps
-		},
-		ref,
-	) => {
+	(_props, ref) => {
 		const locale = useLocale('dialog');
+
+		const [
+			{
+				messageAlign,
+				onConfirm,
+				onCancel,
+				confirmLoading,
+				cancelLoading,
+				confirmButtonProps,
+				cancelButtonProps,
+				transitionName,
+				bodyProps,
+			},
+			{
+				title,
+				footer,
+				width,
+				message,
+				confirmButton,
+				confirmText,
+				cancelButton,
+				cancelText,
+				style,
+				className,
+				children,
+				...resetProps
+			},
+		] = useProps(_props);
 
 		const hasHeader = !!title;
 		const hasBody = !!message || !!children;

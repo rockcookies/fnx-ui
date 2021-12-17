@@ -5,16 +5,15 @@ import React, {
 	ReactNode,
 	useCallback,
 } from 'react';
+import configComponentProps from '../hooks/config-component-props';
 import useControlledState from '../hooks/use-controlled-state';
 import { ForwardRefProps } from '../utils/interface';
 import { noop } from '../utils/misc';
-import { createDefaultsForwardRef } from '../utils/react';
+import { createForwardRef } from '../utils/react';
 import { PopupSelectProps } from './interface';
 import Popup from './Popup';
 
-const PopupSelect = createDefaultsForwardRef<
-	HTMLDivElement,
-	PopupSelectProps,
+const useProps = configComponentProps<
 	Required<
 		Pick<
 			PopupSelectProps,
@@ -26,36 +25,39 @@ const PopupSelect = createDefaultsForwardRef<
 			| 'onClose'
 		>
 	>
->(
+>({
+	selectConfirmTrigger: 'onConfirm',
+	selectCancelTrigger: 'onCancel',
+	selectDefaultValuePropName: 'defaultValue',
+	trigger: 'onClick',
+	disabled: false,
+	onClose: noop,
+});
+
+const PopupSelect = createForwardRef<HTMLDivElement, PopupSelectProps>(
 	'PopupSelect',
-	{
-		selectConfirmTrigger: 'onConfirm',
-		selectCancelTrigger: 'onCancel',
-		selectDefaultValuePropName: 'defaultValue',
-		trigger: 'onClick',
-		disabled: false,
-		onClose: noop,
-	},
-	(
-		{
-			selectConfirmTrigger,
-			selectCancelTrigger,
-			selectDefaultValuePropName,
-			trigger,
-			disabled,
-			onClose,
-			// optionals
-			visible: _visible,
-			value: _value,
-			defaultValue,
-			onChange: _onChange,
-			select,
-			position,
-			children,
-			...restProps
-		},
-		ref,
-	) => {
+	(_props, ref) => {
+		const [
+			{
+				selectConfirmTrigger,
+				selectCancelTrigger,
+				selectDefaultValuePropName,
+				trigger,
+				disabled,
+				onClose,
+			},
+			{
+				visible: _visible,
+				value: _value,
+				defaultValue,
+				onChange: _onChange,
+				select,
+				position,
+				children,
+				...restProps
+			},
+		] = useProps(_props);
+
 		const { value: visible, onChangeRef: setVisibleRef } =
 			useControlledState({
 				value: _visible,

@@ -9,42 +9,41 @@ import React, {
 import { CSSTransition } from 'react-transition-group';
 import ConfigProvider from '../config-provider';
 import { DEFAULT_CONFIG_CONTEXT } from '../config-provider/context';
+import configComponentProps from '../hooks/config-component-props';
 import useDefaults from '../hooks/use-defaults';
 import { bindEvent, preventDefault } from '../utils/dom/event';
 import { classnames, createBEM } from '../utils/namespace';
-import { createDefaultsForwardRef } from '../utils/react';
+import { createForwardRef } from '../utils/react';
 import { OverlayProps } from './interface';
 
 const NS = 'fnx-overlay';
 const bem = createBEM(NS);
 
-const Overlay = createDefaultsForwardRef<
-	HTMLDivElement,
-	OverlayProps,
+const useProps = configComponentProps<
 	Required<Pick<OverlayProps, 'visible' | 'lockScroll'>>
->(
+>({
+	visible: false,
+	lockScroll: true,
+});
+
+const Overlay = createForwardRef<HTMLDivElement, OverlayProps>(
 	'Overlay',
-	{
-		visible: false,
-		lockScroll: true,
-	},
-	(
-		{
-			visible,
-			lockScroll,
-			// optionals
-			zIndex,
-			transitionDuration: _transitionDuration,
-			className,
-			style,
-			children,
-			...restProps
-		},
-		ref,
-	) => {
+	(_props, ref) => {
 		const overlayRef = useRef<HTMLDivElement | null>(null);
 
 		const configContext = useContext(ConfigProvider.Context);
+
+		const [
+			{ visible, lockScroll },
+			{
+				zIndex,
+				transitionDuration: _transitionDuration,
+				className,
+				style,
+				children,
+				...restProps
+			},
+		] = useProps(_props);
 
 		const transitionDuration = useDefaults<number>(
 			configContext.transitionDuration,

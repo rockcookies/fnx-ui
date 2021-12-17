@@ -4,14 +4,23 @@ import React, {
 	useCallback,
 	useMemo,
 } from 'react';
+import configComponentProps from '../hooks/config-component-props';
 import useControlledState from '../hooks/use-controlled-state';
 import { classnames, createBEM } from '../utils/namespace';
-import { createDefaultsForwardRef, toElementArray } from '../utils/react';
+import { createForwardRef, toElementArray } from '../utils/react';
 import CollapseContext from './context';
 import { CollapseProps } from './interface';
 
 const NS = 'fnx-collapse';
 const bem = createBEM(NS);
+
+const useProps = configComponentProps<
+	Required<Pick<CollapseProps, 'defaultActiveKey' | 'accordion' | 'ghost'>>
+>({
+	defaultActiveKey: [],
+	accordion: false,
+	ghost: false,
+});
 
 const parseKeys = (keys: string | string[]): string[] => {
 	const formatted: string[] = [];
@@ -23,31 +32,20 @@ const parseKeys = (keys: string | string[]): string[] => {
 	return formatted;
 };
 
-const Collapse = createDefaultsForwardRef<
-	HTMLDivElement,
-	CollapseProps,
-	Required<Pick<CollapseProps, 'defaultActiveKey' | 'accordion' | 'ghost'>>
->(
+const Collapse = createForwardRef<HTMLDivElement, CollapseProps>(
 	'Collapse',
-	{
-		defaultActiveKey: [],
-		accordion: false,
-		ghost: false,
-	},
-	(
-		{
-			defaultActiveKey: _defaultActiveKey,
-			accordion,
-			ghost,
-			// optionals
-			activeKey: __activeKey,
-			onChange: _onChange,
-			className,
-			children,
-			...restProps
-		},
-		ref,
-	) => {
+	(_props, ref) => {
+		const [
+			{ defaultActiveKey: _defaultActiveKey, accordion, ghost },
+			{
+				activeKey: __activeKey,
+				onChange: _onChange,
+				className,
+				children,
+				...restProps
+			},
+		] = useProps(_props);
+
 		const _activeKeys = useMemo<string[] | undefined>(
 			() => (__activeKey == null ? undefined : parseKeys(__activeKey)),
 			[__activeKey],

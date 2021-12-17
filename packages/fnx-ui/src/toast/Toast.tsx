@@ -1,21 +1,16 @@
 import React, { ReactNode, useEffect, useState } from 'react';
+import configComponentProps from '../hooks/config-component-props';
 import Popup from '../popup';
 import { canUseDom } from '../utils/detect';
 import { noop } from '../utils/misc';
 import { classnames, createBEM } from '../utils/namespace';
-import { createDefaultsForwardRef } from '../utils/react';
+import { createForwardRef } from '../utils/react';
 import { ToastProps } from './interface';
 
 const NS = 'fnx-toast';
 const bem = createBEM(NS);
 
-const BODY_LOCK_CLASS_NAME = `${NS}--unclickable`;
-
-let BODY_CLICK_LOCK_COUNT = 0;
-
-const Toast = createDefaultsForwardRef<
-	HTMLDivElement,
-	ToastProps,
+const useProps = configComponentProps<
 	Required<
 		Pick<
 			ToastProps,
@@ -27,36 +22,43 @@ const Toast = createDefaultsForwardRef<
 			| 'onClick'
 		>
 	>
->(
+>({
+	visible: false,
+	duration: 2000,
+	forbidClick: false,
+	overlay: false,
+	overlayCloseable: false,
+	onClick: noop,
+});
+
+const BODY_LOCK_CLASS_NAME = `${NS}--unclickable`;
+
+let BODY_CLICK_LOCK_COUNT = 0;
+
+const Toast = createForwardRef<HTMLDivElement, ToastProps>(
 	'Toast',
-	{
-		visible: false,
-		duration: 2000,
-		forbidClick: false,
-		overlay: false,
-		overlayCloseable: false,
-		onClick: noop,
-	},
-	(
-		{
-			visible,
-			duration,
-			forbidClick,
-			overlay,
-			overlayCloseable,
-			onClick,
-			// optionals
-			mountTo,
-			position,
-			message,
-			icon,
-			clickCloseable,
-			children,
-			className,
-			...restProps
-		},
-		ref,
-	) => {
+	(_props, ref) => {
+		const [
+			{
+				visible,
+				duration,
+				forbidClick,
+				overlay,
+				overlayCloseable,
+				onClick,
+			},
+			{
+				mountTo,
+				position,
+				message,
+				icon,
+				clickCloseable,
+				children,
+				className,
+				...restProps
+			},
+		] = useProps(_props);
+
 		const [showing, setShowing] = useState(false);
 
 		useEffect(() => {

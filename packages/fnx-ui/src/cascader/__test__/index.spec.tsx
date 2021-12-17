@@ -164,13 +164,17 @@ describe('<Cascader/>', () => {
 			<Cascader
 				data={areaData}
 				dataNames={{ value: 'label' }}
+				defaultValue={[areaData[0].label]}
 				activeColor="red"
 			></Cascader>,
 		);
 
-		const track = TestsDOM.mustQuerySelector(container, '.fnx-tabs__track');
+		const selected = TestsDOM.mustQuerySelector(
+			container,
+			'.fnx-cascader__option--selected',
+		);
 
-		expect(getComputedStyle(track).background).toEqual('red');
+		expect(getComputedStyle(selected).color).toEqual('red');
 	});
 
 	it('swipeable props', async () => {

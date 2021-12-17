@@ -1,4 +1,5 @@
 import React, { ReactElement, ReactNode, useState } from 'react';
+import configComponentProps from '../hooks/config-component-props';
 import useDefaultsRef from '../hooks/use-defaults-ref';
 import useUpdateEffect from '../hooks/use-update-effect';
 import Icon from '../icon';
@@ -9,7 +10,7 @@ import { clamp } from '../utils/format';
 import { ForwardRefProps } from '../utils/interface';
 import { noop } from '../utils/misc';
 import { classnames, createBEM } from '../utils/namespace';
-import { createDefaultsForwardRef } from '../utils/react';
+import { createForwardRef } from '../utils/react';
 import useCascaderDataNames, {
 	CascaderDataGetters,
 } from './hooks/use-cascader-data-names';
@@ -79,9 +80,7 @@ function getActiveOptions(tabs: Tab[]): CascaderOption[] {
 	return output;
 }
 
-const Cascader = createDefaultsForwardRef<
-	HTMLDivElement,
-	CascaderProps,
+const useProps = configComponentProps<
 	Required<
 		Pick<
 			CascaderProps,
@@ -95,39 +94,42 @@ const Cascader = createDefaultsForwardRef<
 			| 'slots'
 		>
 	>
->(
+>({
+	defaultValue: [],
+	dataNames: {},
+	onConfirm: noop,
+	onCancel: noop,
+	onChange: noop,
+	swipeable: false,
+	closeIcon: <Icon name="cross" />,
+	slots: {},
+});
+
+const Cascader = createForwardRef<HTMLDivElement, CascaderProps>(
 	'Cascader',
-	{
-		defaultValue: [],
-		dataNames: {},
-		onConfirm: noop,
-		onCancel: noop,
-		onChange: noop,
-		swipeable: false,
-		closeIcon: <Icon name="cross" />,
-		slots: {},
-	},
-	(
-		{
-			defaultValue,
-			dataNames: _dataNames,
-			onConfirm,
-			onCancel,
-			onChange,
-			swipeable,
-			closeIcon,
-			slots,
-			// optionals
-			data,
-			title,
-			placeholder,
-			onLoadData,
-			activeColor,
-			className,
-			...restProps
-		},
-		ref,
-	) => {
+	(_props, ref) => {
+		const [
+			{
+				defaultValue,
+				dataNames: _dataNames,
+				onConfirm,
+				onCancel,
+				onChange,
+				swipeable,
+				closeIcon,
+				slots,
+			},
+			{
+				data,
+				title,
+				placeholder,
+				onLoadData,
+				activeColor,
+				className,
+				...restProps
+			},
+		] = useProps(_props);
+
 		const i18n = useLocale('cascader');
 
 		const dataNames = useCascaderDataNames(_dataNames);

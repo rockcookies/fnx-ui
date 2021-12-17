@@ -7,52 +7,49 @@ import React, {
 import { CSSTransition } from 'react-transition-group';
 import ConfigProvider from '../config-provider';
 import { DEFAULT_CONFIG_CONTEXT } from '../config-provider/context';
+import configComponentProps from '../hooks/config-component-props';
 import useControlledState from '../hooks/use-controlled-state';
 import useDefaults from '../hooks/use-defaults';
 import Icon from '../icon';
 import { noop } from '../utils/misc';
 import { classnames, createBEM } from '../utils/namespace';
-import { createDefaultsForwardRef } from '../utils/react';
+import { createForwardRef } from '../utils/react';
 import { TagProps } from './interface';
 
 const NS = 'fnx-tag';
 const bem = createBEM(NS);
 
-const Tag = createDefaultsForwardRef<
-	HTMLSpanElement,
-	TagProps,
+const useProps = configComponentProps<
 	Required<Pick<TagProps, 'type' | 'size' | 'closeable' | 'onClose'>>
->(
+>({
+	type: 'default',
+	size: 'md',
+	closeable: false,
+	onClose: noop,
+});
+
+const Tag = createForwardRef<HTMLSpanElement, TagProps>(
 	'Tag',
-	{
-		type: 'default',
-		size: 'md',
-		closeable: false,
-		onClose: noop,
-	},
-	(
-		{
-			type,
-			size,
-			closeable,
-			onClose,
-			// optionals
-			color,
-			textColor,
-			visible: _visible,
-			theme,
-			closeIcon,
-			className,
-			style,
-			children,
-			transitionDuration: _transitionDuration,
-			...restProps
-		},
-		ref,
-	) => {
+	(_props, ref) => {
 		const configContext = useContext(ConfigProvider.Context);
 
 		const rootRef = useRef<HTMLSpanElement | null>(null);
+
+		const [
+			{ type, size, closeable, onClose },
+			{
+				color,
+				textColor,
+				visible: _visible,
+				theme,
+				closeIcon,
+				className,
+				style,
+				children,
+				transitionDuration: _transitionDuration,
+				...restProps
+			},
+		] = useProps(_props);
 
 		useImperativeHandle<HTMLSpanElement | null, HTMLSpanElement | null>(
 			ref,

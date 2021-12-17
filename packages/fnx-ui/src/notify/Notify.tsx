@@ -1,42 +1,39 @@
 import React, { useEffect, useState } from 'react';
+import configComponentProps from '../hooks/config-component-props';
 import Popup from '../popup';
 import { classnames, createBEM } from '../utils/namespace';
-import { createDefaultsForwardRef } from '../utils/react';
+import { createForwardRef } from '../utils/react';
 import { NotifyProps } from './interface';
 
 const NS = 'fnx-notify';
 const bem = createBEM(NS);
 
-const Notify = createDefaultsForwardRef<
-	HTMLDivElement,
-	NotifyProps,
+const useProps = configComponentProps<
 	Required<Pick<NotifyProps, 'type' | 'visible' | 'duration' | 'lockScroll'>>
->(
+>({
+	type: 'danger',
+	visible: false,
+	duration: 2000,
+	lockScroll: false,
+});
+
+const Notify = createForwardRef<HTMLDivElement, NotifyProps>(
 	'Notify',
-	{
-		type: 'danger',
-		visible: false,
-		duration: 2000,
-		lockScroll: false,
-	},
-	(
-		{
-			type,
-			visible,
-			duration,
-			lockScroll,
-			// optionals
-			mountTo,
-			message,
-			color,
-			background,
-			children,
-			className,
-			style,
-			...restProps
-		},
-		ref,
-	) => {
+	(_props, ref) => {
+		const [
+			{ type, visible, duration, lockScroll },
+			{
+				mountTo,
+				message,
+				color,
+				background,
+				children,
+				className,
+				style,
+				...restProps
+			},
+		] = useProps(_props);
+
 		const [showing, setShowing] = useState(false);
 
 		useEffect(() => {

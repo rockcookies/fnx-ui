@@ -8,6 +8,7 @@ import React, {
 	useState,
 } from 'react';
 import Button from '../button';
+import configComponentProps from '../hooks/config-component-props';
 import useCreation from '../hooks/use-creation';
 import useDefaultsRef from '../hooks/use-defaults-ref';
 import useGetState from '../hooks/use-get-state';
@@ -23,7 +24,7 @@ import { Dictionary } from '../utils/interface';
 import { isEqualArrays, noop } from '../utils/misc';
 import { classnames } from '../utils/namespace';
 import { doubleRaf } from '../utils/raf';
-import { createDefaultsForwardRef } from '../utils/react';
+import { createForwardRef } from '../utils/react';
 import CalendarMonth, { CalendarMonthRef } from './CalendarMonth';
 import useCalendarMonthTitle from './hooks/use-calendar-month-title';
 import useCalendarRangeDate from './hooks/use-calendar-range-date';
@@ -31,8 +32,8 @@ import {
 	CalendarBaseProps,
 	CalendarDayComponentProps,
 	CalendarElementProps,
-	CalendarValue,
 	CalendarRef,
+	CalendarValue,
 } from './interface';
 import {
 	calcDateNum,
@@ -124,9 +125,7 @@ const formatValue = (
 	return output;
 };
 
-const CalendarContainer = createDefaultsForwardRef<
-	CalendarRef,
-	CProps,
+const useProps = configComponentProps<
 	Required<
 		Pick<
 			CProps,
@@ -139,47 +138,50 @@ const CalendarContainer = createDefaultsForwardRef<
 			| 'onChange'
 		>
 	>
->(
+>({
+	readonly: false,
+	slots: {},
+	mode: 'single',
+	onClose: noop,
+	onConfirm: noop,
+	defaultValue: [],
+	onChange: noop,
+});
+
+const CalendarContainer = createForwardRef<CalendarRef, CProps>(
 	'CalendarContainer',
-	{
-		readonly: false,
-		slots: {},
-		mode: 'single',
-		onClose: noop,
-		onConfirm: noop,
-		defaultValue: [],
-		onChange: noop,
-	},
-	(
-		{
-			readonly,
-			slots,
-			onClose,
-			mode,
-			onConfirm,
-			defaultValue: _defaultValue,
-			onChange,
-			// optionals
-			title,
-			color,
-			minDate: _minDate,
-			maxDate: _maxDate,
-			dayHeight: _dayHeight,
-			firstDayOfWeek: _firstDayOfWeek,
-			closeIcon,
-			rangeAllowSameDay,
-			rangeMaxSize,
-			onRangeMaxSize,
-			multiMaxSize,
-			onMultiMaxSize,
-			confirmDisabledText,
-			confirmText,
-			className,
-			...restProps
-		},
-		ref,
-	) => {
+	(_props, ref) => {
 		const locale = useLocale('calendar');
+
+		const [
+			{
+				readonly,
+				slots,
+				onClose,
+				mode,
+				onConfirm,
+				defaultValue: _defaultValue,
+				onChange,
+			},
+			{
+				title,
+				color,
+				minDate: _minDate,
+				maxDate: _maxDate,
+				dayHeight: _dayHeight,
+				firstDayOfWeek: _firstDayOfWeek,
+				closeIcon,
+				rangeAllowSameDay,
+				rangeMaxSize,
+				onRangeMaxSize,
+				multiMaxSize,
+				onMultiMaxSize,
+				confirmDisabledText,
+				confirmText,
+				className,
+				...restProps
+			},
+		] = useProps(_props);
 
 		const firstDayOfWeek = useMemo<number>(
 			() => clamp(_firstDayOfWeek != null ? _firstDayOfWeek : 0, 0, 6),

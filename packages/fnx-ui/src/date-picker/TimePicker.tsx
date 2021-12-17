@@ -1,14 +1,13 @@
 import React, { useImperativeHandle, useMemo, useRef } from 'react';
+import configComponentProps from '../hooks/config-component-props';
 import useCreation from '../hooks/use-creation';
 import { isDate } from '../utils/detect';
 import { padZero } from '../utils/format';
-import { createDefaultsForwardRef } from '../utils/react';
+import { createForwardRef } from '../utils/react';
 import DatePicker from './DatePicker';
 import { DatePickerRef, TimePickerProps, TimePickerRef } from './interface';
 
-const TimePicker = createDefaultsForwardRef<
-	TimePickerRef,
-	TimePickerProps,
+const useProps = configComponentProps<
 	Required<
 		Pick<
 			TimePickerProps,
@@ -20,33 +19,29 @@ const TimePicker = createDefaultsForwardRef<
 			| 'formatter'
 		>
 	>
->(
+>({
+	minHour: 0,
+	maxHour: 23,
+	minMinute: 0,
+	maxMinute: 59,
+	filter: (_, v) => v,
+	formatter: (_, v) => v,
+});
+
+const TimePicker = createForwardRef<TimePickerRef, TimePickerProps>(
 	'TimePicker',
-	{
-		minHour: 0,
-		maxHour: 23,
-		minMinute: 0,
-		maxMinute: 59,
-		filter: (_, v) => v,
-		formatter: (_, v) => v,
-	},
-	(
-		{
-			minHour,
-			maxHour,
-			minMinute,
-			maxMinute,
-			formatter,
-			filter,
-			// optionals
-			defaultValue: _defaultValue,
-			onChange,
-			onConfirm,
-			onCancel,
-			...restProps
-		},
-		ref,
-	) => {
+	(_props, ref) => {
+		const [
+			{ minHour, maxHour, minMinute, maxMinute, formatter, filter },
+			{
+				defaultValue: _defaultValue,
+				onChange,
+				onConfirm,
+				onCancel,
+				...restProps
+			},
+		] = useProps(_props);
+
 		const pickerRef = useRef<DatePickerRef>(null);
 
 		const rootRef = useMemo<TimePickerRef>(

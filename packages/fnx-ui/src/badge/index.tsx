@@ -1,111 +1,108 @@
 import React, { CSSProperties } from 'react';
+import configComponentProps from '../hooks/config-component-props';
 import { classnames, createBEM } from '../utils/namespace';
-import { createDefaultsFC } from '../utils/react';
+import { createFC } from '../utils/react';
 import { BadgeProps } from './interface';
 
 const NS = 'fnx-badge';
 const bem = createBEM(NS);
 
-const Badge = createDefaultsFC<
-	BadgeProps,
+const useProps = configComponentProps<
 	Required<Pick<BadgeProps, 'showZero' | 'max' | 'count' | 'position'>>
->(
-	'Badge',
-	{
-		showZero: true,
-		max: 99,
-		count: 8,
-		position: 'top-right',
-	},
-	({
-		showZero,
-		max,
-		count,
-		position,
-		// optionals
-		color,
-		dot,
-		offset,
-		className,
-		children,
-		style,
-		...restProps
-	}) => {
-		const renderCount = () => {
-			if (!dot && count != null && (showZero || count !== 0)) {
-				if (max != null && typeof count === 'number' && count > max) {
-					return `${max}+`;
-				}
+>({
+	showZero: true,
+	max: 99,
+	count: 8,
+	position: 'top-right',
+});
 
-				return count;
+const Badge = createFC<BadgeProps>('Badge', (_props) => {
+	const [
+		{
+			showZero,
+			max,
+			count,
+			position,
+
+			...restProps
+		},
+		{ color, dot, offset, className, children, style },
+	] = useProps(_props);
+
+	const renderCount = () => {
+		if (!dot && count != null && (showZero || count !== 0)) {
+			if (max != null && typeof count === 'number' && count > max) {
+				return `${max}+`;
 			}
-		};
 
-		const renderBadge = () => {
-			const formatStyle = (): CSSProperties | undefined => {
-				const formattedStyle: CSSProperties = {
-					background: color,
-				};
+			return count;
+		}
+	};
 
-				if (offset) {
-					const [x, y] = offset;
-
-					if (children) {
-						formattedStyle.top = `${-y}px`;
-
-						if (typeof x === 'number') {
-							formattedStyle.right = `${-x}px`;
-						} else {
-							formattedStyle.right = x.startsWith('-')
-								? `${x.replace('-', '')}px`
-								: `-${x}px`;
-						}
-					} else {
-						formattedStyle.marginTop = `${y}px`;
-						formattedStyle.marginLeft = `${x}px`;
-					}
-				}
-
-				return { ...formattedStyle, ...style };
+	const renderBadge = () => {
+		const formatStyle = (): CSSProperties | undefined => {
+			const formattedStyle: CSSProperties = {
+				background: color,
 			};
 
-			return (
-				<span
-					className={classnames(
-						bem([
-							position,
-							{
-								dot,
-								fixed: children,
-							},
-						]),
-						className,
-					)}
-					style={formatStyle()}
-					{...restProps}
-				>
-					{renderCount()}
-				</span>
-			);
+			if (offset) {
+				const [x, y] = offset;
+
+				if (children) {
+					formattedStyle.top = `${-y}px`;
+
+					if (typeof x === 'number') {
+						formattedStyle.right = `${-x}px`;
+					} else {
+						formattedStyle.right = x.startsWith('-')
+							? `${x.replace('-', '')}px`
+							: `-${x}px`;
+					}
+				} else {
+					formattedStyle.marginTop = `${y}px`;
+					formattedStyle.marginLeft = `${x}px`;
+				}
+			}
+
+			return { ...formattedStyle, ...style };
 		};
 
-		if (children) {
-			return (
-				<div className={bem('wrapper')}>
-					{children}
-					{renderBadge()}
-				</div>
-			);
-		}
+		return (
+			<span
+				className={classnames(
+					bem([
+						position,
+						{
+							dot,
+							fixed: children,
+						},
+					]),
+					className,
+				)}
+				style={formatStyle()}
+				{...restProps}
+			>
+				{renderCount()}
+			</span>
+		);
+	};
 
-		return renderBadge();
-	},
-);
+	if (children) {
+		return (
+			<div className={bem('wrapper')}>
+				{children}
+				{renderBadge()}
+			</div>
+		);
+	}
+
+	return renderBadge();
+});
 
 export type {
 	BadgeComponentProps,
-	BadgeProps,
 	BadgePosition,
+	BadgeProps,
 } from './interface';
 
 export default Badge;

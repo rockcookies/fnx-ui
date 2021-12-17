@@ -5,6 +5,7 @@ import React, {
 	useRef,
 	useState,
 } from 'react';
+import configComponentProps from '../hooks/config-component-props';
 import useCreation from '../hooks/use-creation';
 import useDefaultsRef from '../hooks/use-defaults-ref';
 import useUpdateEffect from '../hooks/use-update-effect';
@@ -13,11 +14,25 @@ import { PickerMultiRef, PickerOption } from '../picker/interface';
 import { padZero } from '../utils/format';
 import { Dictionary } from '../utils/interface';
 import { isEqualArrays, noop } from '../utils/misc';
-import { createDefaultsForwardRef } from '../utils/react';
+import { createForwardRef } from '../utils/react';
 import useColumnLayout from './hooks/use-column-layout';
 import useDateTime from './hooks/use-datetime';
 import { DatePickerField, DatePickerProps, DatePickerRef } from './interface';
 import { DateTime, iterateNumber } from './utils';
+
+const useProps = configComponentProps<
+	Required<
+		Pick<
+			DatePickerProps,
+			'columnsLayout' | 'filter' | 'formatter' | 'onChange'
+		>
+	>
+>({
+	columnsLayout: 'year,month,day',
+	filter: (_, v) => v,
+	formatter: (_, v) => v,
+	onChange: noop,
+});
 
 const getMonthEndDay = (year: number, month: number): number => {
 	return 32 - new Date(year, month - 1, 32).getDate();
@@ -37,44 +52,24 @@ const range = (date: DateTime, min: DateTime, max: DateTime): DateTime => {
 	return date;
 };
 
-const DatePicker = createDefaultsForwardRef<
-	DatePickerRef,
-	DatePickerProps,
-	Required<
-		Pick<
-			DatePickerProps,
-			'columnsLayout' | 'filter' | 'formatter' | 'onChange'
-		>
-	>
->(
+const DatePicker = createForwardRef<DatePickerRef, DatePickerProps>(
 	'DatePicker',
-	{
-		columnsLayout: 'year,month,day',
-		filter: (_, v) => v,
-		formatter: (_, v) => v,
-		onChange: noop,
-	},
-	(
-		{
-			columnsLayout: _columnsLayout,
-			filter,
-			formatter,
-			onChange,
-			minDate: _minDate,
-			maxDate: _maxDate,
-			onConfirm,
-			onCancel,
-			defaultValue: _defaultValue,
-			...restProps
-		},
-		ref,
-	) => {
-		const propsRef = useDefaultsRef({
-			filter,
-			formatter,
-			onChange,
-		});
+	(_props, ref) => {
+		const [
+			props,
+			{
+				minDate: _minDate,
+				maxDate: _maxDate,
+				onConfirm,
+				onCancel,
+				defaultValue: _defaultValue,
+				...restProps
+			},
+		] = useProps(_props);
 
+		const { columnsLayout: _columnsLayout } = props;
+
+		const propsRef = useDefaultsRef(props);
 		const columnsLayout = useColumnLayout(_columnsLayout);
 
 		const [defaultMinDate, defaultMaxDate] = useMemo<

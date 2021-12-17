@@ -7,6 +7,7 @@ import React, {
 	useRef,
 	useState,
 } from 'react';
+import configComponentProps from '../hooks/config-component-props';
 import useDefaultsRef from '../hooks/use-defaults-ref';
 import { listenDocumentVisibilityChange } from '../utils/dom/event';
 import { getScrollParent, getScrollTop } from '../utils/dom/scroll';
@@ -15,15 +16,13 @@ import { unitToPx } from '../utils/format';
 import { ElementRect } from '../utils/interface';
 import { noop } from '../utils/misc';
 import { classnames, createBEM } from '../utils/namespace';
-import { createDefaultsForwardRef } from '../utils/react';
+import { createForwardRef } from '../utils/react';
 import { StickyProps, StickyRef } from './interface';
 
 const NS = 'fnx-sticky';
 const bem = createBEM(NS);
 
-const Sticky = createDefaultsForwardRef<
-	StickyRef,
-	StickyProps,
+const useProps = configComponentProps<
 	Required<
 		Pick<
 			StickyProps,
@@ -35,33 +34,30 @@ const Sticky = createDefaultsForwardRef<
 			| 'onScroll'
 		>
 	>
->(
+>({
+	zIndex: 99,
+	offsetTop: 0,
+	offsetBottom: 0,
+	position: 'top',
+	onChange: noop,
+	onScroll: noop,
+});
+
+const Sticky = createForwardRef<StickyRef, StickyProps>(
 	'Sticky',
-	{
-		zIndex: 99,
-		offsetTop: 0,
-		offsetBottom: 0,
-		position: 'top',
-		onChange: noop,
-		onScroll: noop,
-	},
-	(
-		{
-			zIndex,
-			offsetTop: __offsetTop,
-			offsetBottom: __offsetBottom,
-			position,
-			onChange,
-			onScroll: _onScroll,
-			// optionals
-			container,
-			children,
-			className,
-			style,
-			...restProps
-		},
-		ref,
-	) => {
+	(_props, ref) => {
+		const [
+			{
+				zIndex,
+				offsetTop: __offsetTop,
+				offsetBottom: __offsetBottom,
+				position,
+				onChange,
+				onScroll: _onScroll,
+			},
+			{ container, children, className, style, ...restProps },
+		] = useProps(_props);
+
 		const [fixed, setFixed] = useState<boolean>();
 		const [transform, setTransform] = useState<number>();
 		const [height, setHeight] = useState<number>();

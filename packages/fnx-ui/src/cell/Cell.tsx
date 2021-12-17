@@ -1,15 +1,14 @@
 import React, { createElement, ReactNode } from 'react';
+import configComponentProps from '../hooks/config-component-props';
 import { Dictionary } from '../utils/interface';
 import { classnames, createBEM } from '../utils/namespace';
-import { createDefaultsForwardRef } from '../utils/react';
+import { createForwardRef } from '../utils/react';
 import { CellProps } from './interface';
 
 const NS = 'fnx-cell';
 const bem = createBEM(NS);
 
-const Cell = createDefaultsForwardRef<
-	HTMLDivElement,
-	CellProps,
+const useProps = configComponentProps<
 	Required<
 		Pick<
 			CellProps,
@@ -23,40 +22,43 @@ const Cell = createDefaultsForwardRef<
 			| 'rightIconProps'
 		>
 	>
->(
+>({
+	border: true,
+	itemsAlign: 'top',
+	clickable: false,
+	titleProps: {},
+	descriptionProps: {},
+	contentProps: {},
+	leftIconProps: {},
+	rightIconProps: {},
+});
+
+const Cell = createForwardRef<HTMLDivElement, CellProps>(
 	'Cell',
-	{
-		border: true,
-		itemsAlign: 'top',
-		clickable: false,
-		titleProps: {},
-		descriptionProps: {},
-		contentProps: {},
-		leftIconProps: {},
-		rightIconProps: {},
-	},
-	(
-		{
-			border,
-			itemsAlign,
-			clickable,
-			titleProps,
-			descriptionProps,
-			contentProps,
-			leftIconProps,
-			rightIconProps,
-			// optionals
-			title,
-			description,
-			content,
-			leftIcon,
-			rightIcon,
-			className,
-			children,
-			...restProps
-		},
-		ref,
-	) => {
+	(_props, ref) => {
+		const [
+			{
+				border,
+				itemsAlign,
+				clickable,
+				titleProps,
+				descriptionProps,
+				contentProps,
+				leftIconProps,
+				rightIconProps,
+			},
+			{
+				title,
+				description,
+				content,
+				leftIcon,
+				rightIcon,
+				className,
+				children,
+				...restProps
+			},
+		] = useProps(_props);
+
 		const renderNode = (
 			tag: string,
 			className: string,

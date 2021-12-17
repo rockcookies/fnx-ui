@@ -6,6 +6,7 @@ import React, {
 	useMemo,
 	useRef,
 } from 'react';
+import configComponentProps from '../hooks/config-component-props';
 import useControlledState from '../hooks/use-controlled-state';
 import useDefaultsRef from '../hooks/use-defaults-ref';
 import Icon from '../icon/Icon';
@@ -15,64 +16,63 @@ import { addUnit } from '../utils/format';
 import { Dictionary } from '../utils/interface';
 import { noop } from '../utils/misc';
 import { classnames, createBEM } from '../utils/namespace';
-import { createDefaultsForwardRef } from '../utils/react';
+import { createForwardRef } from '../utils/react';
 import { RateProps } from './interface';
 
 const NS = 'fnx-rate';
 const bem = createBEM(NS);
 
-type RequiredRateProps = Required<
-	Pick<
-		RateProps,
-		| 'readonly'
-		| 'disabled'
-		| 'allowHalf'
-		| 'count'
-		| 'touchable'
-		| 'defaultValue'
-		| 'onChange'
+const useProps = configComponentProps<
+	Required<
+		Pick<
+			RateProps,
+			| 'readonly'
+			| 'disabled'
+			| 'allowHalf'
+			| 'count'
+			| 'touchable'
+			| 'defaultValue'
+			| 'onChange'
+		>
 	>
->;
+>({
+	readonly: false,
+	disabled: false,
+	allowHalf: false,
+	count: 5,
+	touchable: true,
+	defaultValue: 0,
+	onChange: noop,
+});
 
-const Rate = createDefaultsForwardRef<
-	HTMLUListElement,
-	RateProps,
-	RequiredRateProps
->(
+const Rate = createForwardRef<HTMLUListElement, RateProps>(
 	'Rate',
-	{
-		readonly: false,
-		disabled: false,
-		allowHalf: false,
-		count: 5,
-		touchable: true,
-		defaultValue: 0,
-		onChange: noop,
-	},
-	(
-		{
-			readonly,
-			disabled,
-			allowHalf,
-			count,
-			touchable,
-			defaultValue,
-			onChange: _onChange,
-			// optionals
-			size,
-			color,
-			voidColor,
-			disabledColor,
-			voidDisabledColor,
-			className,
-			character: _character,
-			voidCharacter: _voidCharacter,
-			gutter,
-			value: _value,
-			...restProps
-		},
-		ref,
-	) => {
+	(_props, ref) => {
+		const [
+			{
+				readonly,
+				disabled,
+				allowHalf,
+				count,
+				touchable,
+				defaultValue,
+				onChange: _onChange,
+			},
+			{
+				size,
+				color,
+				voidColor,
+				disabledColor,
+				voidDisabledColor,
+				className,
+				character: _character,
+				voidCharacter: _voidCharacter,
+				gutter,
+				value: _value,
+				...restProps
+			},
+		] = useProps(_props);
+
 		const character = _character || <Icon name="star"></Icon>;
 		const voidCharacter = _voidCharacter || character;
 

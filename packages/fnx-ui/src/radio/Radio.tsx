@@ -1,37 +1,36 @@
 import { useContext } from 'react';
 import useCheckboxRender from '../checkbox/hooks/use-checkbox-render';
+import configComponentProps from '../hooks/config-component-props';
 import useControlledState from '../hooks/use-controlled-state';
 import useDefaults from '../hooks/use-defaults';
 import { createBEM } from '../utils/namespace';
-import { createDefaultsForwardRef } from '../utils/react';
+import { createForwardRef } from '../utils/react';
 import { RadioGroupContext } from './context';
 import { RadioProps } from './interface';
 
 const NS = 'fnx-radio';
 const bem = createBEM(NS);
 
-const Radio = createDefaultsForwardRef<
-	HTMLDivElement,
-	RadioProps,
+const useProps = configComponentProps<
 	Required<Pick<RadioProps, 'defaultChecked' | 'skipGroup'>>
->(
+>({
+	defaultChecked: false,
+	skipGroup: false,
+});
+
+const Radio = createForwardRef<HTMLDivElement, RadioProps>(
 	'Radio',
-	{
-		defaultChecked: false,
-		skipGroup: false,
-	},
-	(
-		{
-			defaultChecked,
-			skipGroup,
-			// optionals
-			checked: _checked,
-			value: radioValue,
-			onChange: _onChange,
-			...resetProps
-		},
-		ref,
-	) => {
+	(_props, ref) => {
+		const [
+			{ defaultChecked, skipGroup },
+			{
+				checked: _checked,
+				value: radioValue,
+				onChange: _onChange,
+				...resetProps
+			},
+		] = useProps(_props);
+
 		const groupContext = useContext(RadioGroupContext);
 
 		const { value: checked, onChangeRef } = useControlledState<boolean>({

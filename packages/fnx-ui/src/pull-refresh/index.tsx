@@ -8,6 +8,7 @@ import React, {
 	useState,
 } from 'react';
 import ConfigProvider from '../config-provider';
+import configComponentProps from '../hooks/config-component-props';
 import useDefaults from '../hooks/use-defaults';
 import useDefaultsRef from '../hooks/use-defaults-ref';
 import Loading from '../loading';
@@ -17,7 +18,7 @@ import { getScrollParent, getScrollTop } from '../utils/dom/scroll';
 import TouchHelper from '../utils/dom/touch-helper';
 import { noop } from '../utils/misc';
 import { classnames, createBEM } from '../utils/namespace';
-import { createDefaultsForwardRef } from '../utils/react';
+import { createForwardRef } from '../utils/react';
 import { PullRefreshComponentProps, PullRefreshProps } from './interface';
 
 const NS = 'fnx-pull-refresh';
@@ -32,9 +33,7 @@ type PullRefreshStatus =
 	| 'pulling'
 	| 'success';
 
-const PullRefresh = createDefaultsForwardRef<
-	HTMLDivElement,
-	PullRefreshProps,
+const useProps = configComponentProps<
 	Required<
 		Pick<
 			PullRefreshComponentProps,
@@ -46,35 +45,38 @@ const PullRefresh = createDefaultsForwardRef<
 			| 'onRefresh'
 		>
 	>
->(
+>({
+	disabled: false,
+	successDuration: 500,
+	slots: {},
+	indicatorHeight: DEFAULT_INDICATOR_HEIGHT,
+	refreshing: false,
+	onRefresh: noop,
+});
+
+const PullRefresh = createForwardRef<HTMLDivElement, PullRefreshProps>(
 	'PullRefresh',
-	{
-		disabled: false,
-		successDuration: 500,
-		slots: {},
-		indicatorHeight: DEFAULT_INDICATOR_HEIGHT,
-		refreshing: false,
-		onRefresh: noop,
-	},
-	(
-		{
-			disabled,
-			successDuration,
-			slots,
-			indicatorHeight,
-			refreshing,
-			onRefresh,
-			// optional
-			transitionDuration: _transitionDuration,
-			className,
-			style,
-			children,
-			...restProps
-		},
-		ref,
-	) => {
+	(_props, ref) => {
 		const locale = useLocale('pull-refresh');
 		const configContext = useContext(ConfigProvider.Context);
+
+		const [
+			{
+				disabled,
+				successDuration,
+				slots,
+				indicatorHeight,
+				refreshing,
+				onRefresh,
+			},
+			{
+				transitionDuration: _transitionDuration,
+				className,
+				style,
+				children,
+				...restProps
+			},
+		] = useProps(_props);
 
 		const transitionDuration = useDefaults<number>(
 			configContext.transitionDuration,

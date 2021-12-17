@@ -12,19 +12,32 @@ import usePopupReopen from '../hooks/use-popup-reopen';
 import Icon from '../icon';
 import { getElementRect } from '../utils/dom/style';
 import { classnames, createBEM } from '../utils/namespace';
-import { createDefaultsForwardRef } from '../utils/react';
 import { NoticeBarProps, NoticeBarRef } from './interface';
 import { doubleRaf } from '../utils/raf';
+import { createForwardRef } from '../utils/react';
+import configComponentProps from '../hooks/config-component-props';
 
 const NS = 'fnx-notice-bar';
 const bem = createBEM(NS);
 
-type RequiredNoticeProps = Required<
-	Pick<
-		NoticeBarProps,
-		'marquee' | 'marqueeDelay' | 'marqueeSpeed' | 'ellipsis' | 'closeable'
+const useProps = configComponentProps<
+	Required<
+		Pick<
+			NoticeBarProps,
+			| 'marquee'
+			| 'marqueeDelay'
+			| 'marqueeSpeed'
+			| 'ellipsis'
+			| 'closeable'
+		>
 	>
->;
+>({
+	marquee: false,
+	marqueeDelay: 1000,
+	marqueeSpeed: 0.06,
+	ellipsis: false,
+	closeable: false,
+});
 
 type NoticeBarPlayType =
 	| 'first-reset'
@@ -42,52 +55,31 @@ const forceRepaint = (nodeRef: MutableRefObject<HTMLDivElement | null>) => {
 	}
 };
 
-const NoticeBar = createDefaultsForwardRef<
-	NoticeBarRef,
-	NoticeBarProps,
-	RequiredNoticeProps
->(
+const NoticeBar = createForwardRef<NoticeBarRef, NoticeBarProps>(
 	'NoticeBar',
-	{
-		marquee: false,
-		marqueeDelay: 1000,
-		marqueeSpeed: 0.06,
-		ellipsis: false,
-		closeable: false,
-	},
-	(
-		{
-			marquee,
-			marqueeDelay,
-			marqueeSpeed,
-			ellipsis,
-			closeable,
-			// optionals
-			leftIcon,
-			rightIcon,
-			closeIcon,
-			color,
-			background,
-			className,
-			style,
-			children,
-			...restProps
-		},
-		ref,
-	) => {
+	(_props, ref) => {
 		const wrapperRef = useRef<HTMLDivElement | null>(null);
 		const contentRef = useRef<HTMLDivElement | null>(null);
 		const noticeBarRef = useRef<HTMLDivElement | null>(null);
 
 		const delayRef = useRef<NodeJS.Timeout>();
 
-		const propsRef = useDefaultsRef<RequiredNoticeProps>({
-			marquee,
-			marqueeDelay,
-			marqueeSpeed,
-			ellipsis,
-			closeable,
-		});
+		const [
+			props,
+			{
+				leftIcon,
+				rightIcon,
+				closeIcon,
+				color,
+				background,
+				className,
+				style,
+				children,
+				...restProps
+			},
+		] = useProps(_props);
+		const { marquee, ellipsis, closeable } = props;
+		const propsRef = useDefaultsRef(props);
 
 		const [offset, setOffset] = useState<number>();
 		const [transitionDuration, setTransitionDuration] = useState<number>();

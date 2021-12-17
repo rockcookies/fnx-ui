@@ -10,13 +10,14 @@ import React, {
 import { CSSTransition } from 'react-transition-group';
 import ConfigProvider from '../config-provider';
 import { DEFAULT_CONFIG_CONTEXT } from '../config-provider/context';
+import configComponentProps from '../hooks/config-component-props';
 import useDefaults from '../hooks/use-defaults';
 import { PopupVisibleContext } from '../hooks/use-popup-reopen';
 import useScrollLock from '../hooks/use-scroll-lock';
 import Overlay from '../overlay';
 import { noop } from '../utils/misc';
 import { classnames, createBEM } from '../utils/namespace';
-import { createDefaultsForwardRef } from '../utils/react';
+import { createForwardRef } from '../utils/react';
 import { PopupProps } from './interface';
 import Portal from './Portal';
 
@@ -25,9 +26,7 @@ const bem = createBEM(NS);
 
 let globalZIndex = 2000;
 
-const Popup = createDefaultsForwardRef<
-	HTMLDivElement,
-	PopupProps,
+const useProps = configComponentProps<
 	Required<
 		Pick<
 			PopupProps,
@@ -48,60 +47,63 @@ const Popup = createDefaultsForwardRef<
 			| 'onAfterShow'
 		>
 	>
->(
+>({
+	visible: false,
+	renderOnShow: true,
+	destroyOnHide: false,
+	lockScroll: true,
+	position: 'center',
+	overlay: true,
+	overlayCloseable: true,
+	onOverlayClick: noop,
+	onClose: noop,
+	onBeforeHide: noop,
+	onHide: noop,
+	onAfterHide: noop,
+	onBeforeShow: noop,
+	onShow: noop,
+	onAfterShow: noop,
+});
+
+const Popup = createForwardRef<HTMLDivElement, PopupProps>(
 	'Popup',
-	{
-		visible: false,
-		renderOnShow: true,
-		destroyOnHide: false,
-		lockScroll: true,
-		position: 'center',
-		overlay: true,
-		overlayCloseable: true,
-		onOverlayClick: noop,
-		onClose: noop,
-		onBeforeHide: noop,
-		onHide: noop,
-		onAfterHide: noop,
-		onBeforeShow: noop,
-		onShow: noop,
-		onAfterShow: noop,
-	},
-	(
-		{
-			visible,
-			renderOnShow,
-			destroyOnHide,
-			lockScroll,
-			position,
-			overlay,
-			overlayCloseable,
-			onOverlayClick,
-			onClose,
-			onBeforeHide,
-			onHide,
-			onAfterHide,
-			onBeforeShow,
-			onShow,
-			onAfterShow,
-			// optionals
-			mountTo,
-			transitionDuration: _transitionDuration,
-			transitionName,
-			round,
-			safeAreaInsetBottom: _safeAreaInsetBottom,
-			overlayClassName,
-			overlayStyle,
-			children,
-			className,
-			style,
-			...restProps
-		},
-		ref,
-	) => {
+	(_props, ref) => {
 		const popupRef = useRef<HTMLDivElement | null>(null);
 
 		const configContext = useContext(ConfigProvider.Context);
+
+		const [
+			{
+				visible,
+				renderOnShow,
+				destroyOnHide,
+				lockScroll,
+				position,
+				overlay,
+				overlayCloseable,
+				onOverlayClick,
+				onClose,
+				onBeforeHide,
+				onHide,
+				onAfterHide,
+				onBeforeShow,
+				onShow,
+				onAfterShow,
+			},
+			{
+				mountTo,
+				transitionDuration: _transitionDuration,
+				transitionName,
+				round,
+				safeAreaInsetBottom: _safeAreaInsetBottom,
+				overlayClassName,
+				overlayStyle,
+				children,
+				className,
+				style,
+				...restProps
+			},
+		] = useProps(_props);
 
 		useImperativeHandle<HTMLDivElement | null, HTMLDivElement | null>(
 			ref,

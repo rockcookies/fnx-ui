@@ -1,13 +1,35 @@
 import React, { useEffect, useMemo, useRef } from 'react';
+import configComponentProps from '../hooks/config-component-props';
 import { getSizeStyle } from '../utils/format';
 import { classnames, createBEM } from '../utils/namespace';
-import { createDefaultsForwardRef } from '../utils/react';
+import { createForwardRef } from '../utils/react';
 import { CircleGapPosition, CircleProps } from './interface';
 
 const NS = 'fnx-circle';
 const bem = createBEM(NS);
 
 let uid = 0;
+
+const useProps = configComponentProps<
+	Required<
+		Pick<
+			CircleProps,
+			| 'progress'
+			| 'speed'
+			| 'strokeWidth'
+			| 'strokeLinecap'
+			| 'gapDegree'
+			| 'clockwise'
+		>
+	>
+>({
+	strokeWidth: 5,
+	progress: 100,
+	speed: 1,
+	strokeLinecap: 'round',
+	gapDegree: 0,
+	clockwise: true,
+});
 
 function stripPercentToNumber(progress: string) {
 	return +progress.replace('%', '');
@@ -108,50 +130,30 @@ const useTransitionDuration = (progressList: number[], speed: number) => {
 	return [paths];
 };
 
-const Circle = createDefaultsForwardRef<
-	HTMLDivElement,
-	CircleProps,
-	Required<
-		Pick<
-			CircleProps,
-			| 'progress'
-			| 'speed'
-			| 'strokeWidth'
-			| 'strokeLinecap'
-			| 'gapDegree'
-			| 'clockwise'
-		>
-	>
->(
+const Circle = createForwardRef<HTMLDivElement, CircleProps>(
 	'Circle',
-	{
-		strokeWidth: 5,
-		progress: 100,
-		speed: 1,
-		strokeLinecap: 'round',
-		gapDegree: 0,
-		clockwise: true,
-	},
-	(
-		{
-			strokeWidth,
-			progress,
-			speed,
-			strokeLinecap,
-			gapDegree,
-			clockwise,
-			// optionals
-			size,
-			gapPosition,
-			strokeColor,
-			trailColor,
-			className,
-			style,
-			children,
-			...restProps
-		},
-		ref,
-	) => {
+	(_props, ref) => {
+		const [
+			{
+				strokeWidth,
+				progress,
+				speed,
+				strokeLinecap,
+				gapDegree,
+				clockwise,
+			},
+			{
+				size,
+				gapPosition,
+				strokeColor,
+				trailColor,
+				className,
+				style,
+				children,
+				...restProps
+			},
+		] = useProps(_props);
+
 		const progressList = toArray(progress);
 		const [paths] = useTransitionDuration(progressList, speed);
 		const strokeColorList = toArray(strokeColor);

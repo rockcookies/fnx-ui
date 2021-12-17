@@ -6,6 +6,7 @@ import React, {
 	useMemo,
 	useRef,
 } from 'react';
+import configComponentProps from '../hooks/config-component-props';
 import useControlledState from '../hooks/use-controlled-state';
 import Icon from '../icon';
 import { useLocale } from '../locale';
@@ -13,7 +14,7 @@ import { isPromise } from '../utils/detect';
 import { ForwardRefProps } from '../utils/interface';
 import { noop } from '../utils/misc';
 import { classnames } from '../utils/namespace';
-import { createDefaultsForwardRef } from '../utils/react';
+import { createForwardRef } from '../utils/react';
 import {
 	UploaderFile,
 	UploaderFileItem,
@@ -24,17 +25,7 @@ import {
 import UploaderPreviewItem from './UploaderPreviewItem';
 import { fileAccept, getFileUid, readFileContent, _bem as bem } from './utils';
 
-const parseUploaderFile = (file: UploaderFile): UploaderMarkedFile => {
-	if (file.uid != null) {
-		return file as UploaderMarkedFile;
-	}
-
-	return { ...file, uid: getFileUid() };
-};
-
-const Uploader = createDefaultsForwardRef<
-	UploaderRef,
-	UploaderProps,
+const useProps = configComponentProps<
 	Required<
 		Pick<
 			UploaderProps,
@@ -50,47 +41,58 @@ const Uploader = createDefaultsForwardRef<
 			| 'slots'
 		>
 	>
->(
+>({
+	multiple: false,
+	disabled: false,
+	showFileList: true,
+	maxCount: Number.MAX_VALUE,
+	defaultValue: [],
+	onRead: (prev) => prev,
+	onUpload: noop,
+	onPreview: noop,
+	onRemove: () => true,
+	slots: {},
+});
+
+const parseUploaderFile = (file: UploaderFile): UploaderMarkedFile => {
+	if (file.uid != null) {
+		return file as UploaderMarkedFile;
+	}
+
+	return { ...file, uid: getFileUid() };
+};
+
+const Uploader = createForwardRef<UploaderRef, UploaderProps>(
 	'Uploader',
-	{
-		multiple: false,
-		disabled: false,
-		showFileList: true,
-		maxCount: Number.MAX_VALUE,
-		defaultValue: [],
-		onRead: (prev) => prev,
-		onUpload: noop,
-		onPreview: noop,
-		onRemove: () => true,
-		slots: {},
-	},
-	(
-		{
-			multiple,
-			disabled,
-			showFileList,
-			maxCount,
-			defaultValue: _defaultFileList,
-			onRead,
-			onUpload,
-			onPreview,
-			onRemove,
-			slots,
-			// optionals
-			onChange: _onChange,
-			capture,
-			accept,
-			value: _fileList,
-			className,
-			children,
-			...restProps
-		},
-		ref,
-	) => {
+	(_props, ref) => {
 		const locale = useLocale('uploader');
 
 		const rootRef = useRef<HTMLDivElement>(null);
 		const inputRef = useRef<HTMLInputElement>(null);
+
+		const [
+			{
+				multiple,
+				disabled,
+				showFileList,
+				maxCount,
+				defaultValue: _defaultFileList,
+				onRead,
+				onUpload,
+				onPreview,
+				onRemove,
+				slots,
+			},
+			{
+				onChange: _onChange,
+				capture,
+				accept,
+				value: _fileList,
+				className,
+				children,
+				...restProps
+			},
+		] = useProps(_props);
 
 		useImperativeHandle<UploaderRef, UploaderRef>(ref, () => ({
 			root: rootRef.current,

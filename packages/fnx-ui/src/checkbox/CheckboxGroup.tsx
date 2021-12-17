@@ -5,10 +5,11 @@ import React, {
 	useMemo,
 	useRef,
 } from 'react';
+import configComponentProps from '../hooks/config-component-props';
 import useControlledState from '../hooks/use-controlled-state';
 import { ForwardRefProps } from '../utils/interface';
 import { classnames, createBEM } from '../utils/namespace';
-import { createDefaultsForwardRef } from '../utils/react';
+import { createForwardRef } from '../utils/react';
 import { CheckGroupContext } from './context';
 import {
 	CheckboxGroupProps,
@@ -19,37 +20,36 @@ import {
 const NS = 'fnx-checkbox-group';
 const bem = createBEM(NS);
 
-const CheckboxGroup = createDefaultsForwardRef<
-	CheckboxGroupRef,
-	CheckboxGroupProps,
+const useProps = configComponentProps<
 	Required<Pick<CheckboxGroupProps, 'defaultValue'>>
->(
+>({
+	defaultValue: [],
+});
+
+const CheckboxGroup = createForwardRef<CheckboxGroupRef, CheckboxGroupProps>(
 	'CheckboxGroup',
-	{
-		defaultValue: [],
-	},
-	(
-		{
-			defaultValue,
-			// optionals
-			value: _value,
-			onChange: _onChange,
-			disabled,
-			direction,
-			iconSize,
-			iconPosition,
-			iconShape,
-			iconCheckedColor,
-			labelDisabled,
-			icon,
-			checkedIcon,
-			maxCheckedCount,
-			className,
-			children,
-			...resetProps
-		},
-		ref,
-	) => {
+	(_props, ref) => {
+		const [
+			{ defaultValue },
+			{
+				value: _value,
+				onChange: _onChange,
+				disabled,
+				direction,
+				iconSize,
+				iconPosition,
+				iconShape,
+				iconCheckedColor,
+				labelDisabled,
+				icon,
+				checkedIcon,
+				maxCheckedCount,
+				className,
+				children,
+				...resetProps
+			},
+		] = useProps(_props);
+
 		const { value, onChangeRef } = useControlledState<CheckboxValue[]>({
 			value: _value,
 			defaultValue,

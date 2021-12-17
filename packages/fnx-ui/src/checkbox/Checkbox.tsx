@@ -6,12 +6,13 @@ import {
 	useMemo,
 	useRef,
 } from 'react';
+import configComponentProps from '../hooks/config-component-props';
 import useControlledState from '../hooks/use-controlled-state';
 import useDefaults from '../hooks/use-defaults';
 import useDefaultsRef from '../hooks/use-defaults-ref';
 import { noop } from '../utils/misc';
 import { createBEM } from '../utils/namespace';
-import { createDefaultsForwardRef } from '../utils/react';
+import { createForwardRef } from '../utils/react';
 import { CheckGroupContext } from './context';
 import useCheckboxRender from './hooks/use-checkbox-render';
 import { CheckboxProps, CheckboxRef, CheckboxValue } from './interface';
@@ -19,30 +20,27 @@ import { CheckboxProps, CheckboxRef, CheckboxValue } from './interface';
 const NS = 'fnx-checkbox';
 const bem = createBEM(NS);
 
-const Checkbox = createDefaultsForwardRef<
-	CheckboxRef,
-	CheckboxProps,
+const useProps = configComponentProps<
 	Required<Pick<CheckboxProps, 'defaultChecked' | 'skipGroup' | 'iconShape'>>
->(
+>({
+	defaultChecked: false,
+	skipGroup: false,
+	iconShape: 'square',
+});
+
+const Checkbox = createForwardRef<CheckboxRef, CheckboxProps>(
 	'Checkbox',
-	{
-		defaultChecked: false,
-		skipGroup: false,
-		iconShape: 'square',
-	},
-	(
-		{
-			defaultChecked,
-			skipGroup: _skipGroup,
-			iconShape: _iconShape,
-			// optionals
-			checked: _checked,
-			value: checkValue,
-			onChange: _onChange,
-			...resetProps
-		},
-		ref,
-	) => {
+	(_props, ref) => {
+		const [
+			{ defaultChecked, skipGroup: _skipGroup, iconShape: _iconShape },
+			{
+				checked: _checked,
+				value: checkValue,
+				onChange: _onChange,
+				...resetProps
+			},
+		] = useProps(_props);
+
 		const groupContext = useContext(CheckGroupContext);
 		const groupContextRef = useDefaultsRef(groupContext);
 

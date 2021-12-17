@@ -1,20 +1,19 @@
 import React, { useImperativeHandle, useMemo, useRef } from 'react';
+import configComponentProps from '../hooks/config-component-props';
 import useCompositionChange from '../hooks/use-composition-change';
 import useControlledState from '../hooks/use-controlled-state';
 import useFocus from '../hooks/use-focus';
 import Icon from '../icon';
 import { formatNumber } from '../utils/format';
 import { classnames, createBEM } from '../utils/namespace';
-import { createDefaultsForwardRef } from '../utils/react';
+import { createForwardRef } from '../utils/react';
 import { FieldInputProps, FieldInputRef } from './interface';
 import { limitValueLength, mapInputType } from './utils';
 
 const NS = 'fnx-field-input';
 const bem = createBEM(NS);
 
-const FieldInput = createDefaultsForwardRef<
-	FieldInputRef,
-	FieldInputProps,
+const useProps = configComponentProps<
 	Required<
 		Pick<
 			FieldInputProps,
@@ -28,42 +27,45 @@ const FieldInput = createDefaultsForwardRef<
 			| 'disabled'
 		>
 	>
->(
+>({
+	defaultValue: '',
+	type: 'text',
+	inputAlign: 'left',
+	clearable: false,
+	clearIcon: <Icon name="close" />,
+	clearTrigger: 'focus',
+	readOnly: false,
+	disabled: false,
+});
+
+const FieldInput = createForwardRef<FieldInputRef, FieldInputProps>(
 	'FieldInput',
-	{
-		defaultValue: '',
-		type: 'text',
-		inputAlign: 'left',
-		clearable: false,
-		clearIcon: <Icon name="close" />,
-		clearTrigger: 'focus',
-		readOnly: false,
-		disabled: false,
-	},
-	(
-		{
-			defaultValue,
-			type: inputType,
-			inputAlign,
-			clearable,
-			clearIcon,
-			clearTrigger,
-			readOnly,
-			disabled,
-			// optionals
-			value: _value,
-			onChange: _onChange,
-			onFocus: _onFocus,
-			onBlur: _onBlur,
-			maxLength,
-			className,
-			style,
-			...restProps
-		},
-		ref,
-	) => {
+	(_props, ref) => {
 		const rootRef = useRef<HTMLSpanElement>(null);
 		const inputRef = useRef<HTMLInputElement>(null);
+
+		const [
+			{
+				defaultValue,
+				type: inputType,
+				inputAlign,
+				clearable,
+				clearIcon,
+				clearTrigger,
+				readOnly,
+				disabled,
+			},
+			{
+				value: _value,
+				onChange: _onChange,
+				onFocus: _onFocus,
+				onBlur: _onBlur,
+				maxLength,
+				className,
+				style,
+				...restProps
+			},
+		] = useProps(_props);
 
 		useImperativeHandle<FieldInputRef, FieldInputRef>(ref, () => {
 			return {

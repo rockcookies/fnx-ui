@@ -1,9 +1,10 @@
 import React, { CSSProperties, useEffect, useMemo, useState } from 'react';
+import configComponentProps from '../hooks/config-component-props';
 import Icon from '../icon';
 import { addUnit } from '../utils/format';
 import { noop } from '../utils/misc';
 import { classnames, createBEM } from '../utils/namespace';
-import { createDefaultsForwardRef } from '../utils/react';
+import { createForwardRef } from '../utils/react';
 import { ImageProps } from './interface';
 
 type ImageStatus = 'none' | 'normal' | 'loading' | 'error';
@@ -11,45 +12,40 @@ type ImageStatus = 'none' | 'normal' | 'loading' | 'error';
 const NS = 'fnx-image';
 const bem = createBEM(NS);
 
+const useProps = configComponentProps<
+	Required<
+		Pick<ImageProps, 'fit' | 'radius' | 'slots' | 'onLoad' | 'onError'>
+	>
+>({
+	fit: 'fill',
+	radius: 0,
+	slots: {},
+	onLoad: noop,
+	onError: noop,
+});
+
 const LOADING = <Icon name="photo" />;
 
 const ERROR = <Icon name="photo-fail" />;
 
-const Image = createDefaultsForwardRef<
-	HTMLSpanElement,
-	ImageProps,
-	Required<
-		Pick<ImageProps, 'fit' | 'radius' | 'slots' | 'onLoad' | 'onError'>
-	>
->(
+const Image = createForwardRef<HTMLSpanElement, ImageProps>(
 	'Image',
-	{
-		fit: 'fill',
-		radius: 0,
-		slots: {},
-		onLoad: noop,
-		onError: noop,
-	},
-	(
-		{
-			fit,
-			radius,
-			slots,
-			onLoad,
-			onError,
-			// optionals
-			src,
-			width,
-			height,
-			alt,
-			round,
-			className,
-			style,
-			children,
-			...restProps
-		},
-		ref,
-	) => {
+	(_props, ref) => {
+		const [
+			{ fit, radius, slots, onLoad, onError },
+			{
+				src,
+				width,
+				height,
+				alt,
+				round,
+				className,
+				style,
+				children,
+				...restProps
+			},
+		] = useProps(_props);
+
 		const [status, setStatus] = useState<ImageStatus>(() =>
 			src ? 'loading' : 'none',
 		);

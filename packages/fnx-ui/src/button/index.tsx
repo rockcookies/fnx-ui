@@ -1,18 +1,17 @@
 import React, { CSSProperties, ReactNode } from 'react';
+import configComponentProps from '../hooks/config-component-props';
 import Icon from '../icon';
 import { BORDER_SURROUND } from '../utils/constants';
 import { preventDefault } from '../utils/dom/event';
 import { noop } from '../utils/misc';
 import { classnames, createBEM } from '../utils/namespace';
-import { createDefaultsForwardRef } from '../utils/react';
+import { createForwardRef } from '../utils/react';
 import { ButtonProps } from './interface';
 
 const NS = 'fnx-button';
 const bem = createBEM(NS);
 
-const Button = createDefaultsForwardRef<
-	HTMLButtonElement,
-	ButtonProps,
+const useProps = configComponentProps<
 	Required<
 		Pick<
 			ButtonProps,
@@ -28,45 +27,48 @@ const Button = createDefaultsForwardRef<
 			| 'onClick'
 		>
 	>
->(
+>({
+	type: 'default',
+	size: 'md',
+	iconPosition: 'left',
+	loading: false,
+	disabled: false,
+	hairline: false,
+	plain: false,
+	shape: 'radius',
+	block: false,
+	onClick: noop,
+});
+
+const Button = createForwardRef<HTMLButtonElement, ButtonProps>(
 	'Button',
-	{
-		type: 'default',
-		size: 'md',
-		iconPosition: 'left',
-		loading: false,
-		disabled: false,
-		hairline: false,
-		plain: false,
-		shape: 'radius',
-		block: false,
-		onClick: noop,
-	},
-	(
-		{
-			type,
-			size,
-			iconPosition,
-			loading,
-			disabled,
-			hairline,
-			plain,
-			shape,
-			block,
-			onClick,
-			// optionals
-			icon,
-			loadingIcon,
-			loadingChildren,
-			color,
-			htmlType,
-			className,
-			style,
-			children,
-			...restProps
-		},
-		ref,
-	) => {
+	(_props, ref) => {
+		const [
+			{
+				type,
+				size,
+				iconPosition,
+				loading,
+				disabled,
+				hairline,
+				plain,
+				shape,
+				block,
+				onClick,
+			},
+			{
+				icon,
+				loadingIcon,
+				loadingChildren,
+				color,
+				htmlType,
+				className,
+				style,
+				children,
+				...restProps
+			},
+		] = useProps(_props);
+
 		const formatStyle = (): CSSProperties | undefined => {
 			if (!color) {
 				return style;

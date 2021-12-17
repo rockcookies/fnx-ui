@@ -1,33 +1,25 @@
 import React, { useContext, useEffect, useState } from 'react';
+import configComponentProps from '../hooks/config-component-props';
 import Swipe from '../swipe';
-import { createDefaultsForwardRef } from '../utils/react';
+import { createForwardRef } from '../utils/react';
 import { TabsContext, TabsPanelContext } from './context';
 import { TabsPanelProps } from './interface';
 import { _bem as bem } from './utils';
 
-const TabsPanel = createDefaultsForwardRef<
-	HTMLDivElement,
-	TabsPanelProps,
-	Required<Pick<TabsPanelProps, 'forceRender'>>
->(
+const useProps = configComponentProps<
+	Required<Pick<TabsPanelProps, 'title' | 'disabled' | 'forceRender'>>
+>({
+	title: null,
+	disabled: false,
+	forceRender: false,
+});
+
+const TabsPanel = createForwardRef<HTMLDivElement, TabsPanelProps>(
 	'TabsPanel',
-	{
-		forceRender: false,
-	},
-	(
-		{
-			// eslint-disable-next-line @typescript-eslint/no-unused-vars
-			title: _title,
-			// eslint-disable-next-line @typescript-eslint/no-unused-vars
-			disabled: _disabled,
-			forceRender,
-			// optionals
-			className,
-			children,
-			...restProps
-		},
-		ref,
-	) => {
+	(_props, ref) => {
+		const [{ forceRender }, { className, children, ...restProps }] =
+			useProps(_props);
+
 		const key = (restProps as any)['data-fnx-tab-panel-key'];
 		const { activeKey, animated, swipeable } = useContext(TabsContext);
 		const isActive = key === activeKey;
