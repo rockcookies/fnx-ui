@@ -58,7 +58,7 @@
     "clean": "fnx-ui-cli clean && rimraf ./dist-site ./converge",
     "dev": "umi dev",
     "build": "fnx-ui-cli build",
-    "build:site": "umi build",
+    "build:site": "umi build && gh-pages -d dist-site",
     "test": "umi-test",
     "test:cov": "umi-test --coverage",
     "test:update": "umi-test --updateSnapshot",
