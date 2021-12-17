@@ -11,7 +11,7 @@ import useTheme from '../../hooks/use-theme';
 import { parseSearchParams } from '../../utils/history-utils';
 import DemoContext from './context';
 import './index.less';
-import './touch';
+import '@vant/touch-emulator';
 
 const bem = createBEM('demo');
 
