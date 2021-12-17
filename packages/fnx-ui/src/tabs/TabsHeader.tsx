@@ -4,9 +4,9 @@ import React, {
 	useImperativeHandle,
 	useMemo,
 	useRef,
-	useState,
 } from 'react';
 import useDefaultsRef from '../hooks/use-defaults-ref';
+import useGetState from '../hooks/use-get-state';
 import useUpdateEffect from '../hooks/use-update-effect';
 import useWindowSize from '../hooks/use-window-size';
 import { BORDER_TOP_BOTTOM } from '../utils/constants';
@@ -64,9 +64,6 @@ const TabsHeader = createForwardRef<
 
 		const scrollTimerRef = useRef<() => void>();
 
-		const [initialized, setInitialized] = useState(false);
-		const initializedRef = useDefaultsRef(initialized);
-
 		const windowSize = useWindowSize();
 
 		const trackWidth = useMemo(
@@ -78,10 +75,11 @@ const TabsHeader = createForwardRef<
 			[props.trackHeight],
 		);
 
-		const [trackLeft, setTrackLeft] = useState(0);
+		const [trackLeft, setTrackLeft, getTrackLeft] =
+			useGetState<number>(undefined);
 
 		const scrollTo = useCallback(
-			(index: number, options?: { immediate?: boolean }) => {
+			(index: number) => {
 				doubleRaf(() => {
 					const tab = tabRefs.current[index];
 					const tabList = tabListRef.current;
@@ -90,8 +88,10 @@ const TabsHeader = createForwardRef<
 						return;
 					}
 
-					const immediate = options && options.immediate;
-
+					const duration =
+						getTrackLeft() == null
+							? 0
+							: transitionDurationRef.current;
 					setTrackLeft(tab.offsetLeft + tab.offsetWidth / 2);
 
 					// cancel scroll animate
@@ -107,11 +107,11 @@ const TabsHeader = createForwardRef<
 					scrollTimerRef.current = scrollLeftTo(
 						tabList,
 						to,
-						immediate ? 0 : transitionDurationRef.current,
+						duration,
 					);
 				});
 			},
-			[transitionDurationRef],
+			[getTrackLeft, setTrackLeft, transitionDurationRef],
 		);
 
 		useImperativeHandle<TabsHeaderRef, TabsHeaderRef>(
@@ -125,10 +125,8 @@ const TabsHeader = createForwardRef<
 		);
 
 		useEffect(() => {
-			// 初始化时取消动画
-			setInitialized(true);
-			scrollTo(activeIndex, { immediate: !initializedRef.current });
-		}, [activeIndex, initializedRef, scrollTo]);
+			scrollTo(activeIndex);
+		}, [activeIndex, scrollTo]);
 
 		useUpdateEffect(() => {
 			scrollTo(activeIndexRef.current);
@@ -192,7 +190,7 @@ const TabsHeader = createForwardRef<
 								</div>
 							);
 						})}
-						{initialized && (
+						{trackLeft != null && (
 							<div
 								className={bem('track')}
 								style={{

@@ -19,6 +19,7 @@ import {
 import TouchHelper from '../utils/dom/touch-helper';
 import { noop } from '../utils/misc';
 import { classnames, createBEM } from '../utils/namespace';
+import { doubleRaf } from '../utils/raf';
 import { createDefaultsForwardRef, toElementArray } from '../utils/react';
 import useSwipe from './hooks/use-swipe';
 import { SwipeComponentProps, SwipeProps, SwipeRef } from './interface';
@@ -227,7 +228,7 @@ const Swipe = createDefaultsForwardRef<
 			reset,
 		]);
 
-		usePopupReopen(() => reset(reload));
+		usePopupReopen(() => doubleRaf(() => reset(reload)));
 
 		useEffect(() => {
 			const node = wrapperRef.current;

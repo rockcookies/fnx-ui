@@ -14,6 +14,7 @@ import { getElementRect } from '../utils/dom/style';
 import { classnames, createBEM } from '../utils/namespace';
 import { createDefaultsForwardRef } from '../utils/react';
 import { NoticeBarProps, NoticeBarRef } from './interface';
+import { doubleRaf } from '../utils/raf';
 
 const NS = 'fnx-notice-bar';
 const bem = createBEM(NS);
@@ -118,7 +119,9 @@ const NoticeBar = createDefaultsForwardRef<
 			}, Math.max(propsRef.current.marqueeDelay, 0));
 		}, [marquee, visible, propsRef, unmountedRef]);
 
-		usePopupReopen(reset);
+		usePopupReopen(() => {
+			doubleRaf(reset);
+		});
 
 		useEffect(() => {
 			reset();
