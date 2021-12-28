@@ -2,8 +2,7 @@ import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
 import Image from '../index';
 
-const EXP_IMG =
-	'https://img17.fn-mart.com/pic/2a021346939822ebb66f/B26n221z_2fdhMZdKz/7imyeafa3yKGj9/CsmRtmA3RAuAVmgsAAKtgt1PF3s715.jpg';
+const EXP_IMG = 'https://dummyimage.com/200x200/000/fff.jpg';
 
 describe('<Image/>', () => {
 	it('should show correctly when set width,height,src', () => {
@@ -113,6 +112,12 @@ describe('<Image/>', () => {
 		//触发error
 		fireEvent(getByTestId('image').children[0], new ErrorEvent('error'));
 		expect(onError).toHaveBeenCalled();
+		expect(container).toMatchSnapshot();
+	});
+
+	it('should render loading placeholder when using lazy prop', () => {
+		const { container } = render(<Image src={EXP_IMG} lazy />);
+
 		expect(container).toMatchSnapshot();
 	});
 });

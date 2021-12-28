@@ -83,6 +83,28 @@ ReactDOM.render(
 );
 ```
 
+## LazyLoad
+
+Use `lazy` prop to enable lazy load.
+
+```tsx
+import { Image } from 'fnx-ui';
+
+ReactDOM.render(
+  <>
+    <Image
+      radius="10"
+      width="10rem"
+      height="10rem"
+      fit="contain"
+      src="https://dummyimage.com/100x100/000/fff.jpg"
+      lazy
+    />
+  </>,
+  mountNode,
+);
+```
+
 ## Loading
 
 Image provides the default loading prompt, and supports customizing the loading content through `indicator.loading`.
@@ -142,6 +164,7 @@ ReactDOM.render(
 | height | Height, default unit `px`         | `number` \| `string`                                               | -        |         |
 | radius | Fillet size, default unit is `px` | `number` \| `string`                                               | `0`      |         |
 | round  | Whether to be round               | `boolean`                                                          | `false`  |         |
+| lazy   | Whether to enable lazy load       | `boolean`                                                          | `false`  | 0.0.10  |
 | slots  | Image slots                       | `ImageSlots`                                                       | -        |         |
 
 ### ImageSlots

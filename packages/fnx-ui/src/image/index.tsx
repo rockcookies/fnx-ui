@@ -1,20 +1,29 @@
-import React, { CSSProperties, useEffect, useMemo, useState } from 'react';
+import React, {
+	CSSProperties,
+	useImperativeHandle,
+	useMemo,
+	useRef,
+	useState,
+} from 'react';
 import configComponentProps from '../hooks/config-component-props';
+import useUpdateEffect from '../hooks/use-update-effect';
 import Icon from '../icon';
 import { addUnit } from '../utils/format';
 import { noop } from '../utils/misc';
 import { classnames, createBEM } from '../utils/namespace';
 import { createForwardRef } from '../utils/react';
 import { ImageProps } from './interface';
-
-type ImageStatus = 'none' | 'normal' | 'loading' | 'error';
+import LazyDetector from './LazyDetector';
 
 const NS = 'fnx-image';
 const bem = createBEM(NS);
 
 const useProps = configComponentProps<
 	Required<
-		Pick<ImageProps, 'fit' | 'radius' | 'slots' | 'onLoad' | 'onError'>
+		Pick<
+			ImageProps,
+			'fit' | 'radius' | 'slots' | 'onLoad' | 'onError' | 'lazy'
+		>
 	>
 >({
 	fit: 'fill',
@@ -22,6 +31,7 @@ const useProps = configComponentProps<
 	slots: {},
 	onLoad: noop,
 	onError: noop,
+	lazy: false,
 });
 
 const LOADING = <Icon name="photo" />;
@@ -32,9 +42,9 @@ const Image = createForwardRef<HTMLSpanElement, ImageProps>(
 	'Image',
 	(_props, ref) => {
 		const [
-			{ fit, radius, slots, onLoad, onError },
+			{ fit, radius, slots, onLoad, onError, lazy },
 			{
-				src,
+				src: _src,
 				width,
 				height,
 				alt,
@@ -46,15 +56,22 @@ const Image = createForwardRef<HTMLSpanElement, ImageProps>(
 			},
 		] = useProps(_props);
 
-		const [status, setStatus] = useState<ImageStatus>(() =>
-			src ? 'loading' : 'none',
+		const rootRef = useRef<HTMLSpanElement | null>(null);
+
+		const [loaded, setLoaded] = useState(false);
+		const [failed, setFailed] = useState(false);
+		const [initialized, setInitialized] = useState(!lazy);
+
+		const src = initialized ? _src : undefined;
+
+		useImperativeHandle<HTMLSpanElement | null, HTMLSpanElement | null>(
+			ref,
+			() => rootRef.current,
 		);
 
-		const [imageSrc, setImageSrc] = useState<string | undefined>();
-
-		useEffect(() => {
-			setImageSrc(src);
-			setStatus(src ? 'loading' : 'none');
+		useUpdateEffect(() => {
+			setLoaded(false);
+			setFailed(false);
 		}, [src]);
 
 		const containerStyle = useMemo(() => {
@@ -77,10 +94,7 @@ const Image = createForwardRef<HTMLSpanElement, ImageProps>(
 		}, [width, height, radius]);
 
 		const renderSlots = () => {
-			if (
-				(status === 'loading' || status === 'none') &&
-				slots.loading !== false
-			) {
+			if (!failed && !loaded && slots.loading !== false) {
 				return (
 					<span className={bem('loading')}>
 						{slots.loading || LOADING}
@@ -88,7 +102,7 @@ const Image = createForwardRef<HTMLSpanElement, ImageProps>(
 				);
 			}
 
-			if (status === 'error' && slots.error !== false) {
+			if (failed && slots.error !== false) {
 				return (
 					<span className={bem('error')}>{slots.error || ERROR}</span>
 				);
@@ -100,22 +114,29 @@ const Image = createForwardRef<HTMLSpanElement, ImageProps>(
 				className={classnames([bem({ round })], className)}
 				style={{ ...containerStyle, ...style }}
 				{...restProps}
-				ref={ref}
+				ref={rootRef}
 			>
-				{(status === 'loading' || status === 'normal') && (
+				{lazy && !initialized && (
+					<LazyDetector
+						nodeRef={rootRef}
+						onActive={() => setInitialized(true)}
+					/>
+				)}
+
+				{!failed && src && (
 					<img
 						className={bem('img')}
-						src={imageSrc}
+						src={src}
 						alt={alt}
 						style={{
 							objectFit: fit,
 						}}
 						onLoad={(e) => {
-							setStatus('normal');
+							setLoaded(true);
 							onLoad(e);
 						}}
 						onError={(e) => {
-							setStatus('error');
+							setFailed(true);
 							onError(e);
 						}}
 					/>

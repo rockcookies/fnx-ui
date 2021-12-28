@@ -83,6 +83,28 @@ ReactDOM.render(
 );
 ```
 
+## 图片懒加载
+
+通过 `lazy` 属性来开启图片懒加载。
+
+```tsx
+import { Image } from 'fnx-ui';
+
+ReactDOM.render(
+  <>
+    <Image
+      radius="10"
+      width="10rem"
+      height="10rem"
+      fit="contain"
+      src="https://dummyimage.com/100x100/000/fff.jpg"
+      lazy
+    />
+  </>,
+  mountNode,
+);
+```
+
 ## 加载中提示
 
 Image 提供了默认的加载中提示，支持通过 `indicator.loading` 自定义加载中内容。
@@ -133,16 +155,17 @@ ReactDOM.render(
 
 ### Image Props
 
-| 名称   | 说明                     | 类型                                                               | 默认值   | 版本 |
-| ------ | ------------------------ | ------------------------------------------------------------------ | -------- | ---- |
-| src    | 图片链接                 | `string`                                                           | -        |      |
-| fit    | 图片填充模式             | `'contain'` \| `'cover'` \| `'fill'` \| `'none'` \| `'scale-down'` | `'fill'` |      |
-| alt    | 替代文本                 | `string`                                                           | -        |      |
-| width  | 宽度，默认单位为`px`     | `number` \| `string`                                               | -        |      |
-| height | 高度，默认单位为`px`     | `number` \| `string`                                               | -        |      |
-| radius | 圆角大小，默认单位为`px` | `number` \| `string`                                               | `0`      |      |
-| round  | 是否显示为圆形           | `boolean`                                                          | `false`  |      |
-| slots  | 图片插槽                 | `ImageSlots`                                                       | -        |      |
+| 名称   | 说明                     | 类型                                                               | 默认值   | 版本   |
+| ------ | ------------------------ | ------------------------------------------------------------------ | -------- | ------ |
+| src    | 图片链接                 | `string`                                                           | -        |        |
+| fit    | 图片填充模式             | `'contain'` \| `'cover'` \| `'fill'` \| `'none'` \| `'scale-down'` | `'fill'` |        |
+| alt    | 替代文本                 | `string`                                                           | -        |        |
+| width  | 宽度，默认单位为`px`     | `number` \| `string`                                               | -        |        |
+| height | 高度，默认单位为`px`     | `number` \| `string`                                               | -        |        |
+| radius | 圆角大小，默认单位为`px` | `number` \| `string`                                               | `0`      |        |
+| round  | 是否显示为圆形           | `boolean`                                                          | `false`  |        |
+| lazy   | 是否开启图片懒加载       | `boolean`                                                          | `false`  | 0.0.10 |
+| slots  | 图片插槽                 | `ImageSlots`                                                       | -        |        |
 
 ### ImageSlots
 

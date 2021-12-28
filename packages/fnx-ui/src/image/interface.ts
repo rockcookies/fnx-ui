@@ -15,6 +15,7 @@ export interface ImageComponentProps {
 	height?: number | string;
 	radius?: number | string;
 	round?: boolean;
+	lazy?: boolean;
 	slots?: ImageSlots;
 }
 
