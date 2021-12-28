@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import configComponentProps from '../hooks/config-component-props';
 import Swipe from '../swipe';
+import { classnames } from '../utils/namespace';
 import { createForwardRef } from '../utils/react';
 import { TabsContext, TabsPanelContext } from './context';
 import { TabsPanelProps } from './interface';
@@ -46,7 +47,10 @@ const TabsPanel = createForwardRef<HTMLDivElement, TabsPanelProps>(
 			return (
 				<Swipe.Item
 					role="tabpanel"
-					className={bem('swipe-item', { inactive: !isActive })}
+					className={classnames(
+						bem('swipe-item', { inactive: !isActive }),
+						className,
+					)}
 					aria-hidden={!isActive}
 					{...restProps}
 				>
@@ -60,7 +64,7 @@ const TabsPanel = createForwardRef<HTMLDivElement, TabsPanelProps>(
 		return (
 			<div
 				role="tabpanel"
-				className={bem('panel', className)}
+				className={classnames(bem('panel'), className)}
 				{...restProps}
 				ref={ref}
 				style={{
