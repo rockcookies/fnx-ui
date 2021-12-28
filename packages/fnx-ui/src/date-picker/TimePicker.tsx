@@ -28,6 +28,9 @@ const useProps = configComponentProps<
 	formatter: (_, v) => v,
 });
 
+const formatValue = (date: Date) =>
+	`${padZero(date.getHours())}:${padZero(date.getMinutes())}`;
+
 const TimePicker = createForwardRef<TimePickerRef, TimePickerProps>(
 	'TimePicker',
 	(_props, ref) => {
@@ -46,16 +49,10 @@ const TimePicker = createForwardRef<TimePickerRef, TimePickerProps>(
 
 		const rootRef = useMemo<TimePickerRef>(
 			() => ({
-				root: (pickerRef.current && pickerRef.current.root) || null,
+				root: pickerRef.current?.root || null,
 				getValue: () => {
-					const dateValue =
-						pickerRef.current && pickerRef.current.getValue();
-
-					if (isDate(dateValue)) {
-						return `${padZero(dateValue.getHours())}:${padZero(
-							dateValue.getMinutes(),
-						)}`;
-					}
+					const dateValue = pickerRef.current?.getValue();
+					return isDate(dateValue) ? formatValue(dateValue) : '';
 				},
 			}),
 			[],
@@ -92,9 +89,8 @@ const TimePicker = createForwardRef<TimePickerRef, TimePickerProps>(
 			[maxHour, maxMinute],
 		);
 
-		const emit = (listener?: (v?: string) => void) => {
-			const value = rootRef.getValue();
-			listener && listener(value);
+		const emit = (date: Date, listener?: (v: string) => void) => {
+			listener && listener(formatValue(date));
 		};
 
 		return (
@@ -104,9 +100,9 @@ const TimePicker = createForwardRef<TimePickerRef, TimePickerProps>(
 				defaultValue={defaultValue}
 				minDate={minDate}
 				maxDate={maxDate}
-				onChange={() => emit(onChange)}
-				onCancel={() => emit(onCancel)}
-				onConfirm={() => emit(onConfirm)}
+				onChange={(value) => emit(value, onChange)}
+				onConfirm={(value) => emit(value, onConfirm)}
+				onCancel={onCancel}
 				formatter={formatter}
 				filter={filter}
 				{...restProps}

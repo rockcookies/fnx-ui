@@ -94,7 +94,7 @@ describe('<DatePicker/>', () => {
 		});
 
 		expect(onChange).toHaveBeenCalledWith(new Date(2025, 10, 1, 0, 0));
-		expect(onCancel).toHaveBeenCalledWith(new Date(2025, 10, 1, 0, 0));
+		expect(onCancel).toHaveBeenCalled();
 	});
 
 	it('month-day type and set maxDate', () => {

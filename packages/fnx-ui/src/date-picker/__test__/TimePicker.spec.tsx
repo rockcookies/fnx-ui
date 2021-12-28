@@ -72,7 +72,7 @@ describe('<TimePicker/>', () => {
 		});
 
 		expect(onConfirm).toHaveBeenCalledWith('14:00');
-		expect(onCancel).toHaveBeenCalledWith('14:00');
+		expect(onCancel).toHaveBeenCalled();
 	});
 
 	it('filter and formatter prop', () => {

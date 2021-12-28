@@ -1,10 +1,10 @@
 # DatePicker
 
-Time selector, support date, month, time division, etc., usually used in conjunction with the pop-up assembly.
+Used to select time, support date and time dimensions, usually used with the [Popup](#/en-US/components/popup) component.
 
 ## Choose Date
 
-`Datepicker` Attribute to define the time type that needs to be selected, `columnsLayout` is the day and month of the day, the `color, month, day`. The optional time range can be determined by `maxdate` and `minDate` properties.
+Use `columnsLayout` prop to set select-type, Set `columnsLayout` to `year,month,day` to select date.
 
 ```tsx
 import { DatePicker } from 'fnx-ui';
@@ -12,7 +12,7 @@ import { DatePicker } from 'fnx-ui';
 ReactDOM.render(
   <>
     <DatePicker
-      title="Select Time"
+      title="Select Date"
       columnsLayout="year,month,day"
       maxDate={new Date(2050, 0, 1)}
       minDate={new Date(2010, 0, 1)}
@@ -24,32 +24,32 @@ ReactDOM.render(
 
 ## Choose Year-Month
 
-Set the `columnslayout` set to `Year, Month` to choose the year and month. By incurring the `formatter` function, you can format the option text.
+Set `columnsLayout` prop to `year,month` to select Year-Month. Use `formatter` prop to format options.
 
 ```tsx
 import { DatePicker } from 'fnx-ui';
 
-const formatter = (type, value) => {
+const formatter = (type: string, value: string) => {
   if (type === 'year') {
     return value + 'year';
   }
+
   if (type === 'month') {
     return value + 'month';
   }
+
   if (type === 'day') {
     return value + 'day';
   }
-  if (type === 'hour') {
-    return value + 'hour';
-  }
+
   return value;
 };
 
 ReactDOM.render(
   <>
     <DatePicker
-      title="Select Time"
-      columnsLayout="year,month"
+      title="Select Date"
+      columnsLayout="year,month,day"
       formatter={formatter}
     />
   </>,
@@ -57,24 +57,24 @@ ReactDOM.render(
 );
 ```
 
-## Choose Hour-Minute
+## Choose Time
 
-Set the `columnslayout` Set to` Hour, Minute` to select time (hours and minutes).
+Use TimePicker to select time.
 
 ```tsx
 import { DatePicker } from 'fnx-ui';
 
 ReactDOM.render(
   <>
-    <DatePicker title="Select Time" columnsLayout="hour,minute" />
+    <DatePicker.TimePicker title="Select Time" />
   </>,
   mountNode,
 );
 ```
 
-## Choose Time
+## Choose DateTime
 
-Set the `columnslayout` , `Year, Month, Day, Hour, Minute` to choose the full time, including year, month, day and hours, minutes.
+Set `columnsLayout` to `year,month,day,hour,minute` to choose DateTime.
 
 ```tsx
 import { DatePicker } from 'fnx-ui';
@@ -82,7 +82,7 @@ import { DatePicker } from 'fnx-ui';
 ReactDOM.render(
   <>
     <DatePicker
-      title="Select Time"
+      title="Select Date"
       columnsLayout="year,month,day,hour,minute"
     />
   </>,
@@ -91,16 +91,16 @@ ReactDOM.render(
 );
 ```
 
-## Filter
+## Option Filter
 
-By incurring the `Filter` function, you can filter the option array and achieve custom interval.
+Use `filter` prop to filter options.
 
 ```tsx
 import { DatePicker } from 'fnx-ui';
 
-const filter = (type, values) => {
+const filter = (type: string, values: number[]) => {
   if (type === 'minute') {
-    return values.filter((value) => Number(value) % 5 === 0);
+    return values.filter((value) => value % 5 === 0);
   }
   return values;
 };
@@ -114,31 +114,31 @@ ReactDOM.render(
 );
 ```
 
-## Custom Sort
+## Custom columns layout
 
 ```tsx
 import { DatePicker } from 'fnx-ui';
 
-const formatter = (type, value) => {
+const formatter = (type: string, value: string) => {
     if (type === 'year') {
         return value + 'year';
     }
+
     if (type === 'month') {
         return value + 'month';
     }
+
     if (type === 'day') {
         return value + 'day';
     }
-    if (type === 'hour') {
-        return value + 'hour';
-    }
+
     return value;
 };
 
 ReactDOM.render(
    <>
     <DatePicker.TimePicker
-        title="Select Time"
+        title="Select Date"
         columnsLayout="minute,hour,day,month,year"
         formatter={formatter}
     />
@@ -149,66 +149,57 @@ ReactDOM.render(
 
 ## API
 
-| Parameter           | Description                                | Type                       | Default value      |
-| ------------------- | ------------------------------------------ | -------------------------- | ------------------ |
-| defaultValue        | Initialization time                        | `string \| number \| Date` | -                  |
-| maxDate             | Optional maximum time, accurate to minutes | `Date \| number \| string` | `Ten years later`  |
-| minDate             | Optional minimum time, accurate to minute  | `Date \| number \| string` | `Ten years ago`    |
-| columnsLayout       | Customize time type                        | `string`                   | `'year,month,day'` |
-| title               | Top column title                           | `ReactNode`                | -                  |
-| loading             | Whether to display the loading status      | `boolean`                  | `false`            |
-| toolbar             | Custom toolbar                             | `ReactNode`                | -                  |
-| toolbarPosition     | Custom toolbar position                    | `top bottom`               | `top`              |
-| optionHeight        | Option height, unit default `px`           | `number \| string`         | `44`               |
-| visibleOptionsCount | Visible options                            | `number`                   | -                  |
-| transitionDuration  | Switching options animation time           | `number`                   | `0`                |
-| confirmButton       | Confirm button                             | `ReactNode`                | `COnfirm`          |
-| cancelButton        | Cancel button                              | `ReactNode`                | `Cancel`           |
-| dataNames           | 自定义 `data` 结构中的字段                 | `PickerDataNames`          | -                  |
+### DatePicker Props
 
-## TimePicker API
+DatePicker extends [`PickerBaseProps`](#/en-US/components/popup), and add the following props:
 
-| Parameter           | Description                           | Type                      | Default value |
-| ------------------- | ------------------------------------- | ------------------------- | ------------- |
-| maxHour             | Optional maximum hour                 | `number`                  | `23`          |
-| minHour             | Optional minimum hour                 | `number`                  | `0`           |
-| minMinute           | Optional minimum minute               | `number`                  | `0`           |
-| maxMinute           | Optional maximum minute               | `number`                  | `59`          |
-| title               | Top column title                      | `ReactNode`               | -             |
-| loading             | Whether to display the loading status | `boolean`                 | `false`       |
-| toolbar             | Custom toolbar                        | `ReactNode`               | -             |
-| toolbarPosition     | Custom toolbar position               | `top bottom`              | `top`         |
-| optionHeight        | Option height, default` PX`           | `number`                  | `44`          |
-| visibleOptionsCount | Visible options                       | `number`                  | -             |
-| transitionDuration  | Switching options animation time      | `number`                  | `0`           |
-| confirmButton       | Confirm button                        | `ReactNode`               | -             |
-| cancelButton        | Cancel button                         | `ReactNode`               | -             |
-| defaultValue        | Initialization time                   | `string \|number \| Date` | -             |
+| Name          | Description           | Type                                                   | Default                        | Version |
+| ------------- | --------------------- | ------------------------------------------------------ | ------------------------------ | ------- |
+| columnsLayout | Columns layout        | `string`                                               | `'year,month,day'`             |         |
+| defaultValue  | Default value         | `Date` \| `number` \| `string`                         | -                              |         |
+| minDate       | Min date              | `Date` \| `number` \| `string`                         | Ten years ago on January 1     |         |
+| maxDate       | Max date              | `Date` \| `number` \| `string`                         | Ten years later on December 31 |         |
+| filter        | Option filter         | `(type: DatePickerField, value: number[]) => number[]` | -                              |
+| formatter     | Option text formatter | `(type: DatePickerField, value: string) => string`     | -                              |
 
 ## DatePicker Events
 
-Type` DatePickerfield` You can be `'Year' | 'MONTH' | 'Day' | 'Hour' | 'Minute'`;
+| Event name | Description                                | Type                    | Version |
+| ---------- | ------------------------------------------ | ----------------------- | ------- |
+| onChange   | Emitted when value changed                 | `(value: Date) => void` |         |
+| onConfirm  | Emitted when the confirm button is clicked | `(value: Date) => void` |         |
+| onCancel   | Emitted when the cancel button is clicked  | `() => void`            |         |
 
-| Event Name | Description                                                 | Callback Arguments                         |
-| ---------- | ----------------------------------------------------------- | ------------------------------------------ |
-| filter     | Option Filter Function                                      | `(type: DatePickerField, value: number[])` |
-| formatter  | Option format function                                      | `(type: DatePickerField, value: string)`   |
-| onChange   | Events triggered when the value change                      | Panel current `Date`                       |
-| onConfirm  | Click the event that triggered when the button is completed | Panel current `Date`                       |
-| onCancel   | Click the event that triggers when the button is canceled   | -                                          |
+### DatePicker Instance
+
+| Name     | Description       | Type         | Version |
+| -------- | ----------------- | ------------ | ------- |
+| getValue | Get current value | `() => Date` |         |
+
+## TimePicker Props
+
+TimePicker extends [`PickerBaseProps`](#/en-US/components/popup), and add the following props:
+
+| Name         | Description           | Type                                                      | Default | Version |
+| ------------ | --------------------- | --------------------------------------------------------- | ------- | ------- |
+| defaultValue | Default value         | `Date` \| `number` \| `string`                            | -       |         |
+| minHour      | Min hour              | `number`                                                  | `0`     |         |
+| maxHour      | Max hour              | `number`                                                  | `23`    |         |
+| minMinute    | Min minute            | `number`                                                  | `0`     |         |
+| maxMinute    | Max minute            | `number`                                                  | `59`    |         |
+| filter       | Option filter         | `(type: 'hour' \| 'minute', value: number[]) => number[]` | -       |
+| formatter    | Option text formatter | `(type: 'hour' \| 'minute', value: string) => string`     | -       |
 
 ## TimePicker Events
 
-| Event Name | Description                                                 | Callback Arguments                                     |
-| ---------- | ----------------------------------------------------------- | ------------------------------------------------------ |
-| filter     | Option Filter Function                                      | `(type: DatePickerField, value: number[]) => number[]` |
-| formatter  | Option format function                                      | `(type: DatePickerField, value: string) => string;`    |
-| onChange   | Events triggered when the value change                      | Panel current `Date`                                   |
-| onConfirm  | Click the event that triggered when the button is completed | Panel current `Date`                                   |
-| onCancel   | Click the event that triggers when the button is canceled   | -                                                      |
+| Event name | Description                                | Type                      | Version |
+| ---------- | ------------------------------------------ | ------------------------- | ------- |
+| onChange   | Emitted when value changed                 | `(value: string) => void` |         |
+| onConfirm  | Emitted when the confirm button is clicked | `(value: string) => void` |         |
+| onCancel   | Emitted when the cancel button is clicked  | `() => void`              |         |
 
-### DatePickerRef Instance Method
+### TimePicker Instance
 
-| Name       | Description                         | Arguments |
-| ---------- | ----------------------------------- | --------- |
-| getValue() | Get the value of the current option | -         |
+| Name     | Description       | Type           | Version |
+| -------- | ----------------- | -------------- | ------- |
+| getValue | Get current value | `() => string` |         |

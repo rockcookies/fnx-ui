@@ -12,16 +12,16 @@ export interface TimePickerComponentProps extends PickerBaseProps {
 	maxMinute?: number;
 	filter?: (type: DatePickerField, value: number[]) => number[];
 	formatter?: (type: DatePickerField, value: string) => string;
-	onChange?: (value?: string) => void;
-	onConfirm?: (value?: string) => void;
-	onCancel?: (value?: string) => void;
+	onChange?: (value: string) => void;
+	onConfirm?: (value: string) => void;
+	onCancel?: () => void;
 }
 
 export type TimePickerProps = TimePickerComponentProps & PickerElementProps;
 
 export interface TimePickerRef {
 	root: HTMLDivElement | null;
-	getValue: () => string | undefined;
+	getValue: () => string;
 }
 
 /**DateTimePicker */
@@ -32,16 +32,16 @@ export interface DatePickerComponentProps extends PickerBaseProps {
 	maxDate?: Date | string | number;
 	filter?: (type: DatePickerField, value: number[]) => number[];
 	formatter?: (type: DatePickerField, value: string) => string;
-	onChange?: (value?: Date) => void;
-	onConfirm?: (value?: Date) => void;
-	onCancel?: (value?: Date) => void;
+	onChange?: (value: Date) => void;
+	onConfirm?: (value: Date) => void;
+	onCancel?: () => void;
 }
 
 export type DatePickerProps = DatePickerComponentProps & PickerElementProps;
 
 export interface DatePickerRef {
 	root: HTMLDivElement | null;
-	getValue: () => Date | undefined;
+	getValue: () => Date;
 }
 
 export interface DatePickerExportExtra {

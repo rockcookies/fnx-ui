@@ -117,7 +117,7 @@ const DatePicker = createForwardRef<DatePickerRef, DatePickerProps>(
 		const pickerRef = useRef<PickerMultiRef>(null);
 		const rootRef = useMemo<DatePickerRef>(
 			() => ({
-				root: (pickerRef.current && pickerRef.current.root) || null,
+				root: pickerRef.current?.root || null,
 				getValue: () => valueRef.current,
 			}),
 			[valueRef],
@@ -250,10 +250,6 @@ const DatePicker = createForwardRef<DatePickerRef, DatePickerProps>(
 			setColumns((prev) => getColumns(columnsLayout, value, prev));
 		}, [columnsLayout, getColumns, value]);
 
-		const emit = (listener?: (v: Date) => void) => {
-			listener && listener(value);
-		};
-
 		const handleChange = () => {
 			const getValue = (type: DatePickerField, def: number): number => {
 				const value = pickerRef.current && pickerRef.current.getValue();
@@ -299,8 +295,10 @@ const DatePicker = createForwardRef<DatePickerRef, DatePickerProps>(
 				defaultValue={pickerDefaultValue}
 				ref={pickerRef}
 				onChange={handleChange}
-				onConfirm={() => emit(onConfirm)}
-				onCancel={() => emit(onCancel)}
+				onConfirm={() => {
+					onConfirm && onConfirm(value);
+				}}
+				onCancel={onCancel}
 			></Picker.Multi>
 		);
 	},
