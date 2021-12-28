@@ -7,6 +7,10 @@
 		padding-right: 320px + @site-content-padding;
 	}
 
+	&__device-mask {
+		display: none;
+	}
+
 	&__device-container {
 		position: fixed;
 		top: @site-content-padding + @site-header-height;
@@ -75,8 +79,31 @@
 			padding-right: 0;
 		}
 
+		.components__simulator {
+			max-height: 60vh;
+		}
+
+		.components__device-mask {
+			position: fixed;
+			top: 0;
+			left: 0;
+			z-index: -1;
+			display: block;
+			width: 100%;
+			height: 100%;
+			background: rgba(0, 0, 0, 0.4);
+			opacity: 0;
+			transition: opacity 0.3s;
+
+			&--active {
+				z-index: 1001;
+				opacity: 1;
+			}
+		}
+
 		.components__device-container {
 			right: -@site-content-padding;
+			z-index: 1001;
 
 			&--expanded {
 				right: 0;

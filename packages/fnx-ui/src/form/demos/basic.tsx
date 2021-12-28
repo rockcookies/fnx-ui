@@ -68,7 +68,7 @@ const I18N: Dictionary<Dictionary<string>> = {
 	},
 	'en-US': {
 		basicUsage: 'basicUsage',
-		validateRules: 'validateRules',
+		validateRules: 'Validate Rules',
 		fieldType: 'Field Type',
 
 		submit: 'Submit',

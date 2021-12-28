@@ -99,7 +99,7 @@ export default function Basic(): ReturnType<React.FC> {
 					<Radio value={2}>{i18n.radio} 2</Radio>
 				</Radio.Group>
 			</DemoBlock>
-			<DemoBlock cardMode title={i18n.insideACell}>
+			<DemoBlock title={i18n.insideACell}>
 				<Cell.Group inset>
 					{[1, 2, 3].map((key) => {
 						return (
