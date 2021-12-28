@@ -41,4 +41,5 @@ export const DEMO_DATA: Dictionary<React.LazyExoticComponent<any>> = {
 	calendar: lazy(() => import('../src/calendar/demos/basic')),
 	notify: lazy(() => import('../src/notify/demos/basic')),
 	'config-provider': lazy(() => import('../src/config-provider/demos/basic')),
+	empty: lazy(() => import('../src/empty/demos/basic')),
 };

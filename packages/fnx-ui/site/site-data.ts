@@ -237,6 +237,13 @@ const SITE_COMPONENTS: SiteMenuGroup[] = [
 				markdownCN: () => import('../src/divider/index.zh-CN.md'),
 			},
 			{
+				key: 'empty',
+				title: 'Empty',
+				titleCN: '空状态',
+				markdown: () => import('../src/empty/index.en-US.md'),
+				markdownCN: () => import('../src/empty/index.zh-CN.md'),
+			},
+			{
 				key: 'list',
 				title: 'List',
 				titleCN: '列表',
