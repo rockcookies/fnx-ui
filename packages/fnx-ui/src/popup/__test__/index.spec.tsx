@@ -1,5 +1,5 @@
 import { fireEvent, render } from '@testing-library/react';
-import React from 'react';
+import React, { useState } from 'react';
 import _Popup from '../index';
 import { PopupProps } from '../interface';
 
@@ -144,6 +144,33 @@ describe('<Popup/>', () => {
 
 		expect(onHide).toHaveBeenCalledTimes(1);
 		expect(onAfterHide).toHaveBeenCalledTimes(1);
+	});
+
+	it('should emit close event after clicking the overlay', async () => {
+		const onClose = jest.fn();
+
+		function Demo() {
+			const [visible, setVisible] = useState(true);
+
+			return (
+				<Popup
+					visible={visible}
+					onClose={() => {
+						setVisible(false);
+						onClose();
+					}}
+				/>
+			);
+		}
+
+		const { container } = render(<Demo />);
+
+		const overlay = container.querySelector<HTMLElement>('.fnx-overlay');
+
+		fireEvent.click(overlay);
+		fireEvent.click(overlay);
+
+		expect(onClose).toHaveBeenCalledTimes(1);
 	});
 
 	it('should change duration when using duration prop', () => {

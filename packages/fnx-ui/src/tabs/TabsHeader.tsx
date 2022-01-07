@@ -190,7 +190,7 @@ const TabsHeader = createForwardRef<
 								</div>
 							);
 						})}
-						{trackLeft != null && (
+						{metaList.length > 0 && trackLeft != null && (
 							<div
 								className={bem('track')}
 								style={{

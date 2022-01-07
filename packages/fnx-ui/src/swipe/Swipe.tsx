@@ -213,8 +213,6 @@ const Swipe = createForwardRef<SwipeRef, SwipeProps>('Swipe', (_props, ref) => {
 
 			const { vertical, stopPropagation, loop } = propsRef.current;
 
-			preventDefault(event, stopPropagation);
-
 			const touchData = touch.touchData;
 
 			if (!touching) {
@@ -228,15 +226,20 @@ const Swipe = createForwardRef<SwipeRef, SwipeProps>('Swipe', (_props, ref) => {
 					touching = true;
 					touchWrapperOffset = stateRef.current.wrapperOffset || 0;
 				}
+			} else {
+				delta = touch.isVertical()
+					? touch.touchData.deltaY
+					: touch.touchData.deltaX;
 
-				return;
+				move(touchWrapperOffset + delta, { critical: loop });
 			}
 
-			delta = touch.isVertical()
-				? touch.touchData.deltaY
-				: touch.touchData.deltaX;
+			const shouldPrevent =
+				touching && touchData.offsetY > touchData.offsetX === vertical;
 
-			move(touchWrapperOffset + delta, { critical: loop });
+			if (shouldPrevent) {
+				preventDefault(event, stopPropagation);
+			}
 		};
 
 		const restore = () => {

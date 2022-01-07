@@ -20,13 +20,11 @@ const DEFAULT_TOUCH_DATA: TouchData = {
 	direction: undefined,
 };
 
-const MIN_DISTANCE = 10;
-
 function getDirection(x: number, y: number) {
-	if (x > y && x > MIN_DISTANCE) {
+	if (x > y) {
 		return 'horizontal';
 	}
-	if (y > x && y > MIN_DISTANCE) {
+	if (y > x) {
 		return 'vertical';
 	}
 }
@@ -51,7 +49,14 @@ export default class TouchHelper {
 		this.touchData.offsetX = Math.abs(this.touchData.deltaX);
 		this.touchData.offsetY = Math.abs(this.touchData.deltaY);
 
-		if (!this.touchData.direction) {
+		// lock direction when distance is greater than a certain value
+		const LOCK_DIRECTION_DISTANCE = 10;
+
+		if (
+			!this.touchData.direction ||
+			(this.touchData.offsetX < LOCK_DIRECTION_DISTANCE &&
+				this.touchData.offsetY < LOCK_DIRECTION_DISTANCE)
+		) {
 			this.touchData.direction = getDirection(
 				this.touchData.offsetX,
 				this.touchData.offsetY,

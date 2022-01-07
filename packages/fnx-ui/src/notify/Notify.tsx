@@ -9,19 +9,25 @@ const NS = 'fnx-notify';
 const bem = createBEM(NS);
 
 const useProps = configComponentProps<
-	Required<Pick<NotifyProps, 'type' | 'visible' | 'duration' | 'lockScroll'>>
+	Required<
+		Pick<
+			NotifyProps,
+			'type' | 'visible' | 'duration' | 'lockScroll' | 'position'
+		>
+	>
 >({
 	type: 'danger',
 	visible: false,
 	duration: 2000,
 	lockScroll: false,
+	position: 'top',
 });
 
 const Notify = createForwardRef<HTMLDivElement, NotifyProps>(
 	'Notify',
 	(_props, ref) => {
 		const [
-			{ type, visible, duration, lockScroll },
+			{ type, visible, duration, lockScroll, position },
 			{
 				mountTo,
 				message,
@@ -58,8 +64,8 @@ const Notify = createForwardRef<HTMLDivElement, NotifyProps>(
 				renderOnShow={true}
 				destroyOnHide={true}
 				overlay={false}
-				position="top"
 				lockScroll={lockScroll}
+				position={position}
 				style={{
 					color,
 					background,

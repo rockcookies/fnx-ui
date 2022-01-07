@@ -19,6 +19,7 @@ const I18N: Dictionary<Dictionary<string>> = {
 		customColor: '自定义颜色',
 		customNotify: '自定义配置',
 		customDuration: '自定义时长',
+		customPosition: '自定义位置',
 		countdownText: '倒计时 ${second} 秒',
 	},
 	'en-US': {
@@ -32,6 +33,7 @@ const I18N: Dictionary<Dictionary<string>> = {
 		customColor: 'Custom Color',
 		customNotify: 'Custom Notify',
 		customDuration: 'Custom Duration',
+		customPosition: 'Custom Position',
 		countdownText: 'Close in ${second}s',
 	},
 };
@@ -118,6 +120,13 @@ export default function Basic(): ReturnType<React.FC> {
 					}),
 				)}
 				{renderCell(i18n.customDuration, handleCountdown)}
+				{renderCell(i18n.customPosition, () => {
+					notify.show({
+						message: i18n.content,
+						type: 'danger',
+						position: 'bottom',
+					});
+				})}
 			</DemoBlock>
 		</>
 	);

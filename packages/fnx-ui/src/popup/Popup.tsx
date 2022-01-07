@@ -190,7 +190,7 @@ const Popup = createForwardRef<HTMLDivElement, PopupProps>(
 								onClick={(e) => {
 									onOverlayClick(e);
 
-									if (overlayCloseable) {
+									if (overlayCloseable && visible) {
 										onClose();
 									}
 								}}
