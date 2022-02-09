@@ -11,7 +11,7 @@ const I18N_DATA: Dictionary<Dictionary> = {
 	'zh-CN': {
 		picker: [
 			'中国',
-			'美国',
+			{ disabled: true, label: '美国', value: '美国' },
 			'英国',
 			'德国',
 			'法国',
@@ -25,28 +25,29 @@ const I18N_DATA: Dictionary<Dictionary> = {
 		],
 		cascade: [
 			{
-				label: '中国',
+				label: '湖北省',
 				children: [
 					{
-						label: '北京',
-						children: [{ label: '海淀区' }, { label: '朝阳区' }],
+						label: '武汉市',
+						children: [{ label: '江岸区' }, { label: '硚口区' }],
 					},
 					{
-						label: '上海',
-						children: [{ label: '闸北区' }, { label: '静安区' }],
+						label: '宜昌市',
+						disabled: true,
+						children: [{ label: '西陵区' }, { label: '夷陵区' }],
 					},
 				],
 			},
 			{
-				label: '美国',
+				label: '江西省',
 				children: [
 					{
-						label: '纽约',
-						children: [{ label: '曼哈顿' }, { label: '布鲁克林' }],
+						label: '南昌市',
+						children: [{ label: '东湖区' }, { label: '西湖区' }],
 					},
 					{
-						label: '加利福尼亚',
-						children: [{ label: '洛杉矶' }, { label: '旧金山' }],
+						label: '景德镇市',
+						children: [{ label: '昌江区' }, { label: '珠山区' }],
 					},
 				],
 			},
@@ -55,7 +56,7 @@ const I18N_DATA: Dictionary<Dictionary> = {
 	'en-US': {
 		picker: [
 			'China',
-			'United States',
+			{ disabled: true, label: 'United States', value: 'United States' },
 			'United Kingdom',
 			'Germany',
 			'France',
@@ -77,33 +78,31 @@ const I18N_DATA: Dictionary<Dictionary> = {
 		],
 		cascade: [
 			{
-				label: 'China',
+				label: 'Hubei',
 				children: [
 					{
-						label: 'Beijing',
-						children: [{ label: 'Haidian' }, { label: 'Chaoyang' }],
+						label: 'Wuhan',
+						children: [{ label: 'JiangAn' }, { label: 'QiaoKou' }],
 					},
 					{
-						label: 'Shanghai',
-						children: [{ label: 'Zhabei' }, { label: 'Jingan' }],
+						label: 'Yichang',
+						disabled: true,
+						children: [{ label: 'XiLing' }, { label: 'YiLing' }],
 					},
 				],
 			},
 			{
-				label: 'United State',
+				label: 'Jiangxi',
 				children: [
 					{
-						label: 'New York',
-						children: [
-							{ label: 'Manhattan' },
-							{ label: 'Brooklyn' },
-						],
+						label: 'Nanchang',
+						children: [{ label: 'DongHu' }, { label: 'XiHu' }],
 					},
 					{
-						label: 'California',
+						label: 'Jingdezhen',
 						children: [
-							{ label: 'Los Angeles' },
-							{ label: 'San Francisco' },
+							{ label: 'ChangJiang' },
+							{ label: 'ZhuShan' },
 						],
 					},
 				],
@@ -159,16 +158,7 @@ export default function Basic(): ReturnType<React.FC> {
 
 			<DemoBlock title={i18n.defaultValue} cardMode>
 				<Picker
-					data={[
-						'中国',
-						'美国',
-						{ disabled: true, label: '英国', value: '英国' },
-						'德国',
-						'法国',
-						'意大利',
-						'日本',
-						'西班牙',
-					]}
+					data={data.picker}
 					defaultValue={data.picker[2]}
 					title={i18n.title}
 					onChange={(v) => {
