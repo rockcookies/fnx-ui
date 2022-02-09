@@ -1,6 +1,6 @@
 {
   "name": "fnx-ui",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "Lightweight Mobile UI Components built in React",
   "tags": [
     "fnx",
@@ -69,8 +69,8 @@
     "react-dom": ">=16.3.1"
   },
   "devDependencies": {
-    "@fnx-ui/cli": "^0.0.10",
-    "@fnx-ui/markdown-loader": "^0.0.7",
+    "@fnx-ui/cli": "^0.0.11",
+    "@fnx-ui/markdown-loader": "^0.0.8",
     "@testing-library/react": "^12.1.2",
     "@testing-library/react-hooks": "^7.0.2",
     "@types/jest": "^27.4.0",
