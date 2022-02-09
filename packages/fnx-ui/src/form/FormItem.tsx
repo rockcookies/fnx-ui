@@ -47,6 +47,12 @@ const FormItem = createFC<FormItemProps>('FormItem', (_props) => {
 		{
 			children,
 			validateTrigger: _validateTrigger,
+			className,
+			style,
+			leftIcon,
+			leftIconProps,
+			rightIcon,
+			rightIconProps,
 			label,
 			labelWidth,
 			labelAlign,
@@ -103,6 +109,12 @@ const FormItem = createFC<FormItemProps>('FormItem', (_props) => {
 		return (
 			<FormItemContext.Provider value={{ meta, isRequired }}>
 				<Field
+					className={className}
+					style={style}
+					leftIcon={leftIcon}
+					leftIconProps={leftIconProps}
+					rightIcon={rightIcon}
+					rightIconProps={rightIconProps}
 					label={label}
 					labelWidth={labelWidth}
 					labelAlign={labelAlign}

@@ -1,11 +1,5 @@
 import RcFieldForm from 'rc-field-form';
-import React, {
-	HTMLAttributes,
-	ReactElement,
-	useImperativeHandle,
-	useMemo,
-	useRef,
-} from 'react';
+import React, { ReactElement, useImperativeHandle, useMemo } from 'react';
 import { useLocale } from '../locale';
 import { ForwardRefProps } from '../utils/interface';
 import { deepAssign, deepClone } from '../utils/misc';
@@ -17,22 +11,6 @@ import { FormContextData, FormInstance, FormProps } from './interface';
 
 const NS = 'fnx-form';
 const bem = createBEM(NS);
-
-const FormContainer = createForwardRef<
-	HTMLFormElement,
-	HTMLAttributes<HTMLFormElement>
->('FormContainer', (props, ref) => {
-	const formRef = useRef<HTMLFormElement>(null);
-	useImperativeHandle<HTMLFormElement | null, HTMLFormElement | null>(
-		ref,
-		() => formRef.current,
-	);
-
-	const [wrapForm] = useForm();
-	wrapForm.__INTERNAL__.formRef = formRef;
-
-	return <form {...props} ref={formRef}></form>;
-});
 
 const Form = createForwardRef<FormInstance, FormProps>('Form', (props, ref) => {
 	const {
@@ -83,7 +61,6 @@ const Form = createForwardRef<FormInstance, FormProps>('Form', (props, ref) => {
 				validateMessages={messages}
 				form={wrapForm}
 				className={classnames(bem(), className)}
-				component={FormContainer}
 			/>
 		</FormContext.Provider>
 	);

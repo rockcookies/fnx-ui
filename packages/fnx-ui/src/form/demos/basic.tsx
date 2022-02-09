@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import React from 'react';
+import React, { ReactNode } from 'react';
 // @ts-ignore
 import demo01 from '../../../site/assets/demo-dog-01.jpg';
 import DemoBlock from '../../../site/components/DemoBlock';
@@ -11,6 +11,7 @@ import DatePicker from '../../date-picker';
 import Field from '../../field';
 import Form from '../../form';
 import useSafeState from '../../hooks/use-safe-state';
+import Icon from '../../icon';
 import Picker from '../../picker';
 import Popup from '../../popup';
 import Radio from '../../radio';
@@ -20,6 +21,7 @@ import Switch from '../../switch';
 import Uploader from '../../uploader';
 import { Dictionary } from '../../utils/interface';
 import { createBEM } from '../../utils/namespace';
+import { FormListField, FormListOperations } from '../interface';
 import './basic.less';
 
 const bem = createBEM('demo-form');
@@ -29,7 +31,9 @@ const I18N: Dictionary<Dictionary<string>> = {
 		basicUsage: '基础用法',
 		validateRules: '校验规则',
 		fieldType: '表单项类型',
+		dynamicFormItem: '动态增减表单项',
 
+		addField: '新增一行',
 		submit: '提交',
 		username: '用户名',
 		password: '密码',
@@ -67,10 +71,12 @@ const I18N: Dictionary<Dictionary<string>> = {
 		calendarPlaceholder: '点击选择日期',
 	},
 	'en-US': {
-		basicUsage: 'basicUsage',
+		basicUsage: 'Basic Usage',
 		validateRules: 'Validate Rules',
 		fieldType: 'Field Type',
+		dynamicFormItem: 'Dynamic Form Item',
 
+		addField: 'Add Field',
 		submit: 'Submit',
 		username: 'Username',
 		password: 'Password',
@@ -123,28 +129,29 @@ const I18N_DATA: Dictionary<Dictionary> = {
 		],
 		cascade: [
 			{
-				label: '中国',
+				label: '湖北省',
 				children: [
 					{
-						label: '北京',
-						children: [{ label: '海淀区' }, { label: '朝阳区' }],
+						label: '武汉市',
+						children: [{ label: '江岸区' }, { label: '硚口区' }],
 					},
 					{
-						label: '上海',
-						children: [{ label: '闸北区' }, { label: '静安区' }],
+						label: '宜昌市',
+						disabled: true,
+						children: [{ label: '西陵区' }, { label: '夷陵区' }],
 					},
 				],
 			},
 			{
-				label: '美国',
+				label: '江西省',
 				children: [
 					{
-						label: '纽约',
-						children: [{ label: '曼哈顿' }, { label: '布鲁克林' }],
+						label: '南昌市',
+						children: [{ label: '东湖区' }, { label: '西湖区' }],
 					},
 					{
-						label: '加利福尼亚',
-						children: [{ label: '洛杉矶' }, { label: '旧金山' }],
+						label: '景德镇市',
+						children: [{ label: '昌江区' }, { label: '珠山区' }],
 					},
 				],
 			},
@@ -163,33 +170,31 @@ const I18N_DATA: Dictionary<Dictionary> = {
 		],
 		cascade: [
 			{
-				label: 'China',
+				label: 'Hubei',
 				children: [
 					{
-						label: 'Beijing',
-						children: [{ label: 'Haidian' }, { label: 'Chaoyang' }],
+						label: 'Wuhan',
+						children: [{ label: 'JiangAn' }, { label: 'QiaoKou' }],
 					},
 					{
-						label: 'Shanghai',
-						children: [{ label: 'Zhabei' }, { label: 'Jingan' }],
+						label: 'Yichang',
+						disabled: true,
+						children: [{ label: 'XiLing' }, { label: 'YiLing' }],
 					},
 				],
 			},
 			{
-				label: 'United State',
+				label: 'Jiangxi',
 				children: [
 					{
-						label: 'New York',
-						children: [
-							{ label: 'Manhattan' },
-							{ label: 'Brooklyn' },
-						],
+						label: 'Nanchang',
+						children: [{ label: 'DongHu' }, { label: 'XiHu' }],
 					},
 					{
-						label: 'California',
+						label: 'Jingdezhen',
 						children: [
-							{ label: 'Los Angeles' },
-							{ label: 'San Francisco' },
+							{ label: 'ChangJiang' },
+							{ label: 'ZhuShan' },
 						],
 					},
 				],
@@ -256,7 +261,7 @@ export default function Basic(): ReturnType<React.FC> {
 				>
 					<Form.Item
 						label={i18n.label}
-						name="pattern"
+						name="name"
 						rules={[
 							{
 								required: true,
@@ -321,6 +326,79 @@ export default function Basic(): ReturnType<React.FC> {
 					>
 						{i18n.submit}
 					</Button>
+				</Form>
+			</DemoBlock>
+
+			<DemoBlock title={i18n.dynamicFormItem} cardMode>
+				<Form
+					initialValues={{
+						list: [{}],
+					}}
+				>
+					<Form.List name="list">
+						{(
+							fields: FormListField[],
+							{ add, remove }: FormListOperations,
+						): ReactNode => (
+							<>
+								{fields.map<ReactNode>(
+									({ key, name, ...restFields }) => {
+										return (
+											<Form.Item
+												{...restFields}
+												key={key}
+												name={[name, 'username']}
+												label={i18n.username}
+												rules={[
+													{
+														required: true,
+														message:
+															i18n.requireUsername,
+													},
+												]}
+												rightIcon={
+													<Icon
+														name="cross"
+														onClick={() =>
+															remove(name)
+														}
+													/>
+												}
+											>
+												<Field.Input
+													placeholder={i18n.pattern}
+												/>
+											</Form.Item>
+										);
+									},
+								)}
+								<div className={bem('actions')}>
+									<Button
+										type="success"
+										shape="round"
+										className={bem('add-field')}
+										block
+										disabled={fields.length >= 3}
+										htmlType="button"
+										onClick={() => {
+											add({});
+										}}
+									>
+										{i18n.addField}
+									</Button>
+									<Button
+										type="primary"
+										htmlType="submit"
+										shape="round"
+										className={bem('submit')}
+										block
+									>
+										{i18n.submit}
+									</Button>
+								</div>
+							</>
+						)}
+					</Form.List>
 				</Form>
 			</DemoBlock>
 
@@ -420,7 +498,7 @@ export default function Basic(): ReturnType<React.FC> {
 							}
 						>
 							{(value) => {
-								const inputValue = value && value.join('/');
+								const inputValue = value && value.join(' / ');
 								return (
 									<Field label={i18n.areaPicker} clickable>
 										<Field.Input

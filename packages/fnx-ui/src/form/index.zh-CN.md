@@ -1,98 +1,189 @@
 # Form 表单
 
-高性能表单控件。
+高性能表单控件，自带数据域管理。包含数据录入、校验以及对应样式。
 
 ## 基础用法
 
 基本的表单数据域控制展示，包含布局、初始化、验证、提交。
 
 ```tsx
-import { Form } from 'fnx-ui';
-
-ReactDOM.render(
- <>
-  <Form>
-    <Form.Item label="Username">
-      <Field.Input placeholder="Placeholder" />
-    </Form.Item>
-    <Form.Item label="Password">
-      <Field.Input placeholder="Placeholder" />
-    </Form.Item>
-  </Form>,
- </>
-  mountNode,
-);
-```
-
-## 表单方式调用
-
-通过 `Form.useForm` 对表单数据域进行交互。
-
-```tsx
-import { Form } from 'fnx-ui';
-
-const [form] = Form.useForm();
-
-const handleReset = () => {
-  form.resetFields();
-};
-
-const handleFill = () => {
-  form.setFieldsValue({
-    Name: 'Hello World!',
-  });
-};
+import { Form, Field, Button } from 'fnx-ui';
 
 ReactDOM.render(
   <>
-    <Form form={form}>
+    <Form>
       <Form.Item
         label="Username"
-        name="Name"
+        name="username"
         rules={[
           {
             required: true,
-            message: 'Please input your userName!',
+            message: 'Username is required',
           },
         ]}
       >
-        <Form.Input placeholder="Please input your name"></Form.Input>
+        <Field.Input placeholder="Username" />
       </Form.Item>
-      <div>
-        <p onClick={handleReset}>Reset</p>
-        <p onClick={handleFill}>Fill</p>
-      </div>
+      <Form.Item
+        label="Password"
+        name="password"
+        rules={[
+          {
+            required: true,
+            message: 'Password is required',
+          },
+        ]}
+      >
+        <Field.Input type="password" placeholder="Password" />
+      </Form.Item>
+
+      <Button type="primary" htmlType="submit" shape="round" block>
+        Submit
+      </Button>
     </Form>
   </>,
   mountNode,
 );
 ```
 
-## 动态增减表单
+## 校验规则
 
-动态增加、减少表单项，`add` 方法参数可用于设置初始值。
+通过 `rules` 定义表单校验规则。
 
 ```tsx
-import { Form, Button } from 'fnx-ui';
+import { Form, Field, Button } from 'fnx-ui';
 
 ReactDOM.render(
   <>
-    <Form>
-      <Form.List name="form">
-        {(fields, { add, remove }) => (
+    <Form
+      onFinish={(values) => console.log(values)}
+      onFinishFailed={(values) => console.log(values)}
+    >
+      <Form.Item
+        label="Pattern"
+        name="name"
+        rules={[
+          {
+            required: true,
+            pattern: /\d{6}/,
+            message: 'please enter six number',
+          },
+        ]}
+      >
+        <Field.Input placeholder="Name" />
+      </Form.Item>
+      <Form.Item
+        label="Validator"
+        name="validator"
+        rules={[
+          {
+            required: true,
+            validator: (_, val) => {
+              if (/\d{6}/.test(val)) {
+                return Promise.resolve();
+              } else {
+                return Promise.reject('please enter six number');
+              }
+            },
+          },
+        ]}
+      >
+        <Field.Input placeholder="Validator" />
+      </Form.Item>
+      <Form.Item
+        label="AsyncValidator"
+        name="asyncValidator"
+        validateTrigger="onBlur"
+        rules={[
+          {
+            required: true,
+            validator: (_, val) => {
+              return new Promise((resolve, reject) => {
+                setValidating(true);
+
+                setTimeout(() => {
+                  setValidating(false);
+
+                  /\d{6}/.test(val)
+                    ? resolve(/\d{6}/.test(val))
+                    : reject('please enter six number');
+                }, 1000);
+              });
+            },
+          },
+        ]}
+      >
+        <Field.Input placeholder="AsyncValidator" />
+      </Form.Item>
+
+      <Button type="primary" htmlType="submit" shape="round" block>
+        Submit
+      </Button>
+    </Form>
+  </>,
+  mountNode,
+);
+```
+
+## 动态增减表单项
+
+动态增加、减少表单项。`add` 方法参数可用于设置初始值。
+
+```tsx
+import { ReactNode } from 'react';
+import { Form, Field, Button, Icon } from 'fnx-ui';
+
+ReactDOM.render(
+  <>
+    <Form
+      initialValues={{
+        list: [{}],
+      }}
+      onFinish={(values) => console.log(values)}
+      onFinishFailed={(values) => console.log(values)}
+    >
+      <Form.List name="list">
+        {(
+          fields: FormListField[],
+          { add, remove }: FormListOperations,
+        ): ReactNode => (
           <>
-            <Form.Item label="Password">
-              <Field.Input placeholder="Placeholder" />
-            </Form.Item>
-            {fields.map((field, index) => {
+            {fields.map<ReactNode>(({ key, name, ...restFields }) => {
               return (
-                <Form.Item key={index} label="Password">
-                  <Field.Input placeholder="Placeholder" />
+                <Form.Item
+                  {...restFields}
+                  key={key}
+                  name={[name, 'username']}
+                  label="Username"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Username is required',
+                    },
+                  ]}
+                  rightIcon={<Icon name="cross" onClick={() => remove(name)} />}
+                >
+                  <Field.Input />
                 </Form.Item>
               );
             })}
-            <Button onClick={() => add()}>Add Field</Button>
-            <Button onClick={() => remove(1)}>Remove Field</Button>
+            <div className={bem('actions')}>
+              <Button
+                type="success"
+                shape="round"
+                block
+                disabled={fields.length >= 3}
+                htmlType="button"
+                onClick={() => {
+                  add({});
+                }}
+              >
+                Add Field
+              </Button>
+              <Button type="primary" htmlType="submit" shape="round" block>
+                Submit
+              </Button>
+            </div>
           </>
         )}
       </Form.List>
@@ -102,160 +193,64 @@ ReactDOM.render(
 );
 ```
 
-## 验证规则
-
-通过 `rules` 校验规则。
-
-```tsx
-import { Form } from 'fnx-ui';
-
-const handleFinish = (e) => {
-  console.log(e);
-};
-
-ReactDOM.render(
-  <>
-    <Form
-      colon
-      name="rulesName"
-      validateTrigger={['onBlur']}
-      initialValues={{
-        switch: true,
-      }}
-      onFinish={handleFinish}
-    >
-      <Form.Item label="Label" name="switch" valuePropName="checked">
-        <Switch size={20} />
-      </Form.Item>
-      <Form.Item
-        label="Required Label"
-        name="requiredName"
-        rules={[
-          {
-            required: true,
-            whitespace: true,
-            message: 'Please input required',
-          },
-        ]}
-      >
-        <Form.Item></Form.Item>
-      </Form.Item>
-      <Form.Item
-        label="Min Label"
-        name="minName"
-        rules={[
-          {
-            required: true,
-            min: 2,
-            message: 'Please input min 2.',
-          },
-        ]}
-      >
-        <Form.Item></Form.Item>
-      </Form.Item>
-      <Form.Item
-        label="Max Label"
-        name="maxName"
-        rules={[
-          {
-            required: true,
-            max: 2,
-            message: 'Please input max 2.',
-          },
-        ]}
-      ></Form.Item>
-      <Button>Submit</Button>
-    </Form>
-  </>,
-  mountNode,
-);
-```
-
 ## API
 
-类型 `FormProps` 继承 `rc-field-form` 中的 `FormProps`；
+### Form Props
 
-| 参数         | 说明                                                           | 类型                            | 默认值 |
-| ------------ | -------------------------------------------------------------- | ------------------------------- | ------ |
-| colon        | 表示是否显示 `label` 后面的冒号                                | `boolean`                       | `true` |
-| requiredMark | 必选样式，可以切换为必选或者可选展示样式                       | `boolean \| 'auto'`             | `auto` |
-| labelAlign   | `label` 标签的文本对齐方式                                     | `'left' \| 'center' \| 'right'` | `left` |
-| labelWidth   | `label` 标签的宽度                                             | `string \| number`              | -      |
-| helpAlign    | 提示信息文本对齐方式                                           | `'left' \| 'center' \| 'right'` | `left` |
-| form         | 经 `Form.useForm()` 创建的 `form` 控制实例，不提供时会自动创建 | `FormInstance`                  | `left` |
+| 名称             | 说明                                                              | 类型                                                                  | 默认值       | 版本 |
+| ---------------- | ----------------------------------------------------------------- | --------------------------------------------------------------------- | ------------ | ---- |
+| colon            | 配置 Form.Item 的 `colon` 的默认值。表示是否显示 label 后面的冒号 | `boolean`                                                             | `true`       |      |
+| component        | 设置 Form 渲染元素，为 `false` 则不创建 DOM 节点                  | `false` \| `string` \| `React.FC<any>` \| `React.ComponentClass<any>` | `'form'`     |      |
+| form             | 经 `Form.useForm()` 创建的 form 控制实例，不提供时会自动创建      | `FormInstance`                                                        | -            |      |
+| initialValues    | 表单默认值，只有初始化以及重置时生效                              | `object`                                                              | -            |      |
+| labelAlign       | label 标签的对齐方式                                              | `'left'` \| `'center'` \| `'right'`                                   | `'left'`     |      |
+| labelWidth       | label 标签的的宽度                                                | `number` \| `string`                                                  | `'6.2em'`    |      |
+| preserve         | 当字段被删除时保留字段值                                          | `boolean`                                                             | -            |      |
+| requiredMark     | 必选样式，可以切换为必选或者可选展示样式                          | `boolean` \| `'auto'`                                                 | `'auto'`     |      |
+| validateMessages | 验证提示模板                                                      | `FormValidateMessages`                                                | -            |      |
+| validateTrigger  | 统一设置字段触发验证的时机                                        | `string` \| `string\[]`                                               | `'onChange'` |      |
 
-## FormItem API
+### FormValidateMessages
 
-类型 `FormProps` 继承 `rc-field-form` 中的 `FormProps`；
+Form 为验证提供了[默认的错误提示信息](https://github.com/react-component/field-form/blob/master/src/utils/messages.ts)，你可以通过配置 `validateMessages` 属性，修改对应的提示模板。一种常见的使用方式，是配置国际化提示信息：
 
-| 参数          | 说明                                     | 类型                                                          | 默认值  |
-| ------------- | ---------------------------------------- | ------------------------------------------------------------- | ------- |
-| children      | 渲染函数                                 | `((context: FormInstance<Values>) => ReactNode) \| ReactNode` | -       |
-| label         | 标签文本                                 | `ReactNode`                                                   | -       |
-| labelWidth    | `label` 标签的宽度                       | `string \| number`                                            | -       |
-| labelAlign    | `label` 标签的文本对齐方式               | ` HTMLAttributes<HTMLDivElement>`                             | `left`  |
-| labelProps    | `label` 标签的属性                       | `'left' \| 'center' \| 'right'`                               | `left`  |
-| controlPrefix | 输入框头部插入内容                       | `ReactNode`                                                   | -       |
-| controlSuffix | 输入框尾部插入内容                       | `ReactNode`                                                   | -       |
-| controlProps  | 输入框插入内容属性                       | `HTMLAttributes<HTMLDivElement>`                              | -       |
-| colon         | 表示是否显示 `label` 后面的冒号          | `boolean`                                                     | `true`  |
-| disabled      | 是否禁用表单                             | `boolean`                                                     | `true`  |
-| requiredMark  | 必选样式，可以切换为必选或者可选展示样式 | `boolean \| 'auto'`                                           | `auto`  |
-| helpAlign     | 提示信息文本对齐方式                     | `'left' \| 'center' \| 'right'`                               | `left`  |
-| help          | 提示信息                                 | `string \| string[]`                                          | -       |
-| border        | `cell` 边框                              | `boolean`                                                     | `true`  |
-| itemsAlign    | 对齐方式                                 | `'top' \| 'middle' \| 'bottom'`                               | -       |
-| clickable     | 是否可点击                               | `boolean`                                                     | `false` |
-| plain         | 平素的样式                               | `boolean`                                                     | `false` |
-| fieldProps    | 输入框属性                               | `FieldProps`                                                  | `false` |
+```tsx
+const validateMessages = {
+  required: "'${name}' 是必选字段",
+  // ...
+};
 
-## 事件
+<Form validateMessages={validateMessages} />;
+```
 
-| 事件名         | 说明                                  | 回调参数                |
-| -------------- | ------------------------------------- | ----------------------- |
-| onValuesChange | 表单内容改变时触发                    | 对应`Form.Item`内容的值 |
-| onFieldsChange | 表单内容改变时触发                    | 对应`Form.Item`内容的值 |
-| onFinish       | 表单提交触发 (默认提交按钮是`Button`) | 表单绑定的值            |
-| onFinishFailed | 提交表单失败时触发                    | 对应`Form.Item`内容的值 |
+### Form 事件
 
-## FormList API
+| 名称           | 说明                             | 类型                                                   | 版本 |
+| -------------- | -------------------------------- | ------------------------------------------------------ | ---- |
+| onFieldsChange | 字段更新时触发回调事件           | `function(changedFields, allFields) => void`           |      |
+| onFinish       | 提交表单且数据验证成功后回调事件 | `function(values) => void`                             |      |
+| onFinishFailed | 提交表单且数据验证失败后回调事件 | `function({ values, errorFields, outOfDate }) => void` |      |
+| onValuesChange | 字段值更新时触发回调事件         | `function(changedValues, allValues) => void`           |      |
 
-| 参数            | 说明                                                                                     | 类型                                                                                        | 默认值 |
-| --------------- | ---------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | ------ |
-| children        | 渲染函数                                                                                 | `(fields: Field\[], operation: { add, remove, move }, meta: { errors }) => React.ReactNode` | -      |
-| initialValue    | 设置子元素默认值，如果与 Form 的 `initialValues` 冲突则以 Form 为准                      | `any[]`                                                                                     | -      |
-| name            | 字段名，支持数组                                                                         | `string \| string[] \| number \| number[]`                                                  | -      |
-| validateTrigger | 设置触发验证时机，必须是 Form.Item 的 `validateTrigger` 的子集 常用有`onBlur` `onChange` | ``string \| string[] \|false`                                                               | -      |
-| rules           | 校验规则，仅支持自定义规则                                                               | `ValidatorRule[]`                                                                           | -      |
+### Form.Item Props
 
-### rules 数据结构
+Form.Item 继承类型 [`FieldProps`](#/zh-CN/components/field)，并新增了如下属性：
 
-类型 `Validator` 是 `(rule: RuleObject, value: StoreValue, callback: (error?: string) => void) => Promise<void | any> | void`;
+| 名称         | 说明                                                   | 类型                  | 默认值   | 版本 |
+| ------------ | ------------------------------------------------------ | --------------------- | -------- | ---- |
+| colon        | 配合 `label` 属性使用，表示是否显示 `label` 后面的冒号 | `boolean`             | `true`   |      |
+| requiredMark | 必选样式，可以切换为必选或者可选展示样式               | `boolean` \| `'auto'` | `'auto'` |      |
+| disabled     | 是否禁用                                               | `boolean`             | -        |      |
+| plain        | 为 `true` 时不带样式，作为纯字段控件使用               | `boolean`             | `false`  |      |
 
-| 参数        | 说明                                          | 类型                  | 默认值 |
-| ----------- | --------------------------------------------- | --------------------- | ------ |
-| message     | 提示信息                                      | `string \| ReactNode` | -      |
-| warningOnly | 仅警告，不阻塞表单提交                        | `boolean`             | -      |
-| validator   | (必填属性)自定义校验，接收 Promise 作为返回值 | `Validator`           | -      |
+详细属性请参考 [Antd - Form.Item](https://ant.design/components/form-cn/#Form.Item)。
 
-### Form 实例方法
+### Form.List Props
 
-`const [form] = Form.useForm(); form.resetFields();`
+为字段提供数组化管理。
 
-参考`rc-field-form` 中的 `FormInstance` 详情访问 `https://github.com/react-component/field-form`
-
-| 方法名           | 说明                                               | 参数             | 返回值 |
-| ---------------- | -------------------------------------------------- | ---------------- | ------ |
-| resetFields()    | 重置表单                                           | -                | -      |
-| setFieldsValue() | 自定义表单内容 `name` 需要与 `From.Item name` 相同 | `{name:string }` | -      |
-| getFieldValue()  | 获取表单内容 `name` 需要与 `From.Item name` 相同   | `{name:string }` | -      |
-
-### FormList 方法
-
-`Form.List` 渲染表单相关操作函数。
-
-| 方法名   | 说明       | 参数                                   | 返回值 |
-| -------- | ---------- | -------------------------------------- | ------ |
-| add()    | 新增表单项 | `(defaultValue?: any, index?: number)` | -      |
-| remove() | 删除表单项 | `(index: number \| number[])`          | -      |
-| move()   | 移动表单项 | `(from: number, to: number)`           | -      |
+| 名称         | 说明                                                                | 类型                                                                                       | 默认值 | 版本 |
+| ------------ | ------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ | ------ | ---- |
+| children     | 渲染函数                                                            | `(fields: Field[], operation: { add, remove, move }, meta: { errors }) => React.ReactNode` | -      |      |
+| initialValue | 设置子元素默认值，如果与 Form 的 `initialValues` 冲突则以 Form 为准 | `any[]`                                                                                    | -      |      |
+| name         | 字段名，支持数组                                                    | `NamePath`                                                                                 | -      |      |

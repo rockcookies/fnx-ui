@@ -3,9 +3,9 @@ import {
 	FormProps as RcFormProps,
 } from 'rc-field-form';
 import { FieldProps as RcFieldProps } from 'rc-field-form/lib/Field';
-import { Meta } from 'rc-field-form/lib/interface';
+import { Meta, ValidateMessages } from 'rc-field-form/lib/interface';
 import { ListField, ListOperations, ListProps } from 'rc-field-form/lib/List';
-import { HTMLAttributes, ReactNode, RefObject } from 'react';
+import { CSSProperties, HTMLAttributes, ReactNode } from 'react';
 import { CellItemsAlign } from '../cell/interface';
 import { FieldProps } from '../field/interface';
 import FormItem from './FormItem';
@@ -22,13 +22,9 @@ export type FormHelpAlign = 'left' | 'center' | 'right';
 
 export type FormRequiredMark = boolean | 'auto';
 
-export interface FormInstance<Values = any> extends RcFormInstance<Values> {
-	__INTERNAL__: {
-		formRef?: RefObject<HTMLElement>;
-	};
-	/*
-	scrollToField: (name: NamePath, options?: boolean | ScrollOptions) => void; */
-}
+export type FormValidateMessages = ValidateMessages;
+
+export type FormInstance<Values = any> = RcFormInstance<Values>;
 
 export type FormItemChildren<Values = any> =
 	| ((context: FormInstance<Values>) => ReactNode)
@@ -37,6 +33,12 @@ export type FormItemChildren<Values = any> =
 export interface FormItemProps<Values = any>
 	extends Omit<RcFieldProps<Values>, 'children'> {
 	children?: FormItemChildren<Values>;
+	className?: string;
+	style?: CSSProperties;
+	leftIcon?: ReactNode;
+	leftIconProps?: HTMLAttributes<HTMLSpanElement>;
+	rightIcon?: ReactNode;
+	rightIconProps?: HTMLAttributes<HTMLSpanElement>;
 	label?: ReactNode;
 	labelWidth?: string | number;
 	labelAlign?: FormLabelAlign;
@@ -68,7 +70,7 @@ export type FormListOperations = ListOperations;
 export type FormListProps = ListProps;
 
 export interface FormProps<Values = any>
-	extends Omit<RcFormProps<Values>, 'form' | 'component'> {
+	extends Omit<RcFormProps<Values>, 'form'> {
 	colon?: boolean;
 	requiredMark?: FormRequiredMark;
 	labelAlign?: FormLabelAlign;

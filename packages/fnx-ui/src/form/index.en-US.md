@@ -1,98 +1,189 @@
 # Form
 
-High performance form controls.
+High performance Form component with data scope management. Including data collection, verification, and styles.
 
 ## Basic Usage
 
-Basic form data domain control show, including layout, initialization, verification, and submission.
+Basic Form data control. Includes layout, initial values, validation and submit.
 
 ```tsx
-import { Form } from 'fnx-ui';
-
-ReactDOM.render(
- <>
-  <Form>
-    <Form.Item label="Username">
-      <Field.Input placeholder="Placeholder" />
-    </Form.Item>
-    <Form.Item label="Password">
-      <Field.Input placeholder="Placeholder" />
-    </Form.Item>
-  </Form>,
- </>
-  mountNode,
-);
-```
-
-## Form Call
-
-Interacting the form data field via `form.useform`
-
-```tsx
-import { Form } from 'fnx-ui';
-
-const [form] = Form.useForm();
-
-const handleReset = () => {
-  form.resetFields();
-};
-
-const handleFill = () => {
-  form.setFieldsValue({
-    Name: 'Hello World!',
-  });
-};
+import { Form, Field, Button } from 'fnx-ui';
 
 ReactDOM.render(
   <>
-    <Form form={form}>
+    <Form>
       <Form.Item
         label="Username"
-        name="Name"
+        name="username"
         rules={[
           {
             required: true,
-            message: 'Please input your userName!',
+            message: 'Username is required',
           },
         ]}
       >
-        <Form.Input placeholder="Please input your name"></Form.Input>
+        <Field.Input placeholder="Username" />
       </Form.Item>
-      <div>
-        <p onClick={handleReset}>Reset</p>
-        <p onClick={handleFill}>Fill</p>
-      </div>
+      <Form.Item
+        label="Password"
+        name="password"
+        rules={[
+          {
+            required: true,
+            message: 'Password is required',
+          },
+        ]}
+      >
+        <Field.Input type="password" placeholder="Password" />
+      </Form.Item>
+
+      <Button type="primary" htmlType="submit" shape="round" block>
+        Submit
+      </Button>
     </Form>
   </>,
   mountNode,
 );
 ```
 
-## Dynamic Increase or Decrease
+## Validate Rules
 
-Dynamically increased, reduce form items, `add` method parameters can be used to set the initial value.
+Use `rules` prop to set validate rules.
 
 ```tsx
-import { Form, Button } from 'fnx-ui';
+import { Form, Field, Button } from 'fnx-ui';
 
 ReactDOM.render(
   <>
-    <Form>
-      <Form.List name="form">
-        {(fields, { add, remove }) => (
+    <Form
+      onFinish={(values) => console.log(values)}
+      onFinishFailed={(values) => console.log(values)}
+    >
+      <Form.Item
+        label="Pattern"
+        name="name"
+        rules={[
+          {
+            required: true,
+            pattern: /\d{6}/,
+            message: 'please enter six number',
+          },
+        ]}
+      >
+        <Field.Input placeholder="Name" />
+      </Form.Item>
+      <Form.Item
+        label="Validator"
+        name="validator"
+        rules={[
+          {
+            required: true,
+            validator: (_, val) => {
+              if (/\d{6}/.test(val)) {
+                return Promise.resolve();
+              } else {
+                return Promise.reject('please enter six number');
+              }
+            },
+          },
+        ]}
+      >
+        <Field.Input placeholder="Validator" />
+      </Form.Item>
+      <Form.Item
+        label="AsyncValidator"
+        name="asyncValidator"
+        validateTrigger="onBlur"
+        rules={[
+          {
+            required: true,
+            validator: (_, val) => {
+              return new Promise((resolve, reject) => {
+                setValidating(true);
+
+                setTimeout(() => {
+                  setValidating(false);
+
+                  /\d{6}/.test(val)
+                    ? resolve(/\d{6}/.test(val))
+                    : reject('please enter six number');
+                }, 1000);
+              });
+            },
+          },
+        ]}
+      >
+        <Field.Input placeholder="AsyncValidator" />
+      </Form.Item>
+
+      <Button type="primary" htmlType="submit" shape="round" block>
+        Submit
+      </Button>
+    </Form>
+  </>,
+  mountNode,
+);
+```
+
+## Dynamic Form Item
+
+Add or remove form items dynamically. `add` function support config initial value.
+
+```tsx
+import { ReactNode } from 'react';
+import { Form, Field, Button, Icon } from 'fnx-ui';
+
+ReactDOM.render(
+  <>
+    <Form
+      initialValues={{
+        list: [{}],
+      }}
+      onFinish={(values) => console.log(values)}
+      onFinishFailed={(values) => console.log(values)}
+    >
+      <Form.List name="list">
+        {(
+          fields: FormListField[],
+          { add, remove }: FormListOperations,
+        ): ReactNode => (
           <>
-            <Form.Item label="Password">
-              <Field.Input placeholder="Placeholder" />
-            </Form.Item>
-            {fields.map((field, index) => {
+            {fields.map<ReactNode>(({ key, name, ...restFields }) => {
               return (
-                <Form.Item key={index} label="Password">
-                  <Field.Input placeholder="Placeholder" />
+                <Form.Item
+                  {...restFields}
+                  key={key}
+                  name={[name, 'username']}
+                  label="Username"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Username is required',
+                    },
+                  ]}
+                  rightIcon={<Icon name="cross" onClick={() => remove(name)} />}
+                >
+                  <Field.Input />
                 </Form.Item>
               );
             })}
-            <Button onClick={() => add()}>Add Field</Button>
-            <Button onClick={() => remove(1)}>Remove Field</Button>
+            <div className={bem('actions')}>
+              <Button
+                type="success"
+                shape="round"
+                block
+                disabled={fields.length >= 3}
+                htmlType="button"
+                onClick={() => {
+                  add({});
+                }}
+              >
+                Add Field
+              </Button>
+              <Button type="primary" htmlType="submit" shape="round" block>
+                Submit
+              </Button>
+            </div>
           </>
         )}
       </Form.List>
@@ -102,159 +193,64 @@ ReactDOM.render(
 );
 ```
 
-## Rules
-
-Pass the `rules` verification rules.
-
-```tsx
-import { Form } from 'fnx-ui';
-
-const handleFinish = (e) => {
-  console.log(e);
-};
-
-ReactDOM.render(
-  <>
-    <Form
-      colon
-      name="rulesName"
-      validateTrigger={['onBlur']}
-      initialValues={{
-        switch: true,
-      }}
-      onFinish={handleFinish}
-    >
-      <Form.Item label="Label" name="switch" valuePropName="checked">
-        <Switch size={20} />
-      </Form.Item>
-      <Form.Item
-        label="Required Label"
-        name="requiredName"
-        rules={[
-          {
-            required: true,
-            whitespace: true,
-            message: 'Please input required',
-          },
-        ]}
-      >
-        <Form.Item></Form.Item>
-      </Form.Item>
-      <Form.Item
-        label="Min Label"
-        name="minName"
-        rules={[
-          {
-            required: true,
-            min: 2,
-            message: 'Please input min 2.',
-          },
-        ]}
-      >
-        <Form.Item></Form.Item>
-      </Form.Item>
-      <Form.Item
-        label="Max Label"
-        name="maxName"
-        rules={[
-          {
-            required: true,
-            max: 2,
-            message: 'Please input max 2.',
-          },
-        ]}
-      ></Form.Item>
-      <Button>Submit</Button>
-    </Form>
-  </>,
-  mountNode,
-);
-```
-
 ## API
 
-Type `formprops` inherited` rc-field-form` of `FormProps`;
+### Form Props
 
-| Parameter    | Description                                                                                                     | Type                            | Default value |
-| ------------ | --------------------------------------------------------------------------------------------------------------- | ------------------------------- | ------------- |
-| colon        | Indicates whether the colon is displayed behind` Label`                                                         | `boolean`                       | `true`        |
-| requiredMark | Must choose, you can switch to a must or optional display style                                                 | `boolean \| 'auto'`             | `auto`        |
-| labelAlign   | `Label` label text alignment                                                                                    | `'left' \| 'center' \| 'right'` | `left`        |
-| labelWidth   | `Label` label width                                                                                             | `string \| number`              | -             |
-| helpAlign    | Tip information text alignment                                                                                  | `'left' \| 'center' \| 'right'` | `left`        |
-| form         | The `form` control instance created by` form.useform (), will be created automatically when it is not available | `FormInstance`                  | `left`        |
+| Name             | Description                                                                                                    | Type                                                                  | Default      | Version |
+| ---------------- | -------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------- | ------------ | ------- |
+| colon            | Configure the default value of `colon` for Form.Item. Indicates whether the colon after the label is displayed | `boolean`                                                             | `true`       |         |
+| component        | Set the Form rendering element. Do not create a DOM node for `false`                                           | `false` \| `string` \| `React.FC<any>` \| `React.ComponentClass<any>` | `'form'`     |         |
+| form             | Form control instance created by `Form.useForm()`. Automatically created when not provide                      | `FormInstance`                                                        | -            |         |
+| initialValues    | Set value by Form initialization or reset                                                                      | `object`                                                              | -            |         |
+| labelAlign       | Label align                                                                                                    | `'left'` \| `'center'` \| `'right'`                                   | `'left'`     |         |
+| labelWidth       | Label width                                                                                                    | `number` \| `string`                                                  | `'6.2em'`    |         |
+| preserve         | Keep field value even when field removed                                                                       | `boolean`                                                             | -            |         |
+| requiredMark     | Required mark style. Can use required mark or optional mark.                                                   | `boolean` \| `'auto'`                                                 | `'auto'`     |         |
+| validateMessages | Validation prompt template                                                                                     | `FormValidateMessages`                                                | -            |         |
+| validateTrigger  | Config field validate trigger                                                                                  | `string` \| `string\[]`                                               | `'onChange'` |         |
 
-## FormItem API
+### FormValidateMessages
 
-Type `formprops` inherited` rc-field-form` of `FormProps`;
+Form provides[default verification error messages](https://github.com/react-component/field-form/blob/master/src/utils/messages.ts). You can modify the template by configuring validateMessages property. A common usage is to configure localization:
 
-| Parameter     | Description                                                     | Type                                                          | Default value |
-| ------------- | --------------------------------------------------------------- | ------------------------------------------------------------- | ------------- |
-| children      | Rendering function                                              | `((context: FormInstance<Values>) => ReactNode) \| ReactNode` | -             |
-| label         | Label text                                                      | `ReactNode`                                                   | -             |
-| labelWidth    | `label` label width                                             | `string \| number`                                            | -             |
-| labelAlign    | `label` label text alignment                                    | ` HTMLAttributes<HTMLDivElement>`                             | `left`        |
-| labelProps    | `label` Label properties                                        | `'left' \| 'center' \| 'right'`                               | `left`        |
-| controlPrefix | Input box head insertion                                        | `ReactNode`                                                   | -             |
-| controlSuffix | Input frame                                                     | `ReactNode`                                                   | -             |
-| controlProps  | Insert the content properties                                   | `HTMLAttributes<HTMLDivElement>`                              | -             |
-| colon         | Indicates whether the colon is displayed behind` Label`         | `boolean`                                                     | `true`        |
-| disabled      | Whether to disable forms                                        | `boolean`                                                     | `true`        |
-| requiredMark  | Must choose, you can switch to a must or optional display style | `boolean \| 'auto'`                                           | `auto`        |
-| helpAlign     | Tip information text alignment                                  | `'left' \| 'center' \| 'right'`                               | `left`        |
-| help          | Tip information                                                 | `string \| string[]`                                          | -             |
-| border        | `Cell` Border                                                   | `boolean`                                                     | `true`        |
-| itemsAlign    | Alignment                                                       | `'top' \| 'middle' \| 'bottom'`                               | -             |
-| clickable     | Will it click?                                                  | `boolean`                                                     | `false`       |
-| plain         | Pattern style                                                   | `boolean`                                                     | `false`       |
-| fieldProps    | Enter box properties                                            | `FieldProps`                                                  | `false`       |
+```tsx
+const validateMessages = {
+  required: "'${name}' is required!",
+  // ...
+};
 
-## Events
+<Form validateMessages={validateMessages} />;
+```
 
-| Event Name     | Description                                                        | Callback Arguments           |
-| -------------- | ------------------------------------------------------------------ | ---------------------------- |
-| onValuesChange | Trigger when the form content changes                              | Corresponding to `form.item` |
-| onFieldsChange | Trigger when the form content changes                              | Corresponding to `form.item` |
-| onFinish       | Form submission trigger (the default submission button is `button) | Form binding value           |
-| onFinishFailed | Trigger when submitting a form failure                             | Corresponding to `form.item` |
+### Form Events
 
-## FormList API
+| Event name     | Description                                                       | Type                                                   | Version |
+| -------------- | ----------------------------------------------------------------- | ------------------------------------------------------ | ------- |
+| onFieldsChange | Trigger when field updated                                        | `function(changedFields, allFields) => void`           |         |
+| onFinish       | Trigger after submitting the form and verifying data successfully | `function(values) => void`                             |         |
+| onFinishFailed | Trigger after submitting the form and verifying data failed       | `function({ values, errorFields, outOfDate }) => void` |         |
+| onValuesChange | Trigger when value updated                                        | `function(changedValues, allValues) => void`           |         |
 
-| Parameter       | Description                                                                       | Type                                                                                        | Default value |
-| --------------- | --------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | ------------- |
-| children        | Rendering function                                                                | `(fields: Field\[], operation: { add, remove, move }, meta: { errors }) => React.ReactNode` | -             |
-| initialValue    | Set sub-element default, if conflict with Form is accurate                        | `any[]`                                                                                     | -             |
-| name            | Field name, support array                                                         | `string \| string[] \| number \| number[]`                                                  | -             |
-| validateTrigger | Set trigger verification timing, must be form set` ValidateTrigger``` Morechange` | ``string \| string[] \|false`                                                               | -             |
-| rules           | Verification rules only support custom rules                                      | `ValidatorRule[]`                                                                           | -             |
+### Form.Item Props
 
-### Rules Data Structure
+Form.Item extends [`FieldProps`](#/en-US/components/field), and add the following props:
 
-类型 `Validator` 是 `(rule: RuleObject, value: StoreValue, callback: (error?: string) => void) => Promise<void | any> | void`;
+| Name         | Description                                                         | Type                  | Default  | Version |
+| ------------ | ------------------------------------------------------------------- | --------------------- | -------- | ------- |
+| colon        | Used with `label`, whether to display `:` after label text          | `boolean`             | `true`   |         |
+| requiredMark | Display required style. It will be generated by the validation rule | `boolean` \| `'auto'` | `'auto'` |         |
+| disabled     | Whether to disable Form.Item                                        | `boolean`             | -        |         |
+| plain        | Plain for `true`, used as a pure field control                      | `boolean`             | `false`  |         |
 
-| Parameter   | Description                                                                          | Type                  | Default value |
-| ----------- | ------------------------------------------------------------------------------------ | --------------------- | ------------- |
-| message     | Tip information                                                                      | `string \| ReactNode` | -             |
-| warningOnly | Warning only, does not block form                                                    | `boolean`             | -             |
-| validator   | (Required to fill the property) custom verification, receive promise as return value | `Validator`           | -             |
+More props references to [Antd - Form.Item](https://ant.design/components/form/#Form.Item)。
 
-### Form Instance Method
+### Form.List Props
 
-`const [form] = Form.useForm(); form.resetFields();`
-refer to `FormInstance` in `rc-field-form` Details: `https://github.com/react-component/field-form`
+Provides array management for fields.
 
-| Method Name      | Description                                               | Parameter        | Return Value |
-| ---------------- | --------------------------------------------------------- | ---------------- | ------------ |
-| resetFields()    | Reset form                                                | -                | -            |
-| setFieldsValue() | Custom form content`Name needs to be with`from.Item name` | `{name:string }` | -            |
-| getFieldValue()  | Get form content` Name` Needs to be with `from.Item name` | `{name:string }` | -            |
-
-### FormList Method
-
-`Form.list` Render form related operation functions.
-
-| Method Name | Description      | Parameter                              | Return Value |
-| ----------- | ---------------- | -------------------------------------- | ------------ |
-| add()       | New form item    | `(defaultValue?: any, index?: number)` | -            |
-| remove()    | Delete form item | `(index: number \| number[])`          | -            |
-| move()      | Mobile form      | `(from: number, to: number)`           | -            |
+| Name         | Description                                                                      | Type                                                                                       | Default | Version |
+| ------------ | -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ | ------- | ------- |
+| children     | Render function                                                                  | `(fields: Field[], operation: { add, remove, move }, meta: { errors }) => React.ReactNode` | -       |         |
+| initialValue | Config sub default value. Form `initialValues` get higher priority when conflict | `any[]`                                                                                    | -       |         |
+| name         | Field name, support array                                                        | `NamePath`                                                                                 | -       |         |
