@@ -323,14 +323,14 @@ There are three kinds of calendar:
 | monthTitle | Custom month title     | `boolean` \| `((date: Date) => ReactNode)`      | -       |         |
 | footer     | Custom Calendar footer | `ReactNode`                                     | -       |         |
 
-## Calendar Props
+### Calendar Props
 
 | Name         | Description                                                            | Type                           | Default | Version |
 | ------------ | ---------------------------------------------------------------------- | ------------------------------ | ------- | ------- |
 | defaultValue | Default value                                                          | `Date` \| `string` \| `number` | -       |         |
 | allowSameDay | Whether the start and end time of the range is allowed on the same day | `boolean`                      | `false` |         |
 
-## Calendar Events
+### Calendar Events
 
 | Event Name | Description                              | Type                    | Version |
 | ---------- | ---------------------------------------- | ----------------------- | ------- |
@@ -338,14 +338,14 @@ There are three kinds of calendar:
 | onCancel   | Triggered when the close icon is clicked | `() => void`            |         |
 | onChange   | Triggered when the active option changes | `(value: Date) => void` |         |
 
-## Calendar.Multi Props
+### Calendar.Multi Props
 
 | Name         | Description               | Type                              | Default | Version |
 | ------------ | ------------------------- | --------------------------------- | ------- | ------- |
 | defaultValue | Default value             | `Array<Date \| string \| number>` | -       |         |
 | maxSize      | Number of selectable days | `number`                          | -       |         |
 
-## Calendar.Multi Events
+### Calendar.Multi Events
 
 | Event Name | Description                              | Type                      | Version |
 | ---------- | ---------------------------------------- | ------------------------- | ------- |
@@ -354,14 +354,14 @@ There are three kinds of calendar:
 | onChange   | Triggered when the active option changes | `(value: Date[]) => void` |         |
 | onMaxSize  | Emitted when exceeded max size           | `() => void`              |         |
 
-## Calendar.Range Props
+### Calendar.Range Props
 
 | Name         | Description                  | Type                              | Default | Version |
 | ------------ | ---------------------------- | --------------------------------- | ------- | ------- |
 | defaultValue | Default value                | `Array<Date \| string \| number>` | -       |         |
 | maxSize      | Max count of selectable days | `number`                          | -       |         |
 
-## Calendar.Range Events
+### Calendar.Range Events
 
 | Event Name | Description                              | Type                      | Version |
 | ---------- | ---------------------------------------- | ------------------------- | ------- |
@@ -370,7 +370,7 @@ There are three kinds of calendar:
 | onChange   | Triggered when the active option changes | `(value: Date[]) => void` |         |
 | onMaxSize  | Emitted when exceeded max size           | `() => void`              |         |
 
-## Calendar Instance
+### Calendar Instance
 
 | Name  | Description    | Type         | Version |
 | ----- | -------------- | ------------ | ------- |

@@ -325,13 +325,13 @@ ReactDOM.render(
 | monthTitle | 月份标题               | `boolean` \| `((date: Date) => ReactNode)`      | -      |      |
 | footer     | 自定义底部区域内容     | `ReactNode`                                     | -      |      |
 
-## Calendar Props
+### Calendar Props
 
 | 名称         | 说明           | 类型                           | 默认值 | 版本 |
 | ------------ | -------------- | ------------------------------ | ------ | ---- |
 | defaultValue | 默认选中的日期 | `Date` \| `string` \| `number` | -      |      |
 
-## Calendar 事件
+### Calendar 事件
 
 | 名称      | 说明               | 类型                    | 版本 |
 | --------- | ------------------ | ----------------------- | ---- |
@@ -339,14 +339,14 @@ ReactDOM.render(
 | onCancel  | 点击关闭图标时触发 | `() => void`            |      |
 | onChange  | 选中项变化时触发   | `(value: Date) => void` |      |
 
-## Calendar.Multi Props
+### Calendar.Multi Props
 
 | 名称         | 说明               | 类型                              | 默认值 | 版本 |
 | ------------ | ------------------ | --------------------------------- | ------ | ---- |
 | defaultValue | 默认选中的日期     | `Array<Date \| string \| number>` | -      |      |
 | maxSize      | 选择的最大日期个数 | `number`                          | -      |      |
 
-## Calendar.Multi 事件
+### Calendar.Multi 事件
 
 | 名称      | 说明                           | 类型                      | 版本 |
 | --------- | ------------------------------ | ------------------------- | ---- |
@@ -355,7 +355,7 @@ ReactDOM.render(
 | onChange  | 选中项变化时触发               | `(value: Date[]) => void` |      |
 | onMaxSize | 范围选择超过最多可选天数时触发 | `() => void`              |      |
 
-## Calendar.Range Props
+### Calendar.Range Props
 
 | 名称         | 说明                           | 类型                              | 默认值  | 版本 |
 | ------------ | ------------------------------ | --------------------------------- | ------- | ---- |
@@ -363,7 +363,7 @@ ReactDOM.render(
 | allowSameDay | 是否可以选定开始和结束是同一天 | `boolean`                         | `false` |      |
 | maxSize      | 日期区间最多可选天数           | `number`                          | -       |      |
 
-## Calendar.Range 事件
+### Calendar.Range 事件
 
 | 名称      | 说明                           | 类型                      | 版本 |
 | --------- | ------------------------------ | ------------------------- | ---- |
@@ -372,7 +372,7 @@ ReactDOM.render(
 | onChange  | 选中项变化时触发               | `(value: Date[]) => void` |      |
 | onMaxSize | 范围选择超过最多可选天数时触发 | `() => void`              |      |
 
-## Calendar 实例方法
+### Calendar 实例方法
 
 | 名称  | 说明     | 类型         | 版本 |
 | ----- | -------- | ------------ | ---- |
