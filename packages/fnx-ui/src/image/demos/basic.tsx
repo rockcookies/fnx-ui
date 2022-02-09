@@ -18,6 +18,7 @@ const I18N: Dictionary<Dictionary<string>> = {
 	'zh-CN': {
 		basicUsage: '基础用法',
 		fitMode: '填充模式',
+		position: '位置',
 		round: '圆形图片',
 		radius: '圆角',
 		loading: '加载中提示',
@@ -29,6 +30,7 @@ const I18N: Dictionary<Dictionary<string>> = {
 	'en-US': {
 		basicUsage: 'Basic Usage',
 		fitMode: 'Fit Mode',
+		position: 'Position',
 		round: 'Round',
 		radius: 'Radius',
 		loading: 'Load Tip',
@@ -45,6 +47,12 @@ const IMAGE_FITS: ImageFit[] = [
 	'fill',
 	'none',
 	'scale-down',
+];
+
+const IMAGE_POSITION_LIST: Array<[ImageFit, string[]]> = [
+	['cover', ['left', 'center', 'right']],
+	['contain', ['top', 'center', 'bottom']],
+	['contain', ['10px', '10px 80%', 'center -1em']],
 ];
 
 export default function Basic(): ReturnType<React.FC> {
@@ -86,6 +94,25 @@ export default function Basic(): ReturnType<React.FC> {
 			</DemoBlock>
 			<DemoBlock cardMode={true} title={i18n.fitMode}>
 				<Row gutter={20}>{fitImages}</Row>
+			</DemoBlock>
+			<DemoBlock cardMode={true} title={i18n.position}>
+				{IMAGE_POSITION_LIST.map(([fit, position], idx) => (
+					<Row gutter={20} key={idx}>
+						{position.map((pos) => (
+							<Col span={8} key={pos}>
+								<Image
+									position={pos}
+									width="100%"
+									height="27vw"
+									fit={fit}
+									src={EXP_IMG}
+								/>
+								<div className="text">{fit}</div>
+								<div className="text">{pos}</div>
+							</Col>
+						))}
+					</Row>
+				))}
 			</DemoBlock>
 			<DemoBlock cardMode={true} title={i18n.round}>
 				<Row gutter={20}>{fitRoundImages}</Row>

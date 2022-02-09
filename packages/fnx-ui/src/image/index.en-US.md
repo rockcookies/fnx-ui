@@ -23,7 +23,7 @@ ReactDOM.render(
 
 ## Fit Mode
 
-You can set the picture filling mode through the `fit` attribute. The optional values are shown in the table below.
+You can set the picture filling mode through the `fit` and `position` attribute.
 
 ```tsx
 import { Image } from 'fnx-ui';
@@ -34,6 +34,7 @@ ReactDOM.render(
       width="10rem"
       height="10rem"
       fit="contain"
+      position="left"
       src="https://dummyimage.com/100x100/000/fff.jpg"
     />
   </>,
@@ -155,17 +156,18 @@ ReactDOM.render(
 
 ### Image Props
 
-| Name   | Description                       | Type                                                               | Default  | Version |
-| ------ | --------------------------------- | ------------------------------------------------------------------ | -------- | ------- |
-| src    | Image src                         | `string`                                                           | -        |         |
-| fit    | Fill mode                         | `'contain'` \| `'cover'` \| `'fill'` \| `'none'` \| `'scale-down'` | `'fill'` |         |
-| alt    | Alternate text                    | `string`                                                           | -        |         |
-| width  | Width, default unit `px`          | `number` \| `string`                                               | -        |         |
-| height | Height, default unit `px`         | `number` \| `string`                                               | -        |         |
-| radius | Fillet size, default unit is `px` | `number` \| `string`                                               | `0`      |         |
-| round  | Whether to be round               | `boolean`                                                          | `false`  |         |
-| lazy   | Whether to enable lazy load       | `boolean`                                                          | `false`  | 0.0.10  |
-| slots  | Image slots                       | `ImageSlots`                                                       | -        |         |
+| Name     | Description                                                                                                        | Type                                                               | Default  | Version |
+| -------- | ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------ | -------- | ------- |
+| src      | Image src                                                                                                          | `string`                                                           | -        |         |
+| fit      | Fill mode                                                                                                          | `'contain'` \| `'cover'` \| `'fill'` \| `'none'` \| `'scale-down'` | `'fill'` |         |
+| position | Position, can be set to `center` `top` `right` `bottom` `left` or `string` ( same as values of `object-position` ) | `string`                                                           | `center` | 0.0.11  |
+| alt      | Alternate text                                                                                                     | `string`                                                           | -        |         |
+| width    | Width, default unit `px`                                                                                           | `number` \| `string`                                               | -        |         |
+| height   | Height, default unit `px`                                                                                          | `number` \| `string`                                               | -        |         |
+| radius   | Fillet size, default unit is `px`                                                                                  | `number` \| `string`                                               | `0`      |         |
+| round    | Whether to be round                                                                                                | `boolean`                                                          | `false`  |         |
+| lazy     | Whether to enable lazy load                                                                                        | `boolean`                                                          | `false`  | 0.0.10  |
+| slots    | Image slots                                                                                                        | `ImageSlots`                                                       | -        |         |
 
 ### ImageSlots
 

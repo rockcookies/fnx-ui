@@ -46,6 +46,7 @@ const Image = createForwardRef<HTMLSpanElement, ImageProps>(
 			{
 				src: _src,
 				width,
+				position,
 				height,
 				alt,
 				round,
@@ -130,6 +131,7 @@ const Image = createForwardRef<HTMLSpanElement, ImageProps>(
 						alt={alt}
 						style={{
 							objectFit: fit,
+							objectPosition: position,
 						}}
 						onLoad={(e) => {
 							setLoaded(true);

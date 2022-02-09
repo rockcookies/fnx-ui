@@ -23,7 +23,7 @@ ReactDOM.render(
 
 ## 填充模式
 
-通过 `fit` 属性可以设置图片填充模式，可选值见下方表格。
+通过 `position` 属性可以设置图片位置，结合`fit`属性使用，可选值见下方表格，同[`object-position`](https://developer.mozilla.org/zh-CN/docs/Web/CSS/object-position)属性。
 
 ```tsx
 import { Image } from 'fnx-ui';
@@ -34,6 +34,7 @@ ReactDOM.render(
       width="10rem"
       height="10rem"
       fit="contain"
+      position="left"
       src="https://dummyimage.com/100x100/000/fff.jpg"
     />
   </>,
@@ -155,17 +156,18 @@ ReactDOM.render(
 
 ### Image Props
 
-| 名称   | 说明                     | 类型                                                               | 默认值   | 版本   |
-| ------ | ------------------------ | ------------------------------------------------------------------ | -------- | ------ |
-| src    | 图片链接                 | `string`                                                           | -        |        |
-| fit    | 图片填充模式             | `'contain'` \| `'cover'` \| `'fill'` \| `'none'` \| `'scale-down'` | `'fill'` |        |
-| alt    | 替代文本                 | `string`                                                           | -        |        |
-| width  | 宽度，默认单位为`px`     | `number` \| `string`                                               | -        |        |
-| height | 高度，默认单位为`px`     | `number` \| `string`                                               | -        |        |
-| radius | 圆角大小，默认单位为`px` | `number` \| `string`                                               | `0`      |        |
-| round  | 是否显示为圆形           | `boolean`                                                          | `false`  |        |
-| lazy   | 是否开启图片懒加载       | `boolean`                                                          | `false`  | 0.0.10 |
-| slots  | 图片插槽                 | `ImageSlots`                                                       | -        |        |
+| 名称     | 说明                                                                                         | 类型                                                               | 默认值   | 版本   |
+| -------- | -------------------------------------------------------------------------------------------- | ------------------------------------------------------------------ | -------- | ------ |
+| src      | 图片链接                                                                                     | `string`                                                           | -        |        |
+| fit      | 图片填充模式                                                                                 | `'contain'` \| `'cover'` \| `'fill'` \| `'none'` \| `'scale-down'` | `'fill'` |        |
+| position | 图片位置，可选值为 `center` `top` `right` `bottom` `left` 或 `string`( 同`object-position` ) | `string`                                                           | `center` | 0.0.11 |
+| alt      | 替代文本                                                                                     | `string`                                                           | -        |        |
+| width    | 宽度，默认单位为`px`                                                                         | `number` \| `string`                                               | -        |        |
+| height   | 高度，默认单位为`px`                                                                         | `number` \| `string`                                               | -        |        |
+| radius   | 圆角大小，默认单位为`px`                                                                     | `number` \| `string`                                               | `0`      |        |
+| round    | 是否显示为圆形                                                                               | `boolean`                                                          | `false`  |        |
+| lazy     | 是否开启图片懒加载                                                                           | `boolean`                                                          | `false`  | 0.0.10 |
+| slots    | 图片插槽                                                                                     | `ImageSlots`                                                       | -        |        |
 
 ### ImageSlots
 

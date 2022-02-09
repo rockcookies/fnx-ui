@@ -120,4 +120,12 @@ describe('<Image/>', () => {
 
 		expect(container).toMatchSnapshot();
 	});
+
+	it('should render image position', () => {
+		const { container } = render(
+			<Image src={EXP_IMG} fit="cover" position="left" />,
+		);
+
+		expect(container).toMatchSnapshot();
+	});
 });
