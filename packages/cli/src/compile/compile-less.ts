@@ -22,7 +22,7 @@ export const getPostcss = ({ minify }) => {
 						restructure: false,
 						debug: false,
 						comments: false,
-					}),
+					} as any),
 			  ]
 			: []),
 	]);
