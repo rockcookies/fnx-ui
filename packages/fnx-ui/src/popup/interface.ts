@@ -1,4 +1,5 @@
 import {
+	Context,
 	CSSProperties,
 	ForwardRefExoticComponent,
 	HTMLAttributes,
@@ -28,6 +29,7 @@ export interface PopupComponentProps {
 	lockScroll?: boolean;
 	position?: PopupPosition;
 	round?: boolean;
+	safeAreaInsetTop?: boolean;
 	safeAreaInsetBottom?: boolean;
 	overlay?: boolean;
 	overlayClassName?: string;
@@ -41,6 +43,10 @@ export interface PopupComponentProps {
 	onBeforeShow?: () => void;
 	onShow?: () => void;
 	onAfterShow?: () => void;
+}
+
+export interface PopupContextData {
+	visible: boolean;
 }
 
 export type PopupProps = PopupComponentProps & HTMLAttributes<HTMLDivElement>;
@@ -68,4 +74,6 @@ export type PopupSelectProps<T = any> = PopupSelectComponentProps<T> &
 export interface PopupExportExtra {
 	Portal: typeof Portal;
 	Select: typeof PopupSelect;
+	useOnPopupOpen: (callback: () => void) => void;
+	Context: Context<PopupContextData>;
 }

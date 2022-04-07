@@ -10,8 +10,8 @@ import React, {
 } from 'react';
 import configComponentProps from '../hooks/config-component-props';
 import useDefaultsRef from '../hooks/use-defaults-ref';
-import usePopupReopen from '../hooks/use-popup-reopen';
 import useWindowSize from '../hooks/use-window-size';
+import useOnPopupOpen from '../popup/hooks/use-on-popup-open';
 import {
 	bindEvent,
 	listenDocumentVisibilityChange,
@@ -187,7 +187,7 @@ const Swipe = createForwardRef<SwipeRef, SwipeProps>('Swipe', (_props, ref) => {
 		reset(reload);
 	}, [swipeLength, windowSize, startAutoplay, reload, stopAutoplay, reset]);
 
-	usePopupReopen(() => doubleRaf(() => reset(reload)));
+	useOnPopupOpen(() => doubleRaf(() => reset(reload)));
 
 	useEffect(() => {
 		const node = wrapperRef.current;

@@ -3,7 +3,7 @@
 exports[`<ConfigProvider /> test provider 1`] = `
 <div>
   <pre>
-    {"locale":"zh-CN","safeAreaInsetBottom":false,"transitionDuration":600}
+    {"locale":"zh-CN","safeAreaInsetTop":false,"safeAreaInsetBottom":false,"transitionDuration":600}
   </pre>
 </div>
 `;
@@ -11,7 +11,7 @@ exports[`<ConfigProvider /> test provider 1`] = `
 exports[`<ConfigProvider /> test-inheritance 1`] = `
 <div>
   <pre>
-    {"count":1,"locale":"zh-CN","safeAreaInsetBottom":true,"transitionDuration":500}
+    {"count":1,"locale":"zh-CN","safeAreaInsetTop":false,"safeAreaInsetBottom":true,"transitionDuration":500}
   </pre>
 </div>
 `;
@@ -19,7 +19,7 @@ exports[`<ConfigProvider /> test-inheritance 1`] = `
 exports[`<ConfigProvider /> test-inheritance 2`] = `
 <div>
   <pre>
-    {"count":1,"locale":"zh-CN","safeAreaInsetBottom":true,"transitionDuration":500}
+    {"count":1,"locale":"zh-CN","safeAreaInsetTop":false,"safeAreaInsetBottom":true,"transitionDuration":500}
   </pre>
 </div>
 `;

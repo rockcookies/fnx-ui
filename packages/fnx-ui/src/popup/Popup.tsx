@@ -12,12 +12,12 @@ import ConfigProvider from '../config-provider';
 import { DEFAULT_CONFIG_CONTEXT } from '../config-provider/context';
 import configComponentProps from '../hooks/config-component-props';
 import useDefaults from '../hooks/use-defaults';
-import { PopupVisibleContext } from '../hooks/use-popup-reopen';
 import useScrollLock from '../hooks/use-scroll-lock';
 import Overlay from '../overlay';
 import { noop } from '../utils/misc';
 import { classnames, createBEM } from '../utils/namespace';
 import { createForwardRef } from '../utils/react';
+import { PopupContext } from './context';
 import { PopupProps } from './interface';
 import Portal from './Portal';
 
@@ -95,6 +95,7 @@ const Popup = createForwardRef<HTMLDivElement, PopupProps>(
 				transitionDuration: _transitionDuration,
 				transitionName,
 				round,
+				safeAreaInsetTop: _safeAreaInsetTop,
 				safeAreaInsetBottom: _safeAreaInsetBottom,
 				overlayClassName,
 				overlayStyle,
@@ -122,6 +123,11 @@ const Popup = createForwardRef<HTMLDivElement, PopupProps>(
 		const safeAreaInsetBottom = useDefaults(
 			configContext.safeAreaInsetBottom,
 			_safeAreaInsetBottom,
+		);
+
+		const safeAreaInsetTop = useDefaults(
+			configContext.safeAreaInsetTop,
+			_safeAreaInsetTop,
 		);
 
 		const formattedTransitionName = useMemo(() => {
@@ -175,7 +181,7 @@ const Popup = createForwardRef<HTMLDivElement, PopupProps>(
 				mountTo={mountTo}
 				visible={visible || rendering}
 			>
-				<PopupVisibleContext.Provider
+				<PopupContext.Provider
 					value={{ visible: visible || rendering }}
 				>
 					<>
@@ -220,6 +226,7 @@ const Popup = createForwardRef<HTMLDivElement, PopupProps>(
 										round,
 										[position]: position,
 									}),
+									safeAreaInsetTop && 'fnx-safe-area-top',
 									safeAreaInsetBottom &&
 										'fnx-safe-area-bottom',
 									className,
@@ -232,7 +239,7 @@ const Popup = createForwardRef<HTMLDivElement, PopupProps>(
 							</div>
 						</CSSTransition>
 					</>
-				</PopupVisibleContext.Provider>
+				</PopupContext.Provider>
 			</Portal>
 		);
 	},

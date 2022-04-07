@@ -13,10 +13,10 @@ import useCreation from '../hooks/use-creation';
 import useDefaultsRef from '../hooks/use-defaults-ref';
 import useGetState from '../hooks/use-get-state';
 import useMount from '../hooks/use-mount';
-import usePopupReopen from '../hooks/use-popup-reopen';
 import useUpdateEffect from '../hooks/use-update-effect';
 import Icon from '../icon';
 import { useLocale } from '../locale';
+import useOnPopupOpen from '../popup/hooks/use-on-popup-open';
 import { isDate } from '../utils/detect';
 import { getScrollTop } from '../utils/dom/scroll';
 import { addUnit, clamp } from '../utils/format';
@@ -401,7 +401,7 @@ const CalendarContainer = createForwardRef<CalendarRef, CProps>(
 			}
 		}, []);
 
-		usePopupReopen(() => {
+		useOnPopupOpen(() => {
 			const activeIndex = isDate(value[0])
 				? months.findIndex(
 						(month) => compareMonth(month, value[0]) === 0,

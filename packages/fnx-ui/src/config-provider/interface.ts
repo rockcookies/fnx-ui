@@ -3,6 +3,7 @@ import { Locale } from '../locale/interface';
 
 export interface ConfigContextData {
 	locale: Locale;
+	safeAreaInsetTop: boolean;
 	safeAreaInsetBottom: boolean;
 	transitionDuration: number;
 	mountTo: () => HTMLElement;

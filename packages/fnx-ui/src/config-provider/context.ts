@@ -4,6 +4,7 @@ import { ConfigContextData } from './interface';
 
 export const DEFAULT_CONFIG_CONTEXT: ConfigContextData = {
 	locale: defaultLocale,
+	safeAreaInsetTop: false,
 	safeAreaInsetBottom: false,
 	transitionDuration: 300,
 	mountTo: () => document.body,

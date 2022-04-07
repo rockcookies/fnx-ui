@@ -8,7 +8,6 @@ import React, {
 } from 'react';
 import useDefaultsRef from '../hooks/use-defaults-ref';
 import useUnmountedRef from '../hooks/use-unmounted-ref';
-import usePopupReopen from '../hooks/use-popup-reopen';
 import Icon from '../icon';
 import { getElementRect } from '../utils/dom/style';
 import { classnames, createBEM } from '../utils/namespace';
@@ -16,6 +15,7 @@ import { NoticeBarProps, NoticeBarRef } from './interface';
 import { doubleRaf } from '../utils/raf';
 import { createForwardRef } from '../utils/react';
 import configComponentProps from '../hooks/config-component-props';
+import useOnPopupOpen from '../popup/hooks/use-on-popup-open';
 
 const NS = 'fnx-notice-bar';
 const bem = createBEM(NS);
@@ -111,7 +111,7 @@ const NoticeBar = createForwardRef<NoticeBarRef, NoticeBarProps>(
 			}, Math.max(propsRef.current.marqueeDelay, 0));
 		}, [marquee, visible, propsRef, unmountedRef]);
 
-		usePopupReopen(() => {
+		useOnPopupOpen(() => {
 			doubleRaf(reset);
 		});
 
