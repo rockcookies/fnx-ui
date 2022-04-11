@@ -89,7 +89,7 @@ const Icon = createForwardRef<HTMLSpanElement, IconProps>(
 		const {
 			className,
 			name,
-			component: SvgComponent,
+			component,
 			spin,
 			children,
 			viewBox,
@@ -98,6 +98,8 @@ const Icon = createForwardRef<HTMLSpanElement, IconProps>(
 			style,
 			...rest
 		} = props;
+
+		const SvgComponent: any = component;
 
 		let icon: ReactNode;
 

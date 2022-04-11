@@ -1,6 +1,5 @@
-import { Field as RcField } from 'rc-field-form';
-import FieldContext from 'rc-field-form/lib/FieldContext';
-import { Meta } from 'rc-field-form/lib/interface';
+import { Field as RcField, FieldContext } from 'rc-field-form';
+import { InternalFormInstance, Meta } from 'rc-field-form/lib/interface';
 import React, {
 	cloneElement,
 	isValidElement,
@@ -40,7 +39,7 @@ const useProps = configComponentProps<
 
 const FormItem = createFC<FormItemProps>('FormItem', (_props) => {
 	const formContext = useContext(FormContext);
-	const fieldContext = useContext(FieldContext);
+	const fieldContext = useContext<InternalFormInstance>(FieldContext as any);
 
 	const [
 		{ trigger, valuePropName },

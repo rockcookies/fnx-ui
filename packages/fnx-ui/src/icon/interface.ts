@@ -1,14 +1,25 @@
-import { ComponentType, HTMLAttributes, SVGAttributes, SVGProps } from 'react';
+import {
+	ComponentType,
+	ForwardRefExoticComponent,
+	HTMLAttributes,
+	SVGAttributes,
+	SVGProps,
+} from 'react';
 import Icon from './Icon';
 import IconSpinner from './IconSpinner';
 
-export interface IconComponentProps {
+export interface IconCustomComponentProps {
 	name?: string;
-	component?: ComponentType<SVGProps<SVGSVGElement>>;
 	viewBox?: string;
 	spin?: boolean;
 	size?: string | number;
 	color?: string;
+}
+
+export interface IconComponentProps extends IconCustomComponentProps {
+	component?:
+		| ComponentType<IconCustomComponentProps | SVGProps<SVGSVGElement>>
+		| ForwardRefExoticComponent<IconCustomComponentProps>;
 }
 
 export type IconProps = IconComponentProps & HTMLAttributes<HTMLSpanElement>;

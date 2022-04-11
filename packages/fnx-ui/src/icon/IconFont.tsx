@@ -43,7 +43,7 @@ export function createFromIconfontCN(
 			const {
 				className,
 				name,
-				component: SvgComponent,
+				component,
 				spin,
 				children,
 				viewBox,
@@ -52,6 +52,8 @@ export function createFromIconfontCN(
 				style,
 				...rest
 			} = props;
+
+			const SvgComponent: any = component;
 
 			let icon: ReactNode;
 

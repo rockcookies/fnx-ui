@@ -59,6 +59,7 @@ async function compileLessEntry(cwd: string): Promise<void> {
 							relative(file.path),
 						)}`,
 					);
+					this.push(file);
 					cb();
 				}),
 			)

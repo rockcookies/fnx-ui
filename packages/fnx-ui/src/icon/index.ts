@@ -8,6 +8,7 @@ Icon.createFromIconfontCN = createFromIconfontCN;
 Icon.Spinner = IconSpinner;
 
 export type {
+	IconCustomComponentProps,
 	IconComponentProps,
 	IconProps,
 	IconSpinnerComponentProps,
