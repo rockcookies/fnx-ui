@@ -7,6 +7,8 @@ import busyImg from '../../../site/assets/empty-busy.svg';
 import disconnectedImg from '../../../site/assets/empty-disconnected.svg';
 // @ts-ignore
 import notFoundImg from '../../../site/assets/empty-not-found.svg';
+// @ts-ignore
+import demoDoge from '../../../site/assets/demo-doge.png';
 import DemoBlock from '../../../site/components/DemoBlock';
 import useDemoTranslate from '../../../site/hooks/use-demo-translate';
 import Button from '../../button';
@@ -23,6 +25,7 @@ const I18N: Dictionary<Dictionary> = {
 		title: '前方拥堵',
 		description: '刷新试试',
 		customImage: '自定义图片',
+		customImageProps: '自定义图片属性',
 		customChildren: '底部内容',
 		button: '按钮',
 		tabs: {
@@ -56,6 +59,7 @@ const I18N: Dictionary<Dictionary> = {
 		title: 'Oops, not loading',
 		description: 'Try to refresh the page',
 		customImage: 'Custom Image',
+		customImageProps: 'Custom Image Props',
 		customChildren: 'Bottom Content',
 		button: 'Button',
 		tabs: {
@@ -112,6 +116,18 @@ export default function Basic(): ReturnType<React.FC> {
 						},
 					)}
 				</Tabs>
+			</DemoBlock>
+			<DemoBlock title={i18n.customImageProps}>
+				<Empty
+					image={demoDoge}
+					imageProps={{
+						style: {
+							borderRadius: '50%',
+							background: 'var(--fnx-gray-75)',
+						},
+					}}
+					description={i18n.description}
+				/>
 			</DemoBlock>
 			<DemoBlock title={i18n.customChildren}>
 				<Empty title={i18n.title} description={i18n.description}>

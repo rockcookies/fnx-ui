@@ -21,6 +21,7 @@
 	--fnx-calendar-month-mark-font-size: 160px;
 	--fnx-calendar-day-height: 64px;
 	--fnx-calendar-day-font-size: var(--fnx-font-size-lg);
+	--fnx-calendar-day-margin-bottom: 4px;
 	--fnx-calendar-range-edge-color: var(--fnx-white-color);
 	--fnx-calendar-range-edge-background: var(--fnx-primary-color);
 	--fnx-calendar-range-middle-color: var(--fnx-primary-color);
@@ -124,6 +125,7 @@
 	&__days-cell {
 		position: relative;
 		width: 14.285%;
+		margin-bottom: var(--fnx-calendar-day-margin-bottom);
 		font-size: var(--fnx-calendar-day-font-size);
 		cursor: pointer;
 	}

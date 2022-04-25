@@ -144,18 +144,37 @@ const Rate = createForwardRef<HTMLUListElement, RateProps>(
 
 			const touch = new TouchHelper();
 
-			let ranges: Array<[number, number]> = [];
+			let ranges: Array<{
+				score: number;
+				left: number;
+				top: number;
+				height: number;
+			}> = [];
+			let nodeRect: DOMRect;
+			let minRectTop = Number.MAX_SAFE_INTEGER;
+			let maxRectTop = Number.MIN_SAFE_INTEGER;
 			let allowHalf = false;
 
-			const getScoreByPosition = (x: number) => {
-				for (let i = ranges.length - 1; i >= 0; i--) {
-					const [score, left] = ranges[i];
+			const getScoreByPosition = (x: number, y: number) => {
+				for (let i = ranges.length - 1; i > 0; i--) {
+					if (y >= nodeRect.top && y <= nodeRect.bottom) {
+						if (
+							x > ranges[i].left &&
+							y >= ranges[i].top &&
+							y <= ranges[i].top + ranges[i].height
+						) {
+							return ranges[i].score;
+						}
+					} else {
+						const curTop =
+							y < nodeRect.top ? minRectTop : maxRectTop;
 
-					if (x > left) {
-						return score;
+						if (x > ranges[i].left && ranges[i].top === curTop) {
+							return ranges[i].score;
+						}
 					}
 				}
-				return 0;
+				return allowHalf ? 0.5 : 1;
 			};
 
 			const onTouchStart = (event: TouchEvent) => {
@@ -164,23 +183,40 @@ const Rate = createForwardRef<HTMLUListElement, RateProps>(
 				const { count, allowHalf: _allowHalf } = propsRef.current;
 
 				allowHalf = _allowHalf;
+				nodeRect = node.getBoundingClientRect();
 				ranges = [];
 
 				for (let i = 0; i < count; i++) {
 					const star = starRefs.current[i];
-					const rect = star && star.getBoundingClientRect();
+					const r = star
+						? star.getBoundingClientRect()
+						: { top: 0, left: 0, height: 0, width: 0 };
 
-					if (!rect) {
-						continue;
-					}
+					minRectTop = Math.min(r.top, minRectTop);
+					maxRectTop = Math.max(r.top, maxRectTop);
 
 					if (allowHalf) {
 						ranges.push(
-							[i + 0.5, rect.left],
-							[i + 1, rect.left + rect.width / 2],
+							{
+								score: i + 0.5,
+								left: r.left,
+								top: r.top,
+								height: r.height,
+							},
+							{
+								score: i + 1,
+								left: r.left + r.width / 2,
+								top: r.top,
+								height: r.height,
+							},
 						);
 					} else {
-						ranges.push([i + 1, rect.left]);
+						ranges.push({
+							score: i + 1,
+							left: r.left,
+							top: r.top,
+							height: r.height,
+						});
 					}
 				}
 			};
@@ -191,9 +227,11 @@ const Rate = createForwardRef<HTMLUListElement, RateProps>(
 				touch.move(event);
 
 				if (touch.isHorizontal()) {
-					const { clientX } = event.touches[0];
+					const { clientX, clientY } = event.touches[0];
 					preventDefault(event);
-					handleChangeRef.current(getScoreByPosition(clientX));
+					handleChangeRef.current(
+						getScoreByPosition(clientX, clientY),
+					);
 				}
 			};
 

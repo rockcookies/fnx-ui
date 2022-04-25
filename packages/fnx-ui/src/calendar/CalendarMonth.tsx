@@ -243,6 +243,7 @@ const CalendarMonth = createForwardRef<CalendarMonthRef, CProps>(
 						style={{
 							marginLeft:
 								i === 1 ? `${(100 * offset) / 7}%` : undefined,
+							marginBottom: offset + i > 28 ? 0 : undefined,
 						}}
 						onClick={() => {
 							onClickDay && onClickDay(day);

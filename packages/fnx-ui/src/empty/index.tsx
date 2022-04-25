@@ -9,20 +9,36 @@ const bem = createBEM(NS);
 
 const Empty = createForwardRef<HTMLDivElement, EmptyProps>(
 	'Empty',
-	({ image, title, description, className, children, ...restProps }, ref) => {
+	(
+		{
+			image,
+			imageProps,
+			title,
+			description,
+			className,
+			children,
+			...restProps
+		},
+		ref,
+	) => {
 		const renderImage = () => {
-			if (image === null || image === false) {
+			if (image === false) {
 				return;
 			}
 
-			const element =
-				typeof image === 'string' ? (
-					<img src={image} />
-				) : (
-					image || <EmptyImage />
+			if (image == null || typeof image === 'string') {
+				return (
+					<div className={bem('image')}>
+						{image == null ? (
+							<EmptyImage />
+						) : (
+							<img {...imageProps} src={image} />
+						)}
+					</div>
 				);
-
-			return <div className={bem('image')}>{element}</div>;
+			} else {
+				return image;
+			}
 		};
 
 		return (

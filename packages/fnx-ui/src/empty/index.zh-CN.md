@@ -46,6 +46,27 @@ ReactDOM.render(
 );
 ```
 
+## 自定义图片属性
+
+使用 `imageProps` 属性自定义图片的属性。
+
+```tsx
+import { Button, Empty } from 'fnx-ui';
+
+ReactDOM.render(
+  <>
+    <Empty
+      image="https://dummyimage.com/200x200/000/fff.jpg"
+      imageProps={{
+        borderRadius: '50%',
+      }}
+      description="Description"
+    />
+  </>,
+  mountNode,
+);
+```
+
 ## 底部内容
 
 通过 `children` 属性在 Empty 组件增加附属内容。

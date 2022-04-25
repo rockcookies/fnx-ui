@@ -1,5 +1,22 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`<Empty/> should allow to set image props by imageProps prop 1`] = `
+<div>
+  <div
+    class="fnx-empty"
+  >
+    <div
+      class="fnx-empty__image"
+    >
+      <img
+        src="Custom Image"
+        style="border-radius: 50%;"
+      />
+    </div>
+  </div>
+</div>
+`;
+
 exports[`<Empty/> should render children correctly 1`] = `
 <div>
   <div
@@ -520,7 +537,7 @@ exports[`<Empty/> should render description correctly 1`] = `
 
 exports[`<Empty/> should render description correctly 2`] = `undefined`;
 
-exports[`<Empty/> should render image == null correctly 1`] = `
+exports[`<Empty/> should render image === false correctly 1`] = `
 <div>
   <div
     class="fnx-empty"

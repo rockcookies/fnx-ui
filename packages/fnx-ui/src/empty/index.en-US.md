@@ -46,6 +46,29 @@ ReactDOM.render(
 );
 ```
 
+## Custom Image Props
+
+Using `imageProps` prop to custom the props of image.
+
+```tsx
+import { Button, Empty } from 'fnx-ui';
+
+ReactDOM.render(
+  <>
+    <Empty
+      image="https://dummyimage.com/200x200/000/fff.jpg"
+      imageProps={{
+        style: {
+          borderRadius: '50%',
+        },
+      }}
+      description="Description"
+    />
+  </>,
+  mountNode,
+);
+```
+
 ## Custom
 
 Use `children` prop to custom extra content.

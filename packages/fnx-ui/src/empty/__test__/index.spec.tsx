@@ -9,8 +9,21 @@ describe('<Empty/>', () => {
 		expect(container).toMatchSnapshot();
 	});
 
-	it('should render image == null correctly', () => {
-		const { container } = render(<Empty image={null} />);
+	it('should render image === false correctly', () => {
+		const { container } = render(<Empty image={false} />);
+
+		expect(container).toMatchSnapshot();
+	});
+
+	test('should allow to set image props by imageProps prop', async () => {
+		const { container } = render(
+			<Empty
+				image="Custom Image"
+				imageProps={{
+					style: { borderRadius: '50%' },
+				}}
+			/>,
+		);
 
 		expect(container).toMatchSnapshot();
 	});

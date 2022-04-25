@@ -1,7 +1,8 @@
-import { HTMLAttributes, ReactNode } from 'react';
+import { HTMLAttributes, ImgHTMLAttributes, ReactNode } from 'react';
 
 export interface EmptyComponentProps {
 	image?: ReactNode;
+	imageProps?: ImgHTMLAttributes<HTMLImageElement>;
 	title?: ReactNode;
 	description?: ReactNode;
 }
