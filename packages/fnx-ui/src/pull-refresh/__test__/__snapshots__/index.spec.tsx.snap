@@ -59,6 +59,8 @@ exports[`<PullRefresh/> should render different head content in different pullin
         class="fnx-pull-refresh__indicator"
       >
         <span
+          aria-busy="true"
+          aria-live="polite"
           class="fnx-loading"
         >
           <span
@@ -107,6 +109,8 @@ exports[`<PullRefresh/> should render different head content in different pullin
         class="fnx-pull-refresh__indicator"
       >
         <span
+          aria-busy="true"
+          aria-live="polite"
           class="fnx-loading"
         >
           <span

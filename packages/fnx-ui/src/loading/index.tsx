@@ -38,6 +38,8 @@ const Loading = createForwardRef<HTMLSpanElement, LoadingProps>(
 			<span
 				className={classnames(bem({ vertical }), className)}
 				style={formatStyle()}
+				aria-live="polite"
+				aria-busy={true}
 				{...restProps}
 				ref={ref}
 			>

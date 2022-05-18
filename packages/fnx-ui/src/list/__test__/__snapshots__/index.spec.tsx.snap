@@ -58,6 +58,8 @@ exports[`<List/> should render loading tip correctly and do not trigger onLoad 1
       class="fnx-list__indicator"
     >
       <span
+        aria-busy="true"
+        aria-live="polite"
         class="fnx-loading"
       >
         <span

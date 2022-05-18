@@ -3,6 +3,8 @@
 exports[`<Loading/> should set color correctly 1`] = `
 <div>
   <span
+    aria-busy="true"
+    aria-live="polite"
     class="fnx-loading"
     style="color: rgb(25, 137, 250);"
   >
@@ -39,6 +41,8 @@ exports[`<Loading/> should set color correctly 1`] = `
 exports[`<Loading/> should set size correctly 1`] = `
 <div>
   <span
+    aria-busy="true"
+    aria-live="polite"
     class="fnx-loading"
   >
     <span
@@ -74,6 +78,8 @@ exports[`<Loading/> should set size correctly 1`] = `
 exports[`<Loading/> should set textColor correctly 1`] = `
 <div>
   <span
+    aria-busy="true"
+    aria-live="polite"
     class="fnx-loading"
   >
     <span
@@ -109,6 +115,8 @@ exports[`<Loading/> should set textColor correctly 1`] = `
 exports[`<Loading/> should set textSize correctly 1`] = `
 <div>
   <span
+    aria-busy="true"
+    aria-live="polite"
     class="fnx-loading"
   >
     <span
