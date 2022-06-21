@@ -11,6 +11,7 @@ import ConfigProvider from '../config-provider';
 import configComponentProps from '../hooks/config-component-props';
 import useDefaults from '../hooks/use-defaults';
 import useDefaultsRef from '../hooks/use-defaults-ref';
+import useUpdateEffect from '../hooks/use-update-effect';
 import Loading from '../loading';
 import { useLocale } from '../locale';
 import { bindEvent, preventDefault } from '../utils/dom/event';
@@ -19,19 +20,16 @@ import TouchHelper from '../utils/dom/touch-helper';
 import { noop } from '../utils/misc';
 import { classnames, createBEM } from '../utils/namespace';
 import { createForwardRef } from '../utils/react';
-import { PullRefreshComponentProps, PullRefreshProps } from './interface';
+import {
+	PullRefreshComponentProps,
+	PullRefreshProps,
+	PullRefreshStatus,
+} from './interface';
 
 const NS = 'fnx-pull-refresh';
 const bem = createBEM(NS);
 
 const DEFAULT_INDICATOR_HEIGHT = 50;
-
-type PullRefreshStatus =
-	| 'normal'
-	| 'loading'
-	| 'loosing'
-	| 'pulling'
-	| 'success';
 
 const useProps = configComponentProps<
 	Required<
@@ -43,6 +41,7 @@ const useProps = configComponentProps<
 			| 'indicatorHeight'
 			| 'refreshing'
 			| 'onRefresh'
+			| 'onChange'
 		>
 	>
 >({
@@ -52,6 +51,7 @@ const useProps = configComponentProps<
 	indicatorHeight: DEFAULT_INDICATOR_HEIGHT,
 	refreshing: false,
 	onRefresh: noop,
+	onChange: noop,
 });
 
 const PullRefresh = createForwardRef<HTMLDivElement, PullRefreshProps>(
@@ -68,6 +68,7 @@ const PullRefresh = createForwardRef<HTMLDivElement, PullRefreshProps>(
 				indicatorHeight,
 				refreshing,
 				onRefresh,
+				onChange,
 			},
 			{
 				transitionDuration: _transitionDuration,
@@ -91,6 +92,7 @@ const PullRefresh = createForwardRef<HTMLDivElement, PullRefreshProps>(
 			indicatorHeight,
 			refreshing,
 			onRefresh,
+			onChange,
 		});
 
 		const rootRef = useRef<HTMLDivElement>(null);
@@ -263,6 +265,10 @@ const PullRefresh = createForwardRef<HTMLDivElement, PullRefreshProps>(
 			};
 		}, []);
 
+		useUpdateEffect(() => {
+			propsRef.current.onChange({ status });
+		}, [propsRef, status]);
+
 		const getIndicatorStyle = (): CSSProperties => {
 			const formattedStyle: CSSProperties = {};
 
@@ -335,6 +341,7 @@ export type {
 	PullRefreshIndicatorNode,
 	PullRefreshProps,
 	PullRefreshSlots,
+	PullRefreshStatus,
 } from './interface';
 
 export default PullRefresh;

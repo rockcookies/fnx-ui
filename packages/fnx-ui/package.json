@@ -65,8 +65,8 @@
     "lint": "fnx-ui-cli lint"
   },
   "peerDependencies": {
-    "react": ">=16.3.1",
-    "react-dom": ">=16.3.1"
+    "react": ">=16.9.0",
+    "react-dom": ">=16.9.0"
   },
   "devDependencies": {
     "@fnx-ui/cli": "^0.0.13",

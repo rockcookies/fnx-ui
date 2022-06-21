@@ -186,4 +186,25 @@ describe('<PullRefresh/>', () => {
 
 		expect(head.style.height).toEqual('100px');
 	});
+
+	it('should emit change event when status changed', async () => {
+		const onChange = jest.fn();
+
+		const { container } = render(
+			<PullRefresh
+				slots={{ success: 'success' }}
+				refreshing={true}
+				onChange={onChange}
+			/>,
+		);
+
+		const track = TestsDOM.mustQuerySelector(
+			container,
+			'.fnx-pull-refresh__track',
+		);
+
+		await TestsEvent.triggerDrag(track, [0, 100]);
+
+		expect(onChange).toBeCalled();
+	});
 });

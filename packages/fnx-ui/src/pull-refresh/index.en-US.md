@@ -1,5 +1,7 @@
 # PullRefresh
 
+Used to provide interactive operations for pull-down refresh.
+
 ## Basic Usage
 
 The drop-down refreshing will trigger the `onRefresh` event, you can synchronize or asynchronously in the callback function of the event, and then set the `refreshing` to `false` after the operation is complete, indicating that the load is complete.
@@ -31,7 +33,7 @@ ReactDOM.render(
 
 ## Successful Reminder
 
-Through `slots`, you can set the top printed copy of the refresh success.
+Through `slots` props you can set the top printed copy of the refresh success.
 
 ```tsx
 import { PullRefresh } from 'fnx-ui';
@@ -116,7 +118,7 @@ ReactDOM.render(
 
 | Parameter          | Description                              | Type               | Default value |
 | ------------------ | ---------------------------------------- | ------------------ | ------------- |
-| refreshing         | Is it in the load?                       | `boolean`          | -             |
+| refreshing         | Loading status                           | `boolean`          | -             |
 | successDuration    | Refresh success prompt showing time (MS) | `number`           | `500`         |
 | transitionDuration | Animation time (MS)                      | `number`           | `300`         |
 | indicatorHeight    | Top content height                       | `number`           | `300`         |

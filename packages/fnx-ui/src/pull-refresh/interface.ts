@@ -4,6 +4,13 @@ export type PullRefreshIndicatorNode =
 	| ReactNode
 	| ((distance: number) => ReactNode);
 
+export type PullRefreshStatus =
+	| 'normal'
+	| 'loading'
+	| 'loosing'
+	| 'pulling'
+	| 'success';
+
 export interface PullRefreshComponentProps {
 	disabled?: boolean;
 	successDuration?: number;
@@ -12,6 +19,7 @@ export interface PullRefreshComponentProps {
 	indicatorHeight?: number;
 	refreshing?: boolean;
 	onRefresh?: () => void;
+	onChange?: (data: { status: PullRefreshStatus }) => void;
 }
 
 export type PullRefreshProps = PullRefreshComponentProps &
