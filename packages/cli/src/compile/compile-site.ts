@@ -17,7 +17,7 @@ import {
 } from 'vite';
 import { COMPILE_TARGETS, DIRS } from '../core/constants';
 
-const DEFAULT_BASE = './';
+const DEFAULT_BASE = '/fnx-ui';
 const DEFAULT_PORT = 8000;
 const DEFAULT_HOST = '0.0.0.0';
 const DEFAULT_LOG_LEVEL: LogLevel = 'info';
@@ -85,7 +85,6 @@ export async function runSiteServer(
 	options: {
 		port?: number;
 		host?: string;
-		base?: string;
 		log?: LogLevel;
 	} = {},
 ): Promise<void> {
@@ -99,7 +98,7 @@ export async function runSiteServer(
 		const server = await createServer({
 			...config,
 			logLevel,
-			base: options.base || DEFAULT_BASE,
+			base: '/',
 			configFile: false,
 			server: {
 				...config.server,
