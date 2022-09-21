@@ -199,10 +199,10 @@ const PullRefresh = forwardRef<HTMLDivElement, PullRefreshProps>(
 				}
 			};
 
-			node.addEventListener('touchstart', onTouchStart, false);
+			bindEvent(node, 'touchstart', onTouchStart, { passive: true });
 			bindEvent(node, 'touchmove', onTouchMove, { passive: false });
-			node.addEventListener('touchend', onTouchEnd, false);
-			node.addEventListener('touchcancel', onTouchEnd, false);
+			bindEvent(node, 'touchend', onTouchEnd, { passive: true });
+			bindEvent(node, 'touchcancel', onTouchEnd, { passive: true });
 
 			return () => {
 				node.removeEventListener('touchstart', onTouchStart);

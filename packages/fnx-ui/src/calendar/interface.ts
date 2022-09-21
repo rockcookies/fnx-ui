@@ -56,9 +56,16 @@ export type CalendarElementProps = Omit<
 	'defaultValue' | 'onChange' | 'title'
 >;
 
-export interface CalendarRef {
-	root: HTMLDivElement | null;
+export interface CalendarContainerRef {
+	element: HTMLDivElement | null;
 	reset: () => void;
+	getValue: () => Date[] | undefined;
+}
+
+export interface CalendarRef {
+	element: HTMLDivElement | null;
+	reset: () => void;
+	getValue: () => Date | undefined;
 }
 
 export interface CalendarComponentProps extends CalendarBaseProps {
@@ -69,6 +76,8 @@ export interface CalendarComponentProps extends CalendarBaseProps {
 }
 
 export type CalendarProps = CalendarComponentProps & CalendarElementProps;
+
+export type CalendarRangeRef = CalendarContainerRef;
 
 export interface CalendarRangeComponentProps extends CalendarBaseProps {
 	defaultValue?: CalendarValue[];
@@ -82,6 +91,8 @@ export interface CalendarRangeComponentProps extends CalendarBaseProps {
 
 export type CalendarRangeProps = CalendarRangeComponentProps &
 	CalendarElementProps;
+
+export type CalendarMultiRef = CalendarRangeRef;
 
 export interface CalendarMultiComponentProps extends CalendarBaseProps {
 	defaultValue?: CalendarValue[];

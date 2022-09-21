@@ -48,7 +48,7 @@ export default function useScrollLock(
 			}
 		};
 
-		document.addEventListener('touchstart', touch.start);
+		bindEvent(document, 'touchstart', touch.start, { passive: true });
 		bindEvent(document, 'touchmove', onTouchMove, { passive: false });
 
 		if (!totalLockCount) {

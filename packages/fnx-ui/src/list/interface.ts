@@ -24,7 +24,7 @@ export interface ListSlots {
 }
 
 export interface ListRef {
-	root: HTMLDivElement | null;
+	element: HTMLDivElement | null;
 	scrollParent: HTMLElement | Window | null;
 	check: () => void;
 }

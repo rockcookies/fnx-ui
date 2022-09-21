@@ -11,8 +11,8 @@ import React, {
 import Button from '../button';
 import configComponentProps from '../hooks/config-component-props';
 import useCreation from '../hooks/use-creation';
-import useMergedPropRef from '../hooks/use-merged-prop-ref';
 import useGetState from '../hooks/use-get-state';
+import useMergedPropRef from '../hooks/use-merged-prop-ref';
 import useMount from '../hooks/use-mount';
 import useUpdateEffect from '../hooks/use-update-effect';
 import Icon from '../icon';
@@ -30,9 +30,9 @@ import useCalendarMonthTitle from './hooks/use-calendar-month-title';
 import useCalendarRangeDate from './hooks/use-calendar-range-date';
 import {
 	CalendarBaseProps,
+	CalendarContainerRef,
 	CalendarDayComponentProps,
 	CalendarElementProps,
-	CalendarRef,
 	CalendarValue,
 } from './interface';
 import {
@@ -148,400 +148,422 @@ const useProps = configComponentProps<
 	onChange: noop,
 });
 
-const CalendarContainer = forwardRef<CalendarRef, CProps>((_props, ref) => {
-	const locale = useLocale('calendar');
+const CalendarContainer = forwardRef<CalendarContainerRef, CProps>(
+	(_props, ref) => {
+		const locale = useLocale('calendar');
 
-	const [
-		{
-			readonly,
-			slots,
-			onClose,
-			mode,
-			onConfirm,
-			defaultValue: _defaultValue,
-			onChange,
-		},
-		{
-			title,
-			color,
-			minDate: _minDate,
-			maxDate: _maxDate,
-			dayHeight: _dayHeight,
-			firstDayOfWeek: _firstDayOfWeek,
-			closeIcon,
-			rangeAllowSameDay,
-			rangeMaxSize,
-			onRangeMaxSize,
-			multiMaxSize,
-			onMultiMaxSize,
-			confirmDisabledText,
-			confirmText,
-			className,
-			...restProps
-		},
-	] = useProps(_props);
-
-	const firstDayOfWeek = useMemo<number>(
-		() => clamp(_firstDayOfWeek != null ? _firstDayOfWeek : 0, 0, 6),
-		[_firstDayOfWeek],
-	);
-
-	const dayHeight = useMemo(() => addUnit(_dayHeight), [_dayHeight]);
-
-	const [minDate, maxDate] = useCalendarRangeDate(_minDate, _maxDate);
-
-	const rootRef = useRef<HTMLDivElement | null>(null);
-
-	const bodyRef = useRef<HTMLDivElement | null>(null);
-	const bodyHeightRef = useRef(0);
-
-	const monthsRef = useRef<Dictionary<CalendarMonthRef | null>>({});
-	const months = useMemo<Date[]>(() => {
-		const months: Date[] = [];
-		let cursor = new Date(minDate.getFullYear(), minDate.getMonth(), 1);
-
-		while (compareMonth(cursor, maxDate) <= 0) {
-			months.push(cursor);
-			cursor = new Date(cursor.getFullYear(), cursor.getMonth() + 1, 1);
-		}
-
-		return months;
-	}, [minDate, maxDate]);
-
-	useImperativeHandle<CalendarRef, CalendarRef>(ref, () => {
-		return {
-			root: rootRef.current || null,
-			reset: () => {
-				scrollIntoMonth(getMonthsActiveIndex());
+		const [
+			{
+				readonly,
+				slots,
+				onClose,
+				mode,
+				onConfirm,
+				defaultValue: _defaultValue,
+				onChange,
 			},
+			{
+				title,
+				color,
+				minDate: _minDate,
+				maxDate: _maxDate,
+				dayHeight: _dayHeight,
+				firstDayOfWeek: _firstDayOfWeek,
+				closeIcon,
+				rangeAllowSameDay,
+				rangeMaxSize,
+				onRangeMaxSize,
+				multiMaxSize,
+				onMultiMaxSize,
+				confirmDisabledText,
+				confirmText,
+				className,
+				...restProps
+			},
+		] = useProps(_props);
+
+		const firstDayOfWeek = useMemo<number>(
+			() => clamp(_firstDayOfWeek != null ? _firstDayOfWeek : 0, 0, 6),
+			[_firstDayOfWeek],
+		);
+
+		const dayHeight = useMemo(() => addUnit(_dayHeight), [_dayHeight]);
+
+		const [minDate, maxDate] = useCalendarRangeDate(_minDate, _maxDate);
+
+		const rootRef = useRef<HTMLDivElement | null>(null);
+
+		const bodyRef = useRef<HTMLDivElement | null>(null);
+		const bodyHeightRef = useRef(0);
+
+		const monthsRef = useRef<Dictionary<CalendarMonthRef | null>>({});
+		const months = useMemo<Date[]>(() => {
+			const months: Date[] = [];
+			let cursor = new Date(minDate.getFullYear(), minDate.getMonth(), 1);
+
+			while (compareMonth(cursor, maxDate) <= 0) {
+				months.push(cursor);
+				cursor = new Date(
+					cursor.getFullYear(),
+					cursor.getMonth() + 1,
+					1,
+				);
+			}
+
+			return months;
+		}, [minDate, maxDate]);
+
+		useImperativeHandle<CalendarContainerRef, CalendarContainerRef>(
+			ref,
+			() => {
+				return {
+					element: rootRef.current || null,
+					reset: () => {
+						scrollIntoMonth(getMonthsActiveIndex());
+					},
+					getValue: () => value,
+				};
+			},
+		);
+
+		const defaultValue = useCreation<Date[]>(() => {
+			if (Array.isArray(_defaultValue)) {
+				const res = _defaultValue.map((date) => new Date(date));
+				return res.every(isDate) ? res : [];
+			} else if (_defaultValue != null) {
+				const res = new Date(_defaultValue);
+				return isDate(res) ? [res] : [];
+			} else {
+				return [];
+			}
+		}, []);
+		const [value, setValue] = useState<Date[]>(() =>
+			formatValue(
+				mode,
+				defaultValue,
+				minDate,
+				maxDate,
+				mode === 'range' ? rangeMaxSize : multiMaxSize,
+			),
+		);
+
+		const [inputValue, setInputValue] = useState<Date[]>(defaultValue);
+		const onChangeRef = useMergedPropRef(onChange);
+
+		const [monthsActiveIndex, setMonthsActiveIndex, getMonthsActiveIndex] =
+			useGetState<number>(() => {
+				const activeIndex = isDate(value[0])
+					? months.findIndex(
+							(month) => compareMonth(month, value[0]) === 0,
+					  )
+					: -1;
+
+				return Math.max(activeIndex, 0);
+			});
+
+		const footerButtonEnabled = useMemo<boolean>(() => {
+			if (mode === 'single') {
+				return value[0] != null;
+			}
+
+			if (mode === 'multiple') {
+				return value.length > 0;
+			}
+
+			if (mode === 'range') {
+				return value[0] != null && value[1] != null;
+			}
+
+			return false;
+		}, [value, mode]);
+
+		const monthTitle = useCalendarMonthTitle();
+
+		const handleClickDay = (day: CalendarDayComponentProps) => {
+			if (readonly || day.type === 'disabled') {
+				return;
+			}
+
+			const { date } = day;
+
+			let next: Date[] | undefined;
+
+			if (mode === 'range') {
+				const [start, end] = value;
+
+				if (start && !end) {
+					const compareToStart = compareDate(date, start);
+
+					if (compareToStart === 1) {
+						next = [start, date];
+					} else if (compareToStart === -1) {
+						next = [date, start];
+					} else if (rangeAllowSameDay) {
+						next = [date, date];
+					}
+
+					if (
+						next &&
+						rangeMaxSize != null &&
+						calcDateNum(next[0], next[1]) > rangeMaxSize
+					) {
+						next = [
+							next[0],
+							getDayByOffset(next[0], rangeMaxSize - 1),
+						];
+						onRangeMaxSize && onRangeMaxSize();
+					}
+				} else {
+					setValue([date]);
+				}
+			} else if (mode === 'multiple') {
+				const selectedIndex = value.findIndex((v) =>
+					isCalendarDateEquals(v, date),
+				);
+
+				if (selectedIndex >= 0) {
+					next = [...value];
+					next.splice(selectedIndex, 1);
+				} else if (
+					multiMaxSize != null &&
+					value.length >= multiMaxSize
+				) {
+					onMultiMaxSize && onMultiMaxSize();
+				} else {
+					next = [...value, date];
+				}
+			} else if (mode === 'single') {
+				next = [date];
+			}
+
+			if (!next) {
+				return;
+			}
+
+			setValue(next);
+			setInputValue((prev) =>
+				next && !isEqualArrays(prev, next, isCalendarDateEquals)
+					? next
+					: prev,
+			);
 		};
-	});
 
-	const defaultValue = useCreation<Date[]>(() => {
-		if (Array.isArray(_defaultValue)) {
-			const res = _defaultValue.map((date) => new Date(date));
-			return res.every(isDate) ? res : [];
-		} else if (_defaultValue != null) {
-			const res = new Date(_defaultValue);
-			return isDate(res) ? [res] : [];
-		} else {
-			return [];
-		}
-	}, []);
-	const [value, setValue] = useState<Date[]>(() =>
-		formatValue(
-			mode,
-			defaultValue,
-			minDate,
-			maxDate,
-			mode === 'range' ? rangeMaxSize : multiMaxSize,
-		),
-	);
+		const handleConfirm = () => {
+			onConfirm(value);
+		};
 
-	const [inputValue, setInputValue] = useState<Date[]>(defaultValue);
-	const onChangeRef = useMergedPropRef(onChange);
+		const handleScroll = () => {
+			const body = bodyRef.current;
 
-	const [monthsActiveIndex, setMonthsActiveIndex, getMonthsActiveIndex] =
-		useGetState<number>(() => {
+			if (!body) {
+				return;
+			}
+
+			const top = getScrollTop(body);
+			const bottom = top + bodyHeightRef.current;
+
+			const heights: number[] = [];
+
+			for (let i = 0; i < months.length; i++) {
+				heights.push(monthsRef.current[i]?.getHeight() || 0);
+			}
+
+			const heightSum = heights.reduce((a, b) => a + b, 0);
+
+			// iOS scroll bounce may exceed the range
+			if (bottom > heightSum && top > 0) {
+				return;
+			}
+
+			let height = 0;
+
+			for (let i = 0; i < months.length; i++) {
+				if (height <= bottom && height + heights[i] >= top) {
+					setMonthsActiveIndex(i);
+					return;
+				} else {
+					height += heights[i];
+				}
+			}
+		};
+
+		const scrollIntoMonth = useCallback((activeIndex: number) => {
+			const month = monthsRef.current[activeIndex];
+			const body = bodyRef.current;
+
+			if (month && body) {
+				month.scrollIntoView(body);
+			}
+		}, []);
+
+		useEffect(() => {
+			const node = bodyRef.current;
+
+			if (node) {
+				bodyHeightRef.current = node.getBoundingClientRect().height;
+			}
+		}, []);
+
+		useOnPopupOpen(() => {
 			const activeIndex = isDate(value[0])
 				? months.findIndex(
 						(month) => compareMonth(month, value[0]) === 0,
 				  )
 				: -1;
 
-			return Math.max(activeIndex, 0);
-		});
-
-	const footerButtonEnabled = useMemo<boolean>(() => {
-		if (mode === 'single') {
-			return value[0] != null;
-		}
-
-		if (mode === 'multiple') {
-			return value.length > 0;
-		}
-
-		if (mode === 'range') {
-			return value[0] != null && value[1] != null;
-		}
-
-		return false;
-	}, [value, mode]);
-
-	const monthTitle = useCalendarMonthTitle();
-
-	const handleClickDay = (day: CalendarDayComponentProps) => {
-		if (readonly || day.type === 'disabled') {
-			return;
-		}
-
-		const { date } = day;
-
-		let next: Date[] | undefined;
-
-		if (mode === 'range') {
-			const [start, end] = value;
-
-			if (start && !end) {
-				const compareToStart = compareDate(date, start);
-
-				if (compareToStart === 1) {
-					next = [start, date];
-				} else if (compareToStart === -1) {
-					next = [date, start];
-				} else if (rangeAllowSameDay) {
-					next = [date, date];
-				}
-
-				if (
-					next &&
-					rangeMaxSize != null &&
-					calcDateNum(next[0], next[1]) > rangeMaxSize
-				) {
-					next = [next[0], getDayByOffset(next[0], rangeMaxSize - 1)];
-					onRangeMaxSize && onRangeMaxSize();
-				}
-			} else {
-				setValue([date]);
-			}
-		} else if (mode === 'multiple') {
-			const selectedIndex = value.findIndex((v) =>
-				isCalendarDateEquals(v, date),
-			);
-
-			if (selectedIndex >= 0) {
-				next = [...value];
-				next.splice(selectedIndex, 1);
-			} else if (multiMaxSize != null && value.length >= multiMaxSize) {
-				onMultiMaxSize && onMultiMaxSize();
-			} else {
-				next = [...value, date];
-			}
-		} else if (mode === 'single') {
-			next = [date];
-		}
-
-		if (!next) {
-			return;
-		}
-
-		setValue(next);
-		setInputValue((prev) =>
-			next && !isEqualArrays(prev, next, isCalendarDateEquals)
-				? next
-				: prev,
-		);
-	};
-
-	const handleConfirm = () => {
-		onConfirm(value);
-	};
-
-	const handleScroll = () => {
-		const body = bodyRef.current;
-
-		if (!body) {
-			return;
-		}
-
-		const top = getScrollTop(body);
-		const bottom = top + bodyHeightRef.current;
-
-		const heights: number[] = [];
-
-		for (let i = 0; i < months.length; i++) {
-			heights.push(monthsRef.current[i]?.getHeight() || 0);
-		}
-
-		const heightSum = heights.reduce((a, b) => a + b, 0);
-
-		// iOS scroll bounce may exceed the range
-		if (bottom > heightSum && top > 0) {
-			return;
-		}
-
-		let height = 0;
-
-		for (let i = 0; i < months.length; i++) {
-			if (height <= bottom && height + heights[i] >= top) {
-				setMonthsActiveIndex(i);
+			if (activeIndex < 0) {
 				return;
-			} else {
-				height += heights[i];
 			}
-		}
-	};
 
-	const scrollIntoMonth = useCallback((activeIndex: number) => {
-		const month = monthsRef.current[activeIndex];
-		const body = bodyRef.current;
-
-		if (month && body) {
-			month.scrollIntoView(body);
-		}
-	}, []);
-
-	useEffect(() => {
-		const node = bodyRef.current;
-
-		if (node) {
-			bodyHeightRef.current = node.getBoundingClientRect().height;
-		}
-	}, []);
-
-	useOnPopupOpen(() => {
-		const activeIndex = isDate(value[0])
-			? months.findIndex((month) => compareMonth(month, value[0]) === 0)
-			: -1;
-
-		if (activeIndex < 0) {
-			return;
-		}
-
-		doubleRaf(() => {
-			scrollIntoMonth(activeIndex);
+			doubleRaf(() => {
+				scrollIntoMonth(activeIndex);
+			});
 		});
-	});
 
-	useUpdateEffect(() => {
-		onChangeRef.current(inputValue);
-	}, [inputValue, onChangeRef]);
+		useUpdateEffect(() => {
+			onChangeRef.current(inputValue);
+		}, [inputValue, onChangeRef]);
 
-	useUpdateEffect(() => {
-		setValue((prev) => {
-			const next = formatValue(mode, prev, minDate, maxDate);
+		useUpdateEffect(() => {
+			setValue((prev) => {
+				const next = formatValue(mode, prev, minDate, maxDate);
 
-			return isEqualArrays(prev, next, isCalendarDateEquals)
-				? prev
-				: next;
+				return isEqualArrays(prev, next, isCalendarDateEquals)
+					? prev
+					: next;
+			});
+		}, [maxDate, minDate, mode]);
+
+		useMount(() => {
+			scrollIntoMonth(monthsActiveIndex);
 		});
-	}, [maxDate, minDate, mode]);
 
-	useMount(() => {
-		scrollIntoMonth(monthsActiveIndex);
-	});
+		const renderMonthTitle = (
+			date?: Date,
+			title?: boolean | ((date: Date) => ReactNode),
+		) => {
+			if (date == null) {
+				return;
+			}
 
-	const renderMonthTitle = (
-		date?: Date,
-		title?: boolean | ((date: Date) => ReactNode),
-	) => {
-		if (date == null) {
-			return;
-		}
+			return typeof title === 'boolean' || title == null
+				? monthTitle(date)
+				: title(date);
+		};
 
-		return typeof title === 'boolean' || title == null
-			? monthTitle(date)
-			: title(date);
-	};
+		const renderHeader = () => {
+			const weekdays = [
+				...locale.weekdays.slice(firstDayOfWeek, 7),
+				...locale.weekdays.slice(0, firstDayOfWeek),
+			];
 
-	const renderHeader = () => {
-		const weekdays = [
-			...locale.weekdays.slice(firstDayOfWeek, 7),
-			...locale.weekdays.slice(0, firstDayOfWeek),
-		];
-
-		return (
-			<div className={bem('header')}>
-				{title !== false && (
-					<div className={bem('header-title')}>
-						{title || locale.title}
+			return (
+				<div className={bem('header')}>
+					{title !== false && (
+						<div className={bem('header-title')}>
+							{title || locale.title}
+						</div>
+					)}
+					{slots.subTitle !== false && (
+						<div className={bem('header-subtitle')}>
+							{renderMonthTitle(
+								months[monthsActiveIndex],
+								slots.subTitle,
+							)}
+						</div>
+					)}
+					<div className={bem('weekdays')}>
+						{weekdays.map((text, idx) => (
+							<span className={bem('weekday')} key={idx}>
+								{text}
+							</span>
+						))}
 					</div>
-				)}
-				{slots.subTitle !== false && (
-					<div className={bem('header-subtitle')}>
-						{renderMonthTitle(
-							months[monthsActiveIndex],
-							slots.subTitle,
-						)}
-					</div>
-				)}
-				<div className={bem('weekdays')}>
-					{weekdays.map((text, idx) => (
-						<span className={bem('weekday')} key={idx}>
-							{text}
+					{closeIcon !== false && (
+						<span className={bem('close-icon')} onClick={onClose}>
+							{closeIcon || <Icon name="cross" />}
 						</span>
-					))}
+					)}
 				</div>
-				{closeIcon !== false && (
-					<span className={bem('close-icon')} onClick={onClose}>
-						{closeIcon || <Icon name="cross" />}
-					</span>
-				)}
-			</div>
-		);
-	};
-
-	const renderBody = () => {
-		return (
-			<div className={bem('body')} ref={bodyRef} onScroll={handleScroll}>
-				{months.map((month, idx) => {
-					return (
-						<CalendarMonth
-							key={idx}
-							color={color}
-							month={month}
-							dayHeight={dayHeight}
-							firstDayOfWeek={firstDayOfWeek}
-							mode={mode}
-							value={value}
-							slots={{
-								...slots,
-								monthTitle:
-									idx === 0 ? false : slots.monthTitle,
-							}}
-							minDate={minDate}
-							maxDate={maxDate}
-							onClickDay={handleClickDay}
-							rangeAllowSameDay={rangeAllowSameDay}
-							ref={(ref) => {
-								monthsRef.current[idx] = ref;
-							}}
-						/>
-					);
-				})}
-			</div>
-		);
-	};
-
-	const renderFooter = () => {
-		let footer = slots.footer;
-
-		if (!footer) {
-			const text = footerButtonEnabled
-				? confirmText
-				: confirmDisabledText;
-
-			footer = (
-				<Button
-					shape="round"
-					block
-					type="primary"
-					color={color}
-					className={bem('confirm')}
-					disabled={!footerButtonEnabled}
-					htmlType="button"
-					onClick={handleConfirm}
-				>
-					{text || locale.confirm}
-				</Button>
 			);
-		}
+		};
 
-		return <div className={bem('footer')}>{footer}</div>;
-	};
+		const renderBody = () => {
+			return (
+				<div
+					className={bem('body')}
+					ref={bodyRef}
+					onScroll={handleScroll}
+				>
+					{months.map((month, idx) => {
+						return (
+							<CalendarMonth
+								key={idx}
+								color={color}
+								month={month}
+								dayHeight={dayHeight}
+								firstDayOfWeek={firstDayOfWeek}
+								mode={mode}
+								value={value}
+								slots={{
+									...slots,
+									monthTitle:
+										idx === 0 ? false : slots.monthTitle,
+								}}
+								minDate={minDate}
+								maxDate={maxDate}
+								onClickDay={handleClickDay}
+								rangeAllowSameDay={rangeAllowSameDay}
+								ref={(ref) => {
+									monthsRef.current[idx] = ref;
+								}}
+							/>
+						);
+					})}
+				</div>
+			);
+		};
 
-	return (
-		<div
-			className={classnames(bem(), className)}
-			{...restProps}
-			ref={rootRef}
-		>
-			{renderHeader()}
-			{renderBody()}
-			{renderFooter()}
-		</div>
-	);
-});
+		const renderFooter = () => {
+			let footer = slots.footer;
+
+			if (!footer) {
+				const text = footerButtonEnabled
+					? confirmText
+					: confirmDisabledText;
+
+				footer = (
+					<Button
+						shape="round"
+						block
+						type="primary"
+						color={color}
+						className={bem('confirm')}
+						disabled={!footerButtonEnabled}
+						htmlType="button"
+						onClick={handleConfirm}
+					>
+						{text || locale.confirm}
+					</Button>
+				);
+			}
+
+			return <div className={bem('footer')}>{footer}</div>;
+		};
+
+		return (
+			<div
+				className={classnames(bem(), className)}
+				{...restProps}
+				ref={rootRef}
+			>
+				{renderHeader()}
+				{renderBody()}
+				{renderFooter()}
+			</div>
+		);
+	},
+);
 
 CalendarContainer.displayName = 'CalendarContainer';
 

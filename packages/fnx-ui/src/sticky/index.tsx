@@ -10,7 +10,7 @@ import React, {
 } from 'react';
 import configComponentProps from '../hooks/config-component-props';
 import useMergedPropRef from '../hooks/use-merged-prop-ref';
-import { listenDocumentVisibilityChange } from '../utils/dom/event';
+import { bindEvent, listenDocumentVisibilityChange } from '../utils/dom/event';
 import { getScrollParent, getScrollTop } from '../utils/dom/scroll';
 import { getElementRect, isHidden } from '../utils/dom/style';
 import { unitToPx } from '../utils/format';
@@ -81,7 +81,7 @@ const Sticky = forwardRef<StickyRef, StickyProps>((_props, ref) => {
 
 	const stickyRef = useMemo<StickyRef>(
 		() => ({
-			root: rootRef.current,
+			element: rootRef.current,
 			isFixed: () => !!stateRef.current.fixed,
 		}),
 		[stateRef],
@@ -170,7 +170,7 @@ const Sticky = forwardRef<StickyRef, StickyProps>((_props, ref) => {
 
 		const cb = () => onScroll();
 
-		scrollParent.addEventListener('scroll', cb);
+		bindEvent(scrollParent, 'scroll', cb, { passive: true });
 
 		const clears = Array.from<() => void>([
 			() => scrollParent.removeEventListener('scroll', cb),

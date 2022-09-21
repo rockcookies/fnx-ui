@@ -228,7 +228,7 @@ const Rate = forwardRef<HTMLUListElement, RateProps>((_props, ref) => {
 			}
 		};
 
-		node.addEventListener('touchstart', onTouchStart, false);
+		bindEvent(node, 'touchstart', onTouchStart, { passive: true });
 		bindEvent(node, 'touchmove', onTouchMove, { passive: false });
 
 		return () => {

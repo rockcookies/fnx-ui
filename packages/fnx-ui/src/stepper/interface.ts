@@ -38,6 +38,6 @@ export type StepperProps<T extends StepperValue = StepperValue> =
 		>;
 
 export interface StepperRef {
-	root: HTMLSpanElement | null;
+	element: HTMLSpanElement | null;
 	input: HTMLInputElement | null;
 }

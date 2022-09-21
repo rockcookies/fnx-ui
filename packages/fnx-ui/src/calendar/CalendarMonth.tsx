@@ -34,7 +34,7 @@ interface CProps {
 }
 
 export interface CalendarMonthRef {
-	root: HTMLDivElement | null;
+	element: HTMLDivElement | null;
 	getHeight(): number;
 	scrollIntoView(body: Element): void;
 }
@@ -56,9 +56,9 @@ const CalendarMonth = forwardRef<CalendarMonthRef, CProps>((props, ref) => {
 		rangeAllowSameDay,
 	} = props;
 
-	const rootHeightRef = useRef<number>(0);
 	const daysRef = useRef<HTMLDivElement | null>(null);
-	const rootRef = useRef<HTMLDivElement | null>(null);
+	const elementHeightRef = useRef<number>(0);
+	const elementRef = useRef<HTMLDivElement | null>(null);
 
 	const slotsRef = useMergedPropRef(slots);
 
@@ -69,7 +69,7 @@ const CalendarMonth = forwardRef<CalendarMonthRef, CProps>((props, ref) => {
 			const element =
 				slotsRef.current.subTitle !== false
 					? daysRef.current
-					: rootRef.current;
+					: elementRef.current;
 
 			if (!element) {
 				return;
@@ -88,8 +88,8 @@ const CalendarMonth = forwardRef<CalendarMonthRef, CProps>((props, ref) => {
 	useImperativeHandle<CalendarMonthRef, CalendarMonthRef>(
 		ref,
 		() => ({
-			root: rootRef.current,
-			getHeight: () => rootHeightRef.current,
+			element: elementRef.current,
+			getHeight: () => elementHeightRef.current,
 			scrollIntoView,
 		}),
 		[scrollIntoView],
@@ -187,10 +187,10 @@ const CalendarMonth = forwardRef<CalendarMonthRef, CProps>((props, ref) => {
 	};
 
 	useEffect(() => {
-		const node = rootRef.current;
+		const node = elementRef.current;
 
 		if (node) {
-			rootHeightRef.current = node.getBoundingClientRect().height;
+			elementHeightRef.current = node.getBoundingClientRect().height;
 		}
 	}, []);
 
@@ -259,7 +259,7 @@ const CalendarMonth = forwardRef<CalendarMonthRef, CProps>((props, ref) => {
 	};
 
 	return (
-		<div className={bem('month')} ref={rootRef}>
+		<div className={bem('month')} ref={elementRef}>
 			{slots.monthTitle !== false && (
 				<div className={bem('month-title')}>
 					{renderSlot(monthTitle, month, slots.monthTitle)}

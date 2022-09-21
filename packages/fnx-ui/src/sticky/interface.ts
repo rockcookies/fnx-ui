@@ -16,6 +16,6 @@ export type StickyProps = StickyComponentProps &
 	Omit<HTMLAttributes<HTMLDivElement>, 'onChange' | 'onScroll'>;
 
 export interface StickyRef {
-	root: HTMLDivElement | null;
+	element: HTMLDivElement | null;
 	isFixed: () => boolean;
 }

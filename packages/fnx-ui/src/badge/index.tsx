@@ -29,7 +29,11 @@ const Badge: React.FC<BadgeProps> = (_props) => {
 	] = useProps(_props);
 
 	const renderCount = () => {
-		if (!dot && count != null && (showZero || count !== 0)) {
+		if (
+			!dot &&
+			count != null &&
+			(showZero || (count !== 0 && count !== '0'))
+		) {
 			if (max != null && typeof count === 'number' && count > max) {
 				return `${max}+`;
 			}

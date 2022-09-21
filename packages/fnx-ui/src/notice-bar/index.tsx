@@ -121,7 +121,7 @@ const NoticeBar = forwardRef<NoticeBarRef, NoticeBarProps>((_props, ref) => {
 		ref,
 		() => {
 			return {
-				root: noticeBarRef.current,
+				element: noticeBarRef.current,
 				reset,
 			};
 		},

@@ -1,8 +1,8 @@
 import React, { forwardRef } from 'react';
 import CalendarContainer from './CalendarContainer';
-import { CalendarRangeProps, CalendarRef } from './interface';
+import { CalendarRangeProps, CalendarRangeRef } from './interface';
 
-const CalendarRange = forwardRef<CalendarRef, CalendarRangeProps>(
+const CalendarRange = forwardRef<CalendarRangeRef, CalendarRangeProps>(
 	(
 		{
 			defaultValue,

@@ -17,6 +17,6 @@ export interface NoticeBarComponentProps {
 }
 
 export interface NoticeBarRef {
-	root: HTMLDivElement | null;
+	element: HTMLDivElement | null;
 	reset: () => void;
 }

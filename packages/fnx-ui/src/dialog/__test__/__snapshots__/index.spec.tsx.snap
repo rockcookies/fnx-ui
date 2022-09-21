@@ -13,6 +13,7 @@ exports[`<Dialog/> useDialog 1`] = `
       class="fnx-popup fnx-popup--center fnx-dialog fnx-dialog-bounce-enter fnx-dialog-bounce-enter-active"
       role="dialog"
       style="z-index: 2008;"
+      tabindex="0"
     >
       <div
         class="fnx-dialog__header"

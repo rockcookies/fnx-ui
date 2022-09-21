@@ -49,6 +49,13 @@ const SITE_COMPONENTS: SiteMenuGroup[] = [
 				markdownCN: () => import('../src/popup/index.zh-CN.md'),
 			},
 			{
+				key: 'space',
+				title: 'Space',
+				titleCN: '间距',
+				markdown: () => import('../src/space/index.en-US.md'),
+				markdownCN: () => import('../src/space/index.zh-CN.md'),
+			},
+			{
 				key: 'toast',
 				title: 'Toast',
 				titleCN: '轻提示',

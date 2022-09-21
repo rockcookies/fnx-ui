@@ -94,7 +94,7 @@ const InternalUploader = forwardRef<UploaderRef, UploaderProps>(
 		] = useProps(_props);
 
 		useImperativeHandle<UploaderRef, UploaderRef>(ref, () => ({
-			root: rootRef.current,
+			element: rootRef.current,
 			input: inputRef.current,
 		}));
 

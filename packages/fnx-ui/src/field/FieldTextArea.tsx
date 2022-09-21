@@ -73,7 +73,7 @@ const FieldTextArea = forwardRef<FieldTextAreaRef, FieldTextAreaProps>(
 
 		useImperativeHandle<FieldTextAreaRef, FieldTextAreaRef>(ref, () => {
 			return {
-				root: rootRef.current,
+				element: rootRef.current,
 				input: inputRef.current,
 			};
 		});

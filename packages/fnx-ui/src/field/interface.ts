@@ -74,12 +74,12 @@ export type FieldTextAreaProps = FieldTextAreaComponentProps &
 
 export interface FieldTextAreaRef {
 	input: HTMLTextAreaElement | null;
-	root: HTMLSpanElement | null;
+	element: HTMLSpanElement | null;
 }
 
 export interface FieldInputRef {
 	input: HTMLInputElement | null;
-	root: HTMLSpanElement | null;
+	element: HTMLSpanElement | null;
 }
 
 export interface FieldExportExtra {

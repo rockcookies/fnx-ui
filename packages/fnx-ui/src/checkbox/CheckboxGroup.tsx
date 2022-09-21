@@ -101,11 +101,11 @@ const InternalCheckboxGroup = forwardRef<CheckboxGroupRef, CheckboxGroupProps>(
 			[maxCheckedCount, onChangeRef, value],
 		);
 
-		const rootRef = useRef<HTMLDivElement>(null);
+		const elementRef = useRef<HTMLDivElement>(null);
 
 		const checkboxGroupRef = useMemo<CheckboxGroupRef>(() => {
 			return {
-				root: rootRef.current,
+				element: elementRef.current,
 				toggleAll: (options) => {
 					let nextCheckedValues = [...registeredValuesRef.current];
 
@@ -139,7 +139,7 @@ const InternalCheckboxGroup = forwardRef<CheckboxGroupRef, CheckboxGroupProps>(
 					className,
 				)}
 				{...resetProps}
-				ref={rootRef}
+				ref={elementRef}
 			>
 				<CheckGroupContext.Provider
 					value={{

@@ -46,7 +46,7 @@ const TimePicker = forwardRef<TimePickerRef, TimePickerProps>((_props, ref) => {
 
 	const rootRef = useMemo<TimePickerRef>(
 		() => ({
-			root: pickerRef.current?.root || null,
+			element: pickerRef.current?.element || null,
 			getValue: () => {
 				const dateValue = pickerRef.current?.getValue();
 				return isDate(dateValue) ? formatValue(dateValue) : '';

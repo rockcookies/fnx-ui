@@ -58,7 +58,7 @@ const InternalPickerMulti = forwardRef<PickerMultiRef, PickerMultiProps>(
 			}
 
 			return {
-				root: rootRef.current,
+				element: rootRef.current,
 				getValue: () => map((cr) => cr.getActiveValue()),
 				getOptions: () => map((cr) => cr.getActiveOption()),
 			};

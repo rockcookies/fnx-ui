@@ -20,7 +20,7 @@ export interface TimePickerComponentProps extends PickerBaseProps {
 export type TimePickerProps = TimePickerComponentProps & PickerElementProps;
 
 export interface TimePickerRef {
-	root: HTMLDivElement | null;
+	element: HTMLDivElement | null;
 	getValue: () => string;
 }
 
@@ -40,7 +40,7 @@ export interface DatePickerComponentProps extends PickerBaseProps {
 export type DatePickerProps = DatePickerComponentProps & PickerElementProps;
 
 export interface DatePickerRef {
-	root: HTMLDivElement | null;
+	element: HTMLDivElement | null;
 	getValue: () => Date;
 }
 

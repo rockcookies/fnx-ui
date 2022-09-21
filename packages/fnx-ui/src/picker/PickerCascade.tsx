@@ -136,7 +136,7 @@ const InternalPickerCascade = forwardRef<PickerCascadeRef, PickerCascadeProps>(
 			ref,
 			() => {
 				return {
-					root: rootRef.current,
+					element: rootRef.current,
 					getOptions: () => getOptions(),
 					getValue: () => getValues(),
 				};

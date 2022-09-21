@@ -115,7 +115,7 @@ const DatePicker = forwardRef<DatePickerRef, DatePickerProps>((_props, ref) => {
 	const pickerRef = useRef<PickerMultiRef>(null);
 	const rootRef = useMemo<DatePickerRef>(
 		() => ({
-			root: pickerRef.current?.root || null,
+			element: pickerRef.current?.element || null,
 			getValue: () => valueRef.current,
 		}),
 		[valueRef],

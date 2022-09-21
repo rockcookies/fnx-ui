@@ -33,7 +33,7 @@ try {
 } catch (e) {}
 
 export function bindEvent(
-	element: Element | Document,
+	element: Element | Document | Window,
 	event: string,
 	callback: (...args: any[]) => any,
 	options: {
@@ -42,8 +42,8 @@ export function bindEvent(
 ) {
 	let eventOptions: boolean | AddEventListenerOptions = false;
 
-	if (options.passive === false) {
-		eventOptions = SUPPORTS_PASSIVE ? { passive: false } : false;
+	if (options.passive != null) {
+		eventOptions = SUPPORTS_PASSIVE ? { passive: options.passive } : false;
 	}
 
 	element.addEventListener(event, callback, eventOptions);

@@ -27,7 +27,7 @@ export type CheckboxProps = CheckboxComponentProps &
 	Omit<HTMLAttributes<HTMLDivElement>, 'onChange' | 'value'>;
 
 export interface CheckboxRef {
-	root: HTMLDivElement | null;
+	element: HTMLDivElement | null;
 	toggle: () => void;
 }
 
@@ -51,7 +51,7 @@ export interface CheckboxGroupContextData extends CheckboxBaseProps {
 	toggleValue?: (isCheck: boolean, value: CheckboxValue) => void;
 }
 export interface CheckboxGroupRef {
-	root: HTMLDivElement | null;
+	element: HTMLDivElement | null;
 	toggleAll: (options?: { checkAll?: boolean }) => void;
 }
 

@@ -58,7 +58,7 @@
     "clean": "fnx-ui-cli clean && rimraf ./dist-site ./converge",
     "dev": "fnx-ui-cli dev --port 8000",
     "build": "fnx-ui-cli build",
-    "build:site": "fnx-ui-cli build-site --outDir dist-site",
+    "build:site": "fnx-ui-cli build-site --outDir dist-site && gh-pages -d dist-site",
     "test": "jest",
     "test:cov": "jest --coverage",
     "test:update": "jest --updateSnapshot",

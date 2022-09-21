@@ -106,7 +106,7 @@ const InternalStepper = forwardRef<StepperRef, StepperProps>((_props, ref) => {
 
 	useImperativeHandle<StepperRef, StepperRef>(ref, () => {
 		return {
-			root: rootRef.current,
+			element: rootRef.current,
 			input: inputRef.current,
 		};
 	});

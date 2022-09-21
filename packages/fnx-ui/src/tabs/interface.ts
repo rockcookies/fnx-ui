@@ -26,7 +26,7 @@ export interface TabsComponentProps {
 }
 
 export interface TabsRef {
-	root: HTMLDivElement | null;
+	element: HTMLDivElement | null;
 	reset: () => void;
 }
 

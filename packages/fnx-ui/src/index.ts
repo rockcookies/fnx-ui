@@ -39,3 +39,4 @@ export { default as Tag } from './tag';
 export { default as Toast } from './toast';
 export { default as Uploader } from './uploader';
 export { default as Empty } from './empty';
+export { default as Space } from './space';

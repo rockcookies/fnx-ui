@@ -95,7 +95,7 @@ const Swipe = forwardRef<SwipeRef, SwipeProps>((_props, ref) => {
 
 	const swipeRef = useMemo<SwipeRef>(() => {
 		return {
-			root: rootRef.current || null,
+			element: rootRef.current || null,
 			wrapper: wrapperRef.current || null,
 			reset: () => {
 				reset(reload);
@@ -322,10 +322,10 @@ const Swipe = forwardRef<SwipeRef, SwipeProps>((_props, ref) => {
 			startAutoplay();
 		};
 
-		node.addEventListener('touchstart', onTouchStart, false);
+		bindEvent(node, 'touchstart', onTouchStart, { passive: true });
 		bindEvent(node, 'touchmove', onTouchMove, { passive: false });
-		node.addEventListener('touchend', onTouchEnd, false);
-		node.addEventListener('touchcancel', onTouchEnd, false);
+		bindEvent(node, 'touchend', onTouchEnd, { passive: true });
+		bindEvent(node, 'touchcancel', onTouchEnd, { passive: true });
 
 		return () => {
 			node.removeEventListener('touchstart', onTouchStart);

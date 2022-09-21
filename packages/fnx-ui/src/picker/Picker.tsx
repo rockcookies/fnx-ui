@@ -22,7 +22,7 @@ const InternalPicker = forwardRef<PickerRef, PickerProps>((_props, ref) => {
 
 	const pickerRef = useMemo<PickerRef>(
 		() => ({
-			root: rootRef.current,
+			element: rootRef.current,
 			getValue: (): any => columnRef.current?.getActiveValue(),
 			getOption: (): any => columnRef.current?.getActiveOption(),
 		}),

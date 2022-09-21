@@ -84,7 +84,7 @@ const Tabs = forwardRef<TabsRef, TabsProps>((_props, ref) => {
 		ref,
 		() => {
 			return {
-				root: rootRef.current,
+				element: rootRef.current,
 				reset: () => {
 					tabsHeaderRef.current?.reset();
 					swipeRef.current?.reset();

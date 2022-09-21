@@ -53,7 +53,7 @@ export type PickerProps<T = PickerOptionOrValue> = PickerComponentProps<T> &
 	PickerElementProps;
 
 export interface PickerRef<T = PickerOptionOrValue> {
-	root: HTMLDivElement | null;
+	element: HTMLDivElement | null;
 	getValue: () => PickerValue;
 	getOption: () => T;
 }
@@ -71,7 +71,7 @@ export type PickerMultiProps<T = PickerOptionOrValue> =
 	PickerMultiComponentProps<T> & PickerElementProps;
 
 export interface PickerMultiRef<T = PickerOptionOrValue> {
-	root: HTMLDivElement | null;
+	element: HTMLDivElement | null;
 	getValue: () => PickerValue[];
 	getOptions: () => T[];
 }
@@ -89,7 +89,7 @@ export type PickerCascadeProps<T = PickerOption> =
 	PickerCascadeComponentProps<T> & PickerElementProps;
 
 export interface PickerCascadeRef<T = PickerOption> {
-	root: HTMLDivElement | null;
+	element: HTMLDivElement | null;
 	getValue: () => PickerValue[];
 	getOptions: () => T[];
 }

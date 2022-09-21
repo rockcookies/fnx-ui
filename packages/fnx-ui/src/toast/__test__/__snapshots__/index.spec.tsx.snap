@@ -4,7 +4,9 @@ exports[`<Toast /> show toast 1`] = `
 <div
   class="fnx-popup fnx-popup--center fnx-toast fnx-toast--text fnx-fade-enter-done"
   id="show-toast"
+  role="dialog"
   style="z-index: 2004;"
+  tabindex="0"
 >
   <div
     class="fnx-toast__message"
@@ -18,7 +20,9 @@ exports[`<Toast /> show toast 2`] = `
 <div
   class="fnx-popup fnx-popup--center fnx-toast fnx-fade-enter-done"
   id="success-toast"
+  role="dialog"
   style="z-index: 2005;"
+  tabindex="0"
 >
   <div
     class="fnx-toast__icon"
@@ -52,7 +56,9 @@ exports[`<Toast /> show toast 3`] = `
 <div
   class="fnx-popup fnx-popup--center fnx-toast fnx-fade-enter-done"
   id="fail-toast"
+  role="dialog"
   style="z-index: 2006;"
+  tabindex="0"
 >
   <div
     class="fnx-toast__icon"
@@ -86,7 +92,9 @@ exports[`<Toast /> show toast 4`] = `
 <div
   class="fnx-popup fnx-popup--center fnx-toast fnx-fade-enter-done"
   id="loading-toast"
+  role="dialog"
   style="z-index: 2007;"
+  tabindex="0"
 >
   <div
     class="fnx-toast__icon"
@@ -125,7 +133,9 @@ exports[`<Toast /> toast disappeared after duration 1`] = `
   <div
     class="fnx-popup fnx-popup--center fnx-toast fnx-toast--text fnx-fade-exit fnx-fade-exit-active"
     data-testid="toast"
+    role="dialog"
     style="z-index: 2002;"
+    tabindex="0"
   />
 </div>
 `;
@@ -135,7 +145,9 @@ exports[`<Toast /> useToast 1`] = `
   <div>
     <div
       class="fnx-popup fnx-popup--center fnx-toast fnx-fade-enter fnx-fade-enter-active"
+      role="dialog"
       style="z-index: 2010;"
+      tabindex="0"
     >
       <div
         class="fnx-toast__icon"

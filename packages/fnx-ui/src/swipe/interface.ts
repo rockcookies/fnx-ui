@@ -20,7 +20,7 @@ export type SwipeProps = SwipeComponentProps & HTMLAttributes<HTMLDivElement>;
 export type SwipeItemProps = HTMLAttributes<HTMLDivElement>;
 
 export interface SwipeRef {
-	root: HTMLElement | null;
+	element: HTMLElement | null;
 	wrapper: HTMLElement | null;
 	reset: () => void;
 	next: () => void;

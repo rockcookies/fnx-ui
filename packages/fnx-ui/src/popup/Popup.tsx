@@ -187,6 +187,8 @@ const Popup = forwardRef<HTMLDivElement, PopupProps>((_props, ref) => {
 							zIndex={zIndex}
 							lockScroll={lockScroll}
 							transitionDuration={transitionDuration}
+							role={overlayCloseable ? 'button' : undefined}
+							tabIndex={overlayCloseable ? 0 : undefined}
 							onClick={(e) => {
 								onOverlayClick(e);
 
@@ -225,6 +227,8 @@ const Popup = forwardRef<HTMLDivElement, PopupProps>((_props, ref) => {
 								className,
 							)}
 							style={formatStyle()}
+							role="dialog"
+							tabIndex={0}
 							{...restProps}
 							ref={popupRef}
 						>

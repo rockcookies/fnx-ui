@@ -38,7 +38,7 @@ const useProps = configComponentProps<
 });
 
 const FieldInput = forwardRef<FieldInputRef, FieldInputProps>((_props, ref) => {
-	const rootRef = useRef<HTMLSpanElement>(null);
+	const elementRef = useRef<HTMLSpanElement>(null);
 	const inputRef = useRef<HTMLInputElement>(null);
 
 	const [
@@ -66,7 +66,7 @@ const FieldInput = forwardRef<FieldInputRef, FieldInputProps>((_props, ref) => {
 
 	useImperativeHandle<FieldInputRef, FieldInputRef>(ref, () => {
 		return {
-			root: rootRef.current,
+			element: elementRef.current,
 			input: inputRef.current,
 		};
 	});
@@ -136,7 +136,7 @@ const FieldInput = forwardRef<FieldInputRef, FieldInputProps>((_props, ref) => {
 
 	return (
 		<span
-			ref={rootRef}
+			ref={elementRef}
 			className={classnames(
 				bem([
 					{

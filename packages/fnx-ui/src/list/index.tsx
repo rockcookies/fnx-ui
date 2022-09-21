@@ -13,6 +13,7 @@ import useUpdateEffect from '../hooks/use-update-effect';
 import Loading from '../loading';
 import { useLocale } from '../locale';
 import Tabs from '../tabs';
+import { bindEvent } from '../utils/dom/event';
 import { getScrollParent } from '../utils/dom/scroll';
 import { getElementRect, isHidden } from '../utils/dom/style';
 import { noop } from '../utils/misc';
@@ -90,7 +91,7 @@ const List = forwardRef<ListRef, ListProps>((_props, ref) => {
 
 	const listRef = useMemo<ListRef>(
 		() => ({
-			root: rootRef.current,
+			element: rootRef.current,
 			scrollParent: scrollParentRef.current || null,
 			check,
 		}),
@@ -114,7 +115,7 @@ const List = forwardRef<ListRef, ListProps>((_props, ref) => {
 		const scrollParent = scrollParentRef.current || getScrollParent(node);
 		scrollParentRef.current = scrollParent;
 
-		scrollParent.addEventListener('scroll', check);
+		bindEvent(scrollParent, 'scroll', check, { passive: true });
 
 		if (immediateCheck) {
 			check();

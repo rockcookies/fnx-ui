@@ -63,7 +63,7 @@ const Checkbox = forwardRef<CheckboxRef, CheckboxProps>((_props, ref) => {
 		onChange: _onChange,
 	});
 
-	const rootRef = useRef<HTMLDivElement>(null);
+	const elementRef = useRef<HTMLDivElement>(null);
 	const prevValueRef = useRef<CheckboxValue | null>(null);
 	const disabled = useMergedProp<boolean>(
 		false,
@@ -117,7 +117,7 @@ const Checkbox = forwardRef<CheckboxRef, CheckboxProps>((_props, ref) => {
 
 	const checkboxRef = useMemo<CheckboxRef>(() => {
 		return {
-			root: rootRef.current,
+			element: elementRef.current,
 			toggle: handleToggle,
 		};
 	}, [handleToggle]);
@@ -142,7 +142,7 @@ const Checkbox = forwardRef<CheckboxRef, CheckboxProps>((_props, ref) => {
 	return render({
 		bem,
 		checked,
-		ref: rootRef,
+		ref: elementRef,
 	});
 });
 

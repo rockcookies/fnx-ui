@@ -4,7 +4,9 @@ exports[`<Notify /> color props 1`] = `
 <div
   class="fnx-popup fnx-popup--top fnx-notify fnx-notify--danger fnx-popup--slide-top-enter fnx-popup--slide-top-enter-active"
   data-testid="notify"
+  role="dialog"
   style="color: rgb(173, 0, 0); z-index: 2003;"
+  tabindex="0"
 />
 `;
 
@@ -16,7 +18,9 @@ exports[`<Notify /> onBeforeHide event is triggered correctly 1`] = `
 <div
   class="fnx-popup fnx-popup--top fnx-notify fnx-notify--danger fnx-popup--slide-top-enter fnx-popup--slide-top-enter-active"
   data-testid="notify"
+  role="dialog"
   style="z-index: 2004;"
+  tabindex="0"
 >
   Content
 </div>
@@ -26,7 +30,9 @@ exports[`<Notify /> should render Notify correctly 1`] = `
 <div
   class="fnx-popup fnx-popup--top fnx-notify fnx-notify--danger fnx-popup--slide-top-enter fnx-popup--slide-top-enter-active"
   data-testid="notify"
+  role="dialog"
   style="z-index: 2001;"
+  tabindex="0"
 />
 `;
 
@@ -37,7 +43,9 @@ exports[`<Notify /> useToast 1`] = `
   <div>
     <div
       class="fnx-popup fnx-popup--top fnx-notify fnx-notify--danger fnx-popup--slide-top-enter fnx-popup--slide-top-enter-active"
+      role="dialog"
       style="z-index: 2006;"
+      tabindex="0"
     >
       success
     </div>

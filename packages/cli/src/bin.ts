@@ -11,7 +11,7 @@ const program = new Command();
 
 program.version(`@fnx-ui/cli ${cliVersion}`);
 
-program.command('lint').description('Run eslint and stylelint').action(lint);
+program.command('lint').description('Run eslint').action(lint);
 
 program
 	.command('commit-lint')

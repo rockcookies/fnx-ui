@@ -58,7 +58,7 @@ export type UploaderProps<T extends UploaderFile = UploaderFile> =
 		>;
 
 export interface UploaderRef {
-	root: HTMLDivElement | null;
+	element: HTMLDivElement | null;
 	input: HTMLInputElement | null;
 }
 

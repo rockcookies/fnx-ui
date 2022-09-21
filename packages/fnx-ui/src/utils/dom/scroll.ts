@@ -17,7 +17,9 @@ export function setScrollTop(el: ScrollElement, value: number) {
 	}
 }
 
-const overflowScrollReg = /scroll|auto/i;
+// get nearest scroll element
+// https://github.com/youzan/vant/issues/3823
+const overflowScrollReg = /scroll|auto|overlay/i;
 
 function isElement(node: Element) {
 	const ELEMENT_NODE_TYPE = 1;

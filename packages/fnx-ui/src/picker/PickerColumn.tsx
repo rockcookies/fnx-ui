@@ -37,7 +37,7 @@ interface PickerColumnOption {
 }
 
 export interface PickerColumnRef {
-	root: HTMLDivElement | null;
+	element: HTMLDivElement | null;
 	getActiveValue: () => PickerValue;
 	getActiveIndex: () => number;
 	getActiveOption: () => PickerOptionOrValue;
@@ -227,7 +227,7 @@ const PickerColumn = forwardRef<PickerColumnRef, CProps>((props, ref) => {
 
 	const pickerColumnRef = useMemo<PickerColumnRef>(() => {
 		return {
-			root: rootRef.current,
+			element: rootRef.current,
 			getActiveValue: () => activeValueRef.current as any,
 			getActiveIndex: () => stateRef.current.activeIndex,
 			getActiveOption: () => {
@@ -359,10 +359,10 @@ const PickerColumn = forwardRef<PickerColumnRef, CProps>((props, ref) => {
 			swipeTo(index, { animation: true });
 		};
 
-		node.addEventListener('touchstart', onTouchStart, false);
+		bindEvent(node, 'touchstart', onTouchStart, { passive: true });
 		bindEvent(node, 'touchmove', onTouchMove, { passive: false });
-		node.addEventListener('touchend', onTouchEnd, false);
-		node.addEventListener('touchcancel', onTouchEnd, false);
+		bindEvent(node, 'touchend', onTouchEnd, { passive: true });
+		bindEvent(node, 'touchcancel', onTouchEnd, { passive: true });
 
 		return () => {
 			node.removeEventListener('touchstart', onTouchStart);

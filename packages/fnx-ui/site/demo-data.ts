@@ -42,4 +42,5 @@ export const DEMO_DATA: Dictionary<React.LazyExoticComponent<any>> = {
 	notify: lazy(() => import('../src/notify/demos/basic')),
 	'config-provider': lazy(() => import('../src/config-provider/demos/basic')),
 	empty: lazy(() => import('../src/empty/demos/basic')),
+	space: lazy(() => import('../src/space/demos/basic')),
 };
