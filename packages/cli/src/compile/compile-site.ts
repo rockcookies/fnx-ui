@@ -17,7 +17,7 @@ import {
 } from 'vite';
 import { COMPILE_TARGETS, DIRS } from '../core/constants';
 
-const DEFAULT_BASE = '/fnx-ui';
+const DEFAULT_BASE = './';
 const DEFAULT_PORT = 8000;
 const DEFAULT_HOST = '0.0.0.0';
 const DEFAULT_LOG_LEVEL: LogLevel = 'info';
@@ -53,29 +53,6 @@ const getViteOptions = (): Partial<UserConfig> => {
 						overrideBrowserslist: COMPILE_TARGETS,
 					}),
 				],
-			},
-		},
-		build: {
-			rollupOptions: {
-				output: {
-					manualChunks(id: any, { getModuleInfo }) {
-						const cssLangs = `\\.(css|less|sass|scss|styl|stylus|pcss|postcss)($|\\?)`;
-						const cssLangRE = new RegExp(cssLangs);
-						const isCSSRequest = (request: string): boolean =>
-							cssLangRE.test(request);
-
-						if (id.includes('node_modules') && !isCSSRequest(id)) {
-							return 'vendor';
-						} else if (
-							getModuleInfo(id).importers.length +
-								getModuleInfo(id).dynamicImporters.length >
-								1 &&
-							id.includes('src')
-						) {
-							return 'manifest';
-						}
-					},
-				},
 			},
 		},
 	};
