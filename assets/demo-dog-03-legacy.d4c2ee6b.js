@@ -1,0 +1,1 @@
+System.register([],(function(e,t){"use strict";return{execute:function(){e("d",""+new URL("demo-dog-02.baa2a847.jpg",t.meta.url).href),e("a",""+new URL("demo-dog-03.397ddf30.jpg",t.meta.url).href)}}}));
