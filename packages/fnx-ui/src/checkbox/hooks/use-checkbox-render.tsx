@@ -1,6 +1,6 @@
 /* eslint-disable react/display-name */
 import React, { HTMLAttributes, ReactElement, RefObject } from 'react';
-import useDefaults from '../../hooks/use-defaults';
+import useMergedProp from '../../hooks/use-merged-prop';
 import Icon from '../../icon';
 import { preventDefault } from '../../utils/dom/event';
 import { addUnit } from '../../utils/format';
@@ -30,26 +30,26 @@ export default function useCheckboxRender(
 	}: HTMLAttributes<HTMLDivElement> & CheckboxBaseProps,
 	context: Partial<CheckboxBaseProps>,
 ): (o: RenderOptions) => ReactElement {
-	const disabled = useDefaults(false, _disabled, context.disabled);
-	const direction = useDefaults('vertical', _direction, context.direction);
-	const iconSize = useDefaults(undefined, _iconSize, context.iconSize);
-	const iconPosition = useDefaults(
+	const disabled = useMergedProp(false, _disabled, context.disabled);
+	const direction = useMergedProp('vertical', _direction, context.direction);
+	const iconSize = useMergedProp(undefined, _iconSize, context.iconSize);
+	const iconPosition = useMergedProp(
 		'left',
 		_iconPosition,
 		context.iconPosition,
 	);
 
-	const iconShape = useDefaults<string>(
+	const iconShape = useMergedProp<string>(
 		'round',
 		_iconShape,
 		context.iconShape,
 	);
-	const iconCheckedColor = useDefaults(
+	const iconCheckedColor = useMergedProp(
 		undefined,
 		_iconCheckedColor,
 		context.iconCheckedColor,
 	);
-	const labelDisabled = useDefaults(
+	const labelDisabled = useMergedProp(
 		false,
 		_labelDisabled,
 		context.labelDisabled,

@@ -1,17 +1,18 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { createBEM } from '../../../src/utils/namespace';
-import { createFC } from '../../../src/utils/react';
 import logo from '../../assets/logo.svg';
 import './index.less';
 
 const bem = createBEM('page-loading');
 
-const PageLoading = createFC('PageLoading', () => {
+const PageLoading: FC = () => {
 	return (
 		<div className={bem()}>
 			<img src={logo} />
 		</div>
 	);
-});
+};
+
+PageLoading.displayName = 'PageLoading';
 
 export default PageLoading;

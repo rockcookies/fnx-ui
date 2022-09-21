@@ -30,7 +30,7 @@ export { default as Radio } from './radio';
 export { default as Rate } from './rate';
 export { default as Row } from './row';
 export { default as Skeleton } from './skeleton';
-export { default as Stepper } from './stepper';
+export { default as InternalStepper } from './stepper';
 export { default as Sticky } from './sticky';
 export { default as Swipe } from './swipe';
 export { default as Switch } from './switch';

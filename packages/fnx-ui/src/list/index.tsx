@@ -1,4 +1,5 @@
 import React, {
+	forwardRef,
 	useCallback,
 	useContext,
 	useEffect,
@@ -7,7 +8,7 @@ import React, {
 	useRef,
 } from 'react';
 import configComponentProps from '../hooks/config-component-props';
-import useDefaultsRef from '../hooks/use-defaults-ref';
+import useMergedPropRef from '../hooks/use-merged-prop-ref';
 import useUpdateEffect from '../hooks/use-update-effect';
 import Loading from '../loading';
 import { useLocale } from '../locale';
@@ -16,7 +17,6 @@ import { getScrollParent } from '../utils/dom/scroll';
 import { getElementRect, isHidden } from '../utils/dom/style';
 import { noop } from '../utils/misc';
 import { classnames, createBEM } from '../utils/namespace';
-import { createForwardRef } from '../utils/react';
 import { ListComponentProps, ListProps, ListRef } from './interface';
 
 const NS = 'fnx-list';
@@ -32,19 +32,19 @@ const useProps = configComponentProps<Required<ListComponentProps>>({
 	scrollListenTo: null,
 });
 
-const List = createForwardRef<ListRef, ListProps>('List', (_props, ref) => {
+const List = forwardRef<ListRef, ListProps>((_props, ref) => {
 	const locale = useLocale('list');
 
 	const [props, { className, children, ...restProps }] = useProps(_props);
 	const { status, direction, slots } = props;
-	const propsRef = useDefaultsRef<Required<ListComponentProps>>(props);
+	const propsRef = useMergedPropRef<Required<ListComponentProps>>(props);
 
 	const rootRef = useRef<HTMLDivElement>(null);
 	const scrollParentRef = useRef<HTMLElement | Window>();
 	const placeholderRef = useRef<HTMLDivElement>(null);
 
 	const { active: tabPanelActive } = useContext(Tabs.PanelContext);
-	const tabPanelActiveRef = useDefaultsRef(tabPanelActive);
+	const tabPanelActiveRef = useMergedPropRef(tabPanelActive);
 
 	const check = useCallback(() => {
 		const { status } = propsRef.current;
@@ -159,6 +159,8 @@ const List = createForwardRef<ListRef, ListProps>('List', (_props, ref) => {
 		</div>
 	);
 });
+
+List.displayName = 'List';
 
 export type {
 	ListComponentProps,

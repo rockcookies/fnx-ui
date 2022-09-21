@@ -8,7 +8,7 @@ import { DIRS } from '../core/constants';
 import { signal } from '../core/logger';
 import { onRelative, pipeline } from '../core/utils';
 import { getPostcss } from './compile-less';
-import chalk from 'chalk';
+import * as color from 'colorette';
 
 const relative = onRelative(DIRS.cwd);
 
@@ -28,7 +28,7 @@ const buildCss = async (options: { minify: boolean }): Promise<void> => {
 						file.path = file.path.replace(/\.css/, '.min.css');
 					}
 
-					signal.info(`Build CSS ${chalk.blue(relative(file.path))}`);
+					signal.info(`Build CSS ${color.blue(relative(file.path))}`);
 
 					this.push(file);
 					cb();
@@ -64,7 +64,7 @@ export async function compileCss() {
 
 		const dest = path.join(DIRS.dist, `fnx-theme-${theme}.less`);
 
-		signal.info(`Build Theme ${chalk.blue(relative(dest))}`);
+		signal.info(`Build Theme ${color.blue(relative(dest))}`);
 
 		await fs.writeFile(dest, css);
 	}

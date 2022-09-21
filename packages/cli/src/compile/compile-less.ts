@@ -1,5 +1,5 @@
 import autoprefixer from 'autoprefixer';
-import chalk from 'chalk';
+import * as color from 'colorette';
 import cssnano from 'cssnano';
 import less from 'gulp-less';
 import plumber from 'gulp-plumber';
@@ -55,7 +55,7 @@ async function compileLessEntry(cwd: string): Promise<void> {
 			.pipe(
 				through.obj(function transform(file: any, encoding, cb: any) {
 					signal.info(
-						`Transform to css for ${chalk.blue(
+						`Transform to css for ${color.blue(
 							relative(file.path),
 						)}`,
 					);
@@ -84,7 +84,7 @@ async function compileCssEntry(cwd: string): Promise<void> {
 					file.contents = Buffer.from(cssInjection(content));
 
 					signal.info(
-						`Transform to css.js for ${chalk.blue(
+						`Transform to css.js for ${color.blue(
 							relative(file.path),
 						)}`,
 					);

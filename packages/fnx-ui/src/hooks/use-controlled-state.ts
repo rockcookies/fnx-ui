@@ -1,5 +1,5 @@
 import { MutableRefObject, useState } from 'react';
-import useDefaultsRef from './use-defaults-ref';
+import useMergedPropRef from './use-merged-prop-ref';
 import useUpdateEffect from './use-update-effect';
 
 interface ControlledOptions<T> {
@@ -38,7 +38,7 @@ export default function useControlledState<T, R = T>({
 		}
 	}, [value]);
 
-	const onChangeRef = useDefaultsRef((...args: any[]) => {
+	const onChangeRef = useMergedPropRef((...args: any[]) => {
 		if (!controlled) {
 			setInnerValue(args[0]);
 		}

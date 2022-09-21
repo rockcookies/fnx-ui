@@ -1,5 +1,6 @@
 import React, {
 	ChangeEvent,
+	forwardRef,
 	ReactElement,
 	useCallback,
 	useImperativeHandle,
@@ -14,7 +15,6 @@ import { isPromise } from '../utils/detect';
 import { ForwardRefProps } from '../utils/interface';
 import { noop } from '../utils/misc';
 import { classnames } from '../utils/namespace';
-import { createForwardRef } from '../utils/react';
 import {
 	UploaderFile,
 	UploaderFileItem,
@@ -62,8 +62,7 @@ const parseUploaderFile = (file: UploaderFile): UploaderMarkedFile => {
 	return { ...file, uid: getFileUid() };
 };
 
-const Uploader = createForwardRef<UploaderRef, UploaderProps>(
-	'Uploader',
+const InternalUploader = forwardRef<UploaderRef, UploaderProps>(
 	(_props, ref) => {
 		const locale = useLocale('uploader');
 
@@ -256,7 +255,11 @@ const Uploader = createForwardRef<UploaderRef, UploaderProps>(
 			</div>
 		);
 	},
-) as <T extends UploaderFile = UploaderFile>(
+);
+
+InternalUploader.displayName = 'Uploader';
+
+const Uploader = InternalUploader as <T extends UploaderFile = UploaderFile>(
 	props: ForwardRefProps<UploaderProps<T>, UploaderRef>,
 ) => ReactElement;
 

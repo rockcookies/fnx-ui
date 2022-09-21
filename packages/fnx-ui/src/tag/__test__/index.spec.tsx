@@ -1,8 +1,8 @@
 import React from 'react';
-import { fireEvent, render } from '@testing-library/react';
+import { act, fireEvent, render } from '@testing-library/react';
 import Tag from '../index';
-import Icon from '../../icon';
 import TestsDOM from '../../../test/dom';
+
 describe('<Tag>', () => {
 	beforeEach(() => {
 		jest.useFakeTimers();
@@ -63,11 +63,18 @@ describe('<Tag>', () => {
 
 		rerender(<Tag visible={false}>switch</Tag>);
 
-		jest.runAllTimers();
+		act(() => {
+			jest.runAllTimers();
+		});
+
 		expect(container).toMatchSnapshot();
 
 		rerender(<Tag visible={true}>switch</Tag>);
-		jest.runAllTimers();
+
+		act(() => {
+			jest.runAllTimers();
+		});
+
 		expect(container).toMatchSnapshot();
 	});
 });

@@ -1,5 +1,6 @@
 import React, {
 	cloneElement,
+	forwardRef,
 	isValidElement,
 	useCallback,
 	useMemo,
@@ -7,7 +8,7 @@ import React, {
 import configComponentProps from '../hooks/config-component-props';
 import useControlledState from '../hooks/use-controlled-state';
 import { classnames, createBEM } from '../utils/namespace';
-import { createForwardRef, toElementArray } from '../utils/react';
+import { toElementArray } from '../utils/react';
 import CollapseContext from './context';
 import { CollapseProps } from './interface';
 
@@ -32,71 +33,70 @@ const parseKeys = (keys: string | string[]): string[] => {
 	return formatted;
 };
 
-const Collapse = createForwardRef<HTMLDivElement, CollapseProps>(
-	'Collapse',
-	(_props, ref) => {
-		const [
-			{ defaultActiveKey: _defaultActiveKey, accordion, ghost },
-			{
-				activeKey: __activeKey,
-				onChange: _onChange,
-				className,
-				children,
-				...restProps
-			},
-		] = useProps(_props);
-
-		const _activeKeys = useMemo<string[] | undefined>(
-			() => (__activeKey == null ? undefined : parseKeys(__activeKey)),
-			[__activeKey],
-		);
-
-		const defaultActiveKeys = useMemo<string[]>(
-			() => parseKeys(_defaultActiveKey != null ? _defaultActiveKey : []),
-			[_defaultActiveKey],
-		);
-
-		const { value: activeKey, onChangeRef } = useControlledState({
-			value: _activeKeys,
-			defaultValue: defaultActiveKeys,
+const Collapse = forwardRef<HTMLDivElement, CollapseProps>((_props, ref) => {
+	const [
+		{ defaultActiveKey: _defaultActiveKey, accordion, ghost },
+		{
+			activeKey: __activeKey,
 			onChange: _onChange,
-		});
+			className,
+			children,
+			...restProps
+		},
+	] = useProps(_props);
 
-		const onChange = useCallback(
-			(v: string[]) => onChangeRef.current(v),
-			[onChangeRef],
-		);
+	const _activeKeys = useMemo<string[] | undefined>(
+		() => (__activeKey == null ? undefined : parseKeys(__activeKey)),
+		[__activeKey],
+	);
 
-		return (
-			<CollapseContext.Provider
-				value={{
-					activeKey,
-					onChange,
-					accordion,
-					ghost,
-				}}
+	const defaultActiveKeys = useMemo<string[]>(
+		() => parseKeys(_defaultActiveKey != null ? _defaultActiveKey : []),
+		[_defaultActiveKey],
+	);
+
+	const { value: activeKey, onChangeRef } = useControlledState({
+		value: _activeKeys,
+		defaultValue: defaultActiveKeys,
+		onChange: _onChange,
+	});
+
+	const onChange = useCallback(
+		(v: string[]) => onChangeRef.current(v),
+		[onChangeRef],
+	);
+
+	return (
+		<CollapseContext.Provider
+			value={{
+				activeKey,
+				onChange,
+				accordion,
+				ghost,
+			}}
+		>
+			<div
+				className={classnames(bem(), className)}
+				{...restProps}
+				ref={ref}
 			>
-				<div
-					className={classnames(bem(), className)}
-					{...restProps}
-					ref={ref}
-				>
-					{toElementArray(children).map((child, idx) => {
-						if (isValidElement<any>(child)) {
-							const key =
-								child.key != null ? `${child.key}` : `${idx}`;
+				{toElementArray(children).map((child, idx) => {
+					if (isValidElement<any>(child)) {
+						const key =
+							child.key != null ? `${child.key}` : `${idx}`;
 
-							return cloneElement(child, {
-								...child.props,
-								key,
-								'data-fnx-collapse-item-key': key,
-							});
-						}
-					})}
-				</div>
-			</CollapseContext.Provider>
-		);
-	},
-);
+						return cloneElement(child, {
+							...child.props,
+							key,
+							'data-fnx-collapse-item-key': key,
+						});
+					}
+				})}
+			</div>
+		</CollapseContext.Provider>
+	);
+});
+
+Collapse.displayName = 'Collapse';
 
 export default Collapse;

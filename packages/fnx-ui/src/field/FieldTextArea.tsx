@@ -1,5 +1,6 @@
 import React, {
 	CSSProperties,
+	forwardRef,
 	useEffect,
 	useImperativeHandle,
 	useRef,
@@ -12,7 +13,6 @@ import useFocus from '../hooks/use-focus';
 import { clamp, unitToPx } from '../utils/format';
 import { isEqualArrays } from '../utils/misc';
 import { classnames, createBEM } from '../utils/namespace';
-import { createForwardRef } from '../utils/react';
 import {
 	FieldTextAreaCountFormatter,
 	FieldTextAreaProps,
@@ -44,8 +44,7 @@ const useProps = configComponentProps<
 	disabled: false,
 });
 
-const FieldTextArea = createForwardRef<FieldTextAreaRef, FieldTextAreaProps>(
-	'FieldTextArea',
+const FieldTextArea = forwardRef<FieldTextAreaRef, FieldTextAreaProps>(
 	(_props, ref) => {
 		const rootRef = useRef<HTMLSpanElement>(null);
 		const inputRef = useRef<HTMLTextAreaElement>(null);
@@ -233,5 +232,7 @@ const FieldTextArea = createForwardRef<FieldTextAreaRef, FieldTextAreaProps>(
 		);
 	},
 );
+
+FieldTextArea.displayName = 'FieldTextArea';
 
 export default FieldTextArea;

@@ -1,11 +1,11 @@
 import { useContext, useEffect } from 'react';
-import useDefaultsRef from '../../hooks/use-defaults-ref';
+import useMergedPropRef from '../../hooks/use-merged-prop-ref';
 import { PopupContext } from '../context';
 
 const useOnPopupOpen = (callback: () => void) => {
 	const ctx = useContext(PopupContext);
 
-	const callbackRef = useDefaultsRef(callback);
+	const callbackRef = useMergedPropRef(callback);
 
 	useEffect(() => {
 		if (ctx.visible === true) {

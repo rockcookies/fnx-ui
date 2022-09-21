@@ -1,15 +1,15 @@
 import React, {
+	forwardRef,
 	ReactElement,
 	useImperativeHandle,
 	useRef,
 	useState,
 } from 'react';
-import useDefaultsRef from '../hooks/use-defaults-ref';
+import useMergedPropRef from '../hooks/use-merged-prop-ref';
 import useGetState from '../hooks/use-get-state';
 import useUpdateEffect from '../hooks/use-update-effect';
 import { ForwardRefProps } from '../utils/interface';
 import { isEqualArrays } from '../utils/misc';
-import { createForwardRef } from '../utils/react';
 import usePickerProps, { PickerDataGetters } from './hooks/use-picker-props';
 import {
 	PickerCascadeProps,
@@ -96,8 +96,7 @@ const parseColumns = (
 	return output;
 };
 
-const PickerCascade = createForwardRef<PickerCascadeRef, PickerCascadeProps>(
-	'PickerCascade',
+const InternalPickerCascade = forwardRef<PickerCascadeRef, PickerCascadeProps>(
 	(_props, ref) => {
 		const [
 			{
@@ -111,7 +110,7 @@ const PickerCascade = createForwardRef<PickerCascadeRef, PickerCascadeProps>(
 
 		const rootRef = useRef<HTMLDivElement>(null);
 
-		const onChangeRef = useDefaultsRef(onChange);
+		const onChangeRef = useMergedPropRef(onChange);
 
 		const [indexes, setIndexes] = useState<number[]>(() =>
 			parseIndexes(data || [], dataNames, defaultValue),
@@ -251,7 +250,11 @@ const PickerCascade = createForwardRef<PickerCascadeRef, PickerCascadeProps>(
 			</PickerContainer>
 		);
 	},
-) as <T = PickerOption>(
+);
+
+InternalPickerCascade.displayName = 'PickerCascade';
+
+const PickerCascade = InternalPickerCascade as <T = PickerOption>(
 	props: ForwardRefProps<PickerCascadeProps<T>, PickerCascadeRef<any>>,
 ) => ReactElement;
 

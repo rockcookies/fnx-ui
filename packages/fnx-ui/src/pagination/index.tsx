@@ -1,4 +1,4 @@
-import React, { useImperativeHandle, useMemo, useRef } from 'react';
+import React, { forwardRef, useImperativeHandle, useMemo, useRef } from 'react';
 import configComponentProps from '../hooks/config-component-props';
 import useControlledState from '../hooks/use-controlled-state';
 import { useLocale } from '../locale';
@@ -6,7 +6,6 @@ import { BORDER } from '../utils/constants';
 import { clamp } from '../utils/format';
 import { noop } from '../utils/misc';
 import { classnames, createBEM } from '../utils/namespace';
-import { createForwardRef } from '../utils/react';
 import { PaginationProps } from './interface';
 
 const NS = 'fnx-pagination';
@@ -39,8 +38,7 @@ const useProps = configComponentProps<
 	pageItemCount: 5,
 });
 
-const Pagination = createForwardRef<HTMLUListElement, PaginationProps>(
-	'Pagination',
+const Pagination = forwardRef<HTMLUListElement, PaginationProps>(
 	(_props, ref) => {
 		const locale = useLocale('pagination');
 
@@ -208,6 +206,8 @@ const Pagination = createForwardRef<HTMLUListElement, PaginationProps>(
 		);
 	},
 );
+
+Pagination.displayName = 'Pagination';
 
 export type {
 	PaginationComponentProps,

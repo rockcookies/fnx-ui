@@ -1,10 +1,8 @@
-import React from 'react';
-import { createForwardRef } from '../utils/react';
+import React, { forwardRef } from 'react';
 import CalendarContainer from './CalendarContainer';
 import { CalendarProps, CalendarRef } from './interface';
 
-const Calendar = createForwardRef<CalendarRef, CalendarProps>(
-	'Calendar',
+const Calendar = forwardRef<CalendarRef, CalendarProps>(
 	({ defaultValue, onChange, onConfirm, onCancel, ...restProps }, ref) => {
 		const handleCallback = (value: Date[], cb?: (v: Date) => any): any => {
 			if (cb && value[0]) {
@@ -29,5 +27,7 @@ const Calendar = createForwardRef<CalendarRef, CalendarProps>(
 		);
 	},
 );
+
+Calendar.displayName = 'Calendar';
 
 export default Calendar;

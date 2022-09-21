@@ -1,8 +1,7 @@
-import React, { useContext } from 'react';
-import { Link } from 'umi';
+import React, { FC, useContext } from 'react';
+import { Link } from 'react-router-dom';
 import { Dictionary } from '../../../src/utils/interface';
 import { createBEM } from '../../../src/utils/namespace';
-import { createFC } from '../../../src/utils/react';
 import { SiteContext } from '../../layout/context';
 import './index.less';
 
@@ -25,7 +24,7 @@ interface CProps {
 	slogan?: string;
 }
 
-const SiteIndex = createFC<CProps>('SiteIndex', (props) => {
+const SiteIndex: FC<CProps> = (props) => {
 	const { locale, setTheme, theme } = useContext(SiteContext);
 
 	const i18n = I18N[locale];
@@ -54,6 +53,8 @@ const SiteIndex = createFC<CProps>('SiteIndex', (props) => {
 			</div>
 		</div>
 	);
-});
+};
+
+SiteIndex.displayName = 'SiteIndex';
 
 export default SiteIndex;

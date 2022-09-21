@@ -69,7 +69,7 @@ export interface PopupSelectComponentProps<T = any> {
 }
 
 export type PopupSelectProps<T = any> = PopupSelectComponentProps<T> &
-	Omit<PopupProps, 'defaultValue' | 'value' | 'onChange'>;
+	Omit<PopupProps, 'children' | 'defaultValue' | 'value' | 'onChange'>;
 
 export interface PopupExportExtra {
 	Portal: typeof Portal;

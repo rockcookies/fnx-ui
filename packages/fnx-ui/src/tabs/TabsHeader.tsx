@@ -1,11 +1,12 @@
 import React, {
+	forwardRef,
 	useCallback,
 	useEffect,
 	useImperativeHandle,
 	useMemo,
 	useRef,
 } from 'react';
-import useDefaultsRef from '../hooks/use-defaults-ref';
+import useMergedPropRef from '../hooks/use-merged-prop-ref';
 import useGetState from '../hooks/use-get-state';
 import useUpdateEffect from '../hooks/use-update-effect';
 import useWindowSize from '../hooks/use-window-size';
@@ -14,7 +15,6 @@ import { addUnit } from '../utils/format';
 import { Dictionary } from '../utils/interface';
 import { classnames } from '../utils/namespace';
 import { doubleRaf } from '../utils/raf';
-import { createForwardRef } from '../utils/react';
 import { TabMeta } from './hooks/use-tab-meta-list';
 import { TabsComponentProps, TabsSlots } from './interface';
 import { scrollLeftTo, _bem as bem } from './utils';
@@ -23,7 +23,7 @@ export interface TabsHeaderRef {
 	reset: () => void;
 }
 
-const TabsHeader = createForwardRef<
+const TabsHeader = forwardRef<
 	TabsHeaderRef,
 	{
 		transitionDuration: number;
@@ -40,7 +40,6 @@ const TabsHeader = createForwardRef<
 		onTabClick?: TabsComponentProps['onTabClick'];
 	}
 >(
-	'TabsHeader',
 	(
 		{
 			activeIndex,
@@ -56,8 +55,8 @@ const TabsHeader = createForwardRef<
 		},
 		ref,
 	) => {
-		const transitionDurationRef = useDefaultsRef(transitionDuration);
-		const activeIndexRef = useDefaultsRef(activeIndex);
+		const transitionDurationRef = useMergedPropRef(transitionDuration);
+		const activeIndexRef = useMergedPropRef(activeIndex);
 
 		const tabListRef = useRef<HTMLDivElement>(null);
 		const tabRefs = useRef<Dictionary<HTMLDivElement | null>>({});
@@ -212,5 +211,7 @@ const TabsHeader = createForwardRef<
 		);
 	},
 );
+
+TabsHeader.displayName = 'TabsHeader';
 
 export default TabsHeader;

@@ -1,5 +1,5 @@
 import { HTMLAttributes } from 'react';
-import RadioGroup from './RadioGroup';
+import InternalRadioGroup from './RadioGroup';
 import { CheckboxValue, CheckboxBaseProps } from '../checkbox/interface';
 
 export type RadioValue = CheckboxValue;
@@ -13,7 +13,7 @@ export interface RadioComponentProps extends CheckboxBaseProps {
 }
 
 export type RadioProps = RadioComponentProps &
-	Omit<HTMLAttributes<HTMLDivElement>, 'onChange'>;
+	Omit<HTMLAttributes<HTMLDivElement>, 'onChange' | 'value'>;
 
 export interface RadioGroupComponentProps<T extends RadioValue = RadioValue>
 	extends CheckboxBaseProps {
@@ -32,5 +32,5 @@ export type RadioGroupProps<T extends RadioValue = RadioValue> =
 		Omit<HTMLAttributes<HTMLDivElement>, 'onChange' | 'defaultValue'>;
 
 export interface RadioExportExtra {
-	Group: typeof RadioGroup;
+	Group: typeof InternalRadioGroup;
 }

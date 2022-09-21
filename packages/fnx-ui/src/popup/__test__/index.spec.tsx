@@ -1,5 +1,7 @@
 import { fireEvent, render } from '@testing-library/react';
 import React, { useState } from 'react';
+import { act } from 'react-dom/test-utils';
+import TestsDOM from '../../../test/dom';
 import _Popup from '../index';
 import { PopupProps } from '../interface';
 
@@ -31,7 +33,10 @@ describe('<Popup/>', () => {
 		expect(ddc().contains('fnx-overflow-hidden')).toBeTruthy();
 
 		rerender(<Popup visible={false} />);
-		jest.runAllTimers();
+
+		act(() => {
+			jest.runAllTimers();
+		});
 
 		expect(ddc().contains('fnx-overflow-hidden')).not.toBeTruthy();
 	});
@@ -49,29 +54,41 @@ describe('<Popup/>', () => {
 		expect(container.querySelectorAll('.fnx-popup').length).toBe(0);
 
 		rerender(<Demo visible={true} />);
-		jest.runAllTimers();
+		act(() => {
+			jest.runAllTimers();
+		});
 		expect(container.querySelectorAll('.fnx-popup').length).toBe(1);
 		expect(ddc().contains('fnx-overflow-hidden')).toBeTruthy();
 
 		rerender(<Demo visible2={true} />);
-		jest.runAllTimers();
+		act(() => {
+			jest.runAllTimers();
+		});
 		expect(container.querySelectorAll('div.fnx-popup').length).toBe(2);
 		expect(ddc().contains('fnx-overflow-hidden')).toBeTruthy();
 
 		rerender(<Demo />);
-		jest.runAllTimers();
+		act(() => {
+			jest.runAllTimers();
+		});
 		expect(ddc().contains('fnx-overflow-hidden')).not.toBeTruthy();
 
 		rerender(<Demo visible={true} />);
-		jest.runAllTimers();
+		act(() => {
+			jest.runAllTimers();
+		});
 		expect(ddc().contains('fnx-overflow-hidden')).toBeTruthy();
 
 		rerender(<Demo visible={false} visible2={true} />);
-		jest.runAllTimers();
+		act(() => {
+			jest.runAllTimers();
+		});
 		expect(ddc().contains('fnx-overflow-hidden')).toBeTruthy();
 
 		rerender(<Demo />);
-		jest.runAllTimers();
+		act(() => {
+			jest.runAllTimers();
+		});
 		expect(ddc().contains('fnx-overflow-hidden')).not.toBeTruthy();
 	});
 
@@ -118,17 +135,16 @@ describe('<Popup/>', () => {
 
 	it('should emit show event when show prop is set to true', () => {
 		const onShow = jest.fn();
-		const onAfterShow = jest.fn();
 
 		const { rerender } = render(<Popup />);
 
-		rerender(
-			<Popup visible={true} onShow={onShow} onAfterShow={onAfterShow} />,
-		);
-		jest.runAllTimers();
+		rerender(<Popup visible={true} onShow={onShow} />);
+
+		act(() => {
+			jest.runAllTimers();
+		});
 
 		expect(onShow).toHaveBeenCalledTimes(1);
-		expect(onAfterShow).toHaveBeenCalledTimes(1);
 	});
 
 	it('should emit close event when show prop is set to false', () => {
@@ -140,7 +156,10 @@ describe('<Popup/>', () => {
 		rerender(
 			<Popup visible={false} onHide={onHide} onAfterHide={onAfterHide} />,
 		);
-		jest.runAllTimers();
+
+		act(() => {
+			jest.runAllTimers();
+		});
 
 		expect(onHide).toHaveBeenCalledTimes(1);
 		expect(onAfterHide).toHaveBeenCalledTimes(1);
@@ -165,7 +184,10 @@ describe('<Popup/>', () => {
 
 		const { container } = render(<Demo />);
 
-		const overlay = container.querySelector<HTMLElement>('.fnx-overlay');
+		const overlay = TestsDOM.mustQuerySelector<HTMLElement>(
+			container,
+			'.fnx-overlay',
+		);
 
 		fireEvent.click(overlay);
 		fireEvent.click(overlay);

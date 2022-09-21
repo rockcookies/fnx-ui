@@ -1,10 +1,8 @@
-import React from 'react';
-import { createForwardRef } from '../utils/react';
+import React, { forwardRef } from 'react';
 import CalendarContainer from './CalendarContainer';
 import { CalendarMultiProps, CalendarRef } from './interface';
 
-const CalendarMulti = createForwardRef<CalendarRef, CalendarMultiProps>(
-	'CalendarMulti',
+const CalendarMulti = forwardRef<CalendarRef, CalendarMultiProps>(
 	(
 		{
 			defaultValue,
@@ -45,5 +43,7 @@ const CalendarMulti = createForwardRef<CalendarRef, CalendarMultiProps>(
 		);
 	},
 );
+
+CalendarMulti.displayName = 'CalendarMulti';
 
 export default CalendarMulti;

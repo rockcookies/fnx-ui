@@ -48,7 +48,7 @@ exports[`<NoticeBar/> should start scrolling when marquee auto and marquee width
     >
       <div
         class="fnx-notice-bar__marquee"
-        style="transform: translateX(-100px); transition-duration: 2500ms;"
+        style="transform: translateX(-100px); transition-duration: 1666.6666666666667ms;"
       >
         Content
       </div>

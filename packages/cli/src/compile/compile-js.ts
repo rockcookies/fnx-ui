@@ -1,5 +1,5 @@
 import { transformSync } from '@babel/core';
-import chalk from 'chalk';
+import * as color from 'colorette';
 import _if from 'gulp-if';
 import plumber from 'gulp-plumber';
 import path from 'path';
@@ -58,7 +58,7 @@ async function compileFiles(options: { type: 'cjs' | 'esm'; dest: string }) {
 							}
 
 							signal.info(
-								`Transform to ${options.type} for ${chalk.blue(
+								`Transform to ${options.type} for ${color.blue(
 									relative(file.path),
 								)}`,
 							);

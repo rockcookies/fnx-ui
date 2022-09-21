@@ -1,17 +1,15 @@
-import React, { ReactElement, useCallback } from 'react';
+import React, { forwardRef, ReactElement, useCallback } from 'react';
 import { CheckboxValue } from '../checkbox';
 import useControlledState from '../hooks/use-controlled-state';
 import { ForwardRefProps } from '../utils/interface';
 import { classnames, createBEM } from '../utils/namespace';
-import { createForwardRef } from '../utils/react';
 import { RadioGroupContext } from './context';
 import { RadioGroupProps, RadioValue } from './interface';
 
 const NS = 'fnx-radio-group';
 const bem = createBEM(NS);
 
-const RadioGroup = createForwardRef<HTMLDivElement, RadioGroupProps>(
-	'RadioGroup',
+const InternalRadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
 	(_props, ref) => {
 		const {
 			value: _value,
@@ -75,7 +73,11 @@ const RadioGroup = createForwardRef<HTMLDivElement, RadioGroupProps>(
 			</div>
 		);
 	},
-) as <T extends RadioValue = RadioValue>(
+);
+
+InternalRadioGroup.displayName = 'RadioGroup';
+
+const RadioGroup = InternalRadioGroup as <T extends RadioValue = RadioValue>(
 	props: ForwardRefProps<RadioGroupProps<T>, HTMLDivElement>,
 ) => ReactElement;
 

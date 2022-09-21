@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 import ErrorBoundary from '../';
 import DemoBlock from '../../../site/components/DemoBlock';
 import useDemoTranslate from '../../../site/hooks/use-demo-translate';
 import Button from '../../button';
 import { Dictionary } from '../../utils/interface';
-import { createFC } from '../../utils/react';
 
 const I18N: Dictionary<Dictionary<string>> = {
 	'zh-CN': {
@@ -19,7 +18,7 @@ const I18N: Dictionary<Dictionary<string>> = {
 	},
 };
 
-const ThrowError = createFC('ThrowError', () => {
+const ThrowError: FC = () => {
 	const [i18n] = useDemoTranslate(I18N, 'en-US');
 	const [error, setError] = useState<Error>();
 
@@ -36,7 +35,9 @@ const ThrowError = createFC('ThrowError', () => {
 			{i18n.clickThrow}
 		</Button>
 	);
-});
+};
+
+ThrowError.displayName = 'ThrowError';
 
 export default function Basic(): ReturnType<React.FC> {
 	const [i18n] = useDemoTranslate(I18N, 'en-US');

@@ -1,10 +1,15 @@
-import React, { Suspense, useCallback, useMemo, useState } from 'react';
-import Helmet from 'react-helmet';
-import { useRouteMatch } from 'umi';
+import React, {
+	FC,
+	Suspense,
+	useCallback,
+	useEffect,
+	useMemo,
+	useState,
+} from 'react';
+import { useMatch } from 'react-router-dom';
 import pkg from '../../package.json';
 import { Dictionary } from '../../src/utils/interface';
 import { createBEM } from '../../src/utils/namespace';
-import { createFC } from '../../src/utils/react';
 import ErrorFallback from '../components/ErrorFallback';
 import PageLoading from '../components/PageLoading';
 import configResponsive from '../hooks/config-responsive';
@@ -37,19 +42,15 @@ const I18N: Dictionary<Dictionary<string>> = {
 	},
 };
 
-const Layout = createFC('Layout', () => {
+const Layout: FC = () => {
 	const [responsive] = useResponsive();
 
-	const matches = useRouteMatch<Dictionary<string | undefined>>(
-		'/:locale/:category?/:menu?',
-	);
-
-	const params = matches?.params || {};
+	const matches = useMatch('/:locale/:category/:menu');
 
 	// 语言
 	const locale = useMemo<'zh-CN' | 'en-US'>(
-		() => (params.locale === 'zh-CN' ? 'zh-CN' : 'en-US'),
-		[params.locale],
+		() => (matches?.params.locale === 'zh-CN' ? 'zh-CN' : 'en-US'),
+		[matches?.params.locale],
 	);
 
 	const i18n = I18N[locale];
@@ -73,26 +74,36 @@ const Layout = createFC('Layout', () => {
 
 	// 分类
 	const category = useMemo<SiteCategory | undefined>(() => {
+		const category = matches?.params.category;
+
 		const categoryIdx =
-			params.category != null
-				? SITE_DATA.findIndex(({ key }) => key === params.category)
+			category != null
+				? SITE_DATA.findIndex(({ key }) => key === category)
 				: -1;
 
 		return SITE_DATA[categoryIdx];
-	}, [params.category]);
+	}, [matches?.params.category]);
 
 	// 菜单
 	const menu = useMemo<SiteMenu | undefined>(() => {
-		if (params.menu != null) {
+		const menu = matches?.params.menu;
+
+		if (menu != null) {
 			for (const { children } of category?.children || []) {
-				for (const menu of children || []) {
-					if (menu.key === params.menu) {
-						return menu;
+				for (const m of children || []) {
+					if (m.key === menu) {
+						return m;
 					}
 				}
 			}
 		}
-	}, [category, params.menu]);
+	}, [category, matches?.params.menu]);
+
+	useEffect(() => {
+		document.title = menu
+			? `${locale === 'zh-CN' ? menu.titleCN : menu.title} - FNX-UI`
+			: `FNX-UI - ${i18n.slogan}`;
+	}, [i18n.slogan, locale, menu]);
 
 	// 设置主题
 	useTheme(theme);
@@ -131,17 +142,6 @@ const Layout = createFC('Layout', () => {
 					'layout-mode': category == null,
 				})}
 			>
-				<Helmet>
-					<title>
-						{menu
-							? `${
-									locale === 'zh-CN'
-										? menu.titleCN
-										: menu.title
-							  } - FNX-UI`
-							: `FNX-UI - ${i18n.slogan}`}
-					</title>
-				</Helmet>
 				<SiteHeader />
 				<SideMenuTree className={bem('aside')} />
 				<div className={bem('main')}>
@@ -161,6 +161,8 @@ const Layout = createFC('Layout', () => {
 			</section>
 		</SiteContext.Provider>
 	);
-});
+};
+
+Layout.displayName = 'Layout';
 
 export default Layout;

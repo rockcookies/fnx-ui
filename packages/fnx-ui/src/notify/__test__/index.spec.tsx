@@ -1,8 +1,9 @@
-import React, { FC } from 'react';
 import { act, fireEvent, render, waitFor } from '@testing-library/react';
-import Notify from '../index';
-import ConfigProvider from '../../config-provider';
+import React, { FC } from 'react';
 import TestsDOM from '../../../test/dom';
+import ConfigProvider from '../../config-provider';
+import Notify from '../index';
+import { NotifyContext, NotifyInstance } from '../interface';
 
 describe('<Notify />', () => {
 	beforeEach(() => {
@@ -12,6 +13,50 @@ describe('<Notify />', () => {
 	afterEach(() => {
 		jest.useRealTimers();
 	});
+
+	function renderNotifyList(
+		triggers: Array<{
+			id: string;
+			onClick: (ctx: NotifyContext) => void;
+		}>,
+	) {
+		const Demo: FC = () => {
+			const ctx = Notify.useNotify();
+
+			return (
+				<>
+					{triggers.map(({ onClick, id }, idx) => (
+						<div
+							key={idx}
+							id={id}
+							onClick={() => {
+								onClick(ctx);
+							}}
+						></div>
+					))}
+				</>
+			);
+		};
+
+		const element = document.createElement('div');
+
+		const { container } = render(
+			<ConfigProvider mountTo={() => element}>
+				<Demo />
+			</ConfigProvider>,
+		);
+
+		return {
+			element,
+			fire: (id: string) => {
+				const trigger = TestsDOM.mustQuerySelector(container, `#${id}`);
+
+				act(() => {
+					fireEvent.click(trigger);
+				});
+			},
+		};
+	}
 
 	it('should render Notify correctly', () => {
 		const { container, getByTestId } = render(
@@ -78,47 +123,55 @@ describe('<Notify />', () => {
 	});
 
 	it('should change default duration after calling update method', async () => {
-		const notify = await waitFor(() =>
-			Notify.show({
-				id: 'notify',
-				duration: 5000,
-				message: 'Message',
+		let _notify: NotifyInstance | undefined;
+
+		const { element, fire } = renderNotifyList([
+			{
+				id: 'demo-notify',
+				onClick: (ctx) => {
+					_notify = ctx.show({
+						id: 'notify',
+						duration: 5000,
+						message: 'Message',
+					});
+				},
+			},
+		]);
+
+		fire('demo-notify');
+
+		if (!_notify) {
+			throw new Error('notify instance undefined');
+		}
+
+		const notify = _notify;
+
+		expect(
+			TestsDOM.mustQuerySelector(element, '#notify').innerHTML,
+		).toEqual('Message');
+
+		await waitFor(() =>
+			notify.update({
+				message: 'updateMessage',
 			}),
 		);
 
-		expect(document.getElementById('notify').innerHTML).toEqual('Message');
-
-		await waitFor(() =>
-			notify.update({ duration: 1000, message: 'updateMessage' }),
-		);
-
-		expect(document.getElementById('notify').innerHTML).toEqual(
-			'updateMessage',
-		);
+		expect(
+			TestsDOM.mustQuerySelector(element, '#notify').innerHTML,
+		).toEqual('updateMessage');
 	});
 
 	it('useToast', () => {
-		const Demo: FC = () => {
-			const { show } = Notify.useNotify();
+		const { element, fire } = renderNotifyList([
+			{
+				id: 'demo-notify',
+				onClick: (ctx) => {
+					ctx.show('success');
+				},
+			},
+		]);
 
-			return (
-				<div className="trigger" onClick={() => show('success')}></div>
-			);
-		};
-
-		const element = document.createElement('div');
-
-		const { container } = render(
-			<ConfigProvider mountTo={() => element}>
-				<Demo />
-			</ConfigProvider>,
-		);
-
-		const trigger = TestsDOM.mustQuerySelector(container, '.trigger');
-
-		act(() => {
-			fireEvent.click(trigger);
-		});
+		fire('demo-notify');
 
 		expect(element).toMatchSnapshot();
 	});
@@ -126,22 +179,21 @@ describe('<Notify />', () => {
 	it('clear multiple notify', async () => {
 		Notify.allowMultiple(true);
 
-		await waitFor(() => {
-			Notify.show({ message: '1', duration: 0 });
-			Notify.show({ message: '2', duration: 0 });
-		});
+		const { element, fire } = renderNotifyList([
+			{
+				id: 'demo-notify',
+				onClick: (ctx) => {
+					ctx.show({ message: '1', duration: 0 });
+					ctx.show({ message: '2', duration: 0 });
+				},
+			},
+		]);
 
-		act(() => {
-			jest.runAllTimers();
-		});
+		fire('demo-notify');
 
-		expect(document.querySelectorAll('.fnx-notify').length).toBe(2);
+		expect(element.querySelectorAll('.fnx-notify').length).toBe(2);
 
 		await waitFor(() => Notify.clearAll());
-
-		act(() => {
-			jest.runAllTimers();
-		});
 
 		Notify.allowMultiple(false);
 	});

@@ -1,11 +1,11 @@
 import React, {
+	forwardRef,
 	ReactElement,
 	useImperativeHandle,
 	useMemo,
 	useRef,
 } from 'react';
 import { Dictionary, ForwardRefProps } from '../utils/interface';
-import { createForwardRef } from '../utils/react';
 import usePickerProps from './hooks/use-picker-props';
 import {
 	PickerMultiProps,
@@ -15,8 +15,7 @@ import {
 import PickerColumn, { PickerColumnRef } from './PickerColumn';
 import PickerContainer from './PickerContainer';
 
-const PickerMulti = createForwardRef<PickerMultiRef, PickerMultiProps>(
-	'PickerMulti',
+const InternalPickerMulti = forwardRef<PickerMultiRef, PickerMultiProps>(
 	(_props, ref) => {
 		const [
 			{
@@ -114,7 +113,13 @@ const PickerMulti = createForwardRef<PickerMultiRef, PickerMultiProps>(
 			</PickerContainer>
 		);
 	},
-) as <T extends PickerOptionOrValue = PickerOptionOrValue>(
+);
+
+InternalPickerMulti.displayName = 'PickerMulti';
+
+const PickerMulti = InternalPickerMulti as <
+	T extends PickerOptionOrValue = PickerOptionOrValue,
+>(
 	props: ForwardRefProps<PickerMultiProps<T>, PickerMultiRef<any>>,
 ) => ReactElement;
 

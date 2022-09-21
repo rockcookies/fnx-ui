@@ -1,6 +1,6 @@
-import React, { ReactElement, ReactNode, useState } from 'react';
+import React, { forwardRef, ReactElement, ReactNode, useState } from 'react';
 import configComponentProps from '../hooks/config-component-props';
-import useDefaultsRef from '../hooks/use-defaults-ref';
+import useMergedPropRef from '../hooks/use-merged-prop-ref';
 import useUpdateEffect from '../hooks/use-update-effect';
 import Icon from '../icon';
 import Loading from '../loading';
@@ -10,7 +10,6 @@ import { clamp } from '../utils/format';
 import { ForwardRefProps } from '../utils/interface';
 import { noop } from '../utils/misc';
 import { classnames, createBEM } from '../utils/namespace';
-import { createForwardRef } from '../utils/react';
 import useCascaderDataNames, {
 	CascaderDataGetters,
 } from './hooks/use-cascader-data-names';
@@ -105,8 +104,7 @@ const useProps = configComponentProps<
 	slots: {},
 });
 
-const Cascader = createForwardRef<HTMLDivElement, CascaderProps>(
-	'Cascader',
+const InternalCascader = forwardRef<HTMLDivElement, CascaderProps>(
 	(_props, ref) => {
 		const [
 			{
@@ -137,7 +135,7 @@ const Cascader = createForwardRef<HTMLDivElement, CascaderProps>(
 		const [tabs, setTabs] = useState<Tab[]>(() =>
 			getTabs(dataNames, defaultValue, data),
 		);
-		const tabsRef = useDefaultsRef(tabs);
+		const tabsRef = useMergedPropRef(tabs);
 
 		const [tabActive, setTabActive] = useState(
 			// 因为有 defaultValue 所以这里不能为 0
@@ -342,7 +340,11 @@ const Cascader = createForwardRef<HTMLDivElement, CascaderProps>(
 			</div>
 		);
 	},
-) as <T = CascaderOption>(
+);
+
+InternalCascader.displayName = 'Cascader';
+
+const Cascader = InternalCascader as <T = CascaderOption>(
 	props: ForwardRefProps<CascaderProps<T>, HTMLDivElement>,
 ) => ReactElement;
 

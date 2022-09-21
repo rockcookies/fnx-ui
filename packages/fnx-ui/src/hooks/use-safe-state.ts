@@ -16,7 +16,7 @@ function useSafeState<S>(initialState?: S | (() => S)) {
 	const [state, setState] = React.useState(initialState);
 
 	const setCurrentState = React.useCallback(
-		(currentState) => {
+		(currentState: S) => {
 			if (unmountedRef.current) return;
 			setState(currentState);
 		},

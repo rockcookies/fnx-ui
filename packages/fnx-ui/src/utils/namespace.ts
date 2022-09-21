@@ -22,7 +22,7 @@ export function createBEM(name: string): BEM {
 		}
 
 		if (Array.isArray(mods)) {
-			return mods.reduce<string>(
+			return (mods as any[]).reduce<string>(
 				(ret, item) => ret + gen(name, item),
 				'',
 			);

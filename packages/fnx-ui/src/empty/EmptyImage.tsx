@@ -1,7 +1,6 @@
-import React from 'react';
-import { createFC } from '../utils/react';
+import React, { FC } from 'react';
 
-const EmptyImage = createFC('EmptyImage', () => {
+const EmptyImage: FC = () => {
 	return (
 		<svg viewBox="0 0 200 200">
 			<defs>
@@ -218,6 +217,8 @@ const EmptyImage = createFC('EmptyImage', () => {
 			</g>
 		</svg>
 	);
-});
+};
+
+EmptyImage.displayName = 'EmptyImage';
 
 export default EmptyImage;

@@ -1,5 +1,6 @@
 import React, {
 	CSSProperties,
+	forwardRef,
 	useContext,
 	useEffect,
 	useImperativeHandle,
@@ -11,12 +12,11 @@ import { CSSTransition } from 'react-transition-group';
 import ConfigProvider from '../config-provider';
 import { DEFAULT_CONFIG_CONTEXT } from '../config-provider/context';
 import configComponentProps from '../hooks/config-component-props';
-import useDefaults from '../hooks/use-defaults';
+import useMergedProp from '../hooks/use-merged-prop';
 import useScrollLock from '../hooks/use-scroll-lock';
 import Overlay from '../overlay';
 import { noop } from '../utils/misc';
 import { classnames, createBEM } from '../utils/namespace';
-import { createForwardRef } from '../utils/react';
 import { PopupContext } from './context';
 import { PopupProps } from './interface';
 import Portal from './Portal';
@@ -65,184 +65,178 @@ const useProps = configComponentProps<
 	onAfterShow: noop,
 });
 
-const Popup = createForwardRef<HTMLDivElement, PopupProps>(
-	'Popup',
-	(_props, ref) => {
-		const popupRef = useRef<HTMLDivElement | null>(null);
+const Popup = forwardRef<HTMLDivElement, PopupProps>((_props, ref) => {
+	const popupRef = useRef<HTMLDivElement | null>(null);
 
-		const configContext = useContext(ConfigProvider.Context);
+	const configContext = useContext(ConfigProvider.Context);
 
-		const [
-			{
-				visible,
-				renderOnShow,
-				destroyOnHide,
-				lockScroll,
-				position,
-				overlay,
-				overlayCloseable,
-				onOverlayClick,
-				onClose,
-				onBeforeHide,
-				onHide,
-				onAfterHide,
-				onBeforeShow,
-				onShow,
-				onAfterShow,
-			},
-			{
-				mountTo,
-				transitionDuration: _transitionDuration,
-				transitionName,
-				round,
-				safeAreaInsetTop: _safeAreaInsetTop,
-				safeAreaInsetBottom: _safeAreaInsetBottom,
-				overlayClassName,
-				overlayStyle,
-				children,
-				className,
-				style,
-				...restProps
-			},
-		] = useProps(_props);
+	const [
+		{
+			visible,
+			renderOnShow,
+			destroyOnHide,
+			lockScroll,
+			position,
+			overlay,
+			overlayCloseable,
+			onOverlayClick,
+			onClose,
+			onBeforeHide,
+			onHide,
+			onAfterHide,
+			onBeforeShow,
+			onShow,
+			onAfterShow,
+		},
+		{
+			mountTo,
+			transitionDuration: _transitionDuration,
+			transitionName,
+			round,
+			safeAreaInsetTop: _safeAreaInsetTop,
+			safeAreaInsetBottom: _safeAreaInsetBottom,
+			overlayClassName,
+			overlayStyle,
+			children,
+			className,
+			style,
+			...restProps
+		},
+	] = useProps(_props);
 
-		useImperativeHandle<HTMLDivElement | null, HTMLDivElement | null>(
-			ref,
-			() => popupRef.current,
-		);
+	useImperativeHandle<HTMLDivElement | null, HTMLDivElement | null>(
+		ref,
+		() => popupRef.current,
+	);
 
-		const [closing, setClosing] = useState(false);
-		const [rendering, setRendering] = useState(false);
-		const [zIndex, setZIndex] = useState<number>();
+	const [closing, setClosing] = useState(false);
+	const [rendering, setRendering] = useState(false);
+	const [zIndex, setZIndex] = useState<number>();
 
-		const transitionDuration = useDefaults(
-			configContext.transitionDuration,
-			_transitionDuration,
-		);
+	const transitionDuration = useMergedProp(
+		configContext.transitionDuration,
+		_transitionDuration,
+	);
 
-		const safeAreaInsetBottom = useDefaults(
-			configContext.safeAreaInsetBottom,
-			_safeAreaInsetBottom,
-		);
+	const safeAreaInsetBottom = useMergedProp(
+		configContext.safeAreaInsetBottom,
+		_safeAreaInsetBottom,
+	);
 
-		const safeAreaInsetTop = useDefaults(
-			configContext.safeAreaInsetTop,
-			_safeAreaInsetTop,
-		);
+	const safeAreaInsetTop = useMergedProp(
+		configContext.safeAreaInsetTop,
+		_safeAreaInsetTop,
+	);
 
-		const formattedTransitionName = useMemo(() => {
-			if (transitionName) {
-				return transitionName;
-			}
+	const formattedTransitionName = useMemo(() => {
+		if (transitionName) {
+			return transitionName;
+		}
 
-			return position === 'center'
-				? 'fnx-fade'
-				: bem([`slide-${position}`]);
-		}, [transitionName, position]);
+		return position === 'center' ? 'fnx-fade' : bem([`slide-${position}`]);
+	}, [transitionName, position]);
 
-		// lock popup scroll
-		useScrollLock(popupRef, { locked: zIndex != null && lockScroll });
+	// lock popup scroll
+	useScrollLock(popupRef, { locked: zIndex != null && lockScroll });
 
-		useEffect(() => {
-			if (visible) {
-				setZIndex(++globalZIndex);
-				setRendering(true);
-				setClosing(false);
-			} else {
-				setClosing(true);
-			}
-		}, [visible]);
+	useEffect(() => {
+		if (visible) {
+			setZIndex(++globalZIndex);
+			setRendering(true);
+			setClosing(false);
+		} else {
+			setClosing(true);
+		}
+	}, [visible]);
 
-		const formatStyle = (): CSSProperties => {
-			const formattedStyle: CSSProperties = {};
+	const formatStyle = (): CSSProperties => {
+		const formattedStyle: CSSProperties = {};
 
-			if (zIndex != null) {
-				formattedStyle.zIndex = zIndex;
-			}
+		if (zIndex != null) {
+			formattedStyle.zIndex = zIndex;
+		}
 
-			if (!rendering) {
-				formattedStyle.display = 'none';
-			}
+		if (!rendering) {
+			formattedStyle.display = 'none';
+		}
 
-			if (
-				transitionDuration != null &&
-				transitionDuration !== DEFAULT_CONFIG_CONTEXT.transitionDuration
-			) {
-				formattedStyle.transitionDuration = `${transitionDuration}ms`;
-			}
+		if (
+			transitionDuration != null &&
+			transitionDuration !== DEFAULT_CONFIG_CONTEXT.transitionDuration
+		) {
+			formattedStyle.transitionDuration = `${transitionDuration}ms`;
+		}
 
-			return { ...formattedStyle, ...style };
-		};
+		return { ...formattedStyle, ...style };
+	};
 
-		return (
-			<Portal
-				renderOnShow={renderOnShow}
-				destroyOnHide={destroyOnHide}
-				mountTo={mountTo}
-				visible={visible || rendering}
-			>
-				<PopupContext.Provider
-					value={{ visible: visible || rendering }}
-				>
-					<>
-						{overlay && (
-							<Overlay
-								visible={visible}
-								className={overlayClassName}
-								style={overlayStyle}
-								zIndex={zIndex}
-								lockScroll={lockScroll}
-								transitionDuration={transitionDuration}
-								onClick={(e) => {
-									onOverlayClick(e);
+	return (
+		<Portal
+			renderOnShow={renderOnShow}
+			destroyOnHide={destroyOnHide}
+			mountTo={mountTo}
+			visible={visible || rendering}
+		>
+			<PopupContext.Provider value={{ visible: visible || rendering }}>
+				<>
+					{overlay && (
+						<Overlay
+							visible={visible}
+							className={overlayClassName}
+							style={overlayStyle}
+							zIndex={zIndex}
+							lockScroll={lockScroll}
+							transitionDuration={transitionDuration}
+							onClick={(e) => {
+								onOverlayClick(e);
 
-									if (overlayCloseable && visible) {
-										onClose();
-									}
-								}}
-							/>
-						)}
-
-						<CSSTransition
-							in={rendering && !closing}
-							classNames={formattedTransitionName}
-							nodeRef={popupRef}
-							timeout={transitionDuration || 0}
-							onEnter={onBeforeShow}
-							onEntering={onShow}
-							onEntered={onAfterShow}
-							onExit={onBeforeHide}
-							onExiting={onHide}
-							onExited={() => {
-								setZIndex(undefined);
-								setClosing(false);
-								setRendering(false);
-								onAfterHide();
+								if (overlayCloseable && visible) {
+									onClose();
+								}
 							}}
+						/>
+					)}
+
+					<CSSTransition
+						in={rendering && !closing}
+						classNames={formattedTransitionName}
+						nodeRef={popupRef}
+						timeout={transitionDuration || 0}
+						onEnter={onBeforeShow}
+						onEntering={onShow}
+						onEntered={onAfterShow}
+						onExit={onBeforeHide}
+						onExiting={onHide}
+						onExited={() => {
+							setZIndex(undefined);
+							setClosing(false);
+							setRendering(false);
+							onAfterHide();
+						}}
+					>
+						<div
+							className={classnames(
+								bem({
+									round,
+									[position]: position,
+								}),
+								safeAreaInsetTop && 'fnx-safe-area-top',
+								safeAreaInsetBottom && 'fnx-safe-area-bottom',
+								className,
+							)}
+							style={formatStyle()}
+							{...restProps}
+							ref={popupRef}
 						>
-							<div
-								className={classnames(
-									bem({
-										round,
-										[position]: position,
-									}),
-									safeAreaInsetTop && 'fnx-safe-area-top',
-									safeAreaInsetBottom &&
-										'fnx-safe-area-bottom',
-									className,
-								)}
-								style={formatStyle()}
-								{...restProps}
-								ref={popupRef}
-							>
-								{children}
-							</div>
-						</CSSTransition>
-					</>
-				</PopupContext.Provider>
-			</Portal>
-		);
-	},
-);
+							{children}
+						</div>
+					</CSSTransition>
+				</>
+			</PopupContext.Provider>
+		</Portal>
+	);
+});
+
+Popup.displayName = 'Popup';
 
 export default Popup;

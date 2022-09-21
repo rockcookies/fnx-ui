@@ -1,14 +1,48 @@
-import {
-	Children,
-	forwardRef,
-	ForwardRefExoticComponent,
-	ForwardRefRenderFunction,
-	FunctionComponent,
-	PropsWithoutRef,
-	ReactElement,
-	RefAttributes,
-} from 'react';
+import React, { Children, ReactElement, ReactNode } from 'react';
+import * as ReactDOM from 'react-dom';
+import type { createRoot as CreateRoot } from 'react-dom/client';
 import { isFragment } from 'react-is';
+
+const createRoot: typeof CreateRoot | undefined = (ReactDOM as any).createRoot;
+
+function toggleRenderWarning(skip: boolean) {
+	const { __SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED } =
+		ReactDOM as any;
+
+	if (
+		__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED &&
+		typeof __SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED === 'object'
+	) {
+		__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.usingClientEntryPoint =
+			skip;
+	}
+}
+
+export function renderReactDOMNode(
+	container: Element | DocumentFragment,
+	node: ReactNode,
+): () => void {
+	if (
+		typeof createRoot === 'function' &&
+		process.env.NODE_ENV === 'production'
+	) {
+		toggleRenderWarning(false);
+		const root = createRoot(container);
+		toggleRenderWarning(true);
+
+		root.render(node);
+
+		return () => {
+			root.unmount();
+		};
+	}
+
+	ReactDOM.render(node as any, container);
+
+	return () => {
+		ReactDOM.unmountComponentAtNode(container);
+	};
+}
 
 export const toElementArray = (
 	children: React.ReactNode,
@@ -32,44 +66,4 @@ export const toElementArray = (
 	});
 
 	return ret;
-};
-
-export const createForwardRef = <R, P = any>(
-	displayName: string,
-	render: ForwardRefRenderFunction<R, P>,
-): ForwardRefExoticComponent<PropsWithoutRef<P> & RefAttributes<R>> => {
-	const fc = forwardRef(render);
-	fc.displayName = displayName;
-	return fc;
-};
-
-export const createDefaultsForwardRef = <R, P, D>(
-	displayName: string,
-	defaultProps: D,
-	render: ForwardRefRenderFunction<R, P & D>,
-): ForwardRefExoticComponent<
-	PropsWithoutRef<P & Partial<D>> & RefAttributes<R>
-> => {
-	const fc = forwardRef(render);
-	fc.displayName = displayName;
-	fc.defaultProps = defaultProps;
-	return fc as any;
-};
-
-export const createFC = <P = any>(
-	displayName: string,
-	fc: FunctionComponent<P>,
-): FunctionComponent<P> => {
-	fc.displayName = displayName;
-	return fc;
-};
-
-export const createDefaultsFC = <P, D>(
-	displayName: string,
-	defaultProps: D,
-	fc: FunctionComponent<P & D>,
-): FunctionComponent<P & Partial<D>> => {
-	fc.displayName = displayName;
-	fc.defaultProps = defaultProps;
-	return fc as any;
 };

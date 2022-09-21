@@ -1,16 +1,14 @@
 import React, { FC, useContext, useEffect, useMemo, useState } from 'react';
-import { Redirect } from 'umi';
+import { Navigate } from 'react-router-dom';
 import { setScrollTop } from '../../../src/utils/dom/scroll';
 import { createBEM } from '../../../src/utils/namespace';
-import { createFC } from '../../../src/utils/react';
 import Markdown from '../../components/Markdown';
 import { SiteContext } from '../../layout/context';
-import { appendQuery } from '../../utils/history-utils';
 import './index.less';
 
 const bem = createBEM('components');
 
-const Components: FC = createFC('Components', () => {
+const Components: FC = () => {
 	const { locale, menu, theme, responsive } = useContext(SiteContext);
 
 	const demoUrl = useMemo<string | undefined>(() => {
@@ -18,11 +16,7 @@ const Components: FC = createFC('Components', () => {
 			return;
 		}
 
-		return appendQuery(`${window.location.pathname}#/demo`, {
-			component: menu.key,
-			locale,
-			theme,
-		});
+		return `${window.location.pathname}#/demo/${menu.key}/${locale}/${theme}`;
 	}, [locale, menu, theme]);
 
 	const [deviceExpanded, setDeviceExpanded] = useState(false);
@@ -52,7 +46,7 @@ const Components: FC = createFC('Components', () => {
 	}, [menu, locale]);
 
 	if (!menu) {
-		return <Redirect to="/" />;
+		return <Navigate to="/" />;
 	}
 
 	return (
@@ -107,6 +101,8 @@ const Components: FC = createFC('Components', () => {
 			)}
 		</div>
 	);
-});
+};
+
+Components.displayName = 'Components';
 
 export default Components;

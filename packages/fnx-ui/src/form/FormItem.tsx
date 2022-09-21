@@ -2,6 +2,7 @@ import { Field as RcField, FieldContext } from 'rc-field-form';
 import { InternalFormInstance, Meta } from 'rc-field-form/lib/interface';
 import React, {
 	cloneElement,
+	FC,
 	isValidElement,
 	memo,
 	ReactNode,
@@ -11,9 +12,8 @@ import React, {
 import { FormRequiredMark } from '.';
 import Field from '../field';
 import configComponentProps from '../hooks/config-component-props';
-import useDefaults from '../hooks/use-defaults';
+import useMergedProp from '../hooks/use-merged-prop';
 import { devWarning } from '../utils/misc';
-import { createFC } from '../utils/react';
 import { FormContext, FormItemContext } from './context';
 import { FormItemProps } from './interface';
 
@@ -37,7 +37,7 @@ const useProps = configComponentProps<
 	valuePropName: 'value',
 });
 
-const FormItem = createFC<FormItemProps>('FormItem', (_props) => {
+const FormItem: FC<FormItemProps> = (_props) => {
 	const formContext = useContext(FormContext);
 	const fieldContext = useContext<InternalFormInstance>(FieldContext as any);
 
@@ -73,13 +73,13 @@ const FormItem = createFC<FormItemProps>('FormItem', (_props) => {
 		},
 	] = useProps(_props);
 
-	const requiredMark = useDefaults<FormRequiredMark>(
+	const requiredMark = useMergedProp<FormRequiredMark>(
 		'auto',
 		_requiredMark,
 		formContext.requiredMark,
 	);
 
-	const validateTrigger = useDefaults(
+	const validateTrigger = useMergedProp(
 		_validateTrigger,
 		fieldContext.validateTrigger,
 	);
@@ -249,13 +249,15 @@ const FormItem = createFC<FormItemProps>('FormItem', (_props) => {
 				) {
 					childNode = (children as any)(form);
 				} else {
-					childNode = children;
+					childNode = children as ReactNode;
 				}
 
 				return renderChildren(childNode, meta, isRequired);
 			}}
 		</RcField>
 	);
-});
+};
+
+FormItem.displayName = 'FormItem';
 
 export default FormItem;

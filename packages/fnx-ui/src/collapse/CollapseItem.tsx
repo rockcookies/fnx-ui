@@ -1,5 +1,6 @@
 import React, {
 	CSSProperties,
+	forwardRef,
 	ReactNode,
 	useCallback,
 	useContext,
@@ -12,10 +13,9 @@ import { CSSTransition } from 'react-transition-group';
 import Cell from '../cell';
 import ConfigProvider from '../config-provider';
 import configComponentProps from '../hooks/config-component-props';
-import useDefaults from '../hooks/use-defaults';
+import useMergedProp from '../hooks/use-merged-prop';
 import Icon from '../icon/Icon';
 import { classnames, createBEM } from '../utils/namespace';
-import { createForwardRef } from '../utils/react';
 import CollapseContext from './context';
 import { CollapseItemProps } from './interface';
 
@@ -30,8 +30,7 @@ const useProps = configComponentProps<
 	disabled: false,
 });
 
-const CollapseItem = createForwardRef<HTMLDivElement, CollapseItemProps>(
-	'CollapseItem',
+const CollapseItem = forwardRef<HTMLDivElement, CollapseItemProps>(
 	(_props, ref) => {
 		const [
 			{ titleProps, headerProps, disabled },
@@ -49,8 +48,8 @@ const CollapseItem = createForwardRef<HTMLDivElement, CollapseItemProps>(
 			useContext(CollapseContext);
 		const configContext = useContext(ConfigProvider.Context);
 
-		const ghost = useDefaults<boolean>(ctx.ghost, _ghost);
-		const transitionDuration = useDefaults<number>(
+		const ghost = useMergedProp<boolean>(ctx.ghost, _ghost);
+		const transitionDuration = useMergedProp<number>(
 			configContext.transitionDuration,
 			_transitionDuration,
 		);
@@ -208,5 +207,7 @@ const CollapseItem = createForwardRef<HTMLDivElement, CollapseItemProps>(
 		);
 	},
 );
+
+CollapseItem.displayName = 'CollapseItem';
 
 export default CollapseItem;

@@ -5,6 +5,7 @@ import { commitLint } from './commands/commit-lint';
 import { build } from './commands/build';
 import { clean } from './commands/clean';
 import { lint } from './commands/lint';
+import { compileSite, runSiteServer } from './compile/compile-site';
 
 const program = new Command();
 
@@ -18,9 +19,24 @@ program
 	.action(commitLint);
 
 program
+	.command('dev')
+	.description('Run vite dev server')
+	.option('--base <path>', `[string] public base path (default: ./)`)
+	.option('--host [host]', `[string] specify hostname`)
+	.option('--port <port>', `[number] specify port`)
+	.action(runSiteServer);
+
+program
 	.command('build')
 	.description('Compile components in production mode')
 	.action(build);
+
+program
+	.command('build-site')
+	.description('Compile site in production mode')
+	.option('--base <path>', `[string] public base path (default: ./)`)
+	.option('--outDir <dir>', `[string] output directory (default: dist)`)
+	.action(compileSite);
 
 program.command('clean').description('Clean all dist files').action(clean);
 

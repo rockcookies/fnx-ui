@@ -1,10 +1,10 @@
 import _Radio from './Radio';
-import RadioGroup from './RadioGroup';
+import InternalRadioGroup from './RadioGroup';
 
 import { RadioExportExtra } from './interface';
 
 const Radio: typeof _Radio & RadioExportExtra = _Radio as any;
-Radio.Group = RadioGroup;
+Radio.Group = InternalRadioGroup;
 
 export type {
 	RadioComponentProps,

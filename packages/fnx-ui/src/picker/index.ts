@@ -1,11 +1,11 @@
 import { PickerExportExtra } from './interface';
 import _Picker from './Picker';
-import PickerCascade from './PickerCascade';
-import PickerMulti from './PickerMulti';
+import InternalPickerCascade from './PickerCascade';
+import InternalPickerMulti from './PickerMulti';
 
 const Picker: typeof _Picker & PickerExportExtra = _Picker as any;
-Picker.Multi = PickerMulti;
-Picker.Cascade = PickerCascade;
+Picker.Multi = InternalPickerMulti;
+Picker.Cascade = InternalPickerCascade;
 
 export type {
 	PickerProps,

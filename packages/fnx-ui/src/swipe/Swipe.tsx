@@ -1,5 +1,6 @@
 import React, {
 	CSSProperties,
+	forwardRef,
 	isValidElement,
 	ReactNode,
 	useCallback,
@@ -9,7 +10,7 @@ import React, {
 	useRef,
 } from 'react';
 import configComponentProps from '../hooks/config-component-props';
-import useDefaultsRef from '../hooks/use-defaults-ref';
+import useMergedPropRef from '../hooks/use-merged-prop-ref';
 import useWindowSize from '../hooks/use-window-size';
 import useOnPopupOpen from '../popup/hooks/use-on-popup-open';
 import {
@@ -21,7 +22,7 @@ import TouchHelper from '../utils/dom/touch-helper';
 import { noop } from '../utils/misc';
 import { classnames, createBEM } from '../utils/namespace';
 import { doubleRaf } from '../utils/raf';
-import { createForwardRef, toElementArray } from '../utils/react';
+import { toElementArray } from '../utils/react';
 import useSwipe from './hooks/use-swipe';
 import { SwipeComponentProps, SwipeProps, SwipeRef } from './interface';
 
@@ -42,13 +43,13 @@ const useProps = configComponentProps<Required<SwipeComponentProps>>({
 	onActiveIndexChange: noop,
 });
 
-const Swipe = createForwardRef<SwipeRef, SwipeProps>('Swipe', (_props, ref) => {
+const Swipe = forwardRef<SwipeRef, SwipeProps>((_props, ref) => {
 	const [props, { className, children: _children, ...restProps }] =
 		useProps(_props);
 
 	const { autoplay, duration, vertical, touchable, indicator } = props;
 
-	const propsRef = useDefaultsRef<Required<SwipeComponentProps>>(props);
+	const propsRef = useMergedPropRef<Required<SwipeComponentProps>>(props);
 
 	const rootRef = useRef<HTMLDivElement>(null);
 	const wrapperRef = useRef<HTMLDivElement>(null);
@@ -429,5 +430,7 @@ const Swipe = createForwardRef<SwipeRef, SwipeProps>('Swipe', (_props, ref) => {
 		</div>
 	);
 });
+
+Swipe.displayName = 'Swipe';
 
 export default Swipe;

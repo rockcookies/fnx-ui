@@ -1,6 +1,6 @@
 import { HTMLAttributes, ReactNode } from 'react';
-import PickerCascade from './PickerCascade';
-import PickerMulti from './PickerMulti';
+import InternalPickerCascade from './PickerCascade';
+import InternalPickerMulti from './PickerMulti';
 
 export type PickerValue = string | number;
 
@@ -95,6 +95,6 @@ export interface PickerCascadeRef<T = PickerOption> {
 }
 
 export interface PickerExportExtra {
-	Multi: typeof PickerMulti;
-	Cascade: typeof PickerCascade;
+	Multi: typeof InternalPickerMulti;
+	Cascade: typeof InternalPickerCascade;
 }

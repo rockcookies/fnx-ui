@@ -1,7 +1,7 @@
 import React, {
 	cloneElement,
+	forwardRef,
 	isValidElement,
-	ReactElement,
 	ReactNode,
 	useCallback,
 } from 'react';
@@ -9,7 +9,6 @@ import configComponentProps from '../hooks/config-component-props';
 import useControlledState from '../hooks/use-controlled-state';
 import { ForwardRefProps } from '../utils/interface';
 import { noop } from '../utils/misc';
-import { createForwardRef } from '../utils/react';
 import { PopupSelectProps } from './interface';
 import Popup from './Popup';
 
@@ -34,8 +33,7 @@ const useProps = configComponentProps<
 	onClose: noop,
 });
 
-const PopupSelect = createForwardRef<HTMLDivElement, PopupSelectProps>(
-	'PopupSelect',
+const InternalPopupSelect = forwardRef<HTMLDivElement, PopupSelectProps>(
 	(_props, ref) => {
 		const [
 			{
@@ -107,11 +105,11 @@ const PopupSelect = createForwardRef<HTMLDivElement, PopupSelectProps>(
 			let child = children;
 
 			if (typeof children === 'function') {
-				child = (children as any)(value);
+				child = children(value);
 			}
 
 			if (!isValidElement(child)) {
-				return child;
+				return child as ReactNode;
 			}
 
 			return cloneElement(child, {
@@ -144,8 +142,12 @@ const PopupSelect = createForwardRef<HTMLDivElement, PopupSelectProps>(
 			</>
 		);
 	},
-) as <T = any>(
-	props: ForwardRefProps<PopupSelectProps<T>, HTMLDivElement>,
-) => ReactElement;
+);
+
+InternalPopupSelect.displayName = 'PopupSelect';
+
+const PopupSelect = InternalPopupSelect as <T = any>(
+	props: PopupSelectProps<T> & { ref?: HTMLDivElement },
+) => React.ReactElement;
 
 export default PopupSelect;

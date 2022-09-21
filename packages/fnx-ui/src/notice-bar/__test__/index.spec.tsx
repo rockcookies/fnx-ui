@@ -1,9 +1,10 @@
-import { act, render, fireEvent, waitFor } from '@testing-library/react';
+import { act, fireEvent, render } from '@testing-library/react';
 import React from 'react';
+import TestsDOM from '../../../test/dom';
+import TestsReact from '../../../test/react';
 import NoticeBar from '../index';
 import { NoticeBarRef } from '../interface';
-import TestsReact from '../../../test/react';
-import TestsDOM from '../../../test/dom';
+
 describe('<NoticeBar/>', () => {
 	const mockRect = (el: Element, rect: Partial<DOMRect>) => {
 		Object.defineProperty(el, 'getBoundingClientRect', {
@@ -95,7 +96,7 @@ describe('<NoticeBar/>', () => {
 		});
 
 		act(() => {
-			jest.runTimersToTime(2000);
+			jest.advanceTimersByTime(2000);
 		});
 
 		expect(container).toMatchSnapshot();

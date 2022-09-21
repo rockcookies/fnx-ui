@@ -1,9 +1,8 @@
-import React, { useContext, useEffect, useMemo, useState } from 'react';
+import React, { FC, useContext, useEffect, useMemo, useState } from 'react';
 import { ConfigContext } from '../config-provider/context';
-import useDefaultsRef from '../hooks/use-defaults-ref';
+import useMergedPropRef from '../hooks/use-merged-prop-ref';
 import Icon from '../icon';
 import PopupHelper from '../popup/utils/popup-helper';
-import { createFC } from '../utils/react';
 import {
 	ToastContext,
 	ToastExportExtra,
@@ -25,7 +24,7 @@ function createToast(
 	options: ToastOptions = {},
 ): ToastInstance {
 	return helper.create<ToastProps>(({ onUpdate, remove }) => {
-		const ToastStatic = createFC<ToastProps>('ToastStatic', () => {
+		const ToastStatic: FC<ToastProps> = () => {
 			const [{ onAfterHide, ...props }, setProps] = useState(baseProps);
 
 			useEffect(() => {
@@ -47,7 +46,9 @@ function createToast(
 					}}
 				/>
 			);
-		});
+		};
+
+		ToastStatic.displayName = 'ToastStatic';
 
 		return ToastStatic;
 	}, options.container);
@@ -86,7 +87,7 @@ Toast.fail = (message) => fail(message);
 
 Toast.useToast = () => {
 	const context = useContext(ConfigContext);
-	const contextRef = useDefaultsRef(context);
+	const contextRef = useMergedPropRef(context);
 
 	return useMemo<ToastContext>(() => {
 		const options = (): ToastOptions => ({

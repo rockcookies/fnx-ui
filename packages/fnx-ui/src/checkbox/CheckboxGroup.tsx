@@ -1,4 +1,5 @@
 import React, {
+	forwardRef,
 	ReactElement,
 	useCallback,
 	useImperativeHandle,
@@ -9,7 +10,6 @@ import configComponentProps from '../hooks/config-component-props';
 import useControlledState from '../hooks/use-controlled-state';
 import { ForwardRefProps } from '../utils/interface';
 import { classnames, createBEM } from '../utils/namespace';
-import { createForwardRef } from '../utils/react';
 import { CheckGroupContext } from './context';
 import {
 	CheckboxGroupProps,
@@ -26,8 +26,7 @@ const useProps = configComponentProps<
 	defaultValue: [],
 });
 
-const CheckboxGroup = createForwardRef<CheckboxGroupRef, CheckboxGroupProps>(
-	'CheckboxGroup',
+const InternalCheckboxGroup = forwardRef<CheckboxGroupRef, CheckboxGroupProps>(
 	(_props, ref) => {
 		const [
 			{ defaultValue },
@@ -164,7 +163,13 @@ const CheckboxGroup = createForwardRef<CheckboxGroupRef, CheckboxGroupProps>(
 			</div>
 		);
 	},
-) as <T extends CheckboxValue = CheckboxValue>(
+);
+
+InternalCheckboxGroup.displayName = 'CheckboxGroup';
+
+const CheckboxGroup = InternalCheckboxGroup as <
+	T extends CheckboxValue = CheckboxValue,
+>(
 	props: ForwardRefProps<CheckboxGroupProps<T>, CheckboxGroupRef>,
 ) => ReactElement;
 

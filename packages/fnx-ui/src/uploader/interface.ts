@@ -1,6 +1,6 @@
 import { HTMLAttributes, InputHTMLAttributes, ReactNode } from 'react';
 import { SetRequired } from '../utils/interface';
-import Uploader from './Uploader';
+import InternalUploader from './Uploader';
 import UploaderPreviewItem from './UploaderPreviewItem';
 
 export type UploaderFileStatus = 'failed' | 'done' | 'uploading';
@@ -72,7 +72,7 @@ export interface UploaderPreviewItemComponentProps {
 export type UploaderPreviewItemProps = UploaderPreviewItemComponentProps &
 	HTMLAttributes<HTMLDivElement>;
 
-export type UploaderComponent = typeof Uploader;
+export type UploaderComponent = typeof InternalUploader;
 export type UploaderPreviewItemComponent = typeof UploaderPreviewItem;
 
 export interface UploaderExportExtra {

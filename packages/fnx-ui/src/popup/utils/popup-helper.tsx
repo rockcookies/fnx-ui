@@ -1,8 +1,8 @@
 import React, { FC } from 'react';
-import ReactDOM from 'react-dom';
 import { canUseDom } from '../../utils/detect';
 import Events from '../../utils/events';
 import { noop } from '../../utils/misc';
+import { renderReactDOMNode } from '../../utils/react';
 
 export interface PopupInstance<T> {
 	update: (props: T) => void;
@@ -66,13 +66,13 @@ export default class PopupHelper {
 				instance.clear();
 
 				setTimeout(() => {
-					ReactDOM.unmountComponentAtNode(container);
+					removeContainer();
 					parent.removeChild(container);
 				}, 0);
 			},
 		});
 
-		ReactDOM.render(<Fc />, container);
+		const removeContainer = renderReactDOMNode(container, <Fc />);
 
 		this.instances.push(instance);
 

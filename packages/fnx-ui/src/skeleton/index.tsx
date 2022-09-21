@@ -1,8 +1,7 @@
-import React, { useCallback } from 'react';
+import React, { FC, useCallback } from 'react';
 import configComponentProps from '../hooks/config-component-props';
 import { addUnit, getSizeStyle } from '../utils/format';
 import { createBEM } from '../utils/namespace';
-import { createFC } from '../utils/react';
 import { SkeletonProps } from './interface';
 
 const NS = 'fnx-skeleton';
@@ -26,7 +25,7 @@ const useProps = configComponentProps<
 	avatarShape: 'round',
 });
 
-const Skeleton = createFC<SkeletonProps>('Skeleton', (_props) => {
+const Skeleton: FC<SkeletonProps> = (_props) => {
 	const [
 		{ row, rowWidth, loading, animate, avatarShape },
 		{
@@ -87,7 +86,9 @@ const Skeleton = createFC<SkeletonProps>('Skeleton', (_props) => {
 			</div>
 		</div>
 	);
-});
+};
+
+Skeleton.displayName = 'Skeleton';
 
 export type { SkeletonComponentProps, SkeletonProps } from './interface';
 

@@ -1,13 +1,14 @@
 import { List } from 'rc-field-form';
-import React from 'react';
+import React, { FC } from 'react';
 import { devWarning } from '../utils/misc';
-import { createFC } from '../utils/react';
 import { FormListProps } from './interface';
 
-const FormList = createFC<FormListProps>('FormList', (props) => {
+const FormList: FC<FormListProps> = (props) => {
 	devWarning(!!props.name, 'Form.List', 'Miss `name` prop.');
 
 	return <List {...props} />;
-});
+};
+
+FormList.displayName = 'FormList';
 
 export default FormList;

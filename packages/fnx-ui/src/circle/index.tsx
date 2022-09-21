@@ -1,8 +1,7 @@
-import React, { useEffect, useMemo, useRef } from 'react';
+import React, { forwardRef, useEffect, useMemo, useRef } from 'react';
 import configComponentProps from '../hooks/config-component-props';
 import { getSizeStyle } from '../utils/format';
 import { classnames, createBEM } from '../utils/namespace';
-import { createForwardRef } from '../utils/react';
 import { CircleGapPosition, CircleProps } from './interface';
 
 const NS = 'fnx-circle';
@@ -130,146 +129,137 @@ const useTransitionDuration = (progressList: number[], speed: number) => {
 	return [paths];
 };
 
-const Circle = createForwardRef<HTMLDivElement, CircleProps>(
-	'Circle',
-	(_props, ref) => {
-		const [
-			{
-				strokeWidth,
-				progress,
-				speed,
-				strokeLinecap,
-				gapDegree,
-				clockwise,
-			},
-			{
-				size,
-				gapPosition,
-				strokeColor,
-				trailColor,
-				className,
-				style,
-				children,
-				...restProps
-			},
-		] = useProps(_props);
-
-		const progressList = toArray(progress);
-		const [paths] = useTransitionDuration(progressList, speed);
-		const strokeColorList = toArray(strokeColor);
-		const { pathString, pathStyle } = getPathStyles(
-			0,
-			100,
-			strokeWidth,
-			trailColor,
-			gapDegree,
+const Circle = forwardRef<HTMLDivElement, CircleProps>((_props, ref) => {
+	const [
+		{ strokeWidth, progress, speed, strokeLinecap, gapDegree, clockwise },
+		{
+			size,
 			gapPosition,
-		);
+			strokeColor,
+			trailColor,
+			className,
+			style,
+			children,
+			...restProps
+		},
+	] = useProps(_props);
 
-		const gradient = strokeColorList.find(
-			(color) =>
-				Object.prototype.toString.call(color) === '[object Object]',
-		);
+	const progressList = toArray(progress);
+	const [paths] = useTransitionDuration(progressList, speed);
+	const strokeColorList = toArray(strokeColor);
+	const { pathString, pathStyle } = getPathStyles(
+		0,
+		100,
+		strokeWidth,
+		trailColor,
+		gapDegree,
+		gapPosition,
+	);
 
-		const id = useMemo(() => {
-			uid += 1;
-			return `fnx-circle-linearGradient-${uid}`;
-		}, []);
+	const gradient = strokeColorList.find(
+		(color) => Object.prototype.toString.call(color) === '[object Object]',
+	);
 
-		const getStokeList = () => {
-			let stackPtg = 0;
-			return progressList.map((ptg, index) => {
-				const color =
-					strokeColorList[index] ||
-					strokeColorList[strokeColorList.length - 1];
+	const id = useMemo(() => {
+		uid += 1;
+		return `fnx-circle-linearGradient-${uid}`;
+	}, []);
 
-				const stroke =
-					Object.prototype.toString.call(color) === '[object Object]'
-						? `url(#${id})`
-						: '#1989fa';
+	const getStokeList = () => {
+		let stackPtg = 0;
+		return progressList.map((ptg, index) => {
+			const color =
+				strokeColorList[index] ||
+				strokeColorList[strokeColorList.length - 1];
 
-				const pathStyles = getPathStyles(
-					stackPtg,
-					ptg,
-					strokeWidth,
-					color,
-					gapDegree,
-					gapPosition,
-					clockwise,
-				);
-				stackPtg += ptg;
+			const stroke =
+				Object.prototype.toString.call(color) === '[object Object]'
+					? `url(#${id})`
+					: '#1989fa';
 
-				return (
-					<path
-						key={index}
-						className={bem('hover')}
-						d={pathStyles.pathString}
-						stroke={stroke}
-						strokeLinecap={strokeLinecap}
-						strokeWidth={strokeWidth}
-						opacity={ptg === 0 ? 0 : 1}
-						fillOpacity="0"
-						style={pathStyles.pathStyle}
-						ref={paths[index]}
-					/>
-				);
-			});
-		};
+			const pathStyles = getPathStyles(
+				stackPtg,
+				ptg,
+				strokeWidth,
+				color,
+				gapDegree,
+				gapPosition,
+				clockwise,
+			);
+			stackPtg += ptg;
 
-		return (
-			<div
-				className={classnames(bem(), className)}
-				style={{
-					...style,
-					...getSizeStyle(size),
-				}}
-				{...restProps}
-				ref={ref}
-			>
-				<svg viewBox="0 0 100 100">
-					{gradient && (
-						<defs>
-							<linearGradient
-								id={id}
-								x1="100%"
-								y1="0%"
-								x2="0%"
-								y2="0%"
-							>
-								{Object.keys(gradient)
-									.sort(
-										(a, b) =>
-											stripPercentToNumber(a) -
-											stripPercentToNumber(b),
-									)
-									.map((key, index) => (
-										<stop
-											key={index}
-											offset={key}
-											stopOpacity={1}
-											stopColor={gradient[key]}
-										/>
-									))}
-							</linearGradient>
-						</defs>
-					)}
-					<path
-						className={bem('trail')}
-						d={pathString}
-						stroke={trailColor}
-						strokeLinecap={strokeLinecap}
-						strokeWidth={strokeWidth}
-						fillOpacity="0"
-						style={pathStyle}
-					/>
-					{getStokeList().reverse()}
-				</svg>
+			return (
+				<path
+					key={index}
+					className={bem('hover')}
+					d={pathStyles.pathString}
+					stroke={stroke}
+					strokeLinecap={strokeLinecap}
+					strokeWidth={strokeWidth}
+					opacity={ptg === 0 ? 0 : 1}
+					fillOpacity="0"
+					style={pathStyles.pathStyle}
+					ref={paths[index]}
+				/>
+			);
+		});
+	};
 
-				<div className={bem('text')}>{children}</div>
-			</div>
-		);
-	},
-);
+	return (
+		<div
+			className={classnames(bem(), className)}
+			style={{
+				...style,
+				...getSizeStyle(size),
+			}}
+			{...restProps}
+			ref={ref}
+		>
+			<svg viewBox="0 0 100 100">
+				{gradient && (
+					<defs>
+						<linearGradient
+							id={id}
+							x1="100%"
+							y1="0%"
+							x2="0%"
+							y2="0%"
+						>
+							{Object.keys(gradient)
+								.sort(
+									(a, b) =>
+										stripPercentToNumber(a) -
+										stripPercentToNumber(b),
+								)
+								.map((key, index) => (
+									<stop
+										key={index}
+										offset={key}
+										stopOpacity={1}
+										stopColor={gradient[key]}
+									/>
+								))}
+						</linearGradient>
+					</defs>
+				)}
+				<path
+					className={bem('trail')}
+					d={pathString}
+					stroke={trailColor}
+					strokeLinecap={strokeLinecap}
+					strokeWidth={strokeWidth}
+					fillOpacity="0"
+					style={pathStyle}
+				/>
+				{getStokeList().reverse()}
+			</svg>
+
+			<div className={bem('text')}>{children}</div>
+		</div>
+	);
+});
+
+Circle.displayName = 'Circle';
 
 export type {
 	CircleComponentProps,

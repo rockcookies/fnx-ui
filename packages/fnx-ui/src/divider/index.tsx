@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import configComponentProps from '../hooks/config-component-props';
 import { classnames, createBEM } from '../utils/namespace';
-import { createForwardRef } from '../utils/react';
 import { DividerComponentProps, DividerProps } from './interface';
 
 const NS = 'fnx-divider';
@@ -17,32 +16,31 @@ const useProps = configComponentProps<
 	contentPosition: 'center',
 });
 
-const Divider = createForwardRef<HTMLDivElement, DividerProps>(
-	'Divider',
-	(_props, ref) => {
-		const [
-			{ dashed, hairline, contentPosition },
-			{ className, children, ...restProps },
-		] = useProps(_props);
+const Divider = forwardRef<HTMLDivElement, DividerProps>((_props, ref) => {
+	const [
+		{ dashed, hairline, contentPosition },
+		{ className, children, ...restProps },
+	] = useProps(_props);
 
-		return (
-			<div
-				className={classnames(
-					bem({
-						dashed,
-						hairline,
-						[`content-${contentPosition}`]: children != null,
-					}),
-					className,
-				)}
-				{...restProps}
-				ref={ref}
-			>
-				{children}
-			</div>
-		);
-	},
-);
+	return (
+		<div
+			className={classnames(
+				bem({
+					dashed,
+					hairline,
+					[`content-${contentPosition}`]: children != null,
+				}),
+				className,
+			)}
+			{...restProps}
+			ref={ref}
+		>
+			{children}
+		</div>
+	);
+});
+
+Divider.displayName = 'Divider';
 
 export type {
 	DividerComponentProps,

@@ -1,5 +1,5 @@
 import { HTMLAttributes, ReactNode } from 'react';
-import CheckboxGroup from './CheckboxGroup';
+import InternalCheckboxGroup from './CheckboxGroup';
 
 export type CheckboxValue = string | number | boolean;
 
@@ -24,7 +24,7 @@ export interface CheckboxComponentProps extends CheckboxBaseProps {
 }
 
 export type CheckboxProps = CheckboxComponentProps &
-	Omit<HTMLAttributes<HTMLDivElement>, 'onChange'>;
+	Omit<HTMLAttributes<HTMLDivElement>, 'onChange' | 'value'>;
 
 export interface CheckboxRef {
 	root: HTMLDivElement | null;
@@ -56,5 +56,5 @@ export interface CheckboxGroupRef {
 }
 
 export interface CheckboxExportExtra {
-	Group: typeof CheckboxGroup;
+	Group: typeof InternalCheckboxGroup;
 }

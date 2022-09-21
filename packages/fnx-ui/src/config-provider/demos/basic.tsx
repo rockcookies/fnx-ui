@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { FC, ReactNode, useContext } from 'react';
 import ConfigProvider from '..';
 import DemoBlock from '../../../site/components/DemoBlock';
 import useDemoTranslate from '../../../site/hooks/use-demo-translate';
@@ -12,7 +12,6 @@ import Popup from '../../popup';
 import Rate from '../../rate';
 import { Dictionary } from '../../utils/interface';
 import { createBEM } from '../../utils/namespace';
-import { createFC } from '../../utils/react';
 import './basic.less';
 
 const bem = createBEM('demo-config-provider');
@@ -45,7 +44,7 @@ const DEMO_I18N: Dictionary<Dictionary<string>> = {
 	},
 };
 
-const Demo = createFC<any>('Demo', () => {
+const Demo: FC = () => {
 	const { locale, transitionDuration } = useContext(ConfigProvider.Context);
 
 	const [i18n] = useDemoTranslate(I18N, 'en-US');
@@ -85,7 +84,9 @@ const Demo = createFC<any>('Demo', () => {
 			</Form>
 		</DemoBlock>
 	);
-});
+};
+
+Demo.displayName = 'Demo';
 
 export default function Basic(): ReturnType<React.FC> {
 	return (

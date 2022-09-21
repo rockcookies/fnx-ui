@@ -1,4 +1,5 @@
 import React, {
+	forwardRef,
 	useContext,
 	useEffect,
 	useImperativeHandle,
@@ -11,13 +12,12 @@ import ConfigProvider from '../config-provider';
 import configComponentProps from '../hooks/config-component-props';
 import useControlledState from '../hooks/use-controlled-state';
 import useCreation from '../hooks/use-creation';
-import useDefaults from '../hooks/use-defaults';
+import useMergedProp from '../hooks/use-merged-prop';
 import Sticky from '../sticky';
 import Swipe from '../swipe';
 import { SwipeRef } from '../swipe/interface';
 import { clamp } from '../utils/format';
 import { classnames } from '../utils/namespace';
-import { createForwardRef } from '../utils/react';
 import { TabsContext } from './context';
 import useTabMetaList from './hooks/use-tab-meta-list';
 import { TabsProps } from './interface';
@@ -49,7 +49,7 @@ const useProps = configComponentProps<
 	slots: {},
 });
 
-const Tabs = createForwardRef<TabsRef, TabsProps>('Tabs', (_props, ref) => {
+const Tabs = forwardRef<TabsRef, TabsProps>((_props, ref) => {
 	const rootRef = useRef<HTMLDivElement>(null);
 	const swipeRef = useRef<SwipeRef>(null);
 	const tabsHeaderRef = useRef<TabsHeaderRef>(null);
@@ -96,7 +96,7 @@ const Tabs = createForwardRef<TabsRef, TabsProps>('Tabs', (_props, ref) => {
 
 	const configContext = useContext(ConfigProvider.Context);
 
-	const transitionDuration = useDefaults<number>(
+	const transitionDuration = useMergedProp<number>(
 		configContext.transitionDuration,
 		_transitionDuration,
 	);
@@ -223,5 +223,7 @@ const Tabs = createForwardRef<TabsRef, TabsProps>('Tabs', (_props, ref) => {
 		</div>
 	);
 });
+
+Tabs.displayName = 'Tabs';
 
 export default Tabs;

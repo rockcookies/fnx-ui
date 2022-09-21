@@ -1,23 +1,20 @@
+import '@vant/touch-emulator';
 import React, { FC, LazyExoticComponent, Suspense, useMemo } from 'react';
-import { useLocation } from 'umi';
+import { useParams } from 'react-router-dom';
 import { ConfigProvider } from '../../../src';
 import '../../../src/index.less';
 import enUS from '../../../src/locale/en-US';
 import zhCN from '../../../src/locale/zh-CN';
 import { classnames, createBEM } from '../../../src/utils/namespace';
-import { createFC } from '../../../src/utils/react';
 import { DEMO_DATA } from '../../demo-data';
 import useTheme from '../../hooks/use-theme';
-import { parseSearchParams } from '../../utils/history-utils';
 import DemoContext from './context';
 import './index.less';
-import '@vant/touch-emulator';
 
 const bem = createBEM('demo');
 
-const Demo: FC = createFC('Demo', () => {
-	const location = useLocation();
-	const { search } = location;
+const Demo: FC = () => {
+	const params = useParams();
 
 	const {
 		demo: Cmp,
@@ -25,12 +22,12 @@ const Demo: FC = createFC('Demo', () => {
 		key,
 		theme,
 	} = useMemo(() => {
-		const query = parseSearchParams(search);
-
-		const key = query.component;
-		const locale = query.locale === 'zh-CN' ? 'zh-CN' : 'en-US';
-		const demo: LazyExoticComponent<any> | undefined = DEMO_DATA[key];
-		const theme = query.theme === 'dark' ? 'dark' : 'light';
+		const key = params.component;
+		const locale = params.locale === 'zh-CN' ? 'zh-CN' : 'en-US';
+		const demo: LazyExoticComponent<any> | undefined = key
+			? DEMO_DATA[key]
+			: undefined;
+		const theme = params.theme === 'dark' ? 'dark' : 'light';
 
 		return {
 			demo,
@@ -38,7 +35,7 @@ const Demo: FC = createFC('Demo', () => {
 			key,
 			theme,
 		};
-	}, [search]);
+	}, [params]);
 
 	useTheme(theme);
 
@@ -62,6 +59,8 @@ const Demo: FC = createFC('Demo', () => {
 			</DemoContext.Provider>
 		</React.StrictMode>
 	);
-});
+};
+
+Demo.displayName = 'Demo';
 
 export default Demo;

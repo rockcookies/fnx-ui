@@ -1,5 +1,6 @@
 import React, {
 	CSSProperties,
+	forwardRef,
 	useContext,
 	useEffect,
 	useImperativeHandle,
@@ -9,8 +10,8 @@ import React, {
 } from 'react';
 import ConfigProvider from '../config-provider';
 import configComponentProps from '../hooks/config-component-props';
-import useDefaults from '../hooks/use-defaults';
-import useDefaultsRef from '../hooks/use-defaults-ref';
+import useMergedProp from '../hooks/use-merged-prop';
+import useMergedPropRef from '../hooks/use-merged-prop-ref';
 import useUpdateEffect from '../hooks/use-update-effect';
 import Loading from '../loading';
 import { useLocale } from '../locale';
@@ -19,7 +20,6 @@ import { getScrollParent, getScrollTop } from '../utils/dom/scroll';
 import TouchHelper from '../utils/dom/touch-helper';
 import { noop } from '../utils/misc';
 import { classnames, createBEM } from '../utils/namespace';
-import { createForwardRef } from '../utils/react';
 import {
 	PullRefreshComponentProps,
 	PullRefreshProps,
@@ -54,8 +54,7 @@ const useProps = configComponentProps<
 	onChange: noop,
 });
 
-const PullRefresh = createForwardRef<HTMLDivElement, PullRefreshProps>(
-	'PullRefresh',
+const PullRefresh = forwardRef<HTMLDivElement, PullRefreshProps>(
 	(_props, ref) => {
 		const locale = useLocale('pull-refresh');
 		const configContext = useContext(ConfigProvider.Context);
@@ -79,12 +78,12 @@ const PullRefresh = createForwardRef<HTMLDivElement, PullRefreshProps>(
 			},
 		] = useProps(_props);
 
-		const transitionDuration = useDefaults<number>(
+		const transitionDuration = useMergedProp<number>(
 			configContext.transitionDuration,
 			_transitionDuration,
 		);
 
-		const propsRef = useDefaultsRef<Required<PullRefreshComponentProps>>({
+		const propsRef = useMergedPropRef<Required<PullRefreshComponentProps>>({
 			disabled,
 			successDuration,
 			transitionDuration,
@@ -335,6 +334,8 @@ const PullRefresh = createForwardRef<HTMLDivElement, PullRefreshProps>(
 		);
 	},
 );
+
+PullRefresh.displayName = 'PullRefresh';
 
 export type {
 	PullRefreshComponentProps,

@@ -1,8 +1,9 @@
-import React, { FC } from 'react';
 import { act, fireEvent, render, waitFor } from '@testing-library/react';
-import Toast from '../index';
-import ConfigProvider from '../../config-provider';
+import React, { FC } from 'react';
 import TestsDOM from '../../../test/dom';
+import ConfigProvider from '../../config-provider';
+import Toast from '../index';
+import { ToastContext, ToastInstance } from '../interface';
 
 describe('<Toast />', () => {
 	beforeEach(() => {
@@ -12,6 +13,50 @@ describe('<Toast />', () => {
 	afterEach(() => {
 		jest.useRealTimers();
 	});
+
+	function renderToastList(
+		triggers: Array<{
+			id: string;
+			onClick: (ctx: ToastContext) => void;
+		}>,
+	) {
+		const Demo: FC = () => {
+			const ctx = Toast.useToast();
+
+			return (
+				<>
+					{triggers.map(({ onClick, id }, idx) => (
+						<div
+							key={idx}
+							id={id}
+							onClick={() => {
+								onClick(ctx);
+							}}
+						></div>
+					))}
+				</>
+			);
+		};
+
+		const element = document.createElement('div');
+
+		const { container } = render(
+			<ConfigProvider mountTo={() => element}>
+				<Demo />
+			</ConfigProvider>,
+		);
+
+		return {
+			element,
+			fire: (id: string) => {
+				const trigger = TestsDOM.mustQuerySelector(container, `#${id}`);
+
+				act(() => {
+					fireEvent.click(trigger);
+				});
+			},
+		};
+	}
 
 	const ddc = () => document.body.classList;
 
@@ -29,7 +74,9 @@ describe('<Toast />', () => {
 			/>,
 		);
 
-		jest.runAllTimers();
+		act(() => {
+			jest.runAllTimers();
+		});
 
 		fireEvent(
 			getByTestId('toast'),
@@ -39,7 +86,9 @@ describe('<Toast />', () => {
 			}),
 		);
 
-		jest.runAllTimers();
+		act(() => {
+			jest.runAllTimers();
+		});
 
 		expect(onHide).toHaveBeenCalled();
 	});
@@ -62,78 +111,125 @@ describe('<Toast />', () => {
 	});
 
 	it('create a forbidClick toast', async () => {
-		const toast = await waitFor(() =>
-			Toast.success({
-				id: 'toast',
-				forbidClick: true,
-				duration: 0,
-			}),
-		);
+		let _toast: ToastInstance | undefined;
 
-		expect(document.getElementById('toast')).toMatchSnapshot();
+		const { fire } = renderToastList([
+			{
+				id: 'demo-toast',
+				onClick: (ctx) => {
+					_toast = ctx.success({
+						id: 'toast',
+						forbidClick: true,
+						duration: 0,
+					});
+				},
+			},
+		]);
+
+		fire('demo-toast');
+
+		if (!_toast) {
+			throw new Error('toast instance undefined');
+		}
+
+		const toast = _toast;
 
 		expect(ddc().contains('fnx-toast--unclickable')).toBeTruthy();
 
-		await waitFor(() => toast.update({ forbidClick: false }));
+		act(() => {
+			toast.update({ forbidClick: false });
+		});
 
 		expect(ddc().contains('fnx-toast--unclickable')).not.toBeTruthy();
-
-		await waitFor(() => Toast.clearAll());
-		jest.runAllTimers();
-
-		expect(document.getElementById('toast')).toMatchSnapshot();
 	});
 
 	it('show toast', async () => {
-		await waitFor(() =>
-			Toast.show({
-				id: 'show-toast',
-				message: 'show',
-				duration: 0,
-			}),
-		);
+		const { element, fire } = renderToastList([
+			{
+				id: 'demo-show-toast',
+				onClick: (ctx) => {
+					ctx.show({
+						id: 'show-toast',
+						message: 'show',
+						duration: 0,
+					});
+				},
+			},
+			{
+				id: 'demo-success-toast',
+				onClick: (ctx) => {
+					ctx.success({
+						id: 'success-toast',
+						message: 'success',
+						duration: 0,
+					});
+				},
+			},
+			{
+				id: 'demo-fail-toast',
+				onClick: (ctx) => {
+					ctx.fail({
+						id: 'fail-toast',
+						message: 'fail',
+						duration: 0,
+					});
+				},
+			},
+			{
+				id: 'demo-loading-toast',
+				onClick: (ctx) => {
+					ctx.loading({
+						id: 'loading-toast',
+						message: 'loading',
+						duration: 0,
+					});
+				},
+			},
+		]);
 
-		jest.runAllTimers();
-		expect(document.getElementById('show-toast')).toMatchSnapshot();
+		fire('demo-show-toast');
 
-		await waitFor(() =>
-			Toast.success({
-				id: 'success-toast',
-				message: 'success',
-				duration: 0,
-			}),
-		);
+		act(() => {
+			jest.runAllTimers();
+		});
 
-		jest.runAllTimers();
-		expect(document.getElementById('success-toast')).toMatchSnapshot();
+		expect(element.querySelector('#show-toast')).toMatchSnapshot();
 
-		await waitFor(() =>
-			Toast.fail({
-				id: 'fail-toast',
-				message: 'fail',
-				duration: 0,
-			}),
-		);
+		fire('demo-success-toast');
 
-		jest.runAllTimers();
-		expect(document.getElementById('fail-toast')).toMatchSnapshot();
+		act(() => {
+			jest.runAllTimers();
+		});
 
-		await waitFor(() =>
-			Toast.loading({
-				id: 'loading-toast',
-				message: 'loading',
-				duration: 0,
-			}),
-		);
+		expect(element.querySelector('#success-toast')).toMatchSnapshot();
 
-		jest.runAllTimers();
-		expect(document.getElementById('loading-toast')).toMatchSnapshot();
+		fire('demo-fail-toast');
+
+		act(() => {
+			jest.runAllTimers();
+		});
+
+		expect(element.querySelector('#fail-toast')).toMatchSnapshot();
+
+		fire('demo-loading-toast');
+
+		act(() => {
+			jest.runAllTimers();
+		});
+
+		expect(element.querySelector('#loading-toast')).toMatchSnapshot();
+
 		expect(ddc().contains('fnx-toast--unclickable')).toBeTruthy();
 
-		await waitFor(() => Toast.clearAll());
-		jest.runAllTimers();
+		act(() => {
+			Toast.clearAll();
+		});
 
-		expect(document.querySelectorAll('.fnx-toast').length).toBe(0);
+		act(() => {
+			jest.runAllTimers();
+		});
+
+		expect(element.querySelectorAll('.fnx-toast').length).toBe(0);
 		expect(ddc().contains('fnx-toast--unclickable')).not.toBeTruthy();
 	});
 
@@ -145,11 +241,16 @@ describe('<Toast />', () => {
 			Toast.success({ message: '2', duration: 0 });
 		});
 
-		jest.runAllTimers();
+		act(() => {
+			jest.runAllTimers();
+		});
+
 		expect(document.querySelectorAll('.fnx-toast').length).toBe(2);
 
 		await waitFor(() => Toast.clearAll());
-		jest.runAllTimers();
+		act(() => {
+			jest.runAllTimers();
+		});
 
 		expect(document.querySelectorAll('.fnx-toast').length).toBe(0);
 

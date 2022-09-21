@@ -146,18 +146,22 @@ describe('<Stepper/>', () => {
 		});
 
 		fireEvent.touchStart(plusBtn);
+
 		act(() => {
-			jest.advanceTimersByTime(1000);
-			fireEvent.touchEnd(plusBtn);
+			jest.advanceTimersByTime(1600);
 		});
-		expect(onChange).toHaveBeenLastCalledWith('5');
+
+		fireEvent.touchEnd(plusBtn);
+
+		expect(onChange).toHaveBeenLastCalledWith('4');
 
 		fireEvent.touchStart(minusBtn);
 		act(() => {
 			jest.advanceTimersByTime(1200);
-			fireEvent.touchEnd(minusBtn);
 		});
-		expect(onChange).toHaveBeenLastCalledWith('2');
+		fireEvent.touchEnd(minusBtn);
+
+		expect(onChange).toHaveBeenLastCalledWith('3');
 	});
 
 	test('should allow to disable long press', async () => {

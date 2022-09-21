@@ -1,12 +1,10 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { addUnit } from '../utils/format';
 import { classnames } from '../utils/namespace';
-import { createForwardRef } from '../utils/react';
 import { bem, DEFAULT_SVG_PROPS } from './Icon';
 import { IconSpinnerProps } from './interface';
 
-const IconSpinner = createForwardRef<HTMLSpanElement, IconSpinnerProps>(
-	'IconSpinner',
+const IconSpinner = forwardRef<HTMLSpanElement, IconSpinnerProps>(
 	(props, ref) => {
 		const { className, size, color, style, ...rest } = props;
 
@@ -28,5 +26,7 @@ const IconSpinner = createForwardRef<HTMLSpanElement, IconSpinnerProps>(
 		);
 	},
 );
+
+IconSpinner.displayName = 'IconSpinner';
 
 export default IconSpinner;

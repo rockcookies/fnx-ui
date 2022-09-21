@@ -1,10 +1,14 @@
 import RcFieldForm from 'rc-field-form';
-import React, { ReactElement, useImperativeHandle, useMemo } from 'react';
+import React, {
+	forwardRef,
+	ReactElement,
+	useImperativeHandle,
+	useMemo,
+} from 'react';
 import { useLocale } from '../locale';
 import { ForwardRefProps } from '../utils/interface';
 import { deepAssign, deepClone } from '../utils/misc';
 import { classnames, createBEM } from '../utils/namespace';
-import { createForwardRef } from '../utils/react';
 import { FormContext } from './context';
 import useForm from './hooks/use-form';
 import { FormContextData, FormInstance, FormProps } from './interface';
@@ -12,7 +16,7 @@ import { FormContextData, FormInstance, FormProps } from './interface';
 const NS = 'fnx-form';
 const bem = createBEM(NS);
 
-const Form = createForwardRef<FormInstance, FormProps>('Form', (props, ref) => {
+const InternalForm = forwardRef<FormInstance, FormProps>((props, ref) => {
 	const {
 		colon,
 		requiredMark,
@@ -64,7 +68,11 @@ const Form = createForwardRef<FormInstance, FormProps>('Form', (props, ref) => {
 			/>
 		</FormContext.Provider>
 	);
-}) as <Values = any>(
+});
+
+InternalForm.displayName = 'Form';
+
+const Form = InternalForm as <Values = any>(
 	props: ForwardRefProps<FormProps<Values>, FormInstance<Values>>,
 ) => ReactElement;
 

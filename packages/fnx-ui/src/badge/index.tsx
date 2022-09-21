@@ -1,7 +1,6 @@
 import React, { CSSProperties } from 'react';
 import configComponentProps from '../hooks/config-component-props';
 import { classnames, createBEM } from '../utils/namespace';
-import { createFC } from '../utils/react';
 import { BadgeProps } from './interface';
 
 const NS = 'fnx-badge';
@@ -16,7 +15,7 @@ const useProps = configComponentProps<
 	position: 'top-right',
 });
 
-const Badge = createFC<BadgeProps>('Badge', (_props) => {
+const Badge: React.FC<BadgeProps> = (_props) => {
 	const [
 		{
 			showZero,
@@ -97,7 +96,9 @@ const Badge = createFC<BadgeProps>('Badge', (_props) => {
 	}
 
 	return renderBadge();
-});
+};
+
+Badge.displayName = 'Badge';
 
 export type {
 	BadgeComponentProps,

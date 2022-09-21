@@ -1,14 +1,12 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { classnames, createBEM } from '../utils/namespace';
-import { createForwardRef } from '../utils/react';
 import EmptyImage from './EmptyImage';
 import { EmptyProps } from './interface';
 
 const NS = 'fnx-empty';
 const bem = createBEM(NS);
 
-const Empty = createForwardRef<HTMLDivElement, EmptyProps>(
-	'Empty',
+const Empty = forwardRef<HTMLDivElement, EmptyProps>(
 	(
 		{
 			image,
@@ -67,6 +65,8 @@ const Empty = createForwardRef<HTMLDivElement, EmptyProps>(
 		);
 	},
 );
+
+Empty.displayName = 'Empty';
 
 export type { EmptyComponentProps, EmptyProps } from './interface';
 

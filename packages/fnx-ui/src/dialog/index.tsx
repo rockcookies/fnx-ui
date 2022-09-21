@@ -1,10 +1,9 @@
-import React, { useContext, useEffect, useMemo, useState } from 'react';
+import React, { FC, useContext, useEffect, useMemo, useState } from 'react';
 import { ConfigContext } from '../config-provider/context';
-import useDefaultsRef from '../hooks/use-defaults-ref';
+import useMergedPropRef from '../hooks/use-merged-prop-ref';
 import PopupHelper from '../popup/utils/popup-helper';
 import { isFunction, isPromise } from '../utils/detect';
 import { noop } from '../utils/misc';
-import { createFC } from '../utils/react';
 import CDialog from './Dialog';
 import {
 	DialogContext,
@@ -22,7 +21,7 @@ const createDialog = (
 	options: { locale?: DialogLocale; container?: HTMLElement } = {},
 ): DialogInstance => {
 	return helper.create<DialogStaticProps>(({ onUpdate, remove }) => {
-		const DialogStatic = createFC<DialogStaticProps>('DialogStatic', () => {
+		const DialogStatic: FC<DialogStaticProps> = () => {
 			const [{ onConfirm, onCancel, onAfterHide, ...props }, setProps] =
 				useState(baseProps);
 
@@ -83,7 +82,9 @@ const createDialog = (
 					}}
 				/>
 			);
-		});
+		};
+
+		DialogStatic.displayName = 'DialogStatic';
 
 		return DialogStatic;
 	}, options.container);
@@ -101,7 +102,7 @@ Dialog.clearAll = () => {
 
 Dialog.useDialog = () => {
 	const context = useContext(ConfigContext);
-	const contextRef = useDefaultsRef(context);
+	const contextRef = useMergedPropRef(context);
 
 	return useMemo<DialogContext>(() => {
 		return {

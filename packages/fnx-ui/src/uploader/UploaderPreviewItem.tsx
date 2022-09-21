@@ -1,11 +1,10 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import configComponentProps from '../hooks/config-component-props';
 import Icon from '../icon';
 import Image from '../image';
 import { isPromise } from '../utils/detect';
 import { noop } from '../utils/misc';
 import { classnames } from '../utils/namespace';
-import { createForwardRef } from '../utils/react';
 import { UploaderPreviewItemProps } from './interface';
 import { _bem as bem } from './utils';
 
@@ -23,10 +22,10 @@ const useProps = configComponentProps<
 	onRemove: noop,
 });
 
-const UploaderPreviewItem = createForwardRef<
+const UploaderPreviewItem = forwardRef<
 	HTMLDivElement,
 	UploaderPreviewItemProps
->('UploaderPreviewItem', (_props, ref) => {
+>((_props, ref) => {
 	const [
 		{ file, onPreview, onBeforeRemove, onRemove },
 		{ className, children, ...restProps },
@@ -132,5 +131,7 @@ const UploaderPreviewItem = createForwardRef<
 		</div>
 	);
 });
+
+UploaderPreviewItem.displayName = 'UploaderPreviewItem';
 
 export default UploaderPreviewItem;
