@@ -1,4 +1,5 @@
 import markdown from '@fnx-ui/vite-plugin-markdown';
+import inline from '@fnx-ui/vite-plugin-inline';
 import legacy from '@vitejs/plugin-legacy';
 import react from '@vitejs/plugin-react';
 import autoprefixer from 'autoprefixer';
@@ -27,6 +28,9 @@ const getViteOptions = (): Partial<UserConfig> => {
 		root: DIRS.cwd,
 		plugins: [
 			react({}),
+			inline({
+				include: /\.(png|jpg|jpeg|gif|woff|woff2|ttf|eot|mp3|mp4|svg)$/,
+			}),
 			markdown({
 				markdownItUses: [
 					[markdownItAnchor, { slugify }],

@@ -4,7 +4,7 @@
     "packages/*"
   ],
   "scripts": {
-    "prepare": "yarn build:vite-plugin-markdown && yarn build:cli",
+    "prepare": "yarn build:vite-plugin-markdown && yarn build:vite-plugin-inline && yarn build:cli",
     "bootstrap": "lerna bootstrap",
     "dev": "lerna exec --scope fnx-ui yarn dev",
     "clean": "lerna exec --scope fnx-ui yarn clean",
@@ -12,6 +12,7 @@
     "build:site": "lerna exec --scope fnx-ui yarn build:site",
     "build:cli": "lerna exec --scope @fnx-ui/cli yarn build",
     "build:vite-plugin-markdown": "lerna exec --scope @fnx-ui/vite-plugin-markdown yarn build",
+    "build:vite-plugin-inline": "lerna exec --scope @fnx-ui/vite-plugin-inline yarn build",
     "test": "lerna exec --scope fnx-ui yarn test",
     "test:cov": "lerna exec --scope fnx-ui yarn test:cov",
     "test:update": "lerna exec --scope fnx-ui yarn test:update",

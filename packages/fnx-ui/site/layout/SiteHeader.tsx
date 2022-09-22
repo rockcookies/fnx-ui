@@ -2,13 +2,15 @@ import React, { FC, useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import pkg from '../../package.json';
 import { createBEM } from '../../src/utils/namespace';
-import logo from '../assets/logo.svg';
+import logo from '../assets/logo.svg?inline=base64';
 import SITE_DATA from '../site-data';
 import { SiteContext } from './context';
 import './SiteHeader.less';
 import SideMenuTree from './SiteMenuTree';
 
 const bem = createBEM('site-header');
+
+console.log(logo);
 
 const DARK_ICON = (
 	<svg viewBox="0 0 36 36" fill="currentColor" width="1em" height="1em">
