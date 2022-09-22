@@ -10,8 +10,6 @@ import SideMenuTree from './SiteMenuTree';
 
 const bem = createBEM('site-header');
 
-console.log(logo);
-
 const DARK_ICON = (
 	<svg viewBox="0 0 36 36" fill="currentColor" width="1em" height="1em">
 		<circle cx="18" cy="18" r="7.9"></circle>
