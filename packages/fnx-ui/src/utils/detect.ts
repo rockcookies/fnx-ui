@@ -12,6 +12,10 @@ export function canUseDom(): boolean {
 	return false;
 }
 
+export function canUseDocElement(): boolean {
+	return canUseDom() && window.document.documentElement != null;
+}
+
 export function isAndroid(): boolean {
 	return IS_BROWSER
 		? /android/.test(navigator.userAgent.toLowerCase())

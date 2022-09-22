@@ -1,5 +1,6 @@
-import React, { FC } from 'react';
+import React, { CSSProperties, FC } from 'react';
 import configComponentProps from '../hooks/config-component-props';
+import useFlexGapSupport from '../hooks/use-flex-gap-support';
 import { classnames, createBEM } from '../utils/namespace';
 import { toElementArray } from '../utils/react';
 import { SpaceProps, SpaceSize } from './interface';
@@ -31,9 +32,12 @@ const Space: FC<SpaceProps> = (_props) => {
 			fill,
 			children: _children,
 			className,
+			style,
 			...restProps
 		},
 	] = useProps(_props);
+
+	const supportFlexGap = useFlexGapSupport();
 
 	const [horizontalSize, verticalSize] = React.useMemo(
 		() =>
@@ -52,6 +56,24 @@ const Space: FC<SpaceProps> = (_props) => {
 		return null;
 	}
 
+	const elementStyle: CSSProperties = {};
+
+	if (wrap) {
+		elementStyle.flexWrap = 'wrap';
+
+		// Patch for gap not support
+		if (!supportFlexGap) {
+			elementStyle.marginBottom = `-${verticalSize}`;
+		}
+	}
+
+	if (supportFlexGap) {
+		elementStyle.columnGap = horizontalSize;
+		elementStyle.rowGap = verticalSize;
+	}
+
+	const latestIndex = children.length - 1;
+
 	return (
 		<div
 			className={classnames(
@@ -63,34 +85,32 @@ const Space: FC<SpaceProps> = (_props) => {
 				}),
 				className,
 			)}
+			style={{
+				...elementStyle,
+				...style,
+			}}
 			{...restProps}
 		>
 			{children.map((child, idx) => {
 				const key = (child && child.key) || `${NS}-${idx}`;
 
+				const childStyle: CSSProperties = {};
+
+				if (!supportFlexGap) {
+					if (direction === 'vertical') {
+						childStyle.marginBottom =
+							idx < latestIndex ? horizontalSize : undefined;
+					} else {
+						childStyle.marginRight =
+							idx < latestIndex ? horizontalSize : undefined;
+						childStyle.paddingBottom = wrap
+							? verticalSize
+							: undefined;
+					}
+				}
+
 				return (
-					<div
-						key={key}
-						className={`${NS}-item`}
-						style={
-							idx === children.length - 1
-								? {
-										marginBottom: wrap
-											? verticalSize
-											: undefined,
-								  }
-								: {
-										marginRight:
-											direction === 'horizontal'
-												? horizontalSize
-												: undefined,
-										marginBottom:
-											direction === 'vertical' || wrap
-												? verticalSize
-												: undefined,
-								  }
-						}
-					>
+					<div key={key} className={`${NS}-item`} style={childStyle}>
 						{child}
 					</div>
 				);
