@@ -1,0 +1,1 @@
+import{I as i}from"./detect-9e279ab2.js";const a=i?window:global,m=(()=>{let n=Date.now();return t=>{const e=Date.now(),o=Math.max(0,16-(e-n)),c=setTimeout(t,o);return n=e+o,c}})();function r(n){return(a.requestAnimationFrame||m).call(a,n)}function s(n){(a.cancelAnimationFrame||a.clearTimeout).call(a,n)}function u(n){r(()=>r(n))}export{s as c,u as d,r};
