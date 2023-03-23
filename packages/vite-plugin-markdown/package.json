@@ -28,6 +28,6 @@
   "devDependencies": {
     "@types/markdown-it": "^12.2.3",
     "@types/node": "^18.7.18",
-    "vite": "^3.1.2"
+    "vite": "^4.2.1"
   }
 }
