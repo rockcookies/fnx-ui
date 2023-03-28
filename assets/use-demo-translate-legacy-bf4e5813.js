@@ -1,1 +1,0 @@
-System.register(["./index-legacy-56dc3fc1.js","./index-legacy-3b87e241.js"],(function(e,n){"use strict";var t,u;return{setters:[function(e){t=e.r},function(e){u=e.a}],execute:function(){e("u",(function(e,n){var r=t.useContext(u).locale;return[t.useMemo((function(){return e[r]||e[n]}),[r,e,n])]}))}}}));
