@@ -17,11 +17,3 @@ jobs:
         with:
           source-repo: https://github.com/Rockcookies/fnx-ui.git
           destination-repo: git@gitee.com:rockcookies/fnx-ui.git
-
-      - name: Reload Gitee Pages 🚀
-        uses: mizuka-wu/gitee-pages-action@v1.0.0
-        with:
-          repository: rockcookies/fnx-ui
-          cookie: ${{ secrets.GITEE_COOKIE }}
-          branch: gh-pages
-          https: true
