@@ -16,6 +16,12 @@ export default function App() {
 							path="/demo/:component/:locale/:theme"
 							element={<Demo />}
 						/>
+						<Route
+							path="/:locale/:category/:menu"
+							element={<Layout />}
+						/>
+						<Route path="/:locale/:category" element={<Layout />} />
+						<Route path="/:locale" element={<Layout />} />
 						<Route path="*" element={<Layout />} />
 					</Routes>
 				</Suspense>

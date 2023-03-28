@@ -1,8 +1,8 @@
 import React, { FC, useContext, useEffect, useMemo, useState } from 'react';
-import { Navigate } from 'react-router-dom';
 import { setScrollTop } from '../../../src/utils/dom/scroll';
 import { createBEM } from '../../../src/utils/namespace';
 import Markdown from '../../components/Markdown';
+import NotFound from '../../components/NotFound';
 import { SiteContext } from '../../layout/context';
 import './index.less';
 
@@ -46,7 +46,7 @@ const Components: FC = () => {
 	}, [menu, locale]);
 
 	if (!menu) {
-		return <Navigate to="/" />;
+		return <NotFound />;
 	}
 
 	return (

@@ -6,7 +6,7 @@ import React, {
 	useMemo,
 	useState,
 } from 'react';
-import { useMatch } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import pkg from '../../package.json';
 import { Dictionary } from '../../src/utils/interface';
 import { createBEM } from '../../src/utils/namespace';
@@ -45,12 +45,12 @@ const I18N: Dictionary<Dictionary<string>> = {
 const Layout: FC = () => {
 	const [responsive] = useResponsive();
 
-	const matches = useMatch('/:locale/:category/:menu');
+	const params = useParams();
 
 	// 语言
 	const locale = useMemo<'zh-CN' | 'en-US'>(
-		() => (matches?.params.locale === 'zh-CN' ? 'zh-CN' : 'en-US'),
-		[matches?.params.locale],
+		() => (params?.locale === 'zh-CN' ? 'zh-CN' : 'en-US'),
+		[params?.locale],
 	);
 
 	const i18n = I18N[locale];
@@ -74,7 +74,7 @@ const Layout: FC = () => {
 
 	// 分类
 	const category = useMemo<SiteCategory | undefined>(() => {
-		const category = matches?.params.category;
+		const category = params?.category;
 
 		const categoryIdx =
 			category != null
@@ -82,11 +82,11 @@ const Layout: FC = () => {
 				: -1;
 
 		return SITE_DATA[categoryIdx];
-	}, [matches?.params.category]);
+	}, [params?.category]);
 
 	// 菜单
 	const menu = useMemo<SiteMenu | undefined>(() => {
-		const menu = matches?.params.menu;
+		const menu = params?.menu;
 
 		if (menu != null) {
 			for (const { children } of category?.children || []) {
@@ -97,7 +97,7 @@ const Layout: FC = () => {
 				}
 			}
 		}
-	}, [category, matches?.params.menu]);
+	}, [category, params?.menu]);
 
 	useEffect(() => {
 		document.title = menu
