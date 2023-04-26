@@ -1,0 +1,1 @@
+System.register(["./index-legacy-cf129d7d.js","./index-legacy-1e7e779e.js"],(function(e,t){"use strict";var n,u;return{setters:[function(e){n=e.r},function(e){u=e.C}],execute:function(){e("u",(function(e){var t=n.useContext(u.Context).locale;return n.useMemo((function(){return(t||{})[e]||{}}),[t,e])}))}}}));

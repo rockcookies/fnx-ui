@@ -1,1 +1,0 @@
-import{r as u}from"./index-cd4e7e60.js";function i(e,r){const t=u.useRef(r),f=u.useRef(!1),n=u.useRef(void 0);return(f.current===!1||!c(t.current,r))&&(t.current=r,n.current=e(n.current),f.current=!0),n}function c(e,r){if(e===r)return!0;for(let t=0;t<e.length;t++)if(e[t]!==r[t])return!1;return!0}function s(e,r){return i(e,r).current}export{s as u};

@@ -1,1 +1,0 @@
-import{r as e}from"./index-cd4e7e60.js";import{u as r}from"./use-merged-prop-ref-cafd8c02.js";const n=e.createContext({visible:!1}),p=o=>{const t=e.useContext(n),s=r(o);e.useEffect(()=>{t.visible===!0&&s.current()},[s,t.visible])},a=p;export{n as P,a as u};
