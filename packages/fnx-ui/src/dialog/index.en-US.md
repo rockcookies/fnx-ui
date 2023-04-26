@@ -14,10 +14,10 @@ import { Dialog } from 'fnx-ui';
 Dialog.show({
   title: 'Dialog',
   message: 'Dialog Content',
-  messageAlign: 'Left',
+  messageAlign: 'left',
   confirmText: 'Confirm',
   cancelText: 'Cancel',
-})；
+});
 
 ```
 

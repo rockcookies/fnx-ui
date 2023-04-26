@@ -26,6 +26,8 @@
     "@babel/preset-env": "^7.19.1",
     "@babel/preset-react": "^7.18.6",
     "@babel/preset-typescript": "^7.18.6",
+    "@fnx-ui/vite-plugin-inline": "^0.0.4",
+    "@fnx-ui/vite-plugin-markdown": "^0.0.11",
     "@typescript-eslint/eslint-plugin": "^5.37.0",
     "@typescript-eslint/parser": "^5.37.0",
     "@vitejs/plugin-legacy": "^4.0.2",
