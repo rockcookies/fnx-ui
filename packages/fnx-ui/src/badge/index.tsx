@@ -7,11 +7,10 @@ const NS = 'fnx-badge';
 const bem = createBEM(NS);
 
 const useProps = configComponentProps<
-	Required<Pick<BadgeProps, 'showZero' | 'max' | 'count' | 'position'>>
+	Required<Pick<BadgeProps, 'showZero' | 'max' | 'position'>>
 >({
 	showZero: true,
 	max: 99,
-	count: 8,
 	position: 'top-right',
 });
 
@@ -20,12 +19,11 @@ const Badge: React.FC<BadgeProps> = (_props) => {
 		{
 			showZero,
 			max,
-			count,
 			position,
 
 			...restProps
 		},
-		{ color, dot, offset, className, children, style },
+		{ color, dot, count, offset, className, children, style },
 	] = useProps(_props);
 
 	const renderCount = () => {

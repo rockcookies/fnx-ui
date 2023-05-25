@@ -13,7 +13,7 @@ export interface BadgeComponentProps {
 	count?: ReactNode;
 	showZero?: boolean;
 	dot?: boolean;
-	max?: string | number;
+	max?: number;
 	color?: string;
 	offset?: [number | string, number | string];
 	position?: BadgePosition;

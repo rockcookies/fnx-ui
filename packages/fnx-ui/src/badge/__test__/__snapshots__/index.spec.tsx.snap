@@ -75,9 +75,7 @@ exports[`<Badge/> should render children correctly 1`] = `
     children
     <span
       class="fnx-badge fnx-badge--top-right fnx-badge--fixed"
-    >
-      8
-    </span>
+    />
   </div>
 </div>
 `;
@@ -86,9 +84,7 @@ exports[`<Badge/> should render default count when children is not exist 1`] = `
 <div>
   <span
     class="fnx-badge fnx-badge--top-right"
-  >
-    8
-  </span>
+  />
 </div>
 `;
 
