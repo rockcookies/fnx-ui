@@ -1,0 +1,1 @@
+import{r as o}from"./index-d9abb3b2.js";import{u as n}from"./use-merged-prop-78f8d6c6.js";function s(r){const e=o.useRef(r);return e.current=r,e}function c(r,...e){const t=n(r,...e);return s(t)}export{c as u};

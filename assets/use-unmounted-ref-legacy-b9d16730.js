@@ -1,1 +1,0 @@
-System.register(["./index-legacy-cf129d7d.js"],(function(e,t){"use strict";var n;return{setters:[function(e){n=e.r}],execute:function(){e("u",(function(){var e=n.useRef(!1);return n.useEffect((function(){return e.current=!1,function(){e.current=!0}}),[]),e}))}}}));
