@@ -38,6 +38,7 @@
     "commit-msg": "fnx-ui-cli commit-lint"
   },
   "lint-staged": {
+    "*.{ts,tsx,js}": "prettier --write",
     "*.{ts,tsx}": "eslint --fix"
   }
 }
