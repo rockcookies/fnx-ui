@@ -1,0 +1,1 @@
+import{R as e}from"./index-8b435b75.js";import{u as o}from"./use-unmounted-ref-2a5aff7e.js";function m(u){const t=o(),[n,r]=e.useState(u),s=e.useCallback(a=>{t.current||r(a)},[t]);return[n,s]}export{m as u};

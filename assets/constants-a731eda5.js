@@ -1,0 +1,1 @@
+const t="fnx-hairline",o="".concat(t,"--top"),s="".concat(t,"--left"),O="".concat(t,"--surround"),R="".concat(t,"--top-bottom"),n="".concat(t,"-unset--top-bottom");export{t as B,o as a,O as b,R as c,n as d,s as e};
