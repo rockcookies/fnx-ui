@@ -5,7 +5,6 @@ import React, {
 	useImperativeHandle,
 	useRef,
 } from 'react';
-import { CSSTransition } from 'react-transition-group';
 import ConfigProvider from '../config-provider';
 import { DEFAULT_CONFIG_CONTEXT } from '../config-provider/context';
 import configComponentProps from '../hooks/config-component-props';
@@ -14,6 +13,7 @@ import useMergedProp from '../hooks/use-merged-prop';
 import Icon from '../icon';
 import { noop } from '../utils/misc';
 import { classnames, createBEM } from '../utils/namespace';
+import { ReactCSSTransition } from '../utils/react';
 import { TagProps } from './interface';
 
 const NS = 'fnx-tag';
@@ -91,7 +91,7 @@ const Tag = forwardRef<HTMLSpanElement, TagProps>((_props, ref) => {
 	};
 
 	return (
-		<CSSTransition
+		<ReactCSSTransition
 			classNames="fnx-fade"
 			in={visible}
 			timeout={transitionDuration || 0}
@@ -124,7 +124,7 @@ const Tag = forwardRef<HTMLSpanElement, TagProps>((_props, ref) => {
 					</span>
 				)}
 			</span>
-		</CSSTransition>
+		</ReactCSSTransition>
 	);
 });
 

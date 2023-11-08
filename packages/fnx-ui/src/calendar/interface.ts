@@ -27,7 +27,7 @@ export interface CalendarDayComponentProps {
 }
 
 export type CalendarDayProps = CalendarDayComponentProps &
-	HTMLAttributes<HTMLDivElement>;
+	Omit<HTMLAttributes<HTMLDivElement>, 'content'>;
 
 export interface CalendarSlots {
 	day?: (day: CalendarDayComponentProps) => ReactNode;

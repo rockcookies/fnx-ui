@@ -74,7 +74,7 @@ export default function Basic(): ReturnType<React.FC> {
 				clearCountdown();
 				loading.clear();
 			}
-		}, 1000);
+		}, 1000) as any;
 	};
 
 	useEffect(() => {

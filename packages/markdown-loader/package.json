@@ -15,6 +15,6 @@
   "dependencies": {
     "gray-matter": "^4.0.3",
     "loader-utils": "^2.0.0",
-    "markdown-it": "^13.0.1"
+    "markdown-it": "^13.0.2"
   }
 }

@@ -1,4 +1,4 @@
-import React, { FC, ReactNode, useContext } from 'react';
+import React, { FC, useContext } from 'react';
 import ConfigProvider from '..';
 import DemoBlock from '../../../site/components/DemoBlock';
 import useDemoTranslate from '../../../site/hooks/use-demo-translate';

@@ -7,7 +7,6 @@ import React, {
 } from 'react';
 import configComponentProps from '../hooks/config-component-props';
 import useControlledState from '../hooks/use-controlled-state';
-import { ForwardRefProps } from '../utils/interface';
 import { noop } from '../utils/misc';
 import { PopupSelectProps } from './interface';
 import Popup from './Popup';

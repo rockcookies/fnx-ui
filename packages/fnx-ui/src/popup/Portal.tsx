@@ -90,7 +90,9 @@ const Portal: FC<PortalProps> = ({
 		return <>{children}</>;
 	}
 
-	return ReactDOM.createPortal(children, containerRef.current) || <></>;
+	return (ReactDOM.createPortal(children as any, containerRef.current) || (
+		<></>
+	)) as any;
 };
 
 Portal.displayName = 'Portal';

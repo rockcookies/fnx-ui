@@ -1,13 +1,41 @@
 import React, { Children, ReactElement, ReactNode } from 'react';
 import * as ReactDOM from 'react-dom';
-import type { createRoot as CreateRoot } from 'react-dom/client';
+import type { Root } from 'react-dom/client';
 import { isFragment } from 'react-is';
+import { CSSTransition } from 'react-transition-group';
+import { CSSTransitionProps } from 'react-transition-group/CSSTransition';
 
-const createRoot: typeof CreateRoot | undefined = (ReactDOM as any).createRoot;
+export const ReactCSSTransition: React.FC<CSSTransitionProps<HTMLElement>> =
+	CSSTransition as any;
 
-function toggleRenderWarning(skip: boolean) {
-	const { __SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED } =
-		ReactDOM as any;
+// https://github.com/react-component/util/blob/master/src/React/render.ts
+
+// Let compiler not to search module usage
+const fullClone = {
+	...ReactDOM,
+} as typeof ReactDOM & {
+	__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED?: {
+		usingClientEntryPoint?: boolean;
+	};
+	createRoot?: CreateRoot;
+};
+
+type CreateRoot = (container: ContainerType) => Root;
+
+const { version, render: reactRender, unmountComponentAtNode } = fullClone;
+
+let createRoot: CreateRoot | undefined;
+try {
+	const mainVersion = Number((version || '').split('.')[0]);
+	if (mainVersion >= 18) {
+		({ createRoot } = fullClone);
+	}
+} catch (e) {
+	// Do nothing;
+}
+
+function toggleWarning(skip: boolean) {
+	const { __SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED } = fullClone;
 
 	if (
 		__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED &&
@@ -18,30 +46,64 @@ function toggleRenderWarning(skip: boolean) {
 	}
 }
 
+const MARK = '__fnx_react_root__';
+
+// ========================== Render ==========================
+type ContainerType = (Element | DocumentFragment) & {
+	[MARK]?: Root;
+};
+
+function modernRender(node: any, container: ContainerType) {
+	toggleWarning(true);
+	const root = container[MARK] || createRoot?.(container);
+	toggleWarning(false);
+
+	root?.render(node);
+
+	container[MARK] = root;
+}
+
+function legacyRender(node: any, container: ContainerType) {
+	reactRender(node, container);
+}
+
 export function renderReactDOMNode(
 	container: Element | DocumentFragment,
 	node: ReactNode,
 ): () => void {
-	if (
-		typeof createRoot === 'function' &&
-		process.env.NODE_ENV === 'production'
-	) {
-		toggleRenderWarning(false);
-		const root = createRoot(container);
-		toggleRenderWarning(true);
-
-		root.render(node);
-
-		return () => {
-			root.unmount();
-		};
+	if (createRoot) {
+		modernRender(node, container);
+	} else {
+		legacyRender(node, container);
 	}
 
-	ReactDOM.render(node as any, container);
-
 	return () => {
-		ReactDOM.unmountComponentAtNode(container);
+		unmountReactDOMNode(container);
 	};
+}
+
+// ========================= Unmount ==========================
+function modernUnmount(container: ContainerType) {
+	container[MARK]?.unmount();
+	// Delay to unmount to avoid React 18 sync warning
+	return Promise.resolve().then(() => {
+		container[MARK]?.unmount();
+
+		delete container[MARK];
+	});
+}
+
+function legacyUnmount(container: ContainerType) {
+	unmountComponentAtNode(container);
+}
+
+export function unmountReactDOMNode(container: ContainerType) {
+	if (createRoot !== undefined) {
+		// Delay to unmount to avoid React 18 sync warning
+		return modernUnmount(container);
+	}
+
+	legacyUnmount(container);
 }
 
 export const toElementArray = (

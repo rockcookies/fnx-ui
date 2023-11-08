@@ -1,5 +1,5 @@
 import { act, fireEvent, render, waitFor } from '@testing-library/react';
-import React, { FC } from 'react';
+import React from 'react';
 import TestsDOM from '../../../test/dom';
 import ConfigProvider from '../../config-provider';
 import Notify from '../index';
@@ -20,7 +20,7 @@ describe('<Notify />', () => {
 			onClick: (ctx: NotifyContext) => void;
 		}>,
 	) {
-		const Demo: FC = () => {
+		const Demo = (): ReturnType<React.FC> => {
 			const ctx = Notify.useNotify();
 
 			return (
@@ -150,11 +150,11 @@ describe('<Notify />', () => {
 			TestsDOM.mustQuerySelector(element, '#notify').innerHTML,
 		).toEqual('Message');
 
-		await waitFor(() =>
+		act(() => {
 			notify.update({
 				message: 'updateMessage',
-			}),
-		);
+			});
+		});
 
 		expect(
 			TestsDOM.mustQuerySelector(element, '#notify').innerHTML,

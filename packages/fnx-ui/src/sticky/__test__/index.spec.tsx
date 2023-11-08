@@ -138,7 +138,7 @@ describe('<Sticky/>', () => {
 	it('should allow to using offset-top prop with rem unit', async () => {
 		const originGetComputedStyle = window.getComputedStyle;
 
-		window.getComputedStyle = () => ({ fontSize: '16px' } as any);
+		window.getComputedStyle = () => ({ fontSize: '16px' }) as any;
 
 		const { getByTestId, container } = render(
 			<Sticky

@@ -8,7 +8,6 @@ import React, {
 	useRef,
 	useState,
 } from 'react';
-import { CSSTransition } from 'react-transition-group';
 import ConfigProvider from '../config-provider';
 import { DEFAULT_CONFIG_CONTEXT } from '../config-provider/context';
 import configComponentProps from '../hooks/config-component-props';
@@ -17,9 +16,10 @@ import useScrollLock from '../hooks/use-scroll-lock';
 import Overlay from '../overlay';
 import { noop } from '../utils/misc';
 import { classnames, createBEM } from '../utils/namespace';
+import { ReactCSSTransition } from '../utils/react';
+import Portal from './Portal';
 import { PopupContext } from './context';
 import { PopupProps } from './interface';
-import Portal from './Portal';
 
 const NS = 'fnx-popup';
 const bem = createBEM(NS);
@@ -199,7 +199,7 @@ const Popup = forwardRef<HTMLDivElement, PopupProps>((_props, ref) => {
 						/>
 					)}
 
-					<CSSTransition
+					<ReactCSSTransition
 						in={rendering && !closing}
 						classNames={formattedTransitionName}
 						nodeRef={popupRef}
@@ -234,7 +234,7 @@ const Popup = forwardRef<HTMLDivElement, PopupProps>((_props, ref) => {
 						>
 							{children}
 						</div>
-					</CSSTransition>
+					</ReactCSSTransition>
 				</>
 			</PopupContext.Provider>
 		</Portal>

@@ -1,5 +1,6 @@
-import RcFieldForm from 'rc-field-form';
+import RcFieldForm, { FormProps as RcFormProps } from 'rc-field-form';
 import React, {
+	FC,
 	forwardRef,
 	ReactElement,
 	useImperativeHandle,
@@ -12,6 +13,8 @@ import { classnames, createBEM } from '../utils/namespace';
 import { FormContext } from './context';
 import useForm from './hooks/use-form';
 import { FormContextData, FormInstance, FormProps } from './interface';
+
+const FieldForm: FC<RcFormProps<any>> = RcFieldForm as any;
 
 const NS = 'fnx-form';
 const bem = createBEM(NS);
@@ -60,7 +63,7 @@ const InternalForm = forwardRef<FormInstance, FormProps>((props, ref) => {
 
 	return (
 		<FormContext.Provider value={formContextValue}>
-			<RcFieldForm
+			<FieldForm
 				{...restProps}
 				validateMessages={messages}
 				form={wrapForm}

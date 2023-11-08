@@ -99,14 +99,17 @@ const NoticeBar = forwardRef<NoticeBarRef, NoticeBarProps>((_props, ref) => {
 			clearTimeout(delayRef.current);
 		}
 
-		delayRef.current = setTimeout(() => {
-			if (!unmountedRef.current) {
-				setPlaying(
-					marquee === 'auto' ? 'first-reset-auto' : 'first-reset',
-				);
-				delayRef.current = undefined;
-			}
-		}, Math.max(propsRef.current.marqueeDelay, 0));
+		delayRef.current = setTimeout(
+			() => {
+				if (!unmountedRef.current) {
+					setPlaying(
+						marquee === 'auto' ? 'first-reset-auto' : 'first-reset',
+					);
+					delayRef.current = undefined;
+				}
+			},
+			Math.max(propsRef.current.marqueeDelay, 0),
+		);
 	}, [marquee, visible, propsRef, unmountedRef]);
 
 	useOnPopupOpen(() => {

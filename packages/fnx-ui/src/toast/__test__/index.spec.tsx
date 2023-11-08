@@ -1,4 +1,4 @@
-import { act, fireEvent, render, waitFor } from '@testing-library/react';
+import { act, fireEvent, render } from '@testing-library/react';
 import React, { FC } from 'react';
 import TestsDOM from '../../../test/dom';
 import ConfigProvider from '../../config-provider';
@@ -236,18 +236,16 @@ describe('<Toast />', () => {
 	it('clear multiple toast', async () => {
 		Toast.allowMultiple(true);
 
-		await waitFor(() => {
+		act(() => {
 			Toast.success({ message: '1', duration: 0 });
 			Toast.success({ message: '2', duration: 0 });
 		});
 
-		act(() => {
-			jest.runAllTimers();
-		});
-
 		expect(document.querySelectorAll('.fnx-toast').length).toBe(2);
 
-		await waitFor(() => Toast.clearAll());
+		act(() => {
+			Toast.clearAll();
+		});
 		act(() => {
 			jest.runAllTimers();
 		});

@@ -9,13 +9,13 @@ import React, {
 	useRef,
 	useState,
 } from 'react';
-import { CSSTransition } from 'react-transition-group';
 import Cell from '../cell';
 import ConfigProvider from '../config-provider';
 import configComponentProps from '../hooks/config-component-props';
 import useMergedProp from '../hooks/use-merged-prop';
 import Icon from '../icon/Icon';
 import { classnames, createBEM } from '../utils/namespace';
+import { ReactCSSTransition } from '../utils/react';
 import CollapseContext from './context';
 import { CollapseItemProps } from './interface';
 
@@ -160,7 +160,7 @@ const CollapseItem = forwardRef<HTMLDivElement, CollapseItemProps>(
 				ref={ref}
 			>
 				{renderCell()}
-				<CSSTransition
+				<ReactCSSTransition
 					timeout={transitionDuration}
 					in={rendering && !closing}
 					nodeRef={wrapperRef}
@@ -202,7 +202,7 @@ const CollapseItem = forwardRef<HTMLDivElement, CollapseItemProps>(
 							</div>
 						)}
 					</div>
-				</CSSTransition>
+				</ReactCSSTransition>
 			</div>
 		);
 	},

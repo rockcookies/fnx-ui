@@ -1,5 +1,195 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`<Dialog/> close、destroy function 1`] = `
+<body
+  class=""
+>
+  <div />
+  <div />
+  <div />
+  <div />
+  <div>
+    <div
+      class="fnx-overlay fnx-fade-exit-done"
+      style="display: none;"
+    />
+    <div
+      class="fnx-popup fnx-popup--center fnx-dialog fnx-dialog-bounce-exit-done"
+      role="dialog"
+      style="display: none;"
+      tabindex="0"
+    >
+      <div
+        class="fnx-dialog__header"
+      >
+        title
+      </div>
+      <div
+        class="fnx-dialog__message fnx-dialog__message--has-header fnx-dialog__message--center"
+      >
+        content
+      </div>
+      <div
+        class="fnx-hairline--top fnx-dialog__footer"
+      >
+        <button
+          class="fnx-button fnx-button--default fnx-button--md fnx-button--loading fnx-dialog__confirm"
+        >
+          <span
+            class="fnx-button__content"
+          >
+            <span
+              class="fnx-icon"
+            >
+              <svg
+                aria-hidden="true"
+                class="fnx-icon__spinner"
+                fill="currentColor"
+                focusable="false"
+                height="1em"
+                viewBox="25 25 50 50"
+                width="1em"
+              >
+                <circle
+                  cx="50"
+                  cy="50"
+                  fill="none"
+                  r="20"
+                />
+              </svg>
+            </span>
+            <span
+              class="fnx-button__text"
+            >
+              Confirm
+            </span>
+          </span>
+        </button>
+        <button
+          class="fnx-button fnx-button--default fnx-button--md fnx-hairline--left fnx-dialog__cancel"
+        >
+          <span
+            class="fnx-button__content"
+          >
+            <span
+              class="fnx-button__text"
+            >
+              Cancel
+            </span>
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div
+      class="fnx-overlay fnx-fade-exit-done"
+      style="display: none;"
+    />
+    <div
+      class="fnx-popup fnx-popup--center fnx-dialog fnx-dialog-bounce-exit-done"
+      role="dialog"
+      style="display: none;"
+      tabindex="0"
+    >
+      <div
+        class="fnx-dialog__header"
+      >
+        title
+      </div>
+      <div
+        class="fnx-dialog__message fnx-dialog__message--has-header fnx-dialog__message--center"
+      >
+        content
+      </div>
+      <div
+        class="fnx-hairline--top fnx-dialog__footer"
+      >
+        <button
+          class="fnx-button fnx-button--default fnx-button--md fnx-dialog__confirm"
+        >
+          <span
+            class="fnx-button__content"
+          >
+            <span
+              class="fnx-button__text"
+            >
+              Confirm
+            </span>
+          </span>
+        </button>
+        <button
+          class="fnx-button fnx-button--default fnx-button--md fnx-hairline--left fnx-dialog__cancel"
+        >
+          <span
+            class="fnx-button__content"
+          >
+            <span
+              class="fnx-button__text"
+            >
+              Cancel
+            </span>
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div
+      class="fnx-overlay fnx-fade-exit-done"
+      style="display: none;"
+    />
+    <div
+      class="fnx-popup fnx-popup--center fnx-dialog fnx-dialog-bounce-exit-done"
+      role="dialog"
+      style="display: none;"
+      tabindex="0"
+    >
+      <div
+        class="fnx-dialog__header"
+      >
+        title2
+      </div>
+      <div
+        class="fnx-dialog__message fnx-dialog__message--has-header fnx-dialog__message--center"
+      >
+        content2
+      </div>
+      <div
+        class="fnx-hairline--top fnx-dialog__footer"
+      >
+        <button
+          class="fnx-button fnx-button--default fnx-button--md fnx-dialog__confirm"
+        >
+          <span
+            class="fnx-button__content"
+          >
+            <span
+              class="fnx-button__text"
+            >
+              Confirm
+            </span>
+          </span>
+        </button>
+        <button
+          class="fnx-button fnx-button--default fnx-button--md fnx-hairline--left fnx-dialog__cancel"
+        >
+          <span
+            class="fnx-button__content"
+          >
+            <span
+              class="fnx-button__text"
+            >
+              Cancel
+            </span>
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+</body>
+`;
+
 exports[`<Dialog/> title、width、message、messageAlign props 1`] = `<div />`;
 
 exports[`<Dialog/> useDialog 1`] = `

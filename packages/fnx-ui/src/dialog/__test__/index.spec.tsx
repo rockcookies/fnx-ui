@@ -1,4 +1,4 @@
-import { act, fireEvent, render, waitFor } from '@testing-library/react';
+import { act, fireEvent, render } from '@testing-library/react';
 import React, { FC } from 'react';
 import Dialog from '../';
 import TestsDOM from '../../../test/dom';
@@ -115,7 +115,7 @@ describe('<Dialog/>', () => {
 			return false;
 		});
 
-		await waitFor(() => {
+		act(() => {
 			Dialog.show({
 				title: 'title',
 				message: 'content',
@@ -124,8 +124,6 @@ describe('<Dialog/>', () => {
 				mountTo: document.body,
 			});
 		});
-
-		jest.runAllTimers();
 
 		const confirm = TestsDOM.mustQuerySelector(
 			document.body,
@@ -149,18 +147,23 @@ describe('<Dialog/>', () => {
 	});
 
 	it('close、destroy function', async () => {
-		await waitFor(() => {
+		act(() => {
 			Dialog.show({
 				title: 'title',
 				message: 'content',
 			});
+		});
+
+		act(() => {
 			Dialog.show({
 				title: 'title2',
 				message: 'content2',
 			});
 		});
 
-		jest.runAllTimers();
+		act(() => {
+			jest.runAllTimers();
+		});
 
 		const dialogDiv = TestsDOM.mustQuerySelector(
 			document.body,
@@ -168,10 +171,14 @@ describe('<Dialog/>', () => {
 		);
 		expect(dialogDiv).not.toBeNull();
 
-		await waitFor(() => Dialog.clearAll());
-		jest.runAllTimers();
+		act(() => {
+			Dialog.clearAll();
+		});
+		act(() => {
+			jest.runAllTimers();
+		});
 
-		expect(document.body.querySelector('.fnx-dialog')).toBeNull();
+		expect(document.body).toMatchSnapshot();
 	});
 
 	it('useDialog', async () => {

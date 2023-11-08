@@ -267,15 +267,15 @@ const DatePicker = forwardRef<DatePickerRef, DatePickerProps>((_props, ref) => {
 		const hour = getValue('hour', value.getHours());
 		const minute = getValue('minute', value.getMinutes());
 
-		const nextValue = range(
+		const next = range(
 			new DateTime(new Date(year, month - 1, day, hour, minute)),
 			minDate,
 			maxDate,
 		);
 
-		if (!nextValue.equals(value)) {
-			setValue(nextValue.getDate());
-		}
+		setValue((prev) => {
+			return next.equals(prev) ? prev : next.getDate();
+		});
 	};
 
 	return (

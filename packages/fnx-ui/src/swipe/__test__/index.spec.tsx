@@ -25,7 +25,7 @@ describe('<Swipe/>', () => {
 					width: 0,
 					height: 0,
 					...rect,
-				} as any),
+				}) as any,
 		);
 
 		return function () {

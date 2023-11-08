@@ -7,13 +7,13 @@ import React, {
 	useRef,
 	useState,
 } from 'react';
-import { CSSTransition } from 'react-transition-group';
 import ConfigProvider from '../config-provider';
 import { DEFAULT_CONFIG_CONTEXT } from '../config-provider/context';
 import configComponentProps from '../hooks/config-component-props';
 import useMergedProp from '../hooks/use-merged-prop';
 import { bindEvent, preventDefault } from '../utils/dom/event';
 import { classnames, createBEM } from '../utils/namespace';
+import { ReactCSSTransition } from '../utils/react';
 import { OverlayProps } from './interface';
 
 const NS = 'fnx-overlay';
@@ -104,7 +104,7 @@ const Overlay = forwardRef<HTMLDivElement, OverlayProps>((_props, ref) => {
 	};
 
 	return (
-		<CSSTransition
+		<ReactCSSTransition
 			classNames="fnx-fade"
 			in={rendering && !closing}
 			timeout={transitionDuration || 0}
@@ -122,7 +122,7 @@ const Overlay = forwardRef<HTMLDivElement, OverlayProps>((_props, ref) => {
 			>
 				{children}
 			</div>
-		</CSSTransition>
+		</ReactCSSTransition>
 	);
 });
 
