@@ -1,6 +1,6 @@
 {
   "name": "@fnx-ui/cli",
-  "version": "0.0.17",
+  "version": "0.0.18",
   "description": "",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
@@ -26,8 +26,8 @@
     "@babel/preset-env": "^7.23.2",
     "@babel/preset-react": "^7.22.15",
     "@babel/preset-typescript": "^7.23.2",
-    "@fnx-ui/vite-plugin-inline": "^0.0.4",
-    "@fnx-ui/vite-plugin-markdown": "^0.0.11",
+    "@fnx-ui/vite-plugin-inline": "^0.0.5",
+    "@fnx-ui/vite-plugin-markdown": "^0.0.12",
     "@typescript-eslint/eslint-plugin": "^6.10.0",
     "@typescript-eslint/parser": "^6.10.0",
     "@vitejs/plugin-legacy": "^4.1.1",
